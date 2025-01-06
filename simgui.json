@@ -1,55 +1,13 @@
 {
   "NTProvider": {
     "types": {
+      "/AdvantageKit/RealOutputs/Alerts": "Alerts",
       "/FMSInfo": "FMSInfo",
-      "/SmartDashboard/AutonChooser": "String Chooser",
-      "/SmartDashboard/AutonTestLog": "String Chooser"
-    }
-  },
-  "NetworkTables": {
-    "Persistent Values": {
-      "open": false
-    },
-    "Retained Values": {
-      "open": false
-    },
-    "Transitory Values": {
-      "open": false
-    },
-    "retained": {
-      "SmartDashboard": {
-        "AutonChooser": {
-          "open": true
-        },
-        "open": true
-      }
-    },
-    "transitory": {
-      "AdvantageKit": {
-        "SwerveDrive": {
-          "open": true
-        },
-        "SystemStats": {
-          "3v3Rail": {
-            "open": true
-          }
-        },
-        "open": true
-      }
+      "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/AutonChooser": "String Chooser"
     }
   },
   "NetworkTables Info": {
-    "Connections": {
-      "open": true
-    },
-    "Server": {
-      "Publishers": {
-        "open": true
-      },
-      "Subscribers": {
-        "open": true
-      }
-    },
     "visible": true
   }
 }

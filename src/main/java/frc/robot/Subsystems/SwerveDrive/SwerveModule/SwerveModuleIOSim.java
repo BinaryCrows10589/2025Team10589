@@ -5,6 +5,9 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N2;
+import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
@@ -16,8 +19,11 @@ import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTable
 public class SwerveModuleIOSim implements SwerveModuleIO{
     private static final double LOOP_PERIOD_SECS = 0.02;
 
-    private DCMotorSim driveMotor = new DCMotorSim(DCMotor.getKrakenX60(1), 1, .025/SwerveModuleConstants.kDriveGearRatio);// 0.025);
-    private DCMotorSim turnMotor = new DCMotorSim(DCMotor.getKrakenX60(1), 1, 0.004/SwerveModuleConstants.kTurningGearRatio);
+    LinearSystem<N2, N1, N2> driveMotorLinearSystem = edu.wpi.first.math.system.plant.LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), .025/SwerveModuleConstants.kDriveGearRatio, 1);
+    LinearSystem<N2, N1, N2> turnMotorLinearSystem = edu.wpi.first.math.system.plant.LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), 0.004/SwerveModuleConstants.kTurningGearRatio, 1);
+
+    private DCMotorSim driveMotor = new DCMotorSim(driveMotorLinearSystem, DCMotor.getKrakenX60(1));
+    private DCMotorSim turnMotor = new DCMotorSim(turnMotorLinearSystem, DCMotor.getKrakenX60(1));
 
     private PIDController drivePIDController; 
     private PIDController turnPIDController; 

@@ -6,6 +6,8 @@ import java.util.List;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -30,8 +32,8 @@ public class PathPlannerAutonCreatorFromPoints {
             pointsAsPose2d.add(modifedPoint);
         }
         pointsAsPose2d.add(realEndPoint);
-
-        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(
+        /* 
+        List<Waypoint> bezierPoints = PathPlannerPath.bezierFromPoses(
                 realStartPoint,
                 realEndPoint
         );
@@ -48,5 +50,9 @@ public class PathPlannerAutonCreatorFromPoints {
         path.preventFlipping = true;
 
         return new PathPlannerFollowPath(path, endPoint.getAutonPoint(), maxTime, driveSubsystem);
+        */
+        return new Command() {
+            
+        };
     }
 }

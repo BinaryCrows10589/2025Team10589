@@ -11,7 +11,6 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -177,7 +176,7 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO{
         this.turnAbsoluteEncoder = new CANcoder(turnAbsoluteEncoderID, SwerveDriveConstants.kCANLoopName);
         CANcoderConfiguration turningAbsoluteEncoderConfig = new CANcoderConfiguration();
         MagnetSensorConfigs magnetConfigs = new MagnetSensorConfigs();
-        magnetConfigs.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
+        magnetConfigs.AbsoluteSensorDiscontinuityPoint = 1;
         magnetConfigs.MagnetOffset = 0.0f;
         magnetConfigs.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
         turningAbsoluteEncoderConfig.MagnetSensor = magnetConfigs;

@@ -4,9 +4,7 @@ import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
+
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -57,7 +55,7 @@ public class DriveSubsystem extends SubsystemBase{
 
         this.poseEstimatorSubsystem = new PoseEstimatorSubsystem(this);
         
-        this.pathPlannerTranslationPIDValueTuner = new NetworkTablesTunablePIDConstants("PathPlanner/TranslationPIDValues",
+        /*this.pathPlannerTranslationPIDValueTuner = new NetworkTablesTunablePIDConstants("PathPlanner/TranslationPIDValues",
             PathPlannerAutonConstants.kTranslationPIDConstants.kP,
             PathPlannerAutonConstants.kTranslationPIDConstants.kI,
             PathPlannerAutonConstants.kTranslationPIDConstants.kD, 0);
@@ -66,7 +64,7 @@ public class DriveSubsystem extends SubsystemBase{
             PathPlannerAutonConstants.kRotationPIDConstants.kP,
             PathPlannerAutonConstants.kRotationPIDConstants.kI,
             PathPlannerAutonConstants.kRotationPIDConstants.kD, 0);
-
+        */
         configurePathPlannerAutoBuilder();
     }
 
@@ -138,6 +136,7 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     public void updatePathPannerPIDValues() {
+        /* 
         double[] currentTranslationPIDValues = this.pathPlannerTranslationPIDValueTuner.getUpdatedPIDConstants();
         if(this.pathPlannerTranslationPIDValueTuner.hasAnyPIDValueChanged()) {
             PathPlannerAutonConstants.kTranslationPIDConstants = new PIDConstants(currentTranslationPIDValues[0], currentTranslationPIDValues[1], currentTranslationPIDValues[2]);
@@ -149,6 +148,7 @@ public class DriveSubsystem extends SubsystemBase{
             PathPlannerAutonConstants.kRotationPIDConstants = new PIDConstants(currentRotationPIDValues[0], currentRotationPIDValues[1], currentRotationPIDValues[2]);
             configurePathPlannerAutoBuilder();
         }
+            */
     }
 
     private void logSwerveDrive() {
@@ -248,7 +248,7 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     private void configurePathPlannerAutoBuilder() {
-        AutoBuilder.configureHolonomic(
+        /*AutoBuilder.configureHolonomic(
             this::getRobotPose, // Robot pose supplier
             this::setRobotPose, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
@@ -263,6 +263,7 @@ public class DriveSubsystem extends SubsystemBase{
             ()->false,
             this // Reference to this subsystem to set requirements
         );
+        */
     }
     
 }

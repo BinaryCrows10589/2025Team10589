@@ -2,8 +2,6 @@ package frc.robot.Subsystems.SwerveDrive.SwerveModule;
 
 import org.littletonrobotics.junction.Logger;
 
-import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;

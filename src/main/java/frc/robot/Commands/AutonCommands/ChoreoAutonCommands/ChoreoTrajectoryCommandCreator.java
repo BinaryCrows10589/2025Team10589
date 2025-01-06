@@ -1,8 +1,5 @@
 package frc.robot.Commands.AutonCommands.ChoreoAutonCommands;
 
-import com.choreo.lib.Choreo;
-import com.choreo.lib.ChoreoTrajectory;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.RobotModeConstants;
@@ -12,7 +9,7 @@ import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 public class ChoreoTrajectoryCommandCreator {
 
     public static Command createChoreoTrajectoryCommand(String choreoTrajectoryFileName, DriveSubsystem driveSubsystem) {
-        String allianceColor = RobotModeConstants.isBlueAlliance ? "" : "_red";
+        /*String allianceColor = RobotModeConstants.isBlueAlliance ? "" : "_red";
         ChoreoTrajectory trajectory = Choreo.getTrajectory(choreoTrajectoryFileName + allianceColor);
         return Choreo.choreoSwerveCommand(trajectory, driveSubsystem::getRobotPose,
             new PIDController(ChoreoAutonConstants.kPTranslationPIDConstant,
@@ -26,5 +23,9 @@ public class ChoreoTrajectoryCommandCreator {
                 ChoreoAutonConstants.kDRotationPIDConstant),
             driveSubsystem::drive, ()->{return false;},
             driveSubsystem);
+            */
+        return new Command() {
+            
+        };
     }
 }

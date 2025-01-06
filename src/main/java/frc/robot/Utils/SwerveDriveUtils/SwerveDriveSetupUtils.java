@@ -8,20 +8,10 @@ import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOPigeon2;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOSim;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIO;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIOSim;
-import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIOSparkMax;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIOTalonFX;
 import frc.robot.Utils.JoystickUtils.ControllerInterface;
 
 public class SwerveDriveSetupUtils {
-    public static DriveSubsystem createSparkMaxSwerve() {
-        return new DriveSubsystem(
-            new SwerveModuleIOSparkMax(SwerveDriveConstants.kFrontLeftModuleName),
-            new SwerveModuleIOSparkMax(SwerveDriveConstants.kFrontRightModuleName),
-            new SwerveModuleIOSparkMax(SwerveDriveConstants.kBackLeftModuleName),
-            new SwerveModuleIOSparkMax(SwerveDriveConstants.kBackRightModuleName),
-            new GyroIOPigeon2());         
-    }
-
     public static DriveSubsystem createTalonFXSwerve() {
         return new DriveSubsystem(
             new SwerveModuleIOTalonFX(SwerveDriveConstants.kFrontLeftModuleName),

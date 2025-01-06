@@ -23,8 +23,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase{
     private OdometryIOInputsAutoLogged odometryInputs = new OdometryIOInputsAutoLogged();
 
 
-    private PhotonCamera exampleCamera = new PhotonCamera("RightCamera");
-    private PhotonPoseEstimator exampleEstimator;
+    private PhotonCamera[] photonCameras = {new PhotonCamera("RightCamera")};
+    private PhotonPoseEstimator[] photonPoseEstimators = new PhotonPoseEstimator[photonCameras.length];
 
     public PoseEstimatorSubsystem(DriveSubsystem driveSubsystem) {
         configPhotonPoseEstimators();
@@ -33,7 +33,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase{
             VisionConstants.kSwerveDrivePoseEstimateTrust, VisionConstants.kVisionPoseEstimateTrust);
         VisionConstants.kAprilTagLayout.setOrigin(VisionConstants.originPosition);
         this.odometryIO = new OdometryIOUpdater(swerveDrivePoseEstimator, 
-        driveSubsystem, exampleEstimator);
+        driveSubsystem, this.photonPoseEstimators, this.photonCameras);
     }
 
     public void periodic() {     
@@ -62,9 +62,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase{
     }
 
     private void configPhotonPoseEstimators() {
-        this.exampleEstimator = new PhotonPoseEstimator(VisionConstants.kAprilTagLayout,
-            PoseStrategy.LOWEST_AMBIGUITY, exampleCamera,
-            VisionConstants.kExampleCameraToRobotCenter);
+        this.photonPoseEstimators[0] = new PhotonPoseEstimator(VisionConstants.kAprilTagLayout, PoseStrategy.LOWEST_AMBIGUITY, VisionConstants.kExampleCameraToRobotCenter);
     }
 
 }

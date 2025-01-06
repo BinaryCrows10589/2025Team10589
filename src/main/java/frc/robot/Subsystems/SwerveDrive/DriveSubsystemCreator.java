@@ -6,7 +6,6 @@ import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOPigeon2;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOSim;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIO;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIOSim;
-import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIOSparkMax;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIOTalonFX;
 
 public class DriveSubsystemCreator {
@@ -14,15 +13,6 @@ public class DriveSubsystemCreator {
 
      public DriveSubsystem getDriveSubsystem() {
         return this.driveSubsystem;
-    }
-
-    public void createSparkMaxSwerve() {
-        this.driveSubsystem = new DriveSubsystem(
-            new SwerveModuleIOSparkMax(SwerveDriveConstants.kFrontLeftModuleName),
-            new SwerveModuleIOSparkMax(SwerveDriveConstants.kFrontRightModuleName),
-            new SwerveModuleIOSparkMax(SwerveDriveConstants.kBackLeftModuleName),
-            new SwerveModuleIOSparkMax(SwerveDriveConstants.kBackRightModuleName),
-            new GyroIOPigeon2());         
     }
 
     public void createTalonFXSwerve() {

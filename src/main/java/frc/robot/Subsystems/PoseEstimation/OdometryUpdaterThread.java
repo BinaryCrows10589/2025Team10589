@@ -2,6 +2,7 @@
 package frc.robot.Subsystems.PoseEstimation;
 
 import org.littletonrobotics.junction.Logger;
+import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -16,12 +17,14 @@ public class OdometryUpdaterThread extends Thread{
     private DriveSubsystem driveSubsystem;
     private SwerveDrivePoseEstimator swerveDrivePoseEstimator;
     private PhotonPoseEstimator[] photonPoseEstimators;
+    private PhotonCamera[] photonCameras;
 
-
-    public OdometryUpdaterThread(SwerveDrivePoseEstimator swerveDrivePoseEstimator, DriveSubsystem driveSubsystem, PhotonPoseEstimator[] photonPoseEstimators) {
+    public OdometryUpdaterThread(SwerveDrivePoseEstimator swerveDrivePoseEstimator, DriveSubsystem driveSubsystem,
+        PhotonPoseEstimator[] photonPoseEstimators, PhotonCamera[] photonCameras) {
         this.swerveDrivePoseEstimator = swerveDrivePoseEstimator;
         this.driveSubsystem = driveSubsystem;
         this.photonPoseEstimators = photonPoseEstimators;
+        this.photonCameras = photonCameras;
         
         Logger.recordOutput("Vision/Updates/VisionUpdatedSuccess", true);
     }
@@ -31,13 +34,13 @@ public class OdometryUpdaterThread extends Thread{
         while(true) {
             if(VisionConstants.updateVision) {
                 try {
-                    for(PhotonPoseEstimator photonPoseEstimator : this.photonPoseEstimators) {
-                        photonPoseEstimator.update().ifPresent(visionReading -> {
+                    for(int i = 0; i < this.photonPoseEstimators.length; i++) {
+                        photonPoseEstimators[i].update(this.photonCameras[i].getLatestResult()).ifPresent(visionReading -> {
                             boolean usedExcludedTag = false;
-                            boolean highPoseAmbiguity = false;;
+                            boolean highPoseAmbiguity = false;
                             for(PhotonTrackedTarget target : visionReading.targetsUsed) {
-                                for(int i = 0; i < VisionConstants.kExcludedTags.length; i++) {
-                                    usedExcludedTag = target.getFiducialId() == VisionConstants.kExcludedTags[i];
+                                for(int j = 0; j < VisionConstants.kExcludedTags.length; j++) {
+                                    usedExcludedTag = target.getFiducialId() == VisionConstants.kExcludedTags[j];
                                     highPoseAmbiguity = target.getPoseAmbiguity() > VisionConstants.kMaxAmbiguity;
                                 }
                                 if(usedExcludedTag || highPoseAmbiguity) {

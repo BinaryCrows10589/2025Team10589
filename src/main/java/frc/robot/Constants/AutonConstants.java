@@ -1,7 +1,5 @@
 package frc.robot.Constants;
 
-import com.pathplanner.lib.util.PIDConstants;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -31,8 +29,8 @@ public final class AutonConstants {
     }
 
     public final class PathPlannerAutonConstants {
-        public static PIDConstants kTranslationPIDConstants = RobotModeConstants.kIsNotSim ? new PIDConstants(2, 0, 0) : new PIDConstants(2, 0, 0);
-        public static PIDConstants kRotationPIDConstants = RobotModeConstants.kIsNotSim ? new PIDConstants(3.5, 0, 0) : new PIDConstants(3.5, 0, 0);
+        //public static PIDConstants kTranslationPIDConstants = RobotModeConstants.kIsNotSim ? new PIDConstants(2, 0, 0) : new PIDConstants(2, 0, 0);
+        //public static PIDConstants kRotationPIDConstants = RobotModeConstants.kIsNotSim ? new PIDConstants(3.5, 0, 0) : new PIDConstants(3.5, 0, 0);
         public static final double kMaxModuleSpeedMetersPerSecond = RobotModeConstants.kIsNotSim ? 3.4 : 4.22;
         public static final double kMaxTranslationalAccelerationInMetersPerSecond = RobotModeConstants.kIsNotSim ? 2.881 : 1.4184;//9.261
         public static final double kMaxRotationalSpeedInDegrees = RobotModeConstants.kIsNotSim ? Math.toDegrees(7.5) : 566.76985;
