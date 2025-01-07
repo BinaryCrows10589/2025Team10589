@@ -6,18 +6,15 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Auton.Autons.RealRobotTestAuton;
-import frc.robot.Auton.Autons.DriveToGameObjectTestAuton;
-import frc.robot.Auton.Autons.ExampleAuton;
+import frc.robot.Auton.Autons.OneCoralAllianceBargeAuton;
+import frc.robot.Auton.Autons.TestAutons.ExampleAuton;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.CommandUtils.CustomWaitCommand;
 
 public class AutonManager {
     // Decloration of auton names
-    private final String exampleAutonName = "ExampleAuton";
-    private final String realRobotTestAutonName = "RealRobotTestAuton";
-    private final String driveToGameObjectTestAutonName = "DriveToGameObjectTestAuton";
+    private final String oneCoralAllianceBargeAuton = "OneCoralAllianceBarge";
 
     // Decloration of auton chooser
     private LoggedDashboardChooser<String> autonChooser;
@@ -31,7 +28,7 @@ public class AutonManager {
         this.autonPointManager = new AutonPointManager();
         this.driveCommandFactory = driveCommandFactory;
         this.driveSubsystem = driveSubsystem;
-        registerAllPathPlannerCommands();
+        //registerAllPathPlannerCommands();
 
         this.autonChooser = new LoggedDashboardChooser<>("AutonChooser");
         addAllAutons();
@@ -39,10 +36,8 @@ public class AutonManager {
     }
 
     private void addAllAutons() {
-        addAuton(exampleAutonName);
-        addAuton(realRobotTestAutonName);
-        addAuton(driveToGameObjectTestAutonName);
-        this.autonChooser.addDefaultOption(realRobotTestAutonName, realRobotTestAutonName);
+        addAuton(oneCoralAllianceBargeAuton);
+        this.autonChooser.addDefaultOption(oneCoralAllianceBargeAuton, oneCoralAllianceBargeAuton);
     }
 
     private void addAuton(String autonName) {
@@ -59,14 +54,8 @@ public class AutonManager {
         Command selectedAuton;
         Logger.recordOutput("Selected Auto", autonChooser.get());
         switch (autonChooser.get()) {
-            case exampleAutonName:
-                selectedAuton = ExampleAuton.getAuton(this.autonPointManager, this.driveCommandFactory, this.driveSubsystem);
-                break;
-            case realRobotTestAutonName:
-                selectedAuton = RealRobotTestAuton.getAuton(this.autonPointManager, this.driveCommandFactory, this.driveSubsystem);
-                break;
-            case driveToGameObjectTestAutonName:
-                selectedAuton = DriveToGameObjectTestAuton.getAuton(this.autonPointManager, this.driveCommandFactory, this.driveSubsystem);
+            case oneCoralAllianceBargeAuton:
+                selectedAuton = OneCoralAllianceBargeAuton.getAuton(autonPointManager, driveCommandFactory, driveSubsystem);
                 break;
             default:
                 selectedAuton = new Command() {};
