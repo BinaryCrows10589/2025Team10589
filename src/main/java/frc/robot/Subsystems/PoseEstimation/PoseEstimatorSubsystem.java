@@ -23,7 +23,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase{
     private OdometryIOInputsAutoLogged odometryInputs = new OdometryIOInputsAutoLogged();
 
 
-    private PhotonCamera[] photonCameras = {new PhotonCamera("RightCamera")};
+    private PhotonCamera[] photonCameras = {new PhotonCamera("FLModuleCam"), new PhotonCamera("BLModuleCam")};
     private PhotonPoseEstimator[] photonPoseEstimators = new PhotonPoseEstimator[photonCameras.length];
 
     public PoseEstimatorSubsystem(DriveSubsystem driveSubsystem) {
@@ -63,6 +63,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase{
 
     private void configPhotonPoseEstimators() {
         this.photonPoseEstimators[0] = new PhotonPoseEstimator(VisionConstants.kAprilTagLayout, PoseStrategy.LOWEST_AMBIGUITY, VisionConstants.kExampleCameraToRobotCenter);
+        this.photonPoseEstimators[1] = new PhotonPoseEstimator(VisionConstants.kAprilTagLayout, PoseStrategy.LOWEST_AMBIGUITY, VisionConstants.kExampleCameraToRobotCenter);
+
     }
 
 }
