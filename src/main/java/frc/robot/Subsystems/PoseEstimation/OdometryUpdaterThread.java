@@ -47,7 +47,7 @@ public class OdometryUpdaterThread extends Thread{
                                         break;
                                 }
                             }
-                            if(visionReading != null && usedExcludedTag && !highPoseAmbiguity) {
+                            if(visionReading != null && !usedExcludedTag && !highPoseAmbiguity) {
                                 Pose2d estimatedPosition = visionReading.estimatedPose.toPose2d();
                                 Pose2d estimatedPositionWithGyroAngle = new Pose2d(estimatedPosition.getTranslation(),
                                     this.driveSubsystem.getGyroAngleRotation2d());
