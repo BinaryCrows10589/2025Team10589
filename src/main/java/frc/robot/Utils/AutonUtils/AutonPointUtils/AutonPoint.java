@@ -70,16 +70,14 @@ public class AutonPoint {
      * Gets the auton point. Auto mirred depending on alliance.
      * @return Pose2d: The auton point which is mirred for the current alliance.
      */
-    public Pose2d getAutonPoint()
-    {   
-        
-        if(!RobotModeConstants.isBlueAlliance && allowMirroring) {
+    public Pose2d getAutonPoint() {   
+        /* if(!RobotModeConstants.isBlueAlliance && allowMirroring) {
             return new Pose2d(this.autonPoint.getX() + fudgeFactor.getRedFudgeFactors().getX(),
                 (FieldConstants.kFieldWidthMeters - this.autonPoint.getY()) +
                 fudgeFactor.getRedFudgeFactors().getY(),
                 Rotation2d.fromDegrees((this.autonPoint.getRotation().getDegrees() +
                 this.fudgeFactor.getRedFudgeFactors().getRotation().getDegrees()) * -1));
-        }
+        } */
 
         return new Pose2d(this.autonPoint.getX() + this.fudgeFactor.getBlueFudgeFactors().getX(),
             this.autonPoint.getY() + this.fudgeFactor.getBlueFudgeFactors().getY(),

@@ -6,7 +6,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Auton.Autons.OneCoralAllianceBargeAuton;
+import frc.robot.Auton.Autons.PlaceOneCoralBStartingOnOwnAliance;
 import frc.robot.Auton.Autons.TestAutons.ExampleAuton;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
@@ -14,18 +14,16 @@ import frc.robot.Utils.CommandUtils.CustomWaitCommand;
 
 public class AutonManager {
     // Decloration of auton names
-    private final String oneCoralAllianceBargeAuton = "OneCoralAllianceBarge";
+    private final String placeOneCoralBStartingOnOwnAlianceAuton = "PlaceOneCoralBStartingOnOwnAliance";
 
     // Decloration of auton chooser
     private LoggedDashboardChooser<String> autonChooser;
 
     // Decloration of all auton dependencies
-    private AutonPointManager autonPointManager;
     private DriveCommandFactory driveCommandFactory;
     private DriveSubsystem driveSubsystem;
 
     public AutonManager(DriveCommandFactory driveCommandFactory, DriveSubsystem driveSubsystem) {
-        this.autonPointManager = new AutonPointManager();
         this.driveCommandFactory = driveCommandFactory;
         this.driveSubsystem = driveSubsystem;
         //registerAllPathPlannerCommands();
@@ -36,8 +34,8 @@ public class AutonManager {
     }
 
     private void addAllAutons() {
-        addAuton(oneCoralAllianceBargeAuton);
-        this.autonChooser.addDefaultOption(oneCoralAllianceBargeAuton, oneCoralAllianceBargeAuton);
+        addAuton(placeOneCoralBStartingOnOwnAlianceAuton);
+        this.autonChooser.addDefaultOption(placeOneCoralBStartingOnOwnAlianceAuton, placeOneCoralBStartingOnOwnAlianceAuton);
     }
 
     private void addAuton(String autonName) {
@@ -54,8 +52,8 @@ public class AutonManager {
         Command selectedAuton;
         Logger.recordOutput("Selected Auto", autonChooser.get());
         switch (autonChooser.get()) {
-            case oneCoralAllianceBargeAuton:
-                selectedAuton = OneCoralAllianceBargeAuton.getAuton(autonPointManager, driveCommandFactory, driveSubsystem);
+            case placeOneCoralBStartingOnOwnAlianceAuton:
+                selectedAuton = PlaceOneCoralBStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
                 break;
             default:
                 selectedAuton = new Command() {};

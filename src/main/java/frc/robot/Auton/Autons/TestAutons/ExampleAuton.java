@@ -2,20 +2,8 @@ package frc.robot.Auton.Autons.TestAutons;
 
 import java.util.ArrayList;
 
-import com.pathplanner.lib.commands.PathPlannerAuto;
-
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
-import frc.robot.Commands.AutonCommands.ChoreoAutonCommands.ChoreoTrajectoryCommandCreator;
-import frc.robot.Commands.AutonCommands.PIDPositioningAutonCommands.PIDGoToPose;
-import frc.robot.Commands.AutonCommands.PIDPositioningAutonCommands.PIDGoToPoseAfterTime;
-import frc.robot.Commands.AutonCommands.PathplannerAutonCommands.PathPlannerAutonCreatorFromFile;
-import frc.robot.Commands.AutonCommands.PathplannerAutonCommands.PathPlannerAutonCreatorFromPoints;
-import frc.robot.Commands.AutonCommands.PathplannerAutonCommands.PathPlannerFollowPath;
-import frc.robot.Constants.AutonConstants.WPILibAutonConstants;
-import frc.robot.Deprecated.WPILibTrajectoryCommandCreator;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
