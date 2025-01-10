@@ -199,8 +199,8 @@ public class WPILibFollowTrajectoryFromPointsCommand extends Command{
         double maxTranslationalAccelerationInMPS) {
         ArrayList<Pose2d> mirroredPoints = new ArrayList<>();
         for(int i = 0; i < points.length; i++) {
-            Pose2d mirroredPoint = points[i].getAutonPoint();
-            Pose2d modifedPoint = new Pose2d(mirroredPoint.getTranslation(), new Rotation2d());
+            //Pose2d mirroredPoint = points[i].getAutonPoint();
+            Pose2d modifedPoint = points[i].getWPILibAutonPoint();
             mirroredPoints.add(modifedPoint);
         }
         this.desiredEndPoint = points[points.length-1].getAutonPoint();

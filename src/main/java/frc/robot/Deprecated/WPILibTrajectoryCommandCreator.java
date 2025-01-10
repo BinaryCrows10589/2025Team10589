@@ -102,7 +102,7 @@ public class WPILibTrajectoryCommandCreator extends Command{
         this.autonName = autonName;
         
         intitalConfig(wpilibTrajectoryConfig.translationPIDValues,
-            wpilibTrajectoryConfig.rotaitonPIDValues, 
+            wpilibTrajectoryConfig.rotationPIDValues, 
             wpilibTrajectoryConfig.maxRotationSpeedRadsPerSecond,
             wpilibTrajectoryConfig.maxRotationAccelerationRadsPerSecond);
 
@@ -119,7 +119,7 @@ public class WPILibTrajectoryCommandCreator extends Command{
         this.driveSubsystem = driveSubsystem;
         this.autonName = autonName;
         intitalConfig(wpilibTrajectoryConfig.translationPIDValues,
-            wpilibTrajectoryConfig.rotaitonPIDValues, 
+            wpilibTrajectoryConfig.rotationPIDValues, 
             wpilibTrajectoryConfig.maxRotationSpeedRadsPerSecond,
             wpilibTrajectoryConfig.maxRotationAccelerationRadsPerSecond);
         

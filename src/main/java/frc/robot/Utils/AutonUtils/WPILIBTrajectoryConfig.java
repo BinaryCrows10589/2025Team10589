@@ -4,7 +4,7 @@ import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
 
 public class WPILIBTrajectoryConfig {
     public double[] translationPIDValues;
-    public double[] rotaitonPIDValues;
+    public double[] rotationPIDValues;
     public double maxTranslationSpeedMPS;
     public double maxTranslationAccelerationMPS;
     public double maxRotationSpeedRadsPerSecond;
@@ -18,7 +18,7 @@ public class WPILIBTrajectoryConfig {
         double maxRotationAccelerationRadsPerSecond) {
         
         this.translationPIDValues = translationPIDValues;
-        this.rotaitonPIDValues = rotaitonPIDValues;
+        this.rotationPIDValues = rotaitonPIDValues;
         this.maxTranslationSpeedMPS = maxTranslationSpeedMPS;
         this.maxTranslationAccelerationMPS = maxTranslationAccelerationMPS;
         this.maxRotationSpeedRadsPerSecond = maxRotationSpeedRadsPerSecond;
