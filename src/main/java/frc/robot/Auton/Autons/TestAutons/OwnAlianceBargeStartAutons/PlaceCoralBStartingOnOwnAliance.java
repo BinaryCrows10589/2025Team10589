@@ -1,4 +1,4 @@
-package frc.robot.Auton.Autons;
+package frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
-public class PlaceOneCoralBStartingOnOwnAliance {
+public class PlaceCoralBStartingOnOwnAliance {
     public static Command getAuton(DriveCommandFactory driveCommandFactory, DriveSubsystem driveSubsystem) {
         driveSubsystem.setRobotPose(AutonPointManager.kOwnAllianceBargeStartPosition);
         
