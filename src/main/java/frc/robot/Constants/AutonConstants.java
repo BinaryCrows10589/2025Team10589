@@ -40,7 +40,7 @@ public final class AutonConstants {
     }
 
     public final class WPILibAutonConstants {
-        public static double kPTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 3;
+        public static double kPTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : .5;
         public static double kITranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
         public static double kDTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
         public static final double kMaxTranslationalSpeedInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.4 : 4.129;

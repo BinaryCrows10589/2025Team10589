@@ -7,6 +7,9 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Auton.Autons.TestAutons.ExampleAuton;
+import frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndEStartingOnOwnAlianceAuton;
+import frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton;
+import frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons.PlaceCoralBAndDStartingOnOwnAliance;
 import frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons.PlaceCoralBAndHumanPlayerStartingOnOwnAliance;
 import frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons.PlaceCoralBStartingOnOwnAliance;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
@@ -17,6 +20,9 @@ public class AutonManager {
     // Decloration of auton names
     private final String placeCoralBStartingOnOwnAlianceAuton = "PlaceCoralBStartingOnOwnAliance";
     private final String placeCoralBAndHumanPlayerStartingOnOwnAlianceAuton = "PlaceCoralBAndHumanPlayerStartingOnOwnAliance";
+    private final String placeCoralBAndDStartingOnOwnAlianceAuton = "PlaceCoralBAndDStartingOnOwnAliance";
+    private final String placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton = "PlaceCoralBAndDAndHumanPlayerStartingOnOwnAliance";
+    private final String placeCoralBAndDAndEStartingOnOwnAlianceAuton = "PlaceCoralBAndDAndEStartingOnOwnAliance";
 
     // Decloration of auton chooser
     private LoggedDashboardChooser<String> autonChooser;
@@ -38,7 +44,11 @@ public class AutonManager {
     private void addAllAutons() {
         addAuton(placeCoralBStartingOnOwnAlianceAuton);
         addAuton(placeCoralBAndHumanPlayerStartingOnOwnAlianceAuton);
-        this.autonChooser.addDefaultOption(placeCoralBStartingOnOwnAlianceAuton, placeCoralBStartingOnOwnAlianceAuton);
+        addAuton(placeCoralBAndDStartingOnOwnAlianceAuton);
+        addAuton(placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton);
+        addAuton(placeCoralBAndDAndEStartingOnOwnAlianceAuton);
+        this.autonChooser.addDefaultOption(placeCoralBAndDAndEStartingOnOwnAlianceAuton,
+        placeCoralBAndDAndEStartingOnOwnAlianceAuton );
     }
 
     private void addAuton(String autonName) {
@@ -60,6 +70,15 @@ public class AutonManager {
                 break;
             case placeCoralBAndHumanPlayerStartingOnOwnAlianceAuton:
                 selectedAuton = PlaceCoralBAndHumanPlayerStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
+                break;
+            case placeCoralBAndDStartingOnOwnAlianceAuton:
+                selectedAuton = PlaceCoralBAndDStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
+                break;
+            case placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton:
+                selectedAuton = PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton.getAuton(driveCommandFactory, driveSubsystem);
+                break;
+            case placeCoralBAndDAndEStartingOnOwnAlianceAuton:
+                selectedAuton = PlaceCoralBAndDAndEStartingOnOwnAlianceAuton.getAuton(driveCommandFactory, driveSubsystem);
                 break;
             default:
                 selectedAuton = new Command() {};

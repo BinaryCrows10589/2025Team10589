@@ -10,15 +10,15 @@ import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
-public class PlaceCoralBAndHumanPlayerStartingOnOwnAliance {
+public class PlaceCoralBAndDAndEStartingOnOwnAlianceAuton {
     public static Command getAuton(DriveCommandFactory driveCommandFactory, DriveSubsystem driveSubsystem) {
         driveSubsystem.setRobotPose(AutonPointManager.kOwnAllianceBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         
-        autonCommands.add(PlaceCoralBStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem));
-        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("PlaceOnCoralBToHumanPlayer",
-        AutonPointManager.kPlaceOnCoralBToHumanPlayer,
+        autonCommands.add(PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton.getAuton(driveCommandFactory, driveSubsystem));
+        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralE",
+        AutonPointManager.kHumanPlayerToCoralE,
         5, driveSubsystem));
         
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
