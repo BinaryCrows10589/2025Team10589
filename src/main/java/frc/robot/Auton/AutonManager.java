@@ -6,12 +6,13 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Auton.Autons.CenterBargeStartAutons.PlaceCoralLStartingCenterBarge;
+import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndEStartingOnOwnAlianceAuton;
+import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton;
+import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDStartingOnOwnAliance;
+import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndHumanPlayerStartingOnOwnAliance;
+import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBStartingOnOwnAliance;
 import frc.robot.Auton.Autons.TestAutons.ExampleAuton;
-import frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndEStartingOnOwnAlianceAuton;
-import frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton;
-import frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons.PlaceCoralBAndDStartingOnOwnAliance;
-import frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons.PlaceCoralBAndHumanPlayerStartingOnOwnAliance;
-import frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons.PlaceCoralBStartingOnOwnAliance;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.CommandUtils.CustomWaitCommand;
@@ -23,6 +24,7 @@ public class AutonManager {
     private final String placeCoralBAndDStartingOnOwnAlianceAuton = "PlaceCoralBAndDStartingOnOwnAliance";
     private final String placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton = "PlaceCoralBAndDAndHumanPlayerStartingOnOwnAliance";
     private final String placeCoralBAndDAndEStartingOnOwnAlianceAuton = "PlaceCoralBAndDAndEStartingOnOwnAliance";
+    private final String placeCoralLStartingCenterBarge = "CenterBargeStartPositionToPlaceOnCoralL";
 
     // Decloration of auton chooser
     private LoggedDashboardChooser<String> autonChooser;
@@ -47,8 +49,9 @@ public class AutonManager {
         addAuton(placeCoralBAndDStartingOnOwnAlianceAuton);
         addAuton(placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton);
         addAuton(placeCoralBAndDAndEStartingOnOwnAlianceAuton);
-        this.autonChooser.addDefaultOption(placeCoralBAndDAndEStartingOnOwnAlianceAuton,
-        placeCoralBAndDAndEStartingOnOwnAlianceAuton );
+        addAuton(placeCoralLStartingCenterBarge);
+        this.autonChooser.addDefaultOption(placeCoralBStartingOnOwnAlianceAuton,
+        placeCoralBStartingOnOwnAlianceAuton);
     }
 
     private void addAuton(String autonName) {
@@ -79,6 +82,9 @@ public class AutonManager {
                 break;
             case placeCoralBAndDAndEStartingOnOwnAlianceAuton:
                 selectedAuton = PlaceCoralBAndDAndEStartingOnOwnAlianceAuton.getAuton(driveCommandFactory, driveSubsystem);
+                break;
+            case placeCoralLStartingCenterBarge:
+                selectedAuton = PlaceCoralLStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem);
                 break;
             default:
                 selectedAuton = new Command() {};

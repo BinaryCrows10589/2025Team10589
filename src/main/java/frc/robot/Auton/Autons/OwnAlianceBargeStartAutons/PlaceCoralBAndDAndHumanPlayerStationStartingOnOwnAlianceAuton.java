@@ -1,4 +1,4 @@
-package frc.robot.Auton.Autons.TestAutons.OwnAlianceBargeStartAutons;
+package frc.robot.Auton.Autons.OwnAlianceBargeStartAutons;
 
 import java.util.ArrayList;
 
@@ -11,15 +11,15 @@ import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
-public class PlaceCoralBAndDStartingOnOwnAliance {
+public class PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton {
     public static Command getAuton(DriveCommandFactory driveCommandFactory, DriveSubsystem driveSubsystem) {
         driveSubsystem.setRobotPose(AutonPointManager.kOwnAllianceBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         
-        autonCommands.add(PlaceCoralBAndHumanPlayerStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem));
-        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralD",
-        AutonPointManager.kHumanPlayerToCoralD,
+        autonCommands.add(PlaceCoralBAndDStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem));
+        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CoralDToHumanPlayer",
+        AutonPointManager.kCoralDToHumanPlayer,
         5,
         new double[] {.5, 0, 0},
         new double[] {.5, 0, 0},
@@ -30,8 +30,7 @@ public class PlaceCoralBAndDStartingOnOwnAliance {
         WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
-        // Add Coral Placment Command
-
+        
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;
     } 
