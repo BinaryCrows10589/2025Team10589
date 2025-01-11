@@ -44,13 +44,13 @@ public final class AutonConstants {
         public static double kITranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
         public static double kDTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
         public static final double kMaxTranslationalSpeedInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.4 : 4.129;
-        public static final double kMaxTranslationalAccelerationInMetersPerSecond = RobotModeConstants.kIsNotSim ? 2.881 : 5.129;
+        public static final double kMaxTranslationalAccelerationInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.45 : 5.129;
 
         public static double kPRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : .59;
         public static double kIRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
         public static double kDRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
-        public static final double kMaxRotationalSpeedInRadsPerSecond = RobotModeConstants.kIsNotSim ? 7.5 : 9.89199998351;
-        public static final double kMaxRotationalAccelerationInRadsPerSecond = RobotModeConstants.kIsNotSim ? 9.146 : 12.928;
+        public static final double kMaxRotationalSpeedInRadsPerSecond = RobotModeConstants.kIsNotSim ? 10.2 : 9.89199998351;
+        public static final double kMaxRotationalAccelerationInRadsPerSecond = RobotModeConstants.kIsNotSim ? 14.2 : 12.928;
         public static final TrapezoidProfile.Constraints kRotationPIDControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxRotationalSpeedInRadsPerSecond, kMaxRotationalAccelerationInRadsPerSecond);
 

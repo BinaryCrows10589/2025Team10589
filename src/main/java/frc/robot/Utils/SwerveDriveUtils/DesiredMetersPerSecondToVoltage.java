@@ -7,24 +7,24 @@ package frc.robot.Utils.SwerveDriveUtils;
  */
 public class DesiredMetersPerSecondToVoltage {
     
-    public static final double minSpeedMPS = 0.1679;
+    public static final double minSpeedMPS = 0.129641;
+    public static final double correctionFactor = 0.01;
     //public static final double maxSpeedMPS = 4.37175;
 
     public static final double voltageAtMinSpeed = 0;
     //public static final double voltageAtMaxSpeed = 12.12027;
 
     public static double metersPerSecondToVoltageRegression(double mps) {
-        return Math.abs(2.734 * mps + 0.1679);
+        return Math.abs(2.61031 * mps + minSpeedMPS - correctionFactor);
     }
-
     public static double metersPerSecondToVoltage(double desiredMetersPerSecond) {
 
         return Math.signum(desiredMetersPerSecond) * ( // Apply correct velocity direction. This is needed since the function is not even.
-            (Math.abs(desiredMetersPerSecond) < minSpeedMPS) ? // If speed is less than the minimum (governed by static friction)...
+            (Math.abs(desiredMetersPerSecond) == 0) ? // If speed is less than the minimum (governed by static friction)...
             voltageAtMinSpeed : // ...return voltage at minimum speed
             /*(desiredMetersPerSecond > maxSpeedMPS) ? // If speed is greater than the maximum (governed by motor quality)...
             voltageAtMaxSpeed : // ..return voltage at maximum speed */
-            metersPerSecondToVoltageRegression(desiredMetersPerSecond) // Return the result of our regression line
+            metersPerSecondToVoltageRegression(Math.abs(desiredMetersPerSecond)) // Return the result of our regression line
         );
     }
 }

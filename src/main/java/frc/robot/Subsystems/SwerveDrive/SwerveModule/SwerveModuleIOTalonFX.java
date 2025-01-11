@@ -157,7 +157,7 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO{
         turnPIDConfig.kD = SwerveModuleConstants.kDModuleTurnPIDValue;
         turnPIDConfig.kS = SwerveModuleConstants.kFFModuleTurnPIDValue;  
 
-        this.driveMotor.getConfigurator().apply(turnPIDConfig);
+        this.turnMotor.getConfigurator().apply(turnPIDConfig);
 
         this.turnMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("SwerveModule/TurnPIDValues",
             SwerveModuleConstants.kPModuleTurnPIDValue,

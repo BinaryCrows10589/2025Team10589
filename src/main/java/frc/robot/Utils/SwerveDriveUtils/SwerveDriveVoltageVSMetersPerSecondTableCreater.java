@@ -4,8 +4,10 @@ import java.util.function.Consumer;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+
 import org.littletonrobotics.junction.Logger;
 
+import frc.robot.Constants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Utils.CommandUtils.Wait;
 
 public class SwerveDriveVoltageVSMetersPerSecondTableCreater {
@@ -16,11 +18,8 @@ public class SwerveDriveVoltageVSMetersPerSecondTableCreater {
     private int currentIndex = 0;
     private boolean finished = false;
 
-    private String table;
-
     public void createVoltageVSMetersPerSecondTable(String moduleName, double maxVolts, double voltageSpacing,
         double timeBetweenVoltChecks, double moduleSpeedMetersPerSecond, Consumer<Double> setVoltageMethod) {
-        table = "VoltageVSMPS";
         if(voltageVSMetersPerSecondTable == null) {
             int rowsInTable = (int)(maxVolts / voltageSpacing);
             voltageVSMetersPerSecondTable = new double[2][rowsInTable];
@@ -41,17 +40,19 @@ public class SwerveDriveVoltageVSMetersPerSecondTableCreater {
                 if(!finished)
                     logTable(moduleName);
             }
-        }    
-        System.out.println(table);       
+        }  
     }
 
     private void logTable(String moduleName) {
-        finished = true;
-        String tableInCSVFormat = moduleName +" VoltageVSMetersPerSecondData:\n";
-        for(int i = 0; i < voltageVSMetersPerSecondTable[0].length; i++) {
-            table = table.concat("\n" + voltageVSMetersPerSecondTable[0][i] + ", " + voltageVSMetersPerSecondTable[1][i]);
+        this.finished = true;
+        if(!moduleName.equals(SwerveDriveConstants.kFrontLeftModuleName)) {
+            return;
         }
-        System.out.println(tableInCSVFormat);
+        String table = "VoltageVSMPS";
+        for(int i = 0; i < voltageVSMetersPerSecondTable[0].length; i++) {
+            table +=  ":" + (voltageVSMetersPerSecondTable[1][i] + ", " + voltageVSMetersPerSecondTable[0][i]);
+        }
+        System.out.println(table);
         //Logger.recordOutput(moduleName + " VoltageVSMPSTable: ", voltageVSMetersPerSecondTable[0][0]);
     }
 }

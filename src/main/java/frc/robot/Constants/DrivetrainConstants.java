@@ -21,7 +21,7 @@ public final class DrivetrainConstants {
         public static final double kDriveFeedForward = 0.04;
 
         // Name of the CAN Bus the Swerve Drive is on.
-        public static final String kCANLoopName = "rio"; // To swich to CANivor set the CANLoopName to the CANivors serial number or name
+        public static final String kCANLoopName = "SwerveDrive"; // To swich to CANivor set the CANLoopName to the CANivors serial number or name
 
         // Swerve Module Configuration Constants
         public static final String kFrontLeftModuleName = "FrontLeftModule";
@@ -114,7 +114,7 @@ public final class DrivetrainConstants {
         public static final double kDriveMotorMinPercentOutput = -1;
         public static final double kDriveMotorMaxPercentOutput = 1;
 
-        public static final double kPModuleTurnPIDValue = .25;
+        public static final double kPModuleTurnPIDValue = .24472;
         public static final double kIModuleTurnPIDValue = 0;
         public static final double kDModuleTurnPIDValue = 0;
         public static final double kFFModuleTurnPIDValue = 0;
@@ -131,13 +131,13 @@ public final class DrivetrainConstants {
         public static final int kDriveMotorMaxAmpsSparkMax = 40;
         public static final int kTurnMotorMaxAmpsSparkMax = 5;
         
-        public static final int kDriveMotorMaxVoltageSparkMaxTalonFX = 12;
+        public static final int kDriveMotorMaxVoltageSparkMaxTalonFX = 13;
 
         //TODO: This can definetly be lowered
         public static final int kTurnMotorMaxVoltageSparkMaxTalonFX = 2; 
 
         // Swerve Module Configuration Values
-        public static final double kWheelDiameterMeters = Units.inchesToMeters(3.9064);//Units.inchesToMeters(3.733428923);// 3.83931974016;
+        public static final double kWheelDiameterMeters = Units.inchesToMeters(3.86060506);//Units.inchesToMeters(3.733428923);// 3.83931974016;
         public static final double kDriveGearRatio = 7.125;//7.125;// 6.75/1.0;
         public static final double kTurningGearRatio = 12.8/1;
 

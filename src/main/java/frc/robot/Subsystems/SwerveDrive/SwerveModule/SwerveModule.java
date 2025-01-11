@@ -72,8 +72,8 @@ public class SwerveModule {
          
         //double desiredRPM = optimizedState.speedMetersPerSecond / SwerveModuleConstants.kDriveConversionVelocityFactor;
         //this.swerveModuleIO.setDesiredModuleVelocityRPM(desiredRPM);
-        this.swerveModuleIO.setDesiredModuleDriveVoltage(metersPerSecondToVoltage(optimizedState.speedMetersPerSecond));
-        //this.swerveModuleIO.setDesiredModuleDriveVoltage(DesiredMetersPerSecondToVoltage.metersPerSecondToVoltage(optimizedState.speedMetersPerSecond));//metersPerSecondToVoltage(optimizedState.speedMetersPerSecond));
+        //this.swerveModuleIO.setDesiredModuleDriveVoltage(metersPerSecondToVoltage(optimizedState.speedMetersPerSecond));
+        this.swerveModuleIO.setDesiredModuleDriveVoltage(DesiredMetersPerSecondToVoltage.metersPerSecondToVoltage(optimizedState.speedMetersPerSecond));//metersPerSecondToVoltage(optimizedState.speedMetersPerSecond));
         this.swerveModuleIO.setDesiredModuleAngle(optimizedState.angle);
     }
 

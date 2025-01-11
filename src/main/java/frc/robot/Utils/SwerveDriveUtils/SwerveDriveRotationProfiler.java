@@ -42,7 +42,7 @@ public class SwerveDriveRotationProfiler extends Command{
 
     @Override
     public boolean isFinished() {
-        this.finishedBasedOnSpeed = this.driveSubsystem.getChassisSpeeds().omegaRadiansPerSecond >= (this.maxRotationRadsPerSecond);
+        this.finishedBasedOnSpeed = this.driveSubsystem.getChassisSpeeds().omegaRadiansPerSecond >= (this.maxRotationRadsPerSecond-.3);
         return this.finishedBasedOnSpeed;
     }
 }

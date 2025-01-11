@@ -42,7 +42,7 @@ public class SwerveDriveTranslationProfiler extends Command{
 
     @Override
     public boolean isFinished() {
-        this.finishedBasedOnSpeed = this.driveSubsystem.getChassisSpeeds().vxMetersPerSecond >= (this.maxTranslationMPS-.02);
+        this.finishedBasedOnSpeed = this.driveSubsystem.getChassisSpeeds().vxMetersPerSecond >= (this.maxTranslationMPS-.2);
         return this.finishedBasedOnSpeed;
     } 
 }
