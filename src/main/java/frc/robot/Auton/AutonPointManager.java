@@ -3,6 +3,7 @@ package frc.robot.Auton;
 import edu.wpi.first.math.geometry.Pose2d;
 import frc.robot.Utils.AutonUtils.WPILIBTrajectoryConfig;
 import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
+import frc.robot.Constants.FieldConstants;
 
 public class AutonPointManager {
 
@@ -26,14 +27,14 @@ public class AutonPointManager {
     public static final AutonPoint kPlaceOnCoralL = new AutonPoint(5.82, 3.85, 0, 180, false);
     public static final AutonPoint kPlaceOnCoralA = new AutonPoint(5.82, 4.20, 0, 180, false);
     // Points For Other Alliance
-    public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.250, 8.0772-5.020, 300, 180, false);
-    public static final AutonPoint kLeaveFromPlaceOnCoralK = new AutonPoint(5.250, 8.0772-5.020, 300, -155, false);
-    public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.600, 8.0772-7.35, 324, -180, false);
-    public static final AutonPoint kLeaveFromOtherAllianceHumanPlayer = new AutonPoint(1.600, 8.0772-7.35, 324, -0, false);
-    public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.95, 8.0772-5.23, 240, -310, false);
-    public static final AutonPoint kLeaveFromPlaceOnCoralI = new AutonPoint(3.95, 8.0772-5.23, 240, -130, false);
-    public static final AutonPoint kPlaceOnCoralH = new AutonPoint(3.65, 8.0772-5.07, 240, -310, false);
-
+    public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.250, FieldConstants.kFieldWidthMeters-5.020, 300, 180, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralK = new AutonPoint(5.250, FieldConstants.kFieldWidthMeters-5.020, 300, -155, false);
+    public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.600, FieldConstants.kFieldWidthMeters-7.35, 324, -180, false);
+    public static final AutonPoint kLeaveFromOtherAllianceHumanPlayer = new AutonPoint(1.600, FieldConstants.kFieldWidthMeters-7.35, 324, -0, false);
+    public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.95, FieldConstants.kFieldWidthMeters-5.23, 240, -310, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralI = new AutonPoint(3.95, FieldConstants.kFieldWidthMeters-5.23, 240, -130, false);
+    public static final AutonPoint kPlaceOnCoralH = new AutonPoint(3.65, FieldConstants.kFieldWidthMeters-5.07, 240, -310, false);
+    
     // Decloration of Path Points
 
     // Path Points for Own Alliance
