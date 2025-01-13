@@ -6,9 +6,15 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Auton.Autons.CenterBargeStartAutons.PlaceCoralAStartingCenterBarge;
 import frc.robot.Auton.Autons.CenterBargeStartAutons.PlaceCoralLStartingCenterBarge;
-import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndEStartingOnOwnAlianceAuton;
-import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton;
+import frc.robot.Auton.Autons.OtherAlianceBargeStartAutons.PlaceCoralKAndHumanPlayerStartingOnOtherAliance;
+import frc.robot.Auton.Autons.OtherAlianceBargeStartAutons.PlaceCoralKAndIAndHStartingOnOtherAliance;
+import frc.robot.Auton.Autons.OtherAlianceBargeStartAutons.PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance;
+import frc.robot.Auton.Autons.OtherAlianceBargeStartAutons.PlaceCoralKAndIStartingOnOtherAliance;
+import frc.robot.Auton.Autons.OtherAlianceBargeStartAutons.PlaceCoralKStartingOnOtherAliance;
+import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndEStartingOnOwnAliance;
+import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance;
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDStartingOnOwnAliance;
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndHumanPlayerStartingOnOwnAliance;
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBStartingOnOwnAliance;
@@ -24,7 +30,15 @@ public class AutonManager {
     private final String placeCoralBAndDStartingOnOwnAlianceAuton = "PlaceCoralBAndDStartingOnOwnAliance";
     private final String placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton = "PlaceCoralBAndDAndHumanPlayerStartingOnOwnAliance";
     private final String placeCoralBAndDAndEStartingOnOwnAlianceAuton = "PlaceCoralBAndDAndEStartingOnOwnAliance";
+
+    private final String placeCoralAStartingCenterBarge = "CenterBargeStartPositionToPlaceOnCoralA";
     private final String placeCoralLStartingCenterBarge = "CenterBargeStartPositionToPlaceOnCoralL";
+    
+    private final String placeCoralKStartingOnOtherAlianceAuton = "PlaceCoralKStartingOnOtherAliance";
+    private final String placeCoralKAndHumanPlayerStartingOnOtherAlianceAuton = "PlaceCoralKAndHumanPlayerStartingOnOtherAliance";
+    private final String placeCoralKAndIStartingOnOtherAlianceAuton = "PlaceCoralKAndIStartingOnOtherAliance";
+    private final String placeCoralKAndIAndHumanPlayerStationStartingOnOtherAlianceAuton = "PlaceCoralKAndIAndHumanPlayerStartingOnOtherAliance";
+    private final String placeCoralKAndIAndHStartingOnOtherAlianceAuton = "PlaceCoralKAndIAndHStartingOnOtherAliance";
 
     // Decloration of auton chooser
     private LoggedDashboardChooser<String> autonChooser;
@@ -49,9 +63,18 @@ public class AutonManager {
         addAuton(placeCoralBAndDStartingOnOwnAlianceAuton);
         addAuton(placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton);
         addAuton(placeCoralBAndDAndEStartingOnOwnAlianceAuton);
+
+        addAuton(placeCoralAStartingCenterBarge);
         addAuton(placeCoralLStartingCenterBarge);
-        this.autonChooser.addDefaultOption(placeCoralBStartingOnOwnAlianceAuton,
-        placeCoralBStartingOnOwnAlianceAuton);
+
+        addAuton(placeCoralKStartingOnOtherAlianceAuton);
+        addAuton(placeCoralKAndHumanPlayerStartingOnOtherAlianceAuton);
+        addAuton(placeCoralKAndIStartingOnOtherAlianceAuton);
+        addAuton(placeCoralKAndIAndHumanPlayerStationStartingOnOtherAlianceAuton);
+        addAuton(placeCoralKAndIAndHStartingOnOtherAlianceAuton);
+        
+        this.autonChooser.addDefaultOption(placeCoralKAndIAndHStartingOnOtherAlianceAuton,
+        placeCoralKAndIAndHStartingOnOtherAlianceAuton);
     }
 
     private void addAuton(String autonName) {
@@ -78,13 +101,31 @@ public class AutonManager {
                 selectedAuton = PlaceCoralBAndDStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
                 break;
             case placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
                 break;
             case placeCoralBAndDAndEStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBAndDAndEStartingOnOwnAlianceAuton.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralBAndDAndEStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
                 break;
             case placeCoralLStartingCenterBarge:
                 selectedAuton = PlaceCoralLStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem);
+                break;
+            case placeCoralKStartingOnOtherAlianceAuton:
+                selectedAuton = PlaceCoralKStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem);
+                break;
+            case placeCoralKAndHumanPlayerStartingOnOtherAlianceAuton:
+                selectedAuton = PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem);
+                break;
+            case placeCoralKAndIStartingOnOtherAlianceAuton:
+                selectedAuton = PlaceCoralKAndIStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem);
+                break;
+            case placeCoralKAndIAndHumanPlayerStationStartingOnOtherAlianceAuton:
+                selectedAuton = PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem);
+                break;
+            case placeCoralKAndIAndHStartingOnOtherAlianceAuton:
+                selectedAuton = PlaceCoralKAndIAndHStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem);
+                break;
+            case placeCoralAStartingCenterBarge:
+                selectedAuton = PlaceCoralAStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem);
                 break;
             default:
                 selectedAuton = new Command() {};

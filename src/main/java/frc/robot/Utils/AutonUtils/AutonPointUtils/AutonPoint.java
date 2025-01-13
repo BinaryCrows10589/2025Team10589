@@ -1,7 +1,10 @@
 package frc.robot.Utils.AutonUtils.AutonPointUtils;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.RobotModeConstants;
 
@@ -127,16 +130,17 @@ public class AutonPoint {
      * Gets the auton point, auto mirrored depending on alliance.
      * @return Pose2d: The auton point which is mirrored for the current alliance.
      */
-    public Pose2d getAutonPoint() {   
-        // Mirroring is disabled for the season
-        /* if(!RobotModeConstants.isBlueAlliance && allowMirroring) {
+    public Pose2d getAutonPoint() { 
+        /* 
+        if(!RobotModeConstants.isBlueAlliance && allowMirroring) {
             return new Pose2d(this.autonPoint.getX() + fudgeFactor.getRedFudgeFactors().getX(),
                 (FieldConstants.kFieldWidthMeters - this.autonPoint.getY()) +
                 fudgeFactor.getRedFudgeFactors().getY(),
                 Rotation2d.fromDegrees((this.autonPoint.getRotation().getDegrees() +
                 this.fudgeFactor.getRedFudgeFactors().getRotation().getDegrees()) * -1));
-        } */
-
+        }
+        */  
+        //double yOffset = RobotModeConstants.isBlueAlliance ? 0 : -0.0508;
         return new Pose2d(this.autonPoint.getX() + this.fudgeFactor.getAllianceFudgeFactors().getX(),
             this.autonPoint.getY() + this.fudgeFactor.getAllianceFudgeFactors().getY(),
                 Rotation2d.fromDegrees((this.autonPoint.getRotation().getDegrees() +
@@ -149,6 +153,8 @@ public class AutonPoint {
      * @return Pose2d: The auton point
      */
     public Pose2d getWPILibAutonPoint() {
+        //double yOffset = RobotModeConstants.isBlueAlliance ? 0 : -0.0508;
+        //Logger.recordOutput("AutonPointYOffset", yOffset);
         return new Pose2d(
             this.autonPoint.getX() + this.fudgeFactor.getAllianceFudgeFactors().getX(),
             this.autonPoint.getY() + this.fudgeFactor.getAllianceFudgeFactors().getY(),
@@ -179,7 +185,7 @@ public class AutonPoint {
                 Rotation2d.fromDegrees((this.autonPoint.getRotation().getDegrees() +
                 this.fudgeFactor.getRedFudgeFactors().getRotation().getDegrees()) * -1));
         }*/
-
+        //double yOffset = RobotModeConstants.isBlueAlliance ? 0 : -0.0508;
         return new Pose2d(this.autonPoint.getX() + this.fudgeFactor.getAllianceFudgeFactors().getX(),
             this.autonPoint.getY() + this.fudgeFactor.getAllianceFudgeFactors().getY(),
                 Rotation2d.fromDegrees((this.autonPoint.getRotation().getDegrees() +

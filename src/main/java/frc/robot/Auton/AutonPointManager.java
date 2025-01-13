@@ -8,7 +8,7 @@ public class AutonPointManager {
 
     // Robot start positions
     public static final AutonPoint kOwnAllianceBargeStartPosition =  new AutonPoint(7.15, 5.22, 60, 180, false);
-    public static final AutonPoint kCenterBargeStartPosition =  new AutonPoint(7.135, 3.85, 0, 180, false);
+    public static final AutonPoint kCenterBargeStartPosition =  new AutonPoint(7.135, 4.0386, 0, 180, false);
     public static final AutonPoint kOtherAllianceBargeStartPosition = new AutonPoint(7.15, 2.830, 300, 180, false);
 
     // Deloration of Points
@@ -24,8 +24,15 @@ public class AutonPointManager {
 
     // Points For Center Position
     public static final AutonPoint kPlaceOnCoralL = new AutonPoint(5.82, 3.85, 0, 180, false);
+    public static final AutonPoint kPlaceOnCoralA = new AutonPoint(5.82, 4.20, 0, 180, false);
     // Points For Other Alliance
-
+    public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.250, 8.0772-5.020, 300, 180, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralK = new AutonPoint(5.250, 8.0772-5.020, 300, -155, false);
+    public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.600, 8.0772-7.35, 324, -180, false);
+    public static final AutonPoint kLeaveFromOtherAllianceHumanPlayer = new AutonPoint(1.600, 8.0772-7.35, 324, -0, false);
+    public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.95, 8.0772-5.23, 240, -310, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralI = new AutonPoint(3.95, 8.0772-5.23, 240, -130, false);
+    public static final AutonPoint kPlaceOnCoralH = new AutonPoint(3.65, 8.0772-5.07, 240, -310, false);
 
     // Decloration of Path Points
 
@@ -37,5 +44,13 @@ public class AutonPointManager {
     public static final AutonPoint[] kHumanPlayerToCoralE = {kLeaveFromOwnAllianceHumanPlayer, kPlaceOnCoralE};
     
     // Path Points for Center Position
+    public static final AutonPoint[] kCenterBargeStartPositionToPlaceOnCoralA = {kCenterBargeStartPosition, kPlaceOnCoralA};
     public static final AutonPoint[] kCenterBargeStartPositionToPlaceOnCoralL = {kCenterBargeStartPosition, kPlaceOnCoralL};
+
+    // Path Points for Other Alliance
+    public static final AutonPoint[] kOtherAllianceBargeStartPositionToPlaceOnCoralK = {kOtherAllianceBargeStartPosition, kPlaceOnCoralK};
+    public static final AutonPoint[] kPlaceOnCoralKToHumanPlayer = {kLeaveFromPlaceOnCoralK, kIntakeFromOtherAllianceHumanPlayer};
+    public static final AutonPoint[] kHumanPlayerToCoralI = {kLeaveFromOtherAllianceHumanPlayer, kPlaceOnCoralI};
+    public static final AutonPoint[] kCoralIToHumanPlayer = {kLeaveFromPlaceOnCoralI, kIntakeFromOtherAllianceHumanPlayer};
+    public static final AutonPoint[] kHumanPlayerToCoralH = {kLeaveFromOtherAllianceHumanPlayer, kPlaceOnCoralH};
 }
