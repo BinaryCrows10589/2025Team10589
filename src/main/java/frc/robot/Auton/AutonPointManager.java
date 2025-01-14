@@ -17,8 +17,8 @@ public class AutonPointManager {
     // Points For Own Alliance
     public static final AutonPoint kPlaceOnCoralB = new AutonPoint(5.250, 5.020, 60, 180, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralB = new AutonPoint(5.250, 5.020, 60, 155, false);
-    public static final AutonPoint kIntakeFromOwnAllianceHumanPlayer = new AutonPoint(1.600, 7.35, 36, 180, false);
-    public static final AutonPoint kLeaveFromOwnAllianceHumanPlayer = new AutonPoint(1.600, 7.35, 36, 0, false);
+    public static final AutonPoint kIntakeFromOwnAllianceHumanPlayer = new AutonPoint(1.600, 7.35, 126, 180, false);
+    public static final AutonPoint kLeaveFromOwnAllianceHumanPlayer = new AutonPoint(1.600, 7.35, 126, 0, false);
     public static final AutonPoint kPlaceOnCoralD = new AutonPoint(3.95, 5.23, 120, 310, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralD = new AutonPoint(3.95, 5.23, 120, 130, false);
     public static final AutonPoint kPlaceOnCoralE = new AutonPoint(3.65, 5.07, 120, 310, false);
@@ -29,8 +29,8 @@ public class AutonPointManager {
     // Points For Other Alliance
     public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.250, FieldConstants.kFieldWidthMeters-5.020, 300, 180, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralK = new AutonPoint(5.250, FieldConstants.kFieldWidthMeters-5.020, 300, -155, false);
-    public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.600, FieldConstants.kFieldWidthMeters-7.35, 324, -180, false);
-    public static final AutonPoint kLeaveFromOtherAllianceHumanPlayer = new AutonPoint(1.600, FieldConstants.kFieldWidthMeters-7.35, 324, -0, false);
+    public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.600, FieldConstants.kFieldWidthMeters-7.35, -126, -180, false);
+    public static final AutonPoint kLeaveFromOtherAllianceHumanPlayer = new AutonPoint(1.600, FieldConstants.kFieldWidthMeters-7.35, -126, -0, false);
     public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.95, FieldConstants.kFieldWidthMeters-5.23, 240, -310, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralI = new AutonPoint(3.95, FieldConstants.kFieldWidthMeters-5.23, 240, -130, false);
     public static final AutonPoint kPlaceOnCoralH = new AutonPoint(3.65, FieldConstants.kFieldWidthMeters-5.07, 240, -310, false);
