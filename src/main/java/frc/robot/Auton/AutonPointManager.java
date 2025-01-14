@@ -17,6 +17,7 @@ public class AutonPointManager {
     // Points For Own Alliance
     public static final AutonPoint kPlaceOnCoralB = new AutonPoint(5.250, 5.020, 60, 180, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralB = new AutonPoint(5.250, 5.020, 60, 155, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralBConstrant = new AutonPoint(4.5, 5.8, 60, 155, false);
     public static final AutonPoint kIntakeFromOwnAllianceHumanPlayer = new AutonPoint(1.600, 7.35, 126, 180, false);
     public static final AutonPoint kLeaveFromOwnAllianceHumanPlayer = new AutonPoint(1.600, 7.35, 126, 0, false);
     public static final AutonPoint kPlaceOnCoralD = new AutonPoint(3.95, 5.23, 120, 310, false);
@@ -29,6 +30,7 @@ public class AutonPointManager {
     // Points For Other Alliance
     public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.250, FieldConstants.kFieldWidthMeters-5.020, 300, 180, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralK = new AutonPoint(5.250, FieldConstants.kFieldWidthMeters-5.020, 300, -155, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralKConstrant = new AutonPoint(4.5, FieldConstants.kFieldWidthMeters-5.8, 300, -155, false);
     public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.600, FieldConstants.kFieldWidthMeters-7.35, -126, -180, false);
     public static final AutonPoint kLeaveFromOtherAllianceHumanPlayer = new AutonPoint(1.600, FieldConstants.kFieldWidthMeters-7.35, -126, -0, false);
     public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.95, FieldConstants.kFieldWidthMeters-5.23, 240, -310, false);
@@ -39,7 +41,7 @@ public class AutonPointManager {
 
     // Path Points for Own Alliance
     public static final AutonPoint[] kOwnAllianceBargeStartPositionToPlaceOnCoralB = {kOwnAllianceBargeStartPosition, kPlaceOnCoralB};
-    public static final AutonPoint[] kPlaceOnCoralBToHumanPlayer = {kLeaveFromPlaceOnCoralB, kIntakeFromOwnAllianceHumanPlayer};
+    public static final AutonPoint[] kPlaceOnCoralBToHumanPlayer = {kLeaveFromPlaceOnCoralB, kLeaveFromPlaceOnCoralBConstrant, kIntakeFromOwnAllianceHumanPlayer};
     public static final AutonPoint[] kHumanPlayerToCoralD = {kLeaveFromOwnAllianceHumanPlayer, kPlaceOnCoralD};
     public static final AutonPoint[] kCoralDToHumanPlayer = {kLeaveFromPlaceOnCoralD, kIntakeFromOwnAllianceHumanPlayer};
     public static final AutonPoint[] kHumanPlayerToCoralE = {kLeaveFromOwnAllianceHumanPlayer, kPlaceOnCoralE};
@@ -50,7 +52,7 @@ public class AutonPointManager {
 
     // Path Points for Other Alliance
     public static final AutonPoint[] kOtherAllianceBargeStartPositionToPlaceOnCoralK = {kOtherAllianceBargeStartPosition, kPlaceOnCoralK};
-    public static final AutonPoint[] kPlaceOnCoralKToHumanPlayer = {kLeaveFromPlaceOnCoralK, kIntakeFromOtherAllianceHumanPlayer};
+    public static final AutonPoint[] kPlaceOnCoralKToHumanPlayer = {kLeaveFromPlaceOnCoralK, kLeaveFromPlaceOnCoralKConstrant, kIntakeFromOtherAllianceHumanPlayer};
     public static final AutonPoint[] kHumanPlayerToCoralI = {kLeaveFromOtherAllianceHumanPlayer, kPlaceOnCoralI};
     public static final AutonPoint[] kCoralIToHumanPlayer = {kLeaveFromPlaceOnCoralI, kIntakeFromOtherAllianceHumanPlayer};
     public static final AutonPoint[] kHumanPlayerToCoralH = {kLeaveFromOtherAllianceHumanPlayer, kPlaceOnCoralH};
