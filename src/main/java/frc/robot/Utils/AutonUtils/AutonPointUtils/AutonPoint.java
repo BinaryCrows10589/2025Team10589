@@ -121,6 +121,7 @@ public class AutonPoint {
      */
     public AutonPoint(double xPointMeters, double yPointMeters, double rotationAngleDegrees, double attackAngleDegrees, boolean allowMirroring) {
         this.autonPoint = new Pose2d(xPointMeters, yPointMeters, Rotation2d.fromDegrees(rotationAngleDegrees));
+        this.autonPoint.getRotation().getDegrees();
         this.fudgeFactor = new FudgeFactor(0, 0, 0);
         this.allowMirroring = allowMirroring;
         this.attackAngleDegrees = attackAngleDegrees;
