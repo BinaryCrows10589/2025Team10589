@@ -43,8 +43,8 @@ public final class AutonConstants {
         public static double kPTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : .5;
         public static double kITranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
         public static double kDTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
-        public static final double kMaxTranslationalSpeedInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.4 : 4.129;
-        public static final double kMaxTranslationalAccelerationInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.45 : 5.129;
+        public static final double kMaxTranslationalSpeedInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.4 : 4.129;//4.4 : 4.129;
+        public static final double kMaxTranslationalAccelerationInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.45 : 5.129;//4.45 : 5.129;
 
         public static double kPRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : .59;
         public static double kIRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
@@ -55,7 +55,7 @@ public final class AutonConstants {
         kMaxRotationalSpeedInRadsPerSecond, kMaxRotationalAccelerationInRadsPerSecond);
 
         public static Pose2d kPositionTolorence = RobotModeConstants.kIsNotSim ?
-            new Pose2d(.03, .03, Rotation2d.fromDegrees(3)) : new Pose2d(.03, .03, Rotation2d.fromDegrees(3));
+            new Pose2d(.02, .02, Rotation2d.fromDegrees(3)) : new Pose2d(.03, .03, Rotation2d.fromDegrees(3));
     }
 
     public final class ChoreoAutonConstants {

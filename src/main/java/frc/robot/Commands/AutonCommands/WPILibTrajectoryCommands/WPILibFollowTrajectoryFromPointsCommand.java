@@ -239,13 +239,17 @@ public class WPILibFollowTrajectoryFromPointsCommand extends Command{
     @Override
     public boolean isFinished() {
         Pose2d robotPose = this.driveSubsystem.getRobotPose();
-        boolean translationXInTolorence = Tolerance.inTolorance(this.desiredEndPoint.getX(),  robotPose.getX(),
+        boolean translationXInTolorence = Tolerance.inTolorance(robotPose.getX(), this.desiredEndPoint.getX(),
             this.positionTolorance.getX());
-        boolean translationYInTolorence = Tolerance.inTolorance(this.desiredEndPoint.getY(),  robotPose.getY(),
+        boolean translationYInTolorence = Tolerance.inTolorance(robotPose.getY(), this.desiredEndPoint.getY(),
             this.positionTolorance.getY());
-        boolean rotationalInTolorence = Tolerance.inTolorance(this.desiredEndPoint.getRotation().getRadians(),
-            robotPose.getRotation().getRadians(),
+        boolean rotationalInTolorence = Tolerance.inTolorance(
+            robotPose.getRotation().getRadians(), this.desiredEndPoint.getRotation().getRadians(),
             this.positionTolorance.getRotation().getRadians());
+        Logger.recordOutput("Auton/" + pathName + "/XCorrect", translationXInTolorence);
+        Logger.recordOutput("Auton/" + pathName + "/YCorrect", translationYInTolorence);
+        Logger.recordOutput("Auton/" + pathName + "/RotationCorrect", rotationalInTolorence);
+
         return (translationXInTolorence && translationYInTolorence && rotationalInTolorence) || this.hardCutOffTimer.hasTimePassed();
     }
 }
