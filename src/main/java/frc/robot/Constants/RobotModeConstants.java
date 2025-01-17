@@ -1,7 +1,7 @@
 package frc.robot.Constants;
 
 public class RobotModeConstants {
-    public static final Mode currentMode = Mode.REAL;
+    public static final Mode currentMode = Mode.SIM;
     public static boolean isBlueAlliance = true;
     public static boolean hasAllianceChanged = false;
     /* Must be set to false before in code before full drive practice and before comp.
