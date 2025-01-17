@@ -1,0 +1,78 @@
+Mechanisms:
+    Ground Intake:
+        Subsystems:
+            Pivot-PositionalPID On Krakens with CTRE Throughbore
+            IntakeWheels-Voltage Control On Neo
+            CoralSensorIntake-PlayingWithFusion Distence Sensor
+    Transit:
+        Subsystems:
+            TransitWheels-Voltage
+    Funnle:
+        Subsysetms:
+            CoralSensorFunnle-PlayingWithFusion Distence Sensor
+    Elevator:
+        Subsystems:
+            Elevator-Two Ways do both., Normal Positional PID, Motion Magic Position PID. Double Kraken(One Follower one master), CTRE Throughbore, also impliment for rev throughbore
+    Outtake:
+        Subsystems:
+            OuttakeWheels-Voltage and Positional PID, 2 Neos(one right one left)
+            CoralDetectorStart-PlayingWithFusion Distence Sensor
+            CoralDetectorEnd-PlayingWithFusion Distence Sensor
+    Climber:
+        Subsystems:
+            ClimberPivot-PositionalPID, Neo, Rev through bore
+    Reef Tree Detector:
+        Subsystems:
+            ReefTreeDetector-PlayingWithFusion Distence Sensor
+
+Commands:
+    Score:
+        L1ScorePosition:
+            Requred Subsystems:
+                Elevator
+        L2ScoreEosition:
+            Requred Subsystems:
+                Elevator
+        L3ScorePosition:
+            Requred Subsystems:
+                Elevator
+        L4ScorePosition:
+            Requred Subsystems:
+                Elevator
+        ElevatorBasementPosition:
+            Requred Subsystems:
+                Elevator
+        ElevatorFunnlePosition:
+            Requred Subsystems:
+                Elevator
+        OuttakeCoral:
+            SubCommands:
+                None(Make Sure to lock the outaking if elevator in basement)
+
+    Intake:
+        IntakeGround:
+            SubCommands:
+                IntakeDown
+                IntakeUp
+                RunTransitIn
+                ElevatorBasement
+                HoldCoralOuttake
+        EjectCoralFromIntake:
+            SubCommands:
+                IntakeDown
+    
+    ScoreAutoPosition:
+        ReefTreeAutoPositionWithTrajectoryAndDistenceSensor(Name)x12
+        ReefTreeAutoPositionWithTrajectory(Name)x12
+        AutoIntakeFromHumanPlayerTrajectoryx2
+    
+    Manual:
+        ElevatorUpAtRate
+        ElevatorDownAtRate
+
+
+
+    
+
+
+
