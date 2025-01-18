@@ -1,12 +1,32 @@
 package frc.robot.Subsystems.GroundIntake.Pivot;
 
-import frc.robot.Constants.PivotConstants;
+import org.littletonrobotics.junction.Logger;
+
+import com.ctre.phoenix.CANifier.PinValues;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.GroundIntakeConstants;
 import frc.robot.Utils.GeneralUtils.Tolerance;
 
-public class PivotSubsystem {
-    
-     public boolean isPivotInTolorence() {
-        return false;//Tolerance.inTolorance();
-            //PivotConstants.kPivotAngleToloranceRotations);
-    };
+public class PivotSubsystem extends SubsystemBase{
+    PivotIO pivotIO;
+    PivotIOInputsAutoLogged pivotInputs;
+
+    public PivotSubsystem(PivotIO pivotIO) {
+        this.pivotIO = pivotIO;
+    }
+
+    public void periodic() {
+        this.pivotIO.updateInputs(this.pivotInputs);
+        Logger.processInputs("GroundIntake/Pivot/", this.pivotInputs);
+    }
+
+    public void setDesiredPivotRotation(double desiredRotations) {
+        this.pivotIO.setDesiredPivotRotation(desiredRotations);
+    }
+
+    public boolean isPivotInTolorence() {
+        return Tolerance.inTolorance(this.pivotInputs.pivotAngleRotations, this.pivotInputs.desiredPivotAngleRotations,
+        GroundIntakeConstants.kPivotAngleToloranceRotations);
+    }
 }

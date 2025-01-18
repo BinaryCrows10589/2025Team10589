@@ -2,6 +2,7 @@ package frc.robot.Subsystems.GroundIntake.Pivot;
 
 import org.littletonrobotics.junction.AutoLog;
 
+import frc.robot.Constants.GroundIntakeConstants;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIO.SwerveModuleIOInputs;
 
 public interface PivotIO {
@@ -10,6 +11,7 @@ public interface PivotIO {
     public static class PivotIOInputs {
         public double pivotRPM = 0.0;
         public double pivotAngleRotations = 0.0;
+        public double desiredPivotAngleRotations = GroundIntakeConstants.kRotationOffset;
         public double pivotMotorAppliedVolts = 0.0;
         public double[] pivotMotorCurrentAmps = new double[] {};
     }
@@ -25,7 +27,5 @@ public interface PivotIO {
      * @param desiredRotations Double: The Desired Pivot Rotations
      */
     public default void setDesiredPivotRotation(double desiredRotations) {}
-
-    public default boolean isPivotInTolorence() {return true;};
 
 }
