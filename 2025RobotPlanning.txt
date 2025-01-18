@@ -1,4 +1,17 @@
 Mechanisms:
+    Boyne:
+        Elevator:
+            Subsystems:
+                Elevator-Two Ways do both., Normal Positional PID, Motion Magic Position PID. Double Kraken(One Follower one master), CTRE Throughbore, also impliment for rev throughbore
+        Outtake:
+            Subsystems:
+                OuttakeWheels-Voltage and Positional PID, 2 Neos(one right one left)
+                CoralDetectorStart-PlayingWithFusion Distance Sensor
+                CoralDetectorEnd-PlayingWithFusion Distance Sensor
+        Climber:
+            Subsystems:
+                ClimberPivot-PositionalPID, Neo, Rev through bore
+    
     Ground Intake:
         Subsystems:
             Pivot-PositionalPID On Krakens with CTRE Throughbore
@@ -10,22 +23,27 @@ Mechanisms:
     Funnel:
         Subsysetms:
             CoralSensorFunnel-PlayingWithFusion Distance Sensor
-    Elevator:
-        Subsystems:
-            Elevator-Two Ways do both., Normal Positional PID, Motion Magic Position PID. Double Kraken(One Follower one master), CTRE Throughbore, also impliment for rev throughbore
-    Outtake:
-        Subsystems:
-            OuttakeWheels-Voltage and Positional PID, 2 Neos(one right one left)
-            CoralDetectorStart-PlayingWithFusion Distance Sensor
-            CoralDetectorEnd-PlayingWithFusion Distance Sensor
-    Climber:
-        Subsystems:
-            ClimberPivot-PositionalPID, Neo, Rev through bore
     Reef Tree Detector:
         Subsystems:
             ReefTreeDetector-PlayingWithFusion Distance Sensor
 
 Commands:
+    Boyne:
+        Intake:
+            IntakeGround:
+                SubCommands:
+                    IntakeDown
+                    IntakeUp
+                    RunTransitIn
+                    ElevatorBasement
+                    HoldCoralOuttake
+            EjectCoralFromIntake:
+                SubCommands:
+                    IntakeDown
+        Manual:
+            ElevatorUpAtRate
+            ElevatorDownAtRate
+            
     Score:
         L1ScorePosition:
             Requred Subsystems:
@@ -49,26 +67,14 @@ Commands:
             SubCommands:
                 None(Make Sure to lock the outaking if elevator in basement)
 
-    Intake:
-        IntakeGround:
-            SubCommands:
-                IntakeDown
-                IntakeUp
-                RunTransitIn
-                ElevatorBasement
-                HoldCoralOuttake
-        EjectCoralFromIntake:
-            SubCommands:
-                IntakeDown
+    
     
     ScoreAutoPosition:
         ReefTreeAutoPositionWithTrajectoryAndDistanceSensor(Name)x12
         ReefTreeAutoPositionWithTrajectory(Name)x12
         AutoIntakeFromHumanPlayerTrajectoryx2
     
-    Manual:
-        ElevatorUpAtRate
-        ElevatorDownAtRate
+
 
 
 
