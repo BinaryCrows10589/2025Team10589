@@ -11,21 +11,21 @@ Mechanisms:
         Climber:
             Subsystems:
                 ClimberPivot-PositionalPID, Neo, Rev through bore
-    
-    Ground Intake:
-        Subsystems:
-            Pivot-PositionalPID On Krakens with CTRE Throughbore
-            IntakeWheels-Voltage Control On Neo
-            CoralSensorIntake-PlayingWithFusion Distance Sensor
-    Transit:
-        Subsystems:
-            TransitWheels-Voltage
-    Funnel:
-        Subsysetms:
-            CoralSensorFunnel-PlayingWithFusion Distance Sensor
-    Reef Tree Detector:
-        Subsystems:
-            ReefTreeDetector-PlayingWithFusion Distance Sensor
+    Elijah:
+        Ground Intake:
+            Subsystems:
+                Pivot-PositionalPID On Krakens with CTRE Throughbore
+                IntakeWheels-Voltage Control On Neo
+                CoralSensorIntake-PlayingWithFusion Distance Sensor
+        Transit:
+            Subsystems:
+                TransitWheels-Voltage
+        Funnel:
+            Subsysetms:
+                CoralSensorFunnel-PlayingWithFusion Distance Sensor
+        Reef Tree Detector:
+            Subsystems:
+                ReefTreeDetector-PlayingWithFusion Distance Sensor
 
 Commands:
     Boyne:
@@ -43,36 +43,36 @@ Commands:
         Manual:
             ElevatorUpAtRate
             ElevatorDownAtRate
-            
-    Score:
-        L1ScorePosition:
-            Requred Subsystems:
-                Elevator
-        L2ScoreEosition:
-            Requred Subsystems:
-                Elevator
-        L3ScorePosition:
-            Requred Subsystems:
-                Elevator
-        L4ScorePosition:
-            Requred Subsystems:
-                Elevator
-        ElevatorBasementPosition:
-            Requred Subsystems:
-                Elevator
-        ElevatorFunnelPosition:
-            Requred Subsystems:
-                Elevator
-        OuttakeCoral:
-            SubCommands:
-                None(Make Sure to lock the outaking if elevator in basement)
+    Elijah:
+        Score:
+            L1ScorePosition:
+                Requred Subsystems:
+                    Elevator
+            L2ScoreEosition:
+                Requred Subsystems:
+                    Elevator
+            L3ScorePosition:
+                Requred Subsystems:
+                    Elevator
+            L4ScorePosition:
+                Requred Subsystems:
+                    Elevator
+            ElevatorBasementPosition:
+                Requred Subsystems:
+                    Elevator
+            ElevatorFunnelPosition:
+                Requred Subsystems:
+                    Elevator
+            OuttakeCoral:
+                SubCommands:
+                    None(Make Sure to lock the outaking if elevator in basement)
 
     
-    
-    ScoreAutoPosition:
-        ReefTreeAutoPositionWithTrajectoryAndDistanceSensor(Name)x12
-        ReefTreeAutoPositionWithTrajectory(Name)x12
-        AutoIntakeFromHumanPlayerTrajectoryx2
+    Elijah:
+        ScoreAutoPosition:
+            ReefTreeAutoPositionWithTrajectoryAndDistanceSensor(Name)x12
+            ReefTreeAutoPositionWithTrajectory(Name)x12
+            AutoIntakeFromHumanPlayerTrajectoryx2
     
 
 
