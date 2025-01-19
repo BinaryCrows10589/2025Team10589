@@ -13,6 +13,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.GroundIntakeConstants;
+import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class PivotIOTalonFX implements PivotIO{
 
@@ -21,6 +22,7 @@ public class PivotIOTalonFX implements PivotIO{
 
     private PositionVoltage desiredPivotPosition = new PositionVoltage(GroundIntakeConstants.kRotationOffset).withSlot(0);
 
+    private NetworkTablesTunablePIDConstants pivotMotorPIDConstantTuner;
 
     public PivotIOTalonFX() {
         this.pivotMotor = new TalonFX(GroundIntakeConstants.kPivotMotorCANID);
@@ -28,6 +30,7 @@ public class PivotIOTalonFX implements PivotIO{
 
         configurePivotEncoder();
         configurePivotMotor();
+
 
         Timer.delay(.5);
     }
@@ -48,8 +51,32 @@ public class PivotIOTalonFX implements PivotIO{
         pivotPositionalPIDConfigs.kI = GroundIntakeConstants.kPivotIPIDValue;
         pivotPositionalPIDConfigs.kD = GroundIntakeConstants.kPivotDPIDValue;
 
+        this.pivotMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("GroundIntake/Pivot/", 
+            pivotPositionalPIDConfigs.kP,
+            pivotPositionalPIDConfigs.kI,
+            pivotPositionalPIDConfigs.kD,
+            0);
+
         this.pivotMotor.getConfigurator().apply(pivotConfiguration);
         this.pivotMotor.getConfigurator().apply(pivotPositionalPIDConfigs);
+    }
+
+    /**
+     * WORNING!!! There should only be one call of this method and that
+     *  call should be commented out before going to a competition. 
+     * Updates the PID values for the module bassed on network tables.
+     * Must be called periodicly.
+     */
+    private void updatePIDValuesFromNetworkTables() {
+        double[] currentDrivePIDValues = this.pivotMotorPIDConstantTuner.getUpdatedPIDConstants();
+        if(this.pivotMotorPIDConstantTuner.hasAnyPIDValueChanged()) {
+            Slot0Configs newDrivePIDConfigs = new Slot0Configs();
+            newDrivePIDConfigs.kP = currentDrivePIDValues[0];
+            newDrivePIDConfigs.kI = currentDrivePIDValues[1];
+            newDrivePIDConfigs.kD = currentDrivePIDValues[2];
+            newDrivePIDConfigs.kS = currentDrivePIDValues[3];
+            this.pivotMotor.getConfigurator().apply(newDrivePIDConfigs);
+        }
     }
 
     private void configurePivotEncoder() {
@@ -68,6 +95,8 @@ public class PivotIOTalonFX implements PivotIO{
         pivotIOInputs.pivotRPM = this.pivotMotor.getVelocity().getValueAsDouble();
         pivotIOInputs.pivotMotorAppliedVolts = this.pivotMotor.getMotorVoltage().getValueAsDouble();
         pivotIOInputs.pivotMotorCurrentAmps = new double[] {this.pivotMotor.getSupplyCurrent().getValueAsDouble()};
+
+        updatePIDValuesFromNetworkTables();
     }
 
     public void setDesiredPivotRotation(double desiredRotations) {
