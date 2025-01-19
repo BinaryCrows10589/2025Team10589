@@ -7,7 +7,7 @@ public class ElevatorConstants {
     public static final int kElevatorSlaveMotorCANID = 25; // Right motor is slave
     public static final int kElevatorEncoderCANID = 26;
 
-    public static final double kElevatorGearRatio = 1.0;
+    public static final double kElevatorGearRatio = 6/1;
 
     public static final double kMaxVoltage = 0;
 

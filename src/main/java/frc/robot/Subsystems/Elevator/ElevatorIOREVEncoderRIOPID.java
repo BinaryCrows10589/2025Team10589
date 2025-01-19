@@ -17,6 +17,7 @@ import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotIO.PivotIOInputs;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
@@ -31,6 +32,8 @@ public class ElevatorIOREVEncoderRIOPID implements ElevatorIO {
 
     private double desiredElevatorPosition = ElevatorConstants.kDefaultElevatorPosition;
 
+    private double gravityVoltageOffset = ElevatorConstants.kElevatorGPIDValue;
+
     private NetworkTablesTunablePIDConstants elevatorMotorPIDConstantTuner;
 
 
@@ -41,6 +44,9 @@ public class ElevatorIOREVEncoderRIOPID implements ElevatorIO {
 
         configureElevatorEncoder();
         configureElevatorMotors();
+        resetElevatorMotorToAbsolute();
+
+        Timer.delay(.5);
     }
 
     private void configureElevatorMotors() {
@@ -48,7 +54,6 @@ public class ElevatorIOREVEncoderRIOPID implements ElevatorIO {
         masterConfiguration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         masterConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         masterConfiguration.Feedback.SensorToMechanismRatio = 1.0;
-        masterConfiguration.Feedback.RotorToSensorRatio = ElevatorConstants.kElevatorGearRatio;
         masterConfiguration.Voltage.PeakForwardVoltage = ElevatorConstants.kMaxVoltage;
         masterConfiguration.Voltage.PeakReverseVoltage = -ElevatorConstants.kMaxVoltage;
         //masterConfiguration.Feedback.FeedbackRotorOffset = elevatorEncoder.getAbsoluteEncoder().getPosition(); // Reset the builtin encoder to the REV encoder's value
@@ -62,27 +67,29 @@ public class ElevatorIOREVEncoderRIOPID implements ElevatorIO {
             ElevatorConstants.kElevatorDPIDValue
         );
 
-        this.elevatorMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("GroundIntake/Pivot/", 
+        this.elevatorMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("Elevator/", 
             pidController.getP(),
             pidController.getI(),
             pidController.getD(),
+            0,
+            gravityVoltageOffset,
             0
             );
 
         this.elevatorMasterMotor.getConfigurator().apply(masterConfiguration);
+        this.elevatorSlaveMotor.getConfigurator().apply(masterConfiguration);
     }
 
     private void configureElevatorEncoder() {
         SparkMaxConfig encoderConfig = new SparkMaxConfig();
-        encoderConfig.absoluteEncoder.positionConversionFactor(ElevatorConstants.kElevatorGearRatio); //TODO: Is this right?
         elevatorEncoder.configure(encoderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         
     }
 
-    public void resetElevatorMotorToAbsolute() {
+    private void resetElevatorMotorToAbsolute() {
         this.elevatorMasterMotor.setPosition((
-            this.elevatorEncoder.getAbsoluteEncoder().getPosition()
+            this.elevatorEncoder.getAbsoluteEncoder().getPosition() * ElevatorConstants.kElevatorGearRatio
         ));
     }
 
@@ -98,6 +105,8 @@ public class ElevatorIOREVEncoderRIOPID implements ElevatorIO {
             pidController.setP(currentDrivePIDValues[0]);
             pidController.setI(currentDrivePIDValues[1]);
             pidController.setD(currentDrivePIDValues[2]);
+
+            gravityVoltageOffset = currentDrivePIDValues[4];
         }
     }
 
@@ -114,8 +123,8 @@ public class ElevatorIOREVEncoderRIOPID implements ElevatorIO {
 
     @Override
     public void setDesiredPosition(double desiredPosition) {
-        desiredElevatorPosition = desiredPosition;
-        this.elevatorMasterMotor.set(pidController.calculate(desiredElevatorPosition));
+        desiredElevatorPosition = desiredPosition * ElevatorConstants.kElevatorGearRatio;
+        this.elevatorMasterMotor.set(pidController.calculate(desiredElevatorPosition) + gravityVoltageOffset);
         
     }
 

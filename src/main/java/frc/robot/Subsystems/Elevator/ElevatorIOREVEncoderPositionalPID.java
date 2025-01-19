@@ -16,6 +16,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotIO.PivotIOInputs;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
@@ -38,6 +39,9 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
 
         configureElevatorEncoder();
         configureElevatorMotors();
+        resetElevatorMotorToAbsolute();
+
+        Timer.delay(.5);
     }
 
     private void configureElevatorMotors() {
@@ -45,7 +49,6 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
         masterConfiguration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         masterConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         masterConfiguration.Feedback.SensorToMechanismRatio = 1.0;
-        masterConfiguration.Feedback.RotorToSensorRatio = ElevatorConstants.kElevatorGearRatio;
         masterConfiguration.Voltage.PeakForwardVoltage = ElevatorConstants.kMaxVoltage;
         masterConfiguration.Voltage.PeakReverseVoltage = -ElevatorConstants.kMaxVoltage;
         //masterConfiguration.Feedback.FeedbackRotorOffset = elevatorEncoder.getAbsoluteEncoder().getPosition(); // Reset the builtin encoder to the REV encoder's value
@@ -60,7 +63,7 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
         elevatorPositionalPIDConfigs.kG = ElevatorConstants.kElevatorGPIDValue;
         elevatorPositionalPIDConfigs.kS = ElevatorConstants.kElevatorSPIDValue;
 
-        this.elevatorMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("GroundIntake/Pivot/", 
+        this.elevatorMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("Elevator/", 
             elevatorPositionalPIDConfigs.kP,
             elevatorPositionalPIDConfigs.kI,
             elevatorPositionalPIDConfigs.kD,
@@ -70,20 +73,20 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
             );
 
         this.elevatorMasterMotor.getConfigurator().apply(masterConfiguration);
+        this.elevatorSlaveMotor.getConfigurator().apply(masterConfiguration);
         this.elevatorMasterMotor.getConfigurator().apply(elevatorPositionalPIDConfigs); 
     }
 
     private void configureElevatorEncoder() {
         SparkMaxConfig encoderConfig = new SparkMaxConfig();
-        encoderConfig.absoluteEncoder.positionConversionFactor(ElevatorConstants.kElevatorGearRatio); //TODO: Is this right?
         elevatorEncoder.configure(encoderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         
     }
 
-    public void resetElevatorMotorToAbsolute() {
+    private void resetElevatorMotorToAbsolute() {
         this.elevatorMasterMotor.setPosition((
-            this.elevatorEncoder.getAbsoluteEncoder().getPosition()
+            this.elevatorEncoder.getAbsoluteEncoder().getPosition() * ElevatorConstants.kElevatorGearRatio
         ));
     }
 
@@ -119,7 +122,7 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
 
     @Override
     public void setDesiredPosition(double desiredPosition) {
-        desiredElevatorPosition.Position = desiredPosition;
+        desiredElevatorPosition.Position = desiredPosition * ElevatorConstants.kElevatorGearRatio;
         this.elevatorMasterMotor.setControl(desiredElevatorPosition);
         
     }

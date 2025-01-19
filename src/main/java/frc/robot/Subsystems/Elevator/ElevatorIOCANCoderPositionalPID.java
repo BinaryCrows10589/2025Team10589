@@ -12,6 +12,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
@@ -29,8 +30,9 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         this.elevatorMasterMotor = new TalonFX(ElevatorConstants.kElevatorMasterMotorCANID);
         this.elevatorSlaveMotor = new TalonFX(ElevatorConstants.kElevatorSlaveMotorCANID);
 
-        configureElevatorEncoder();
         configureElevatorMotors();
+
+        Timer.delay(.5);
     }
 
     private void configureElevatorMotors() {
@@ -55,7 +57,7 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         elevatorPositionalPIDConfigs.kG = ElevatorConstants.kElevatorGPIDValue;
         elevatorPositionalPIDConfigs.kS = ElevatorConstants.kElevatorSPIDValue;
 
-        this.elevatorMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("GroundIntake/Pivot/", 
+        this.elevatorMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("Elevator/", 
             elevatorPositionalPIDConfigs.kP,
             elevatorPositionalPIDConfigs.kI,
             elevatorPositionalPIDConfigs.kD,
@@ -64,14 +66,8 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
             elevatorPositionalPIDConfigs.kS);
 
         this.elevatorMasterMotor.getConfigurator().apply(masterConfiguration);
+        this.elevatorSlaveMotor.getConfigurator().apply(masterConfiguration);
         this.elevatorMasterMotor.getConfigurator().apply(elevatorPositionalPIDConfigs); 
-    }
-
-    private void configureElevatorEncoder() {
-        SparkMaxConfig encoderConfig = new SparkMaxConfig();
-        encoderConfig.absoluteEncoder.positionConversionFactor(ElevatorConstants.kElevatorGearRatio); //TODO: Is this right?
-
-        
     }
 
     /**
