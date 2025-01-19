@@ -6,8 +6,8 @@ import edu.wpi.first.math.util.Units;
 public class GroundIntakeConstants {
 
     public class PivotContants {
-        public static final int kPivotEncoderCANID = 0;
-        public static final int kPivotMotorCANID = 0;
+        public static final int kPivotMotorCANID = 18;
+        public static final int kPivotEncoderCANID = 19;
 
         public static final double kRotationOffset = 0;
         public static final double kMaxVoltage = 2;
@@ -20,12 +20,12 @@ public class GroundIntakeConstants {
     }
 
     public class IntakeWheelsConstants {
-        public static final int kIntakeWheelsMotorCANID = 0;
+        public static final int kIntakeWheelsMotorCANID = 20;
     }
     
-    public class CoralSensorIntakeConstants {
-        public static final int CoralSensorIntakeID = 0;
-        public static final double kCoralIntakeSensorMaxCoralDistanceMilameters = 330.2;
+    public class IntakeCoralSensorConstants {
+        public static final int kIntakeCoralSensorID = 21;
+        public static final double kIntakeCoralSensorMaxCoralDistanceMilameters = 330.2;
     }
     
 
