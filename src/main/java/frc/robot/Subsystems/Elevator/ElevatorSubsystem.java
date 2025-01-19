@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
     ElevatorIO elevatorIO;
-    ElevatorIOInputsAutoLogged elevatorInputs;
+    ElevatorIOInputsAutoLogged elevatorInputs = new ElevatorIOInputsAutoLogged();
 
     public ElevatorSubsystem(ElevatorIO elevatorIO) {
         this.elevatorIO = elevatorIO;

@@ -31,7 +31,6 @@ public class PivotIOTalonFX implements PivotIO{
         configurePivotEncoder();
         configurePivotMotor();
 
-
         Timer.delay(.5);
     }
 
