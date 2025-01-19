@@ -19,7 +19,7 @@ public class IntakeWheelsSubsystem extends SubsystemBase{
 
     public void periodic() {
         this.intakeWheelsIO.updateInputs(this.intakeWheelsInputs);
-        Logger.processInputs("GroundIntake/Pivot/", this.intakeWheelsInputs);
+        Logger.processInputs("GroundIntake/IntakeWheels/", this.intakeWheelsInputs);
     }
 
     public void setDesiredIntakeWheelsVoltage(double desiredVoltage) {

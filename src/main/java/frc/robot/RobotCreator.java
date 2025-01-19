@@ -2,10 +2,10 @@ package frc.robot;
 
 
 import frc.robot.Constants.RobotModeConstants;
-import frc.robot.Constants.GroundIntakeConstants.CoralSensorIntakeConstants;
-import frc.robot.Subsystems.GroundIntake.CoralSensorIntake.CoralSensorIntakeIO;
-import frc.robot.Subsystems.GroundIntake.CoralSensorIntake.CoralSensorIntakeIODistanceSensor;
-import frc.robot.Subsystems.GroundIntake.CoralSensorIntake.CoralSensorIntakeSubsystem;
+import frc.robot.Constants.GroundIntakeConstants.IntakeCoralSensorConstants;
+import frc.robot.Subsystems.GroundIntake.IntakeCoralSensor.IntakeCoralSensorIO;
+import frc.robot.Subsystems.GroundIntake.IntakeCoralSensor.IntakeCoralSensorIODistanceSensor;
+import frc.robot.Subsystems.GroundIntake.IntakeCoralSensor.IntakeCoralSensorSubsystem;
 import frc.robot.Subsystems.GroundIntake.IntakeWheels.IntakeWheelsIO;
 import frc.robot.Subsystems.GroundIntake.IntakeWheels.IntakeWheelsIOSparkMax;
 import frc.robot.Subsystems.GroundIntake.IntakeWheels.IntakeWheelsSubsystem;
@@ -14,13 +14,24 @@ import frc.robot.Subsystems.GroundIntake.Pivot.PivotIOTalonFX;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotSubsystem;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystemCreator;
+import frc.robot.Subsystems.TransitTunnel.TransitCoralSensor.TransitCoralSensorIO;
+import frc.robot.Subsystems.TransitTunnel.TransitCoralSensor.TransitCoralSensorIODistanceSensor;
+import frc.robot.Subsystems.TransitTunnel.TransitCoralSensor.TransitCoralSensorSubsystem;
+import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsIO;
+import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsIOSparkMax;
+import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsSubsystem;
 
 public class RobotCreator {
     // Decloration of subsystem creators
     private final DriveSubsystemCreator driveSubsystemCreator;
+
     private final PivotSubsystem pivotSubsystem;
     private final IntakeWheelsSubsystem intakeWheelsSubsystem;
-    private final CoralSensorIntakeSubsystem coralSensorIntakeSubsystem;
+    private final IntakeCoralSensorSubsystem coralSensorIntakeSubsystem;
+
+    private final TransitWheelsSubsystem transitWheelsSubsystem;
+    private final TransitCoralSensorSubsystem coralSensorTransitSubsystem;
+
  
     public RobotCreator() {
         this.driveSubsystemCreator = new DriveSubsystemCreator();
@@ -30,9 +41,13 @@ public class RobotCreator {
                 // Real robot, instantiate hardware IO implementations
                 //this.driveSubsystemCreator.createTalonFXSwerve();
                 this.driveSubsystemCreator.createTalonFXSwerve();
+
                 this.pivotSubsystem = new PivotSubsystem(new PivotIOTalonFX());
                 this.intakeWheelsSubsystem = new IntakeWheelsSubsystem(new IntakeWheelsIOSparkMax());
-                this.coralSensorIntakeSubsystem = new CoralSensorIntakeSubsystem(new CoralSensorIntakeIODistanceSensor());
+                this.coralSensorIntakeSubsystem = new IntakeCoralSensorSubsystem(new IntakeCoralSensorIODistanceSensor());
+
+                this.transitWheelsSubsystem = new TransitWheelsSubsystem(new TransitWheelsIOSparkMax());
+                this.coralSensorTransitSubsystem = new TransitCoralSensorSubsystem(new TransitCoralSensorIODistanceSensor());
 
                 break;
             case SIM:
@@ -40,7 +55,10 @@ public class RobotCreator {
                 this.driveSubsystemCreator.createSimSwerve();
                 this.pivotSubsystem = new PivotSubsystem(new PivotIOTalonFX());
                 this.intakeWheelsSubsystem = new IntakeWheelsSubsystem(new IntakeWheelsIOSparkMax());
-                this.coralSensorIntakeSubsystem = new CoralSensorIntakeSubsystem(new CoralSensorIntakeIODistanceSensor());
+                this.coralSensorIntakeSubsystem = new IntakeCoralSensorSubsystem(new IntakeCoralSensorIODistanceSensor());
+
+                this.transitWheelsSubsystem = new TransitWheelsSubsystem(new TransitWheelsIOSparkMax());
+                this.coralSensorTransitSubsystem = new TransitCoralSensorSubsystem(new TransitCoralSensorIODistanceSensor());
 
                 break;
             case REPLAY:
@@ -48,7 +66,10 @@ public class RobotCreator {
                 this.driveSubsystemCreator.createReplaySwerve();
                 this.pivotSubsystem = new PivotSubsystem(new PivotIO() {});
                 this.intakeWheelsSubsystem = new IntakeWheelsSubsystem(new IntakeWheelsIO() {});
-                this.coralSensorIntakeSubsystem = new CoralSensorIntakeSubsystem(new CoralSensorIntakeIO() {});
+                this.coralSensorIntakeSubsystem = new IntakeCoralSensorSubsystem(new IntakeCoralSensorIO() {});
+
+                this.transitWheelsSubsystem = new TransitWheelsSubsystem(new TransitWheelsIO() {});
+                this.coralSensorTransitSubsystem = new TransitCoralSensorSubsystem(new TransitCoralSensorIO() {});
                 break;
         default:
             throw new RuntimeException("Invalid Robot Mode. Please set the current mode value in RobotModeConstants");
@@ -67,8 +88,16 @@ public class RobotCreator {
         return this.intakeWheelsSubsystem;
     }
 
-    public CoralSensorIntakeSubsystem getCoralSensorIntakeSubsystem() {
+    public IntakeCoralSensorSubsystem getCoralSensorIntakeSubsystem() {
         return this.coralSensorIntakeSubsystem;
+    }
+
+    public TransitWheelsSubsystem getTransitWheelsSubsystem() {
+        return this.transitWheelsSubsystem;
+    }
+
+    public TransitCoralSensorSubsystem getCoralSensorTransitSubsystem() {
+        return this.coralSensorTransitSubsystem;
     }
 
 

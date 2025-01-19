@@ -15,17 +15,22 @@ Mechanisms:
         Ground Intake:
             Subsystems:
                 Pivot-PositionalPID On Krakens with CTRE Throughbore-Done(Untested)
-                IntakeWheels-Voltage Control On Neo
+                IntakeWheels-Voltage Control On Neo-Done(Untested)
                 CoralSensorIntake-PlayingWithFusion Distance Sensor-Done(Untested)
         Transit:
             Subsystems:
-                TransitWheels-Voltage
+                TransitWheels-Voltage-Done(Untested)
+                TransitCoralSensor-Done(Untested)
         Funnel:
             Subsysetms:
                 CoralSensorFunnel-PlayingWithFusion Distance Sensor
         Reef Tree Detector:
             Subsystems:
                 ReefTreeDetector-PlayingWithFusion Distance Sensor
+        AlgaeSystem:
+            Subsystems:
+            AlgeaPivot-PositionalPID, Neo+RevThroughBore
+            AlgeaWheels-Voltage, mini-neo
 
 Commands:
     Boyne:
@@ -66,9 +71,34 @@ Commands:
             OuttakeCoral:
                 SubCommands:
                     None(Make Sure to lock the outaking if elevator in basement)
-
-    
-    Elijah:
+            IntakeAlgeaFromReef:
+                Requred Subsystems:
+                    Elevator
+                    AlgaePivot 
+                    AlgaeWheels
+                SubCommands-None
+            IntakeAlgaeFromGround:
+                Requred Subsystems:
+                        Elevator
+                        AlgaePivot 
+                        AlgaeWheels
+                SubCommands-None
+            PlaceAlgaeBarge:
+                Requred Subsystems:
+                    Elevator
+                    AlgaePivot 
+                    AlgaeWheels
+                SubCommands:
+                    ElevatorBargeHight
+                    AlgaeWheelsOut
+            EjectAlgae:
+                Requred Subsystems:
+                    Elevator
+                    AlgaePivot 
+                    AlgaeWheels
+                SubCommands:
+                    ElevatorL1
+                    AlgaeWheelsOut
         ScoreAutoPosition:
             ReefTreeAutoPositionWithTrajectoryAndDistanceSensor(Name)x12
             ReefTreeAutoPositionWithTrajectory(Name)x12
