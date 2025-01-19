@@ -7,7 +7,6 @@ import com.playingwithfusion.TimeOfFlight;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TransitConstants.TransitCoralSensorConstants;
-import frc.robot.Subsystems.TransitTunnel.CoralSensorTransit.CoralSensorTransitIOInputsAutoLogged;
 
 
 /**
@@ -15,17 +14,17 @@ import frc.robot.Subsystems.TransitTunnel.CoralSensorTransit.CoralSensorTransitI
  * This is for checking whether a note is loaded in our robot.
  */
 public class TransitCoralSensorSubsystem extends SubsystemBase{
-    private TransitCoralSensorIO TransitCoralSensorIO;
-    private CoralSensorTransitIOInputsAutoLogged transitCoralSensorInputs = new CoralSensorTransitIOInputsAutoLogged();
+    private TransitCoralSensorIO transitCoralSensorIO;
+    private TransitCoralSensorIOInputsAutoLogged transitCoralSensorInputs = new TransitCoralSensorIOInputsAutoLogged();
 
-    public TransitCoralSensorSubsystem(TransitCoralSensorIO TransitCoralSensorIO) {
-        this.TransitCoralSensorIO = TransitCoralSensorIO;
+    public TransitCoralSensorSubsystem(TransitCoralSensorIO transitCoralSensorIO) {
+        this.transitCoralSensorIO = transitCoralSensorIO;
     }
 
     @Override
     public void periodic() {
-        this.TransitCoralSensorIO.updateInputs(this.transitCoralSensorInputs);
-        Logger.processInputs("Transit/CoralSensorTransit", this.transitCoralSensorInputs);
+        this.transitCoralSensorIO.updateInputs(this.transitCoralSensorInputs);
+        Logger.processInputs("Transit/TransitCoralSensor", this.transitCoralSensorInputs);
     }
 
     public boolean isCoralInTransit() {
