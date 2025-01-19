@@ -7,6 +7,11 @@ public class NetworkTablesTunablePIDConstants {
     private NetworkTablesChangableValue changableDValue;
     private NetworkTablesChangableValue changableFFValue;
 
+    // Specific to certain implementations of PID
+    private NetworkTablesChangableValue changableGValue; // Gravity
+    private NetworkTablesChangableValue changableSValue; // Static friction
+    private boolean isUsingAdvancedPID = false; // Whether the variables above will be used
+
 
     /**
      * WORNING!!! THIS WILL NOT WORK DURING MATCHES AT COMPETION.
@@ -30,24 +35,67 @@ public class NetworkTablesTunablePIDConstants {
         this.changableFFValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/FFValue", (double)defaultFFValue);
     }
 
+    public NetworkTablesTunablePIDConstants(String baseNetworkTablesKey,
+    double defaultPValue,
+    double defaultIValue,
+    double defaultDValue,
+    double defaultFFValue,
+    double defaultGValue,
+    double defaultSValue) {
+        this.changablePValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/PValue", (double)defaultPValue);
+        this.changableIValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/IValue", (double)defaultIValue);
+        this.changableDValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/DValue", (double)defaultDValue);
+        this.changableFFValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/FFValue", (double)defaultFFValue);
+        this.changableGValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/GValue", (double)defaultGValue);
+        this.changableSValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/SValue", (double)defaultSValue);
+        isUsingAdvancedPID = true;
+    }
+    
+
     /**
      * The values of all four PID Constant as an array of doubles
-     * @return Double[]-{PValue, IValue, DValue, FFValue} The values of the PID as an array
+     * @return Double[]-{PValue, IValue, DValue, FFValue, (GValue, SValue)} The values of the PID as an array
      */
     public double[] getUpdatedPIDConstants() {
-        double[] arrayOfPIDValues = {
-            (double)this.changablePValue.getChangableValueOnNetworkTables(),
-            (double)this.changableIValue.getChangableValueOnNetworkTables(),
-            (double)this.changableDValue.getChangableValueOnNetworkTables(),
-            (double)this.changableFFValue.getChangableValueOnNetworkTables()
-        };
+        double[] arrayOfPIDValues;
 
+        if (isUsingAdvancedPID) {
+
+            arrayOfPIDValues = new double[] {
+                (double)this.changablePValue.getChangableValueOnNetworkTables(),
+                (double)this.changableIValue.getChangableValueOnNetworkTables(),
+                (double)this.changableDValue.getChangableValueOnNetworkTables(),
+                (double)this.changableFFValue.getChangableValueOnNetworkTables(),
+                (double)this.changableGValue.getChangableValueOnNetworkTables(),
+                (double)this.changableSValue.getChangableValueOnNetworkTables()
+            };
+
+        } else {
+
+            arrayOfPIDValues = new double[] {
+                (double)this.changablePValue.getChangableValueOnNetworkTables(),
+                (double)this.changableIValue.getChangableValueOnNetworkTables(),
+                (double)this.changableDValue.getChangableValueOnNetworkTables(),
+                (double)this.changableFFValue.getChangableValueOnNetworkTables()
+            };
+
+        }
         return arrayOfPIDValues;
     }
 
     public boolean hasAnyPIDValueChanged() {
-        return this.changablePValue.hasChangableValueChanged() || this.changableIValue.hasChangableValueChanged() ||
-            this.changableDValue.hasChangableValueChanged() || this.changableFFValue.hasChangableValueChanged();
+        boolean valuesChanged =  
+        this.changablePValue.hasChangableValueChanged() || 
+        this.changableIValue.hasChangableValueChanged() ||
+        this.changableDValue.hasChangableValueChanged() || 
+        this.changableFFValue.hasChangableValueChanged();
+        if (isUsingAdvancedPID) {
+            return valuesChanged ||
+            this.changableGValue.hasChangableValueChanged() ||
+            this.changableSValue.hasChangableValueChanged();
+        } else {
+            return valuesChanged;
+        }
     }
 
 }
