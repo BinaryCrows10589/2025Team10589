@@ -7,6 +7,7 @@ import com.playingwithfusion.TimeOfFlight;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GroundIntakeConstants;
+import frc.robot.Constants.GroundIntakeConstants.CoralSensorIntakeConstants;
 
 /**
  * Provides methods for accessing the distance reported by our time-of-flight sensor.
@@ -14,7 +15,7 @@ import frc.robot.Constants.GroundIntakeConstants;
  */
 public class CoralSensorIntakeSubsystem extends SubsystemBase{
     private CoralSensorIntakeIO coralSensorIntakeIO;
-    private CoralSensorIntakeIOInputsAutoLogged coralSensorIntakeInputs;
+    private CoralSensorIntakeIOInputsAutoLogged coralSensorIntakeInputs = new CoralSensorIntakeIOInputsAutoLogged();
 
     public CoralSensorIntakeSubsystem(CoralSensorIntakeIO coralSensorIntakeIO) {
         this.coralSensorIntakeIO = coralSensorIntakeIO;
@@ -29,7 +30,7 @@ public class CoralSensorIntakeSubsystem extends SubsystemBase{
     public boolean isCoralInIntake() {
         return this.coralSensorIntakeInputs.validReading && 
             this.coralSensorIntakeInputs.distanceSensorReadingMilameters <
-            GroundIntakeConstants.kCoralIntakeSensorMaxCoralDistanceMilameters;
+            CoralSensorIntakeConstants.kCoralIntakeSensorMaxCoralDistanceMilameters;
     }
  
 

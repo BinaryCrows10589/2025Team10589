@@ -16,7 +16,7 @@ Mechanisms:
             Subsystems:
                 Pivot-PositionalPID On Krakens with CTRE Throughbore-Done(Untested)
                 IntakeWheels-Voltage Control On Neo
-                CoralSensorIntake-PlayingWithFusion Distance Sensor
+                CoralSensorIntake-PlayingWithFusion Distance Sensor-Done(Untested)
         Transit:
             Subsystems:
                 TransitWheels-Voltage
