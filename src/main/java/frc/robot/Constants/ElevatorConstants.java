@@ -23,5 +23,11 @@ public class ElevatorConstants {
 
     public static final boolean isSlaveReversed = true;
 
+    public static final double kMotionMagicCruiseVelocity = 0;
+
+    public static final double kMotionMagicAcceleration = 0;
+
+    public static final double kMotionMagicJerk = 0;
+
 
 }
