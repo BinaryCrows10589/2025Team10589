@@ -23,10 +23,10 @@ Mechanisms:
                 TransitCoralSensor-Done(Untested)
         Funnel:
             Subsysetms:
-                CoralSensorFunnel-PlayingWithFusion Distance Sensor
+                CoralSensorFunnel-PlayingWithFusion Distance Sensor-Done(Untested)
         Reef Tree Detector:
             Subsystems:
-                ReefTreeDetector-PlayingWithFusion Distance Sensor
+                ReefTreeDetector-PlayingWithFusion Distance Sensor-Done(Untested)
         AlgaeSystem:
             Subsystems:
             AlgeaPivot-PositionalPID, Neo+RevThroughBore
