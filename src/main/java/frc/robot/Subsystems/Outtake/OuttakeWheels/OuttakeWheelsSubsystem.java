@@ -18,14 +18,14 @@ public class OuttakeWheelsSubsystem {
         Logger.processInputs("Outtake/Wheels", outtakeWheelsInputs);
     }
     public void stopOuttake() {
-        outtakeWheelsIO.setWheels(0, 0);
+        outtakeWheelsIO.setWheelVoltages(0, 0);
     }
     public void outtakeCoral() {
-        outtakeWheelsIO.setWheels(OuttakeConstants.kLeftWheel, -OuttakeConstants.kRightWheel);
+        outtakeWheelsIO.setWheelVoltages(OuttakeConstants.kLeftWheel, -OuttakeConstants.kRightWheel);
     }
     // oh gosh, I hope it never comes to this
     public void intakeCoral() {
-        outtakeWheelsIO.setWheels(-OuttakeConstants.kLeftWheel, OuttakeConstants.kRightWheel);
+        outtakeWheelsIO.setWheelVoltages(-OuttakeConstants.kLeftWheel, OuttakeConstants.kRightWheel);
     }
 
 }

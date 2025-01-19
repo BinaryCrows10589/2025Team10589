@@ -16,7 +16,7 @@ import frc.robot.Constants.OuttakeConstants;
 import frc.robot.Subsystems.Elevator.ElevatorIO.ElevatorIOInputs;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
-public class OuttakeWheelsIOPositionalPID implements OuttakeWheelsIO {
+public class OuttakeWheelsIONEO implements OuttakeWheelsIO {
     
     private SparkMax leftWheel;
     private SparkMax rightWheel;
@@ -30,7 +30,7 @@ public class OuttakeWheelsIOPositionalPID implements OuttakeWheelsIO {
     private NetworkTablesTunablePIDConstants leftWheelPIDConstantTuner;
     private NetworkTablesTunablePIDConstants rightWheelPIDConstantTuner;
 
-    public OuttakeWheelsIOPositionalPID() {
+    public OuttakeWheelsIONEO() {
         this.leftWheel = new SparkMax(OuttakeConstants.kLeftWheelMotorCANID, MotorType.kBrushless);
         this.rightWheel = new SparkMax(OuttakeConstants.kRightWheelMotorCANID, MotorType.kBrushless);
 
@@ -40,12 +40,20 @@ public class OuttakeWheelsIOPositionalPID implements OuttakeWheelsIO {
     }
 
     @Override
-    public void setWheels(double leftWheelPosition, double rightWheelPosition) {
+    public void setWheelPositions(double leftWheelPosition, double rightWheelPosition) {
         desiredLeftWheel = leftWheelPosition;
         desiredRightWheel = leftWheelPosition;
 
         leftWheelPIDController.setReference(rightWheelPosition, ControlType.kPosition);
         rightWheelPIDController.setReference(rightWheelPosition, ControlType.kPosition);
+    }
+
+    @Override
+    public void setWheelVoltages(double leftWheelVoltage, double rightWheelVoltage) {
+        desiredLeftWheel = leftWheelVoltage;
+        desiredRightWheel = rightWheelVoltage;
+        leftWheel.setVoltage(leftWheelVoltage);
+        rightWheel.setVoltage(rightWheelVoltage);
     }
 
     private void configureWheels() {
