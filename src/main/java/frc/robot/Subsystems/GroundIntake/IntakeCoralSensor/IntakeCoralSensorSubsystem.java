@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GroundIntakeConstants;
 import frc.robot.Constants.GroundIntakeConstants.IntakeCoralSensorConstants;
-import frc.robot.Subsystems.GroundIntake.CoralSensorIntake.CoralSensorIntakeIOInputsAutoLogged;
 
 /**
  * Provides methods for accessing the distance reported by our time-of-flight sensor.
@@ -16,7 +15,7 @@ import frc.robot.Subsystems.GroundIntake.CoralSensorIntake.CoralSensorIntakeIOIn
  */
 public class IntakeCoralSensorSubsystem extends SubsystemBase{
     private IntakeCoralSensorIO intakeCoralSensorIO;
-    private CoralSensorIntakeIOInputsAutoLogged intakeCoralSensorInputs = new CoralSensorIntakeIOInputsAutoLogged();
+    private IntakeCoralSensorIOInputsAutoLogged intakeCoralSensorInputs = new IntakeCoralSensorIOInputsAutoLogged();
 
     public IntakeCoralSensorSubsystem(IntakeCoralSensorIO intakeCoralSensorIO) {
         this.intakeCoralSensorIO = intakeCoralSensorIO;
@@ -25,7 +24,7 @@ public class IntakeCoralSensorSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
         this.intakeCoralSensorIO.updateInputs(this.intakeCoralSensorInputs);
-        Logger.processInputs("GroundIntake/CoralSensorIntake", this.intakeCoralSensorInputs);
+        Logger.processInputs("GroundIntake/IntakeCoralSensor", this.intakeCoralSensorInputs);
     }
 
     public boolean isCoralInIntake() {
