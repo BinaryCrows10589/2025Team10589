@@ -13,7 +13,7 @@ public interface ElevatorIO {
 
         public double elevatorRPM = 0.0;
         public double elevatorAppliedVolts = 0.0;
-        public double elevatorCurrentAmps = 0.0;
+        public double[] elevatorCurrentAmps = new double[] {};
     }
 
     /**

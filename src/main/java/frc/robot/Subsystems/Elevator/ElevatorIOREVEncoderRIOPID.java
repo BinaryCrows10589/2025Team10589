@@ -16,22 +16,25 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.math.controller.PIDController;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotIO.PivotIOInputs;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
-public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
+public class ElevatorIOREVEncoderRIOPID implements ElevatorIO {
     
     private TalonFX elevatorMasterMotor;
     private TalonFX elevatorSlaveMotor;
     private SparkMax elevatorEncoder;
 
-    private PositionVoltage desiredElevatorPosition = new PositionVoltage(ElevatorConstants.kDefaultElevatorPosition);
+    private PIDController pidController;
+
+    private double desiredElevatorPosition = ElevatorConstants.kDefaultElevatorPosition;
 
     private NetworkTablesTunablePIDConstants elevatorMotorPIDConstantTuner;
 
 
-    public ElevatorIOREVEncoderPositionalPID() {
+    public ElevatorIOREVEncoderRIOPID() {
         this.elevatorMasterMotor = new TalonFX(ElevatorConstants.kElevatorMasterMotorCANID);
         this.elevatorSlaveMotor = new TalonFX(ElevatorConstants.kElevatorSlaveMotorCANID);
         this.elevatorEncoder = new SparkMax(ElevatorConstants.kElevatorEncoderCANID, null);
@@ -53,24 +56,20 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
         //TODO: I don't think this requires more configuration, but we'll have to see
         elevatorSlaveMotor.setControl(new Follower(elevatorMasterMotor.getDeviceID(), ElevatorConstants.isSlaveReversed));
 
-        Slot0Configs elevatorPositionalPIDConfigs = new Slot0Configs();
-        elevatorPositionalPIDConfigs.kP = ElevatorConstants.kElevatorPPIDValue;
-        elevatorPositionalPIDConfigs.kI = ElevatorConstants.kElevatorIPIDValue;
-        elevatorPositionalPIDConfigs.kD = ElevatorConstants.kElevatorDPIDValue;
-        elevatorPositionalPIDConfigs.kG = ElevatorConstants.kElevatorGPIDValue;
-        elevatorPositionalPIDConfigs.kS = ElevatorConstants.kElevatorSPIDValue;
+        this.pidController = new PIDController(
+            ElevatorConstants.kElevatorPPIDValue,
+            ElevatorConstants.kElevatorIPIDValue,
+            ElevatorConstants.kElevatorDPIDValue
+        );
 
         this.elevatorMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("GroundIntake/Pivot/", 
-            elevatorPositionalPIDConfigs.kP,
-            elevatorPositionalPIDConfigs.kI,
-            elevatorPositionalPIDConfigs.kD,
-            0,
-            elevatorPositionalPIDConfigs.kG,
-            elevatorPositionalPIDConfigs.kS
+            pidController.getP(),
+            pidController.getI(),
+            pidController.getD(),
+            0
             );
 
         this.elevatorMasterMotor.getConfigurator().apply(masterConfiguration);
-        this.elevatorMasterMotor.getConfigurator().apply(elevatorPositionalPIDConfigs); 
     }
 
     private void configureElevatorEncoder() {
@@ -96,20 +95,16 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
     private void updatePIDValuesFromNetworkTables() {
         double[] currentDrivePIDValues = this.elevatorMotorPIDConstantTuner.getUpdatedPIDConstants();
         if(this.elevatorMotorPIDConstantTuner.hasAnyPIDValueChanged()) {
-            Slot0Configs newDrivePIDConfigs = new Slot0Configs();
-            newDrivePIDConfigs.kP = currentDrivePIDValues[0];
-            newDrivePIDConfigs.kI = currentDrivePIDValues[1];
-            newDrivePIDConfigs.kD = currentDrivePIDValues[2];
-            newDrivePIDConfigs.kG = currentDrivePIDValues[4];
-            newDrivePIDConfigs.kS = currentDrivePIDValues[5];
-            this.elevatorMasterMotor.getConfigurator().apply(newDrivePIDConfigs);
+            pidController.setP(currentDrivePIDValues[0]);
+            pidController.setI(currentDrivePIDValues[1]);
+            pidController.setD(currentDrivePIDValues[2]);
         }
     }
 
     @Override
     public void updateInputs(ElevatorIOInputs elevatorIOInputs) {
         elevatorIOInputs.elevatorPosition = elevatorMasterMotor.getPosition().getValueAsDouble();
-        elevatorIOInputs.desiredElevatorPosition = desiredElevatorPosition.Position;
+        elevatorIOInputs.desiredElevatorPosition = desiredElevatorPosition;
         elevatorIOInputs.elevatorRPM = elevatorMasterMotor.getVelocity().getValueAsDouble();
         elevatorIOInputs.elevatorAppliedVolts = elevatorMasterMotor.getMotorVoltage().getValueAsDouble();
         elevatorIOInputs.elevatorCurrentAmps = new double[] {elevatorMasterMotor.getSupplyCurrent().getValueAsDouble()};
@@ -119,8 +114,8 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
 
     @Override
     public void setDesiredPosition(double desiredPosition) {
-        desiredElevatorPosition.Position = desiredPosition;
-        this.elevatorMasterMotor.setControl(desiredElevatorPosition);
+        desiredElevatorPosition = desiredPosition;
+        this.elevatorMasterMotor.set(pidController.calculate(desiredElevatorPosition));
         
     }
 

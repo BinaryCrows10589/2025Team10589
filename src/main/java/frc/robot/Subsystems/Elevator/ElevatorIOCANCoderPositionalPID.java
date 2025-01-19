@@ -10,31 +10,24 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Subsystems.GroundIntake.Pivot.PivotIO.PivotIOInputs;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
-public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
+public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
     
     private TalonFX elevatorMasterMotor;
     private TalonFX elevatorSlaveMotor;
-    private SparkMax elevatorEncoder;
 
     private PositionVoltage desiredElevatorPosition = new PositionVoltage(ElevatorConstants.kDefaultElevatorPosition);
 
     private NetworkTablesTunablePIDConstants elevatorMotorPIDConstantTuner;
 
 
-    public ElevatorIOREVEncoderPositionalPID() {
+    public ElevatorIOCANCoderPositionalPID() {
         this.elevatorMasterMotor = new TalonFX(ElevatorConstants.kElevatorMasterMotorCANID);
         this.elevatorSlaveMotor = new TalonFX(ElevatorConstants.kElevatorSlaveMotorCANID);
-        this.elevatorEncoder = new SparkMax(ElevatorConstants.kElevatorEncoderCANID, null);
 
         configureElevatorEncoder();
         configureElevatorMotors();
@@ -46,6 +39,8 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
         masterConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         masterConfiguration.Feedback.SensorToMechanismRatio = 1.0;
         masterConfiguration.Feedback.RotorToSensorRatio = ElevatorConstants.kElevatorGearRatio;
+        masterConfiguration.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
+        masterConfiguration.Feedback.FeedbackRemoteSensorID = ElevatorConstants.kElevatorEncoderCANID;
         masterConfiguration.Voltage.PeakForwardVoltage = ElevatorConstants.kMaxVoltage;
         masterConfiguration.Voltage.PeakReverseVoltage = -ElevatorConstants.kMaxVoltage;
         //masterConfiguration.Feedback.FeedbackRotorOffset = elevatorEncoder.getAbsoluteEncoder().getPosition(); // Reset the builtin encoder to the REV encoder's value
@@ -66,8 +61,7 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
             elevatorPositionalPIDConfigs.kD,
             0,
             elevatorPositionalPIDConfigs.kG,
-            elevatorPositionalPIDConfigs.kS
-            );
+            elevatorPositionalPIDConfigs.kS);
 
         this.elevatorMasterMotor.getConfigurator().apply(masterConfiguration);
         this.elevatorMasterMotor.getConfigurator().apply(elevatorPositionalPIDConfigs); 
@@ -76,15 +70,8 @@ public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {
     private void configureElevatorEncoder() {
         SparkMaxConfig encoderConfig = new SparkMaxConfig();
         encoderConfig.absoluteEncoder.positionConversionFactor(ElevatorConstants.kElevatorGearRatio); //TODO: Is this right?
-        elevatorEncoder.configure(encoderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         
-    }
-
-    public void resetElevatorMotorToAbsolute() {
-        this.elevatorMasterMotor.setPosition((
-            this.elevatorEncoder.getAbsoluteEncoder().getPosition()
-        ));
     }
 
     /**
