@@ -15,7 +15,7 @@ public class OuttakeWheelsSubsystem {
 
     public void periodic() {
         this.outtakeWheelsIO.updateInputs(this.outtakeWheelsInputs);
-        Logger.processInputs("/Outtake/Wheels", outtakeWheelsInputs);
+        Logger.processInputs("Outtake/Wheels", outtakeWheelsInputs);
     }
     public void stopOuttake() {
         outtakeWheelsIO.setWheels(0, 0);
