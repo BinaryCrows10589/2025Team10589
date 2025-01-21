@@ -35,7 +35,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorIO.setDesiredPosition(resolveElevatorPosition(desiredPosition));
     }
 
-    private double resolveElevatorPosition(ElevatorPosition desiredPosition) {
+    public static double resolveElevatorPosition(ElevatorPosition desiredPosition) {
         switch (desiredPosition) {
             case L1:
                 return 0;
