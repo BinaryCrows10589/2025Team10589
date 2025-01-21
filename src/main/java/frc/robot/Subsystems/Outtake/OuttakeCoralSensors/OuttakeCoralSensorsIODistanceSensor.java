@@ -3,8 +3,6 @@ package frc.robot.Subsystems.Outtake.OuttakeCoralSensors;
 import com.playingwithfusion.TimeOfFlight;
 
 import frc.robot.Constants.OuttakeConstants;
-import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIO.FunnelCoralSensorIOInputs;
-import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIO.OuttakeCoralSensorsIOInputs;
 
 public class OuttakeCoralSensorsIODistanceSensor implements OuttakeCoralSensorsIO {
     private TimeOfFlight outtakeCoralSensorStart;

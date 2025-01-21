@@ -2,12 +2,8 @@ package frc.robot.Subsystems.Funnel.FunnelCoralSensor;
 
 import org.littletonrobotics.junction.Logger;
 
-import com.playingwithfusion.TimeOfFlight;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FunnelConstants;
-import frc.robot.Constants.TransitConstants.TransitCoralSensorConstants;
 
 
 /**

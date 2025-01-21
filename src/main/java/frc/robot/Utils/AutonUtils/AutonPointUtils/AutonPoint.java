@@ -1,19 +1,15 @@
 package frc.robot.Utils.AutonUtils.AutonPointUtils;
 
-import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
-import frc.robot.Constants.FieldConstants;
-import frc.robot.Constants.RobotModeConstants;
 
 public class AutonPoint {
     
     private Pose2d autonPoint;
     private FudgeFactor fudgeFactor;
     private double attackAngleDegrees;
-    private boolean allowMirroring;
+    //private boolean allowMirroring;
     
     /**
      * Current Mirring assumes assumes mirred standered mirred field rather than a rotated or fliped.
@@ -123,7 +119,7 @@ public class AutonPoint {
         this.autonPoint = new Pose2d(xPointMeters, yPointMeters, Rotation2d.fromDegrees(rotationAngleDegrees));
         this.autonPoint.getRotation().getDegrees();
         this.fudgeFactor = new FudgeFactor(0, 0, 0);
-        this.allowMirroring = allowMirroring;
+        //this.allowMirroring = allowMirroring;
         this.attackAngleDegrees = attackAngleDegrees;
     }
 

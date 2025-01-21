@@ -9,9 +9,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.OuttakeConstants;
-import frc.robot.Subsystems.Climber.ClimberIO.ClimberIOInputs;
-import frc.robot.Subsystems.Outtake.OuttakeWheels.OuttakeWheelsIO.OuttakeWheelsIOInputs;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class ClimberIONeoREVThroughbore implements ClimberIO {

@@ -2,9 +2,6 @@ package frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector;
 
 import org.littletonrobotics.junction.AutoLog;
 
-import frc.robot.Constants.GroundIntakeConstants;
-import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIO.SwerveModuleIOInputs;
-
 public interface ReefTreeDetectorIO {
 
     @AutoLog

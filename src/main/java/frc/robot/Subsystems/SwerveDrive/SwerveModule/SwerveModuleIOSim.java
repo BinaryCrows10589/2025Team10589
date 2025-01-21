@@ -9,9 +9,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.RobotModeConstants;
 import frc.robot.Constants.DrivetrainConstants.SwerveModuleConstants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
@@ -25,27 +23,27 @@ public class SwerveModuleIOSim implements SwerveModuleIO{
     private DCMotorSim driveMotor = new DCMotorSim(driveMotorLinearSystem, DCMotor.getKrakenX60(1));
     private DCMotorSim turnMotor = new DCMotorSim(turnMotorLinearSystem, DCMotor.getKrakenX60(1));
 
-    private PIDController drivePIDController; 
+    //private PIDController drivePIDController; 
     private PIDController turnPIDController; 
     
-    private double desiredVelocityRPM = 0;
+    //private double desiredVelocityRPM = 0;
     private double desiredPositionRotations = 0;
     private double driveVolts = 0;
 
     private String swerveModuleName;
 
-    private NetworkTablesTunablePIDConstants driveMotorPIDConstantTuner;
+    //private NetworkTablesTunablePIDConstants driveMotorPIDConstantTuner;
     private NetworkTablesTunablePIDConstants turnMotorPIDConstantTuner;
 
     public SwerveModuleIOSim(String swerveModuleName) {
         this.swerveModuleName = swerveModuleName;
-        configDirvePID();
+        //configDirvePID();
         configTurnPID();
 
-        this.driveMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("SwerveModule/DrivePIDValues",
+        /*this.driveMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("SwerveModule/DrivePIDValues",
             SwerveModuleConstants.kPModuleSIMDrivePIDValue,
             SwerveModuleConstants.kIModuleSIMDrivePIDValue,
-            SwerveModuleConstants.kDModuleSIMDrivePIDValue, 0);
+            SwerveModuleConstants.kDModuleSIMDrivePIDValue, 0);*/
 
         this.turnMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("SwerveModule/TurnPIDValues",
             SwerveModuleConstants.kPModuleSIMTurnPIDValue,
@@ -56,11 +54,13 @@ public class SwerveModuleIOSim implements SwerveModuleIO{
     /**
      * Configures the drive motor PID Controller. 
      */
+    /* 
     private void configDirvePID() {
         this.drivePIDController = new PIDController(SwerveModuleConstants.kPModuleSIMDrivePIDValue,
             SwerveModuleConstants.kIModuleSIMDrivePIDValue,
             SwerveModuleConstants.kDModuleSIMDrivePIDValue, RobotModeConstants.kLoopPeriod);
     }
+    */
     
     /**
      * Configures the turn motor PID Controller. 
@@ -78,11 +78,13 @@ public class SwerveModuleIOSim implements SwerveModuleIO{
      * Must be called periodicly.
      */
     private void updatePIDValuesFromNetworkTables() {
+        /* 
         double[] currentDrivePIDValues = this.driveMotorPIDConstantTuner.getUpdatedPIDConstants();
         if(this.driveMotorPIDConstantTuner.hasAnyPIDValueChanged()) {
             this.drivePIDController = new PIDController(currentDrivePIDValues[0],
                 currentDrivePIDValues[1], currentDrivePIDValues[2], RobotModeConstants.kLoopPeriod);
         }
+        */
 
         double[] currentTurnPIDValues = this.turnMotorPIDConstantTuner.getUpdatedPIDConstants();
         if(this.turnMotorPIDConstantTuner.hasAnyPIDValueChanged()) {
@@ -120,11 +122,12 @@ public class SwerveModuleIOSim implements SwerveModuleIO{
     }
 
     
-    public void setDesiredModuleVelocityRPM(double desiredRPM) {
+    /*public void setDesiredModuleVelocityRPM(double desiredRPM) {
         Logger.recordOutput(SwerveModuleConstants.kSwerveModuleOutputLoggerBase + swerveModuleName + "DesiredRPM", desiredRPM);
 
         this.desiredVelocityRPM = desiredRPM;
     }
+    */
 
     @Override
     public void setDesiredModuleDriveVoltage(double desiredVoltage) {

@@ -1,11 +1,6 @@
 package frc.robot.Utils.SwerveDriveUtils;
 
 import java.util.function.Consumer;
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
-
-
-import org.littletonrobotics.junction.Logger;
 
 import frc.robot.Constants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Utils.CommandUtils.Wait;

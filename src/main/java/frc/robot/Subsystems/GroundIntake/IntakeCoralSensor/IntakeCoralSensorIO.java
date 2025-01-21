@@ -2,8 +2,6 @@ package frc.robot.Subsystems.GroundIntake.IntakeCoralSensor;
 
 import org.littletonrobotics.junction.AutoLog;
 
-import frc.robot.Constants.GroundIntakeConstants;
-import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIO.SwerveModuleIOInputs;
 
 public interface IntakeCoralSensorIO {
 
