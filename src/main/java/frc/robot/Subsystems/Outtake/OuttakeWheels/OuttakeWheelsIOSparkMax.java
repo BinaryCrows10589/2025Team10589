@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.MechanismConstants.OuttakeConstants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
-public class OuttakeWheelsIONEO implements OuttakeWheelsIO {
+public class OuttakeWheelsIOSparkMax implements OuttakeWheelsIO {
     
     private SparkMax leftWheel;
     private SparkMax rightWheel;
@@ -26,7 +26,7 @@ public class OuttakeWheelsIONEO implements OuttakeWheelsIO {
     private NetworkTablesTunablePIDConstants leftWheelPIDConstantTuner;
     private NetworkTablesTunablePIDConstants rightWheelPIDConstantTuner;
 
-    public OuttakeWheelsIONEO() {
+    public OuttakeWheelsIOSparkMax() {
         this.leftWheel = new SparkMax(OuttakeConstants.kLeftWheelMotorCANID, MotorType.kBrushless);
         this.rightWheel = new SparkMax(OuttakeConstants.kRightWheelMotorCANID, MotorType.kBrushless);
 

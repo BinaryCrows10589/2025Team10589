@@ -6,7 +6,7 @@ import frc.robot.Constants.GenericConstants.ControlConstants;
 
 public class ButtonBoardInterface {
     private GenericHID buttonBoard;
-    private Command[][] buttonMap = new Command[this.buttonBoard.getButtonCount()][2];
+    private Command[][] buttonMap = new Command[this.buttonBoard.getButtonCount()+1][2];
     
     public ButtonBoardInterface(int controlerPortID) {
         this.buttonBoard = new GenericHID(controlerPortID);
@@ -23,16 +23,18 @@ public class ButtonBoardInterface {
     }
 
     public void periodic() {
-        for(int i = 0; i < buttonMap.length; i++) {
-            int buttonIndex = i+1;
-            if(this.buttonBoard.getRawButtonPressed(buttonIndex)) {
-                this.buttonMap[buttonIndex][0].schedule();
+        for(int i = 1; i < buttonMap.length; i++) {
+            if(this.buttonBoard.getRawButtonPressed(i)) {
+                if(this.buttonMap[i][0] != null)
+                    this.buttonMap[i][0].schedule();
             }
-            if(this.buttonBoard.getRawButtonReleased(buttonIndex)) {
-                if(this.buttonMap[buttonIndex][1] == null) {
-                    this.buttonMap[buttonIndex][0].cancel();
+            if(this.buttonBoard.getRawButtonReleased(i)) {
+                if(this.buttonMap[i][1] == null) {
+                    if(this.buttonMap[i][0] != null)
+                        this.buttonMap[i][0].cancel();
                 } else {
-                    this.buttonMap[buttonIndex][1].schedule();
+                    if(this.buttonMap[i][1] != null)
+                        this.buttonMap[i][1].schedule();
                 }
             }
         }

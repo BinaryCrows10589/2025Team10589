@@ -3,6 +3,9 @@ package frc.robot;
 
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeCoralSensorConstants;
+import frc.robot.Subsystems.Elevator.ElevatorIO;
+import frc.robot.Subsystems.Elevator.ElevatorIOCANCoderPositionalPID;
+import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIO;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIODistanceSensor;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorSubsystem;
@@ -15,6 +18,12 @@ import frc.robot.Subsystems.GroundIntake.IntakeWheels.IntakeWheelsSubsystem;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotIO;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotIOTalonFX;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotSubsystem;
+import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIO;
+import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIODistanceSensor;
+import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
+import frc.robot.Subsystems.Outtake.OuttakeWheels.OuttakeWheelsIO;
+import frc.robot.Subsystems.Outtake.OuttakeWheels.OuttakeWheelsIOSparkMax;
+import frc.robot.Subsystems.Outtake.OuttakeWheels.OuttakeWheelsSubsystem;
 import frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector.ReefTreeDetectorIO;
 import frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector.ReefTreeDetectorIODistanceSensor;
 import frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector.ReefTreeDetectorSubsystem;
@@ -41,6 +50,12 @@ public class RobotCreator {
     private final FunnelCoralSensorSubsystem funnelCoralSensorSubsystem;
     private final ReefTreeDetectorSubsystem reefTreeDetectorSubsystem;
 
+    private final ElevatorSubsystem elevatorSubsystem;
+
+    private final OuttakeWheelsSubsystem outtakeWheelsSubsystem;
+    private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
+
+
  
     public RobotCreator() {
         this.driveSubsystemCreator = new DriveSubsystemCreator();
@@ -59,6 +74,11 @@ public class RobotCreator {
 
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIODistanceSensor());
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
+                
+                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderPositionalPID());
+
+                this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
+                this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());
 
                 break;
             case SIM:
@@ -74,6 +94,11 @@ public class RobotCreator {
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIODistanceSensor());
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
 
+                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderPositionalPID());
+
+                this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
+                this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());
+
                 break;
             case REPLAY:
                 // Replayed robot, disable IO implementations
@@ -87,6 +112,11 @@ public class RobotCreator {
 
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIO() {});
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIO() {});
+
+                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
+                
+                this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIO() {});
+                this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIO() {});
 
 
                 break;
@@ -125,6 +155,18 @@ public class RobotCreator {
 
     public ReefTreeDetectorSubsystem getReefTreeDetectorSubsystem() {
         return this.reefTreeDetectorSubsystem;
+    }
+
+    public ElevatorSubsystem getElevatorSubsystem() {
+        return this.elevatorSubsystem;
+    }
+
+    public OuttakeWheelsSubsystem getOuttakeWheelsSubsystem() {
+        return this.outtakeWheelsSubsystem;
+    }
+
+    public OuttakeCoralSensorsSubsystem getOuttakeCoralSensorsSubsystem() {
+        return this.outtakeCoralSensorsSubsystem;
     }
 
 }
