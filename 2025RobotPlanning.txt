@@ -2,15 +2,15 @@ Mechanisms:
     Boyne:
         Elevator:
             Subsystems:
-                Elevator-Two Ways do both., Normal Positional PID, Motion Magic Position PID. Double Kraken(One Follower one master), CTRE Throughbore, also impliment for rev throughbore
+                Elevator-Two Ways do both., Normal Positional PID, Motion Magic Position PID. Double Kraken(One Follower one master), CTRE Throughbore, also impliment for rev throughbore-Done(Untested)
         Outtake:
             Subsystems:
-                OuttakeWheels-Voltage and Positional PID, 2 Neos(one right one left)
-                CoralDetectorStart-PlayingWithFusion Distance Sensor
-                CoralDetectorEnd-PlayingWithFusion Distance Sensor
+                OuttakeWheels-Voltage and Positional PID, 2 Neos(one right one left)-Done(Untested)
+                CoralDetectorStart-PlayingWithFusion Distance Sensor-Done(Untested)
+                CoralDetectorEnd-PlayingWithFusion Distance Sensor-Done(Untested)
         Climber:
             Subsystems:
-                ClimberPivot-PositionalPID, Neo, Rev through bore
+                ClimberPivot-PositionalPID, Neo, Rev through bore-Done(Untested)
     Elijah:
         Ground Intake:
             Subsystems:

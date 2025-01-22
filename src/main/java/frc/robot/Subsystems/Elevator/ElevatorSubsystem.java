@@ -3,6 +3,9 @@ package frc.robot.Subsystems.Elevator;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.GroundIntakeConstants.PivotContants;
+import frc.robot.Utils.GeneralUtils.Tolerance;
 
 public class ElevatorSubsystem extends SubsystemBase {
     ElevatorIO elevatorIO;
@@ -31,8 +34,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void setDesiredElevatorPosition(double desiredPosition) {
         elevatorIO.setDesiredPosition(desiredPosition);
     }
+
     public void setDesiredElevatorPosition(ElevatorPosition desiredPosition) {
         elevatorIO.setDesiredPosition(resolveElevatorPosition(desiredPosition));
+    }
+
+    public boolean isElevatorInTolorence(double toloranceRotations) {
+        return Tolerance.inTolorance(this.elevatorInputs.desiredElevatorPosition, this.elevatorInputs.desiredElevatorPosition,
+        toloranceRotations);
     }
 
     public static double resolveElevatorPosition(ElevatorPosition desiredPosition) {
@@ -55,6 +64,4 @@ public class ElevatorSubsystem extends SubsystemBase {
                 return 0;
         }
     }
-
-
 }
