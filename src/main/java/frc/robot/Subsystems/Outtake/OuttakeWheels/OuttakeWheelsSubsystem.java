@@ -3,7 +3,6 @@ package frc.robot.Subsystems.Outtake.OuttakeWheels;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.MechanismConstants.OuttakeConstants;
 
 public class OuttakeWheelsSubsystem extends SubsystemBase{
     
@@ -28,6 +27,8 @@ public class OuttakeWheelsSubsystem extends SubsystemBase{
     
     public void setWheelPositionsReletiveToCurrentPose(double leftWheel, double rightWheel) {
         // Boyne do this
+        // Ok
+        outtakeWheelsIO.setWheelPositionsRelative(leftWheel, rightWheel);
     }
 
 }

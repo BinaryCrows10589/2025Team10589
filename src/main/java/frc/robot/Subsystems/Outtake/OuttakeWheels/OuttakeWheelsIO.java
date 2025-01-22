@@ -7,9 +7,11 @@ public interface OuttakeWheelsIO {
     @AutoLog
     public static class OuttakeWheelsIOInputs {
         public double leftWheelRPM;
-        public double leftWheelDesired;
+        public double leftWheelDesiredVoltage;
+        public double leftWheelDesiredPosition;
         public double rightWheelRPM;
-        public double rightWheelDesired;
+        public double rightWheelDesiredVoltage;
+        public double rightWheelDesiredPosition;
 
         public double leftWheelAppliedVolts;
         public double rightWheelAppliedVolts;
@@ -20,6 +22,7 @@ public interface OuttakeWheelsIO {
     public default void updateInputs(OuttakeWheelsIOInputs inputs) {}
 
     public default void setWheelPositions(double leftWheel, double rightWheel) {}
+    public default void setWheelPositionsRelative(double leftWheel, double rightWheel) {}
     public default void setWheelVoltages(double leftWheel, double rightWheel) {}
     
 }

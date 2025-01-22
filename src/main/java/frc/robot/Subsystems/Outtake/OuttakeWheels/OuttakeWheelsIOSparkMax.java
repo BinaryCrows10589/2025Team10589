@@ -7,6 +7,7 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.MechanismConstants.OuttakeConstants;
@@ -20,8 +21,11 @@ public class OuttakeWheelsIOSparkMax implements OuttakeWheelsIO {
     private SparkClosedLoopController leftWheelPIDController;
     private SparkClosedLoopController rightWheelPIDController;
 
-    private double desiredLeftWheel = 0;
-    private double desiredRightWheel = 0;
+    private double desiredLeftWheelVoltage = 0;
+    private double desiredRightWheelVoltage = 0;
+
+    private double desiredLeftWheelPosition = 0;
+    private double desiredRightWheelPosition = 0;
 
     private NetworkTablesTunablePIDConstants leftWheelPIDConstantTuner;
     private NetworkTablesTunablePIDConstants rightWheelPIDConstantTuner;
@@ -37,19 +41,28 @@ public class OuttakeWheelsIOSparkMax implements OuttakeWheelsIO {
 
     @Override
     public void setWheelPositions(double leftWheelPosition, double rightWheelPosition) {
-        desiredLeftWheel = leftWheelPosition;
-        desiredRightWheel = leftWheelPosition;
+        desiredLeftWheelPosition = leftWheelPosition;
+        desiredRightWheelPosition = rightWheelPosition;
 
-        leftWheelPIDController.setReference(rightWheelPosition, ControlType.kPosition);
-        rightWheelPIDController.setReference(rightWheelPosition, ControlType.kPosition);
+        leftWheelPIDController.setReference(desiredLeftWheelPosition, ControlType.kPosition);
+        rightWheelPIDController.setReference(desiredRightWheelPosition, ControlType.kPosition);
+    }
+
+    @Override
+    public void setWheelPositionsRelative(double leftWheelPosition, double rightWheelPosition) {
+        desiredLeftWheelPosition += leftWheelPosition;
+        desiredRightWheelPosition += leftWheelPosition;
+
+        leftWheelPIDController.setReference(desiredLeftWheelPosition, ControlType.kPosition);
+        rightWheelPIDController.setReference(desiredRightWheelPosition, ControlType.kPosition);
     }
 
     @Override
     public void setWheelVoltages(double leftWheelVoltage, double rightWheelVoltage) {
-        desiredLeftWheel = leftWheelVoltage;
-        desiredRightWheel = rightWheelVoltage;
-        leftWheel.setVoltage(leftWheelVoltage);
-        rightWheel.setVoltage(rightWheelVoltage);
+        desiredLeftWheelVoltage = leftWheelVoltage;
+        desiredRightWheelVoltage = rightWheelVoltage;
+        leftWheel.setVoltage(desiredLeftWheelVoltage);
+        rightWheel.setVoltage(desiredRightWheelVoltage);
     }
 
     private void configureWheels() {
@@ -80,6 +93,9 @@ public class OuttakeWheelsIOSparkMax implements OuttakeWheelsIO {
         OuttakeConstants.kRightWheelIPIDValue,
         OuttakeConstants.kRightWheelDPIDValue,
         0);
+
+        leftConfiguration.idleMode(IdleMode.kBrake);
+        leftConfiguration.idleMode(IdleMode.kBrake);
         
         leftWheel.configure(leftConfiguration, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         rightWheel.configure(rightConfiguration, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -94,9 +110,11 @@ public class OuttakeWheelsIOSparkMax implements OuttakeWheelsIO {
     @Override
     public void updateInputs(OuttakeWheelsIOInputs outtakeIOInputs) {
         outtakeIOInputs.leftWheelRPM = leftWheel.getEncoder().getVelocity();
-        outtakeIOInputs.leftWheelDesired = desiredLeftWheel;
+        outtakeIOInputs.leftWheelDesiredVoltage = desiredLeftWheelVoltage;
+        outtakeIOInputs.leftWheelDesiredPosition = desiredLeftWheelPosition;
         outtakeIOInputs.rightWheelRPM = rightWheel.getEncoder().getVelocity();
-        outtakeIOInputs.rightWheelDesired = desiredRightWheel;
+        outtakeIOInputs.rightWheelDesiredVoltage = desiredRightWheelVoltage;
+        outtakeIOInputs.rightWheelDesiredPosition = desiredRightWheelPosition;
         outtakeIOInputs.leftWheelAppliedVolts = leftWheel.getAppliedOutput() * leftWheel.getBusVoltage();
         outtakeIOInputs.rightWheelAppliedVolts = rightWheel.getAppliedOutput() * rightWheel.getBusVoltage();
         outtakeIOInputs.leftWheelCurrentAmps = new double[] {leftWheel.getOutputCurrent()};
