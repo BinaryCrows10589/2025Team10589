@@ -2,9 +2,7 @@ package frc.robot.Subsystems.GroundIntake.Pivot;
 
 import org.littletonrobotics.junction.AutoLog;
 
-import frc.robot.Constants.GroundIntakeConstants;
 import frc.robot.Constants.GroundIntakeConstants.PivotContants;
-import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIO.SwerveModuleIOInputs;
 
 public interface PivotIO {
 

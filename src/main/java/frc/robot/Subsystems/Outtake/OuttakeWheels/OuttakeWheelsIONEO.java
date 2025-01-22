@@ -2,8 +2,6 @@ package frc.robot.Subsystems.Outtake.OuttakeWheels;
 
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
-import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -11,12 +9,10 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OuttakeConstants;
-import frc.robot.Subsystems.Elevator.ElevatorIO.ElevatorIOInputs;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
-public class OuttakeWheelsIOPositionalPID implements OuttakeWheelsIO {
+public class OuttakeWheelsIONEO implements OuttakeWheelsIO {
     
     private SparkMax leftWheel;
     private SparkMax rightWheel;
@@ -30,7 +26,7 @@ public class OuttakeWheelsIOPositionalPID implements OuttakeWheelsIO {
     private NetworkTablesTunablePIDConstants leftWheelPIDConstantTuner;
     private NetworkTablesTunablePIDConstants rightWheelPIDConstantTuner;
 
-    public OuttakeWheelsIOPositionalPID() {
+    public OuttakeWheelsIONEO() {
         this.leftWheel = new SparkMax(OuttakeConstants.kLeftWheelMotorCANID, MotorType.kBrushless);
         this.rightWheel = new SparkMax(OuttakeConstants.kRightWheelMotorCANID, MotorType.kBrushless);
 
@@ -40,12 +36,20 @@ public class OuttakeWheelsIOPositionalPID implements OuttakeWheelsIO {
     }
 
     @Override
-    public void setWheels(double leftWheelPosition, double rightWheelPosition) {
+    public void setWheelPositions(double leftWheelPosition, double rightWheelPosition) {
         desiredLeftWheel = leftWheelPosition;
         desiredRightWheel = leftWheelPosition;
 
         leftWheelPIDController.setReference(rightWheelPosition, ControlType.kPosition);
         rightWheelPIDController.setReference(rightWheelPosition, ControlType.kPosition);
+    }
+
+    @Override
+    public void setWheelVoltages(double leftWheelVoltage, double rightWheelVoltage) {
+        desiredLeftWheel = leftWheelVoltage;
+        desiredRightWheel = rightWheelVoltage;
+        leftWheel.setVoltage(leftWheelVoltage);
+        rightWheel.setVoltage(rightWheelVoltage);
     }
 
     private void configureWheels() {

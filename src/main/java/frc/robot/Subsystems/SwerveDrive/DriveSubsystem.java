@@ -2,10 +2,6 @@ package frc.robot.Subsystems.SwerveDrive;
 
 import org.littletonrobotics.junction.Logger;
 
-import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
-import com.pathplanner.lib.auto.AutoBuilder;
-
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -14,14 +10,12 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ControlConstants;
-import frc.robot.Constants.AutonConstants.PathPlannerAutonConstants;
 import frc.robot.Constants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Subsystems.PoseEstimation.PoseEstimatorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIO;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModule;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIO;
 import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
-import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOInputsAutoLogged;
 
 public class DriveSubsystem extends SubsystemBase{
@@ -40,8 +34,8 @@ public class DriveSubsystem extends SubsystemBase{
 
     private PoseEstimatorSubsystem poseEstimatorSubsystem;
 
-    private NetworkTablesTunablePIDConstants pathPlannerTranslationPIDValueTuner;
-    private NetworkTablesTunablePIDConstants pathPlannerRotationPIDValueTuner;
+    //private NetworkTablesTunablePIDConstants pathPlannerTranslationPIDValueTuner;
+    //private NetworkTablesTunablePIDConstants pathPlannerRotationPIDValueTuner;
 
     public DriveSubsystem(SwerveModuleIO frontLeftSwerveModuleIO, SwerveModuleIO frontRightSwerveModuleIO,
         SwerveModuleIO backLeftSwerveModuleIO, SwerveModuleIO backRightSwerveModuleIO, GyroIO gyroIO) {

@@ -19,6 +19,7 @@ public interface OuttakeWheelsIO {
 
     public default void updateInputs(OuttakeWheelsIOInputs inputs) {}
 
-    public default void setWheels(double leftWheel, double rightWheel) {}
+    public default void setWheelPositions(double leftWheel, double rightWheel) {}
+    public default void setWheelVoltages(double leftWheel, double rightWheel) {}
     
 }

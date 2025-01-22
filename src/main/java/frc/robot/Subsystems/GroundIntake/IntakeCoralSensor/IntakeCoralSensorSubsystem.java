@@ -2,11 +2,7 @@ package frc.robot.Subsystems.GroundIntake.IntakeCoralSensor;
 
 import org.littletonrobotics.junction.Logger;
 
-import com.playingwithfusion.TimeOfFlight;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.GroundIntakeConstants;
 import frc.robot.Constants.GroundIntakeConstants.IntakeCoralSensorConstants;
 
 /**

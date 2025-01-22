@@ -1,6 +1,5 @@
 package frc.robot.Utils.AutonUtils;
 
-import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
 
 public class WPILIBTrajectoryConfig {
     public double[] translationPIDValues;

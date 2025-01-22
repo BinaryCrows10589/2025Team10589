@@ -1,7 +1,5 @@
 package frc.robot.Subsystems.PoseEstimation;
 
-import java.util.Optional;
-
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -12,9 +10,6 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import frc.robot.Constants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.RobotModeConstants;
 import frc.robot.Constants.VisionConstants;
