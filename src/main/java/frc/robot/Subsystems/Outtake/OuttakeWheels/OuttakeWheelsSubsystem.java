@@ -2,9 +2,10 @@ package frc.robot.Subsystems.Outtake.OuttakeWheels;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MechanismConstants.OuttakeConstants;
 
-public class OuttakeWheelsSubsystem {
+public class OuttakeWheelsSubsystem extends SubsystemBase{
     
     OuttakeWheelsIO outtakeWheelsIO;
     OuttakeWheelsIOInputsAutoLogged outtakeWheelsInputs = new OuttakeWheelsIOInputsAutoLogged();
@@ -20,12 +21,13 @@ public class OuttakeWheelsSubsystem {
     public void stopOuttake() {
         outtakeWheelsIO.setWheelVoltages(0, 0);
     }
-    public void outtakeCoral() {
-        outtakeWheelsIO.setWheelVoltages(OuttakeConstants.kLeftWheel, -OuttakeConstants.kRightWheel);
+
+    public void setWheelVoltages(double leftWheel, double rightWheel) {
+        outtakeWheelsIO.setWheelVoltages(leftWheel, rightWheel);
     }
-    // oh gosh, I hope it never comes to this
-    public void intakeCoral() {
-        outtakeWheelsIO.setWheelVoltages(-OuttakeConstants.kLeftWheel, OuttakeConstants.kRightWheel);
+    
+    public void setWheelPositionsReletiveToCurrentPose(double leftWheel, double rightWheel) {
+        // Boyne do this
     }
 
 }
