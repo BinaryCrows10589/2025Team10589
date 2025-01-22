@@ -40,7 +40,7 @@ Commands:
                     IntakeDown
                     IntakeUp
                     RunTransitIn
-                    ElevatorBasement
+                    ElevatorBasement-Done(Untested)
                     HoldCoralOuttake
             EjectCoralFromIntake:
                 SubCommands:
@@ -50,22 +50,22 @@ Commands:
             ElevatorDownAtRate
     Elijah:
         Score:
-            L1ScorePosition:
+            L1ScorePosition:-Done(Untested)
                 Requred Subsystems:
                     Elevator
-            L2ScoreEosition:
+            L2ScoreEosition:-Done(Untested)
                 Requred Subsystems:
                     Elevator
-            L3ScorePosition:
+            L3ScorePosition:-Done(Untested)
                 Requred Subsystems:
                     Elevator
-            L4ScorePosition:
+            L4ScorePosition:-Done(Untested)
                 Requred Subsystems:
                     Elevator
-            ElevatorBasementPosition:
+            ElevatorBasementPosition:-Done(Untested)
                 Requred Subsystems:
                     Elevator
-            ElevatorFunnelPosition:
+            ElevatorFunnelPosition:-Done(Untested)
                 Requred Subsystems:
                     Elevator
             OuttakeCoral:

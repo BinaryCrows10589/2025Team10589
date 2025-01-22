@@ -1,5 +1,7 @@
 package frc.robot.Subsystems.Elevator;
 
+import java.util.Base64;
+
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,13 +14,16 @@ public class ElevatorSubsystem extends SubsystemBase {
     ElevatorIOInputsAutoLogged elevatorInputs = new ElevatorIOInputsAutoLogged();
 
     public enum ElevatorPosition {
+        BASEMENT,
         L1,
         L2,
         L3,
         L4,
         FUNNEL,
-        INTAKE,
-        ALGAE
+        GROUND_INTAKE_ALGAE,
+        SCORE_ALGAE_PROCESSOR,
+        SCORE_ALGAE_BARGE,
+        REEF_INTAKE_ALGAE
     }
 
     public ElevatorSubsystem(ElevatorIO elevatorIO) {
@@ -46,6 +51,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public static double resolveElevatorPosition(ElevatorPosition desiredPosition) {
         switch (desiredPosition) {
+            case BASEMENT:
+                return 0;
             case L1:
                 return 0;
             case L2:
@@ -56,10 +63,14 @@ public class ElevatorSubsystem extends SubsystemBase {
                 return 0;
             case FUNNEL:
                 return 0;
-            case INTAKE:
+            case GROUND_INTAKE_ALGAE:
                 return 0;
-            case ALGAE:
+            case REEF_INTAKE_ALGAE:
                 return 0;
+            case SCORE_ALGAE_PROCESSOR:
+                return 0;
+            case SCORE_ALGAE_BARGE:
+                return 0;    
             default:
                 return 0;
         }

@@ -12,5 +12,7 @@ public final class ControlConstants {
     public static final double kTranslationYSlowModeMultipler = .2;
     public static final double kRotationSlowModeMultipler = .2;
 
+    public static final int[] kElevatorInPositionColor = {0, 255, 150};
+
     public static boolean kIsDriverControlled = true;
 }

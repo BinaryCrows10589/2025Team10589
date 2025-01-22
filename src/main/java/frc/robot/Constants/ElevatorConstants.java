@@ -12,22 +12,21 @@ public class ElevatorConstants {
     public static final double kMaxVoltage = 0;
 
     public static final double kElevatorPPIDValue = 0;
-
     public static final double kElevatorIPIDValue = 0;
-
     public static final double kElevatorDPIDValue = 0;
-
     public static final double kElevatorGPIDValue = 0;
-
     public static final double kElevatorSPIDValue = 0;
 
+    public static final double kMotionMagicCruiseVelocity = 0;
+    public static final double kMotionMagicAcceleration = 0;
+    public static final double kMotionMagicJerk = 0;
     public static final boolean isSlaveReversed = true;
 
-    public static final double kMotionMagicCruiseVelocity = 0;
-
-    public static final double kMotionMagicAcceleration = 0;
-
-    public static final double kMotionMagicJerk = 0;
+    public static final double kGroundIntakePassoffTolorence = .25;
+    public static final double kElevatorScorePositionTolorence = .25;
+    public static final double kElevatorScoreBargePositionTolorence = .25;
+    public static final double kElevatorScoreProcessorPositionTolorence = .25;
+    public static final double kElevatorFunnelTolorence = .25;
 
 
 }
