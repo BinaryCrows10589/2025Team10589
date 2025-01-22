@@ -2,7 +2,7 @@ package frc.robot.Utils.AutonUtils.AutonPointUtils;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import frc.robot.Constants.GenaricConstants.RobotModeConstants;
+import frc.robot.Constants.GenericConstants.RobotModeConstants;
 
 public class FudgeFactor {
     

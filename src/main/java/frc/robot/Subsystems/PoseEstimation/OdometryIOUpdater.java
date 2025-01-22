@@ -11,8 +11,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.Constants.CameraConstants.VisionConstants;
-import frc.robot.Constants.GenaricConstants.FieldConstants;
-import frc.robot.Constants.GenaricConstants.RobotModeConstants;
+import frc.robot.Constants.GenericConstants.FieldConstants;
+import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
 

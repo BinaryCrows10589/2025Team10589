@@ -3,7 +3,7 @@ package frc.robot.Constants.MechanismConstants;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import frc.robot.Constants.GenaricConstants.RobotModeConstants;
+import frc.robot.Constants.GenericConstants.RobotModeConstants;
 
 // Do not create an instants of a constant class
 

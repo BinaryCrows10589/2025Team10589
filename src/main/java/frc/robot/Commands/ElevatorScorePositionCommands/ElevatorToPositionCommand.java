@@ -5,7 +5,7 @@
 package frc.robot.Commands.ElevatorScorePositionCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.GenaricConstants.ControlConstants;
+import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.LEDUtils.LEDManager;

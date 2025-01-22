@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.AutonCommands.PIDPositioningAutonCommands.PIDGoToPose;
 import frc.robot.Constants.CameraConstants.GameObjectTrackingConstants;
 import frc.robot.Constants.CameraConstants.VisionConstants;
-import frc.robot.Constants.GenaricConstants.AutonConstants.PIDPositioningAutonConstants;
+import frc.robot.Constants.GenericConstants.AutonConstants.PIDPositioningAutonConstants;
 import frc.robot.Subsystems.GameObjectTracking.GameObjectTracker;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;

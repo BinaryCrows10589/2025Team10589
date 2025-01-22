@@ -1,4 +1,4 @@
-package frc.robot.Constants.GenaricConstants;
+package frc.robot.Constants.GenericConstants;
 
 // Do not create an instants of a constant class
 

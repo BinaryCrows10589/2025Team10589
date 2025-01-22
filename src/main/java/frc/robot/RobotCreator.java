@@ -1,7 +1,7 @@
 package frc.robot;
 
 
-import frc.robot.Constants.GenaricConstants.RobotModeConstants;
+import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeCoralSensorConstants;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIO;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIODistanceSensor;
