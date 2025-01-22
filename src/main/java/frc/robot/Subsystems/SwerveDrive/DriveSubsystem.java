@@ -242,7 +242,7 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     private void configurePathPlannerAutoBuilder() {
-        /*AutoBuilder.configureHolonomic(
+        /*utoBuilder.configureHolonomic(
             this::getRobotPose, // Robot pose supplier
             this::setRobotPose, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE

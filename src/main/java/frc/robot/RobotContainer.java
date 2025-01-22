@@ -13,6 +13,7 @@ import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
+import frc.robot.Utils.JoystickUtils.ButtonBoardInterface;
 import frc.robot.Utils.JoystickUtils.ControllerInterface;
 
 /**
@@ -27,7 +28,7 @@ public class RobotContainer {
 
     // Controller Decloration and Instantiation
     private ControllerInterface driverController = new ControllerInterface(ControlConstants.kDriverControllerPort);
-    private ControllerInterface buttonBoard = new ControllerInterface(ControlConstants.kButtonBoardPort);
+    private ButtonBoardInterface buttonBoard = new ButtonBoardInterface(ControlConstants.kButtonBoardPort);
     private ControllerInterface buttonBoardAlt = new ControllerInterface(ControlConstants.kButtonBoardAltPort);
     // Declare all Subsystems and Command Factories
     private DriveSubsystem driveSubsystem;
@@ -61,13 +62,12 @@ public class RobotContainer {
      * Used to configure button binding
      */
     private void configureBindings() {
-        this.driverController.bindToButton(this.lockSwerves, XboxController.Button.kRightBumper.value);
+        this.driverController.bindToButton(this.lockSwerves, XboxController.Button.kLeftBumper.value);
         this.driverController.bindToButton(this.resetOdometry, XboxController.Button.kY.value);
         this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveTranslationProfiler(), XboxController.Button.kX.value);
         this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveRotationProfiler(), XboxController.Button.kB.value);
-        this.driverController.bindToButton(Commands.runOnce(this.driveSubsystem::setSlowModeTrue),
-        Commands.runOnce(this.driveSubsystem::setSlowModeFalse), XboxController.Button.kLeftBumper.value);
-        
+        this.driverController.bindToLeftTriggure(Commands.runOnce(this.driveSubsystem::setSlowModeTrue),
+        Commands.runOnce(this.driveSubsystem::setSlowModeFalse));
     }
 
     /**
@@ -80,6 +80,10 @@ public class RobotContainer {
 
     public void updateAlliance() {
         this.driveSubsystem.getPoseEstimatorSubsystem().updateAlliance();
+    }
+
+    public void updateButtonBoardInputs() {
+        this.buttonBoard.periodic();
     }
         
 }
