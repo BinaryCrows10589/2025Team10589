@@ -3,10 +3,9 @@ package frc.robot.Subsystems.TransitTunnel.TransitWheels;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
-
-import frc.robot.Constants.TransitConstants.TransitWheelsConstants;
-
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import frc.robot.Constants.MechanismConstants.TransitConstants.TransitWheelsConstants;
 
 public class TransitWheelsIOSparkMax implements TransitWheelsIO {
     SparkMax transitWheelsMotor;

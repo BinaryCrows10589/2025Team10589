@@ -5,7 +5,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import frc.robot.Constants.GroundIntakeConstants.IntakeWheelsConstants;
+import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeWheelsConstants;
 
 public class IntakeWheelsIOSparkMax implements IntakeWheelsIO {
     SparkMax intakeWheelsMotor;

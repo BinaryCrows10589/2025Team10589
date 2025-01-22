@@ -3,7 +3,7 @@ package frc.robot.Subsystems.Outtake.OuttakeCoralSensors;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.OuttakeConstants;
+import frc.robot.Constants.MechanismConstants.OuttakeConstants;
 
 public class OuttakeCoralSensorsSubsystem extends SubsystemBase {
     private OuttakeCoralSensorsIO outtakeCoralSensorsIO;

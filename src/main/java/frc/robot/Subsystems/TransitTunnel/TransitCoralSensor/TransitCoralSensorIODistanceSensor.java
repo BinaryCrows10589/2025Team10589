@@ -2,7 +2,7 @@ package frc.robot.Subsystems.TransitTunnel.TransitCoralSensor;
 
 import com.playingwithfusion.TimeOfFlight;
 
-import frc.robot.Constants.TransitConstants.TransitCoralSensorConstants;
+import frc.robot.Constants.MechanismConstants.TransitConstants.TransitCoralSensorConstants;
 
 /**
  * Provides methods for accessing the distance reported by our time-of-flight sensor.

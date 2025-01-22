@@ -13,7 +13,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class ElevatorIOREVEncoderPositionalPID implements ElevatorIO {

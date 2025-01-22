@@ -1,4 +1,4 @@
-package frc.robot.Utils.JoystickUtils;
+package frc.robot.Deprecated;
 
 public enum ButtonBoardButtonMap {
         /** Left bumper. */

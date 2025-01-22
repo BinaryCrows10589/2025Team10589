@@ -1,9 +1,9 @@
 package frc.robot.Auton;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import frc.robot.Constants.GenaricConstants.FieldConstants;
 import frc.robot.Utils.AutonUtils.WPILIBTrajectoryConfig;
 import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
-import frc.robot.Constants.FieldConstants;
 
 public class AutonPointManager {
 

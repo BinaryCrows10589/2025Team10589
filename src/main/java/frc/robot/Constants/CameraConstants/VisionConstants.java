@@ -1,4 +1,4 @@
-package frc.robot.Constants;
+package frc.robot.Constants.CameraConstants;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;

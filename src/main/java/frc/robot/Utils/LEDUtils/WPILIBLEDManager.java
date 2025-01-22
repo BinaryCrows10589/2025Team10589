@@ -2,9 +2,9 @@ package frc.robot.Utils.LEDUtils;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import frc.robot.Constants.LEDConstants;
-import frc.robot.Constants.RobotModeConstants;
-import frc.robot.Constants.RobotModeConstants.Mode;
+import frc.robot.Constants.GenaricConstants.RobotModeConstants;
+import frc.robot.Constants.GenaricConstants.RobotModeConstants.Mode;
+import frc.robot.Constants.MechanismConstants.LEDConstants;
 
 public class WPILIBLEDManager {
     private static AddressableLED LEDStrip;

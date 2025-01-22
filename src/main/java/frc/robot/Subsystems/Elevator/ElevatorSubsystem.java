@@ -5,8 +5,8 @@ import java.util.Base64;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.GroundIntakeConstants.PivotContants;
+import frc.robot.Constants.MechanismConstants.ElevatorConstants;
+import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.PivotContants;
 import frc.robot.Utils.GeneralUtils.Tolerance;
 
 public class ElevatorSubsystem extends SubsystemBase {

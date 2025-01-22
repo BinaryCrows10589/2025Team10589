@@ -3,7 +3,7 @@ package frc.robot.Subsystems.SwerveDrive.Gyro;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
-import frc.robot.Constants.DrivetrainConstants.SwerveDriveConstants;
+import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 
 public class GyroIOPigeon2 implements GyroIO{
 

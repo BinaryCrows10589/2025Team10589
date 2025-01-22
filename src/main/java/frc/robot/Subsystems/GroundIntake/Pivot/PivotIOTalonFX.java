@@ -12,7 +12,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Constants.GroundIntakeConstants.PivotContants;
+import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.PivotContants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class PivotIOTalonFX implements PivotIO{

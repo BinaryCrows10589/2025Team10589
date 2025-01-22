@@ -3,7 +3,7 @@ package frc.robot.Subsystems.GroundIntake.IntakeCoralSensor;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.GroundIntakeConstants.IntakeCoralSensorConstants;
+import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeCoralSensorConstants;
 
 /**
  * Provides methods for accessing the distance reported by our time-of-flight sensor.

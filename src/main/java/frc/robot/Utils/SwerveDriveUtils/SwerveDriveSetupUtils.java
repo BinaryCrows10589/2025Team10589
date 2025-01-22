@@ -1,7 +1,7 @@
 package frc.robot.Utils.SwerveDriveUtils;
 
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
-import frc.robot.Constants.DrivetrainConstants.SwerveDriveConstants;
+import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIO;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOPigeon2;

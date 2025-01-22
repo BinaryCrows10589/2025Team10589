@@ -2,7 +2,7 @@ package frc.robot.Subsystems.Funnel.FunnelCoralSensor;
 
 import com.playingwithfusion.TimeOfFlight;
 
-import frc.robot.Constants.FunnelConstants;
+import frc.robot.Constants.MechanismConstants.FunnelConstants;
 
 /**
  * Provides methods for accessing the distance reported by our time-of-flight sensor.

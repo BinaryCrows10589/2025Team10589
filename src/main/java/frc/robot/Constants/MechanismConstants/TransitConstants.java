@@ -1,4 +1,4 @@
-package frc.robot.Constants;
+package frc.robot.Constants.MechanismConstants;
 
 public class TransitConstants {
 

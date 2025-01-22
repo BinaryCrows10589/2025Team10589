@@ -9,7 +9,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Constants.OuttakeConstants;
+import frc.robot.Constants.MechanismConstants.OuttakeConstants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class OuttakeWheelsIONEO implements OuttakeWheelsIO {

@@ -1,8 +1,8 @@
 package frc.robot;
 
 
-import frc.robot.Constants.RobotModeConstants;
-import frc.robot.Constants.GroundIntakeConstants.IntakeCoralSensorConstants;
+import frc.robot.Constants.GenaricConstants.RobotModeConstants;
+import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeCoralSensorConstants;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIO;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIODistanceSensor;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorSubsystem;
@@ -48,7 +48,6 @@ public class RobotCreator {
         switch (RobotModeConstants.currentMode) {
             case REAL:
                 // Real robot, instantiate hardware IO implementations
-                // this.driveSubsystemCreator.createTalonFXSwerve();
                 this.driveSubsystemCreator.createTalonFXSwerve();
 
                 this.pivotSubsystem = new PivotSubsystem(new PivotIOTalonFX());

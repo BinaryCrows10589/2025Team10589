@@ -1,10 +1,11 @@
-package frc.robot.Constants;
+package frc.robot.Constants.CameraConstants;
 
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.robot.Constants.GenaricConstants.RobotModeConstants;
 
 public class GameObjectTrackingConstants {
     public static final Transform3d kExampleGameObjectCameraToRobotCenter =  new Transform3d(0, 0, 0, new Rotation3d());

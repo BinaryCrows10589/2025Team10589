@@ -16,8 +16,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Constants.DrivetrainConstants.SwerveDriveConstants;
-import frc.robot.Constants.DrivetrainConstants.SwerveModuleConstants;
+import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
+import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveModuleConstants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class SwerveModuleIOTalonFX implements SwerveModuleIO{

@@ -2,7 +2,7 @@ package frc.robot.Subsystems.Outtake.OuttakeWheels;
 
 import org.littletonrobotics.junction.Logger;
 
-import frc.robot.Constants.OuttakeConstants;
+import frc.robot.Constants.MechanismConstants.OuttakeConstants;
 
 public class OuttakeWheelsSubsystem {
     

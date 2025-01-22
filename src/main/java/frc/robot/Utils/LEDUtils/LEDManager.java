@@ -11,7 +11,7 @@ import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
 
-import frc.robot.Constants.LEDConstants;
+import frc.robot.Constants.MechanismConstants.LEDConstants;
 
 public class LEDManager {
 

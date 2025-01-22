@@ -1,4 +1,4 @@
-package frc.robot.Constants;
+package frc.robot.Constants.MechanismConstants;
 
 public class ReefTreeDetectorConstants {
     public static final int kReefTreeDetectorCANID = 34;

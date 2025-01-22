@@ -10,7 +10,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {

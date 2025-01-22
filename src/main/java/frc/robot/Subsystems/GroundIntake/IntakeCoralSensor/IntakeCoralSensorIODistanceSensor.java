@@ -2,7 +2,7 @@ package frc.robot.Subsystems.GroundIntake.IntakeCoralSensor;
 
 import com.playingwithfusion.TimeOfFlight;
 
-import frc.robot.Constants.GroundIntakeConstants.IntakeCoralSensorConstants;
+import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeCoralSensorConstants;
 
 /**
  * Provides methods for accessing the distance reported by our time-of-flight sensor.

@@ -2,7 +2,7 @@ package frc.robot.Utils.SwerveDriveUtils;
 
 import java.util.function.Consumer;
 
-import frc.robot.Constants.DrivetrainConstants.SwerveDriveConstants;
+import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Utils.CommandUtils.Wait;
 
 public class SwerveDriveVoltageVSMetersPerSecondTableCreater {

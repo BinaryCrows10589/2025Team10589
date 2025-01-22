@@ -1,7 +1,7 @@
 package frc.robot.Subsystems.Elevator;
 
 import frc.robot.Commands.ElevatorScorePositionCommands.ElevatorToPositionCommand;
-import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorPosition;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.JoystickUtils.ControllerInterface;

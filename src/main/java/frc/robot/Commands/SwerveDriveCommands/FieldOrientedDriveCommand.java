@@ -7,9 +7,9 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ControlConstants;
-import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.Constants.DrivetrainConstants.SwerveDriveConstants;
+import frc.robot.Constants.GenaricConstants.ControlConstants;
+import frc.robot.Constants.MechanismConstants.DrivetrainConstants;
+import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 
 /**

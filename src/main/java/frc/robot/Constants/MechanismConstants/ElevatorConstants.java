@@ -1,4 +1,4 @@
-package frc.robot.Constants;
+package frc.robot.Constants.MechanismConstants;
 
 public class ElevatorConstants {
     public static final double kDefaultElevatorPosition = 0.0;

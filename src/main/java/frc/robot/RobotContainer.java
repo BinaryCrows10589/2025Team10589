@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
 import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
-import frc.robot.Constants.ControlConstants;
+import frc.robot.Constants.GenaricConstants.ControlConstants;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.JoystickUtils.ControllerInterface;

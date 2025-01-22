@@ -3,7 +3,7 @@ package frc.robot.Subsystems.TransitTunnel.TransitCoralSensor;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.TransitConstants.TransitCoralSensorConstants;
+import frc.robot.Constants.MechanismConstants.TransitConstants.TransitCoralSensorConstants;
 
 
 /**

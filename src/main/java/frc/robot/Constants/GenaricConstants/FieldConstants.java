@@ -1,4 +1,4 @@
-package frc.robot.Constants;
+package frc.robot.Constants.GenaricConstants;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;

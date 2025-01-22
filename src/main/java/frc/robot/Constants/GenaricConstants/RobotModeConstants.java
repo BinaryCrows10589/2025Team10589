@@ -1,4 +1,4 @@
-package frc.robot.Constants;
+package frc.robot.Constants.GenaricConstants;
 
 public class RobotModeConstants {
     public static final Mode currentMode = Mode.SIM;
