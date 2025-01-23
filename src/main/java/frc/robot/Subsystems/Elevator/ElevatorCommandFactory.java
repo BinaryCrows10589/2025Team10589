@@ -8,10 +8,10 @@ import frc.robot.Utils.JoystickUtils.ControllerInterface;
 
 public class ElevatorCommandFactory {
     // All Subsystems needed for every command
-    ElevatorSubsystem elevatorSubsystem;
+    private final ElevatorSubsystem elevatorSubsystem;
 
     // All other dependencies for every command that uses primarly DriveSubsystem
-    ControllerInterface mechanismController;
+    private final ControllerInterface mechanismController;
 
     public ElevatorCommandFactory(ElevatorSubsystem elevatorSubsystem, ControllerInterface mechanismController) {
         this.elevatorSubsystem = elevatorSubsystem;

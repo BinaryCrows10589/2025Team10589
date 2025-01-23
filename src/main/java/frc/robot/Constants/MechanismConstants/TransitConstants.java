@@ -4,6 +4,7 @@ public class TransitConstants {
 
     public class TransitWheelsConstants {
         public static final int kTransitWheelsMotorCANID = 22;
+        public static final double kTransitWheelsRunningVoltage = 5;
     }
 
     public class TransitCoralSensorConstants {

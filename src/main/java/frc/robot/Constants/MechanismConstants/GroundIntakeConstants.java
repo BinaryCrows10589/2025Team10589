@@ -17,6 +17,8 @@ public class GroundIntakeConstants {
         public static final double kPivotIPIDValue = 0;
         public static final double kPivotDPIDValue = 0;
         public static final double kPivotAngleToloranceRotations = Units.degreesToRotations(3);
+        public static final double kPivotDownPosition = 0;
+        public static final double kPivotUpPosition = 0;
     }
 
     public class IntakeWheelsConstants {

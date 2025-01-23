@@ -1,4 +1,4 @@
-package frc.robot.Subsystems.AnglaeSystem.AlgaePivot;
+package frc.robot.Subsystems.AlgaeSystem.AlgaePivot;
 
 public class AlgaePivotIO {
     

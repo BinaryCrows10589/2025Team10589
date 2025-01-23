@@ -16,6 +16,8 @@ public class OuttakeConstants {
 
     public static final int kWheelSmartCurrentLimit = 2; // TODO: MAKE THIS CORRECT OR DEATH OF MOTORS WILL ENSUE
 
+    public static final double kHoldCoralVoltage = 0.2;
+
     public static final int kLeftWheelPPIDValue = 0;
     public static final int kLeftWheelIPIDValue = 0;
     public static final int kLeftWheelDPIDValue = 0;

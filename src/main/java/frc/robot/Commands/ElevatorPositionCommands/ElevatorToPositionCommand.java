@@ -12,9 +12,9 @@ import frc.robot.Utils.LEDUtils.LEDManager;
 
 public class ElevatorToPositionCommand extends Command {
 
-    private ElevatorSubsystem elevatorSubsystem;
-    private double desiredElevatorPosition;
-    private double elevatorToloranceRotations;
+    private final ElevatorSubsystem elevatorSubsystem;
+    private final double desiredElevatorPosition;
+    private final double elevatorToloranceRotations;
 
     public ElevatorToPositionCommand(double desiredElevatorPosition, double elevatorToloranceRotations, ElevatorSubsystem elevatorSubsystem) {
         this.elevatorSubsystem = elevatorSubsystem;
