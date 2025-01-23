@@ -6,13 +6,13 @@ import frc.robot.Subsystems.GroundIntake.IntakeWheels.IntakeWheelsSubsystem;
 import frc.robot.Subsystems.TransitTunnel.TransitCoralSensor.TransitCoralSensorSubsystem;
 import frc.robot.Utils.CommandUtils.Wait;
 
-public class RunIntakeWheelsCommand extends Command {
+public class EjectCoralFromIntakeCommand extends Command {
 
     private final IntakeWheelsSubsystem intakeWheelsSubsystem;
     private final TransitCoralSensorSubsystem transitCoralSensorSubsystem;
     private final Wait hardCutOffTimer;
 
-    public RunIntakeWheelsCommand(double waitTime, IntakeWheelsSubsystem intakeWheelsSubsystem, TransitCoralSensorSubsystem transitCoralSensorSubsystem) {
+    public EjectCoralFromIntakeCommand(double waitTime, IntakeWheelsSubsystem intakeWheelsSubsystem, TransitCoralSensorSubsystem transitCoralSensorSubsystem) {
         this.intakeWheelsSubsystem = intakeWheelsSubsystem;
         this.transitCoralSensorSubsystem = transitCoralSensorSubsystem;
         this.hardCutOffTimer = new Wait(waitTime);
@@ -22,7 +22,7 @@ public class RunIntakeWheelsCommand extends Command {
 
     @Override
     public void initialize() {
-        intakeWheelsSubsystem.setDesiredIntakeWheelsVoltage(IntakeWheelsConstants.kIntakeWheelsIntakeVoltage);
+        intakeWheelsSubsystem.setDesiredIntakeWheelsVoltage(IntakeWheelsConstants.kIntakeWheelsEjectionVoltage);
         this.hardCutOffTimer.startTimer();
     }
 

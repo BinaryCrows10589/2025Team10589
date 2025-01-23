@@ -17,6 +17,7 @@ public class RunTransitToOuttakeCommand extends Command {
         this.transitWheelsSubsystem = transitWheelsSubsystem;
         this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
         this.hardCutOffTimer = new Wait(waitTime);
+        addRequirements(transitWheelsSubsystem, outtakeCoralSensorsSubsystem);
     }
     public RunTransitToOuttakeCommand(TransitWheelsSubsystem transitWheelsSubsystem, OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem) {
         this(150, transitWheelsSubsystem, outtakeCoralSensorsSubsystem);

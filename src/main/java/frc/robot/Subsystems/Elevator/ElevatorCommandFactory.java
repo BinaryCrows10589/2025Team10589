@@ -1,9 +1,13 @@
 package frc.robot.Subsystems.Elevator;
 
-import frc.robot.Commands.ElevatorPositionCommands.ElevatorToPositionCommand;
+import java.util.function.Supplier;
+
+import frc.robot.Commands.ElevatorCommands.ElevatorToPositionCommand;
+import frc.robot.Commands.ElevatorCommands.MoveElevatorManuallyCommand;
 import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorPosition;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
+import frc.robot.Utils.JoystickUtils.ButtonBoardInterface;
 import frc.robot.Utils.JoystickUtils.ControllerInterface;
 
 public class ElevatorCommandFactory {
@@ -76,6 +80,14 @@ public class ElevatorCommandFactory {
         return new ElevatorToPositionCommand(ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.REEF_INTAKE_ALGAE),
         ElevatorConstants.kElevatorScoreProcessorPositionTolorence,
         elevatorSubsystem);
+    }
+
+    public MoveElevatorManuallyCommand createMoveElevatorUpCommand(Supplier<Boolean> condition) {
+        return new MoveElevatorManuallyCommand(ElevatorConstants.kManualMovementUpSpeed, condition, elevatorSubsystem);
+    }
+
+    public MoveElevatorManuallyCommand createMoveElevatorDownCommand(Supplier<Boolean> condition) {
+        return new MoveElevatorManuallyCommand(ElevatorConstants.kManualMovementDownSpeed, condition, elevatorSubsystem);
     }
     
 }

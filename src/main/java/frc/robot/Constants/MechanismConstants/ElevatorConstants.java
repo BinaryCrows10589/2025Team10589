@@ -28,5 +28,13 @@ public class ElevatorConstants {
     public static final double kElevatorScoreProcessorPositionTolorence = .25;
     public static final double kElevatorFunnelTolorence = .25;
 
+    public static final double kForwardSoftLimit = 5; // ???
+
+    public static final double kReverseSoftLimit = 0;
+
+    public static final double kManualMovementUpSpeed = 0.05;
+
+    public static final double kManualMovementDownSpeed = -0.05;
+
 
 }

@@ -27,5 +27,7 @@ public interface ElevatorIO {
      * @param desiredPosition Double: The desired position of the elevator
      */
     public default void setDesiredPosition(double desiredPosition) {}
+
+    public default void incrementDesiredPosition(double increment) {}
     
 }

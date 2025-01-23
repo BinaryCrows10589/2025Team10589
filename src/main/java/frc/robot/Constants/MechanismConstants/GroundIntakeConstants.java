@@ -23,6 +23,8 @@ public class GroundIntakeConstants {
 
     public class IntakeWheelsConstants {
         public static final int kIntakeWheelsMotorCANID = 20;
+        public static final double kIntakeWheelsIntakeVoltage = 4.0;
+        public static final double kIntakeWheelsEjectionVoltage = -4.0;
     }
     
     public class IntakeCoralSensorConstants {

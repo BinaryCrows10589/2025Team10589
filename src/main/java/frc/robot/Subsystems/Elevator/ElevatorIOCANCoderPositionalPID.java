@@ -36,6 +36,10 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         TalonFXConfiguration masterConfiguration = new TalonFXConfiguration();
         masterConfiguration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         masterConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        masterConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        masterConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ElevatorConstants.kForwardSoftLimit;
+        masterConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        masterConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ElevatorConstants.kReverseSoftLimit;
         masterConfiguration.Feedback.SensorToMechanismRatio = 1.0;
         masterConfiguration.Feedback.RotorToSensorRatio = ElevatorConstants.kElevatorGearRatio;
         masterConfiguration.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
@@ -102,6 +106,12 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         desiredElevatorPosition.Position = desiredPosition;
         this.elevatorMasterMotor.setControl(desiredElevatorPosition);
         
+    }
+
+    @Override
+    public void incrementDesiredPosition(double increment) {
+        desiredElevatorPosition.Position += increment * ElevatorConstants.kElevatorGearRatio;
+        this.elevatorMasterMotor.setControl(desiredElevatorPosition);
     }
 
 

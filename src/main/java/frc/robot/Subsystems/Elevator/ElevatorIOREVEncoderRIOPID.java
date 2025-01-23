@@ -46,6 +46,10 @@ public class ElevatorIOREVEncoderRIOPID implements ElevatorIO {
         TalonFXConfiguration masterConfiguration = new TalonFXConfiguration();
         masterConfiguration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         masterConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        masterConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        masterConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ElevatorConstants.kForwardSoftLimit;
+        masterConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        masterConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ElevatorConstants.kReverseSoftLimit;
         masterConfiguration.Feedback.SensorToMechanismRatio = 1.0;
         masterConfiguration.Voltage.PeakForwardVoltage = ElevatorConstants.kMaxVoltage;
         masterConfiguration.Voltage.PeakReverseVoltage = -ElevatorConstants.kMaxVoltage;
@@ -121,6 +125,10 @@ public class ElevatorIOREVEncoderRIOPID implements ElevatorIO {
         
     }
 
-
+    @Override
+    public void incrementDesiredPosition(double increment) {
+        desiredElevatorPosition += increment * ElevatorConstants.kElevatorGearRatio;
+        this.elevatorMasterMotor.set(pidController.calculate(desiredElevatorPosition) + gravityVoltageOffset);
+    }
 
 }

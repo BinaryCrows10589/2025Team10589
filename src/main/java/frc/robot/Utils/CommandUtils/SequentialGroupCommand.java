@@ -6,9 +6,12 @@ public class SequentialGroupCommand extends Command {
     private Command[] commands;
     private int currentRunningIndex = -1;
 
-    public SequentialGroupCommand(Command[] commands) {
+    public SequentialGroupCommand(Command... commands) {
         this.commands = commands;
     }
+    /*public SequentialGroupCommand(Command[] commands) {
+        this.commands = commands;
+    }*/
 
     @Override
     public void initialize() {

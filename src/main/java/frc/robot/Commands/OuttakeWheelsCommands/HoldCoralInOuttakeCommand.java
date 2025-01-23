@@ -17,6 +17,7 @@ public class HoldCoralInOuttakeCommand extends Command {
         this.outtakeWheelsSubsystem = outtakeWheelsSubsystem;
         this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
         hardCutOffTimer = new Wait(waitTime);
+        addRequirements(outtakeWheelsSubsystem, outtakeCoralSensorsSubsystem);
     }
 
     public HoldCoralInOuttakeCommand(OuttakeWheelsSubsystem outtakeWheelsSubsystem, OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem) {

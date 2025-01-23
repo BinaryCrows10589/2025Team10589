@@ -44,6 +44,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorIO.setDesiredPosition(resolveElevatorPosition(desiredPosition));
     }
 
+    public void incrementDesiredElevatorPosition(double increment) {
+        elevatorIO.incrementDesiredPosition(increment);
+    }
+
     public boolean isElevatorInTolorence(double toloranceRotations) {
         return Tolerance.inTolorance(this.elevatorInputs.desiredElevatorPosition, this.elevatorInputs.desiredElevatorPosition,
         toloranceRotations);
