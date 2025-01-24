@@ -1,4 +1,4 @@
-Mechanisms:
+Mechanisms: [ ALL DONE ]
     Boyne:
         Elevator:
             Subsystems:
@@ -33,7 +33,7 @@ Mechanisms:
             AlgeaWheels-Voltage, mini-neo
 
 Commands:
-    Boyne:
+    Boyne: [ ALL DONE ]
         Intake:
             IntakeGround:
                 SubCommands:
