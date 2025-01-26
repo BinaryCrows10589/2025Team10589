@@ -36,5 +36,7 @@ public class ElevatorConstants {
 
     public static final double kManualMovementDownSpeed = -0.05;
 
+    public static final double kElevatorEncoderOffset = 0;
+
 
 }

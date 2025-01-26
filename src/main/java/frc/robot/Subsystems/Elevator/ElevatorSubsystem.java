@@ -49,7 +49,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public boolean isElevatorInTolorence(double toloranceRotations) {
-        return Tolerance.inTolorance(this.elevatorInputs.desiredElevatorPosition, this.elevatorInputs.desiredElevatorPosition,
+        return Tolerance.inTolorance(this.elevatorInputs.elevatorRawPosition, this.elevatorInputs.offsetDesiredElevatorPosition,
         toloranceRotations);
     }
 

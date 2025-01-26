@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -96,8 +97,10 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
 
     @Override
     public void updateInputs(ElevatorIOInputs elevatorIOInputs) {
-        elevatorIOInputs.elevatorPosition = elevatorMasterMotor.getPosition().getValueAsDouble();
-        elevatorIOInputs.desiredElevatorPosition = desiredElevatorPosition.Position;
+        elevatorIOInputs.elevatorRawPosition = elevatorMasterMotor.getPosition().getValueAsDouble();
+        elevatorIOInputs.elevatorOffsetPosition = elevatorMasterMotor.getPosition().getValueAsDouble() - ElevatorConstants.kElevatorEncoderOffset;
+        elevatorIOInputs.rawDesiredElevatorPosition = desiredElevatorPosition.Position;
+        elevatorIOInputs.offsetDesiredElevatorPosition = getOffsetDesiredPosition().Position;
         elevatorIOInputs.elevatorRPM = elevatorMasterMotor.getVelocity().getValueAsDouble();
         elevatorIOInputs.elevatorAppliedVolts = elevatorMasterMotor.getMotorVoltage().getValueAsDouble();
         elevatorIOInputs.elevatorCurrentAmps = new double[] {elevatorMasterMotor.getSupplyCurrent().getValueAsDouble()};
@@ -105,17 +108,21 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         updatePIDValuesFromNetworkTables();
     }
 
+    private PositionVoltage getOffsetDesiredPosition() {
+        return new PositionVoltage(desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset);
+    }
+
     @Override
     public void setDesiredPosition(double desiredPosition) {
         desiredElevatorPosition.Position = desiredPosition;
-        this.elevatorMasterMotor.setControl(desiredElevatorPosition);
+        this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
         
     }
 
     @Override
     public void incrementDesiredPosition(double increment) {
         desiredElevatorPosition.Position += increment * ElevatorConstants.kElevatorGearRatio;
-        this.elevatorMasterMotor.setControl(desiredElevatorPosition);
+        this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
     }
 
 

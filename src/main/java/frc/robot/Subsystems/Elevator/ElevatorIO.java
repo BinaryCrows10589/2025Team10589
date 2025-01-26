@@ -8,8 +8,10 @@ public interface ElevatorIO {
     
     @AutoLog
     public static class ElevatorIOInputs {
-        public double elevatorPosition = 0.0;
-        public double desiredElevatorPosition = ElevatorConstants.kDefaultElevatorPosition;
+        public double elevatorRawPosition = 0.0;
+        public double elevatorOffsetPosition = 0.0;
+        public double rawDesiredElevatorPosition = ElevatorConstants.kDefaultElevatorPosition;
+        public double offsetDesiredElevatorPosition = ElevatorConstants.kDefaultElevatorPosition;
 
         public double elevatorRPM = 0.0;
         public double elevatorAppliedVolts = 0.0;

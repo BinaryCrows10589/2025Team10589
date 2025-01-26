@@ -1,5 +1,12 @@
 package frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils;
 
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
+
 public class NetworkTablesTunablePIDConstants {
 
     private NetworkTablesChangableValue changablePValue;
@@ -95,6 +102,25 @@ public class NetworkTablesTunablePIDConstants {
             this.changableSValue.hasChangableValueChanged();
         } else {
             return valuesChanged;
+        }
+    }
+
+    public void updatePIDValuesFromNetworkTables(SparkMax motor) {
+        if (hasAnyPIDValueChanged()) {
+            double[] pidConstants = getUpdatedPIDConstants();
+            SparkMaxConfig newConfig = new SparkMaxConfig();
+            newConfig.closedLoop.pid(pidConstants[0], pidConstants[1], pidConstants[2]);
+            motor.configure(newConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        }
+    }
+    public void updatePIDValuesFromNetworkTables(TalonFX motor) {
+        if (hasAnyPIDValueChanged()) {
+            double[] pidConstants = getUpdatedPIDConstants();
+            Slot0Configs newConfig = new Slot0Configs();
+            newConfig.kP = pidConstants[0];
+            newConfig.kI = pidConstants[1];
+            newConfig.kD = pidConstants[2];
+            motor.getConfigurator().apply(newConfig);
         }
     }
 

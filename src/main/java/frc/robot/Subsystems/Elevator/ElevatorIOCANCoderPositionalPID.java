@@ -92,8 +92,10 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
 
     @Override
     public void updateInputs(ElevatorIOInputs elevatorIOInputs) {
-        elevatorIOInputs.elevatorPosition = elevatorMasterMotor.getPosition().getValueAsDouble();
-        elevatorIOInputs.desiredElevatorPosition = desiredElevatorPosition.Position;
+        elevatorIOInputs.elevatorRawPosition = elevatorMasterMotor.getPosition().getValueAsDouble();
+        elevatorIOInputs.elevatorOffsetPosition = elevatorMasterMotor.getPosition().getValueAsDouble() - ElevatorConstants.kElevatorEncoderOffset;
+        elevatorIOInputs.rawDesiredElevatorPosition = desiredElevatorPosition.Position;
+        elevatorIOInputs.offsetDesiredElevatorPosition = getOffsetDesiredPosition().Position;
         elevatorIOInputs.elevatorRPM = elevatorMasterMotor.getVelocity().getValueAsDouble();
         elevatorIOInputs.elevatorAppliedVolts = elevatorMasterMotor.getMotorVoltage().getValueAsDouble();
         elevatorIOInputs.elevatorCurrentAmps = new double[] {elevatorMasterMotor.getSupplyCurrent().getValueAsDouble()};
@@ -101,17 +103,21 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         updatePIDValuesFromNetworkTables();
     }
 
+    private PositionVoltage getOffsetDesiredPosition() {
+        return new PositionVoltage(desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset);
+    }
+
     @Override
     public void setDesiredPosition(double desiredPosition) {
         desiredElevatorPosition.Position = desiredPosition;
-        this.elevatorMasterMotor.setControl(desiredElevatorPosition);
+        this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
         
     }
 
     @Override
     public void incrementDesiredPosition(double increment) {
         desiredElevatorPosition.Position += increment * ElevatorConstants.kElevatorGearRatio;
-        this.elevatorMasterMotor.setControl(desiredElevatorPosition);
+        this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
     }
 
 
