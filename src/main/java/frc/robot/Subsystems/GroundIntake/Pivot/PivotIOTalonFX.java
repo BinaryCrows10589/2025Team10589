@@ -45,6 +45,10 @@ public class PivotIOTalonFX implements PivotIO{
         pivotConfiguration.Voltage.PeakForwardVoltage = PivotContants.kMaxVoltage;
         pivotConfiguration.Voltage.PeakReverseVoltage = -PivotContants.kMaxVoltage;
         pivotConfiguration.ClosedLoopGeneral.ContinuousWrap = true;
+        pivotConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        pivotConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = PivotContants.kForwardSoftLimit + PivotContants.kRotationOffset;
+        pivotConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        pivotConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = PivotContants.kReverseSoftLimit + PivotContants.kRotationOffset;
 
         Slot0Configs pivotPositionalPIDConfigs = new Slot0Configs();
         pivotPositionalPIDConfigs.kP = PivotContants.kPivotPPIDValue;

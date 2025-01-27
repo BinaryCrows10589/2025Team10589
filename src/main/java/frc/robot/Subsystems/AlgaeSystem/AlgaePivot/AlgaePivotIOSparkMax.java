@@ -22,7 +22,6 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
 
     private SparkClosedLoopController pivotPIDController;
 
-
     private double desiredPivotRotations = 0;
 
     public AlgaePivotIOSparkMax() {

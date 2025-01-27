@@ -76,9 +76,6 @@ public class AlgaeWheelIOSparkMax implements AlgaeWheelIO {
         wheelMotor.configure(wheelConfiguration, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
         wheelPIDController = wheelMotor.getClosedLoopController();
-
-        
-    
     }
 
     @Override

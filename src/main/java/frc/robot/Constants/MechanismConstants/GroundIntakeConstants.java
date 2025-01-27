@@ -10,6 +10,8 @@ public class GroundIntakeConstants {
         public static final int kPivotEncoderCANID = 19;
 
         public static final double kRotationOffset = 0;
+        public static final double kForwardSoftLimit = 0;
+        public static final double kReverseSoftLimit = 0;
         public static final double kMaxVoltage = 2;
         public static final double kPivotGearRatio = 121.5/1;
 
@@ -19,6 +21,7 @@ public class GroundIntakeConstants {
         public static final double kPivotAngleToloranceRotations = Units.degreesToRotations(3);
         public static final double kPivotDownPosition = 0;
         public static final double kPivotUpPosition = 0;
+        
     }
 
     public class IntakeWheelsConstants {
