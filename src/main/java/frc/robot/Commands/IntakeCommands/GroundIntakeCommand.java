@@ -1,7 +1,10 @@
 package frc.robot.Commands.IntakeCommands;
 
+import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.GroundIntake.GroundIntakeCommandFactory;
@@ -12,6 +15,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsy
 import frc.robot.Subsystems.TransitTunnel.TransitCoralSensor.TransitCoralSensorSubsystem;
 import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsCommandFactory;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
+import frc.robot.Utils.LEDUtils.LEDManager;
 
 public class GroundIntakeCommand extends Command {
 
@@ -63,6 +67,7 @@ public class GroundIntakeCommand extends Command {
         elevatorAndTransitCommand = new SequentialGroupCommand(
             elevatorCommandFactory.createElevatorToBasementCommand(),
             transitWheelsCommandFactory.createRunTransitToOuttakeCommand());
+        LEDManager.setSolidColor(ControlConstants.kCoralIntakingColor);
     }
 
     public boolean checkIfStageStarted() {
@@ -93,6 +98,8 @@ public class GroundIntakeCommand extends Command {
             if (!checkIfStageStarted()) {
                 groundIntakeCommandFactory.createPivotUpCommand().schedule(); // Pivots the pivot back into the robot
                 elevatorCommandFactory.createElevatorToL1Command().schedule(); // Brings elevator up to L1
+                outtakeCommandFactory.creatHoldCoralInOuttakeCommand();
+                LEDManager.setSolidColor(ControlConstants.kCoralIntakedColor);
             }
         }
     }

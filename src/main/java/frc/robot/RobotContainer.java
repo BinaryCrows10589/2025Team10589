@@ -8,11 +8,16 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Auton.AutonManager;
+import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
 import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
 import frc.robot.Constants.GenericConstants.ControlConstants;
+import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
+import frc.robot.Subsystems.GroundIntake.GroundIntakeCommandFactory;
+import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
+import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsCommandFactory;
 import frc.robot.Utils.JoystickUtils.ButtonBoardInterface;
 import frc.robot.Utils.JoystickUtils.ControllerInterface;
 
@@ -23,22 +28,28 @@ import frc.robot.Utils.JoystickUtils.ControllerInterface;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {  
-    private RobotCreator robotCreator;
-    private AutonManager autonManager;
+    private final RobotCreator robotCreator;
+    private final AutonManager autonManager;
 
     // Controller Decloration and Instantiation
-    private ControllerInterface driverController = new ControllerInterface(ControlConstants.kDriverControllerPort);
-    private ButtonBoardInterface buttonBoard = new ButtonBoardInterface(ControlConstants.kButtonBoardPort);
-    private ControllerInterface buttonBoardAlt = new ControllerInterface(ControlConstants.kButtonBoardAltPort);
+    private final ControllerInterface driverController = new ControllerInterface(ControlConstants.kDriverControllerPort);
+    private final ButtonBoardInterface buttonBoard = new ButtonBoardInterface(ControlConstants.kButtonBoardPort);
+    private final ControllerInterface buttonBoardAlt = new ControllerInterface(ControlConstants.kButtonBoardAltPort);
     // Declare all Subsystems and Command Factories
-    private DriveSubsystem driveSubsystem;
-    private DriveCommandFactory driveCommandFactory;
+    private final DriveSubsystem driveSubsystem;
+    private final DriveCommandFactory driveCommandFactory;
+
+    private final OuttakeCommandFactory outtakeCommandFactory;
+    private final ElevatorCommandFactory elevatorCommandFactory;
+    private final TransitWheelsCommandFactory transitWheelsCommandFactory;
+
+    private final HighLevelCommandsFactory highLevelCommandsFactory;
 
     // Decloration of Commands
     // SwerveDrive Commands
-    private FieldOrientedDriveCommand fieldOrientedDriveCommand;
-    private LockSwerves lockSwerves;
-    private Command resetOdometry;
+    private final FieldOrientedDriveCommand fieldOrientedDriveCommand;
+    private final LockSwerves lockSwerves;
+    private final Command resetOdometry;
 
     /** 
      * Initalized all Subsystem and Commands 
@@ -53,6 +64,23 @@ public class RobotContainer {
         this.driveSubsystem.setDefaultCommand(this.fieldOrientedDriveCommand);
         this.lockSwerves = this.driveCommandFactory.createLockSwervesCommand();
         this.resetOdometry = this.driveCommandFactory.createResetOdometryCommand();
+
+        this.outtakeCommandFactory = new OuttakeCommandFactory(this.robotCreator.getOuttakeWheelsSubsystem(),
+            this.robotCreator.getOuttakeCoralSensorsSubsystem());
+        this.elevatorCommandFactory = new ElevatorCommandFactory(this.robotCreator.getElevatorSubsystem(), this.buttonBoardAlt);
+        this.transitWheelsCommandFactory = new TransitWheelsCommandFactory(this.robotCreator.getTransitWheelsSubsystem(),
+            this.robotCreator.getOuttakeCoralSensorsSubsystem());
+
+
+        this.highLevelCommandsFactory = new HighLevelCommandsFactory(new GroundIntakeCommandFactory(this.robotCreator.getPivotSubsystem(),
+            this.robotCreator.getIntakeWheelsSubsystem(),
+            this.robotCreator.getTransitCoralSensorSubsystem()
+            ),
+            this.transitWheelsCommandFactory, this.outtakeCommandFactory, this.robotCreator.getOuttakeCoralSensorsSubsystem(),
+            this.robotCreator.getTransitCoralSensorSubsystem(), this.robotCreator.getFunnelCoralSensorSubsystem(),
+            this.elevatorCommandFactory);
+
+        this.robotCreator.getFunnelCoralSensorSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
         configureBindings();
 
         this.autonManager = new AutonManager(this.driveCommandFactory, this.driveSubsystem);

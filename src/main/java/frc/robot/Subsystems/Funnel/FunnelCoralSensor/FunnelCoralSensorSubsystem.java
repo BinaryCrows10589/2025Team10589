@@ -24,7 +24,7 @@ public class FunnelCoralSensorSubsystem extends SubsystemBase{
         Logger.processInputs("Funnel/FunnelCoralSensor", this.funnelCoralSensorInputs);
     }
 
-    public boolean isCoralInTransit() {
+    public boolean isCoralInFunnel() {
         return this.funnelCoralSensorInputs.validReading && 
             this.funnelCoralSensorInputs.distanceSensorReadingMilameters <
             FunnelConstants.kFunnelCoralSensorMaxCoralDistanceMilameters;

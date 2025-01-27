@@ -12,7 +12,11 @@ public final class ControlConstants {
     public static final double kTranslationYSlowModeMultipler = .2;
     public static final double kRotationSlowModeMultipler = .2;
 
-    public static final int[] kElevatorInPositionColor = {0, 255, 150};
+    public static final int[] kElevatorInPositionColor = {0, 255, 200};
+    public static final int[] kElevatorInMotionColor = {255, 255, 0};
+    public static final int[] kCoralIntakingColor = {255, 0, 0};
+    public static final int[] kCoralIntakedColor = {0, 255, 0};
+    public static final int[] kCoralOuttakedColor = {255, 0, 255};
 
     public static boolean kIsDriverControlled = true;
 }

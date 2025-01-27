@@ -27,6 +27,8 @@ public class ElevatorToPositionCommand extends Command {
     @Override
     public void initialize() {
         this.elevatorSubsystem.setDesiredElevatorPosition(desiredElevatorPosition);
+        LEDManager.setSolidColor(ControlConstants.kElevatorInMotionColor);
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.

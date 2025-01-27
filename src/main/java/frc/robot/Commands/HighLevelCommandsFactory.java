@@ -1,8 +1,10 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Commands.FunnelCommands.DetectFunnelCoralCommand;
 import frc.robot.Commands.IntakeCommands.GroundIntakeCommand;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
+import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorSubsystem;
 import frc.robot.Subsystems.GroundIntake.GroundIntakeCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
@@ -16,6 +18,7 @@ public class HighLevelCommandsFactory {
     private final OuttakeCommandFactory outtakeCommandFactory;
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
     private final TransitCoralSensorSubsystem transitCoralSensorSubsystem;
+    private final FunnelCoralSensorSubsystem funnelCoralSensorSubsystem;
     private final ElevatorCommandFactory elevatorCommandFactory;
 
     public HighLevelCommandsFactory(
@@ -24,6 +27,7 @@ public class HighLevelCommandsFactory {
         OuttakeCommandFactory outtakeCommandFactory, 
         OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem,
         TransitCoralSensorSubsystem transitCoralSensorSubsystem,
+        FunnelCoralSensorSubsystem funnelCoralSensorSubsystem,
         ElevatorCommandFactory elevatorCommandFactory
     ) {
         this.groundIntakeCommandFactory = groundIntakeCommandFactory;
@@ -31,10 +35,15 @@ public class HighLevelCommandsFactory {
         this.outtakeCommandFactory = outtakeCommandFactory;
         this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
         this.transitCoralSensorSubsystem = transitCoralSensorSubsystem;
+        this.funnelCoralSensorSubsystem = funnelCoralSensorSubsystem;
         this.elevatorCommandFactory = elevatorCommandFactory;
     }
     
     public GroundIntakeCommand createGroundIntakeCommand() {
         return new GroundIntakeCommand(groundIntakeCommandFactory, transitWheelsCommandFactory, outtakeCommandFactory, outtakeCoralSensorsSubsystem, transitCoralSensorSubsystem, elevatorCommandFactory);
+    }
+    
+    public DetectFunnelCoralCommand createDetectFunnelCoralCommand() {
+        return new DetectFunnelCoralCommand(outtakeCommandFactory, outtakeCoralSensorsSubsystem, funnelCoralSensorSubsystem);
     }
 }

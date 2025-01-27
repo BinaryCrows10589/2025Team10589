@@ -6,10 +6,11 @@ import frc.robot.Constants.GenericConstants.ControlConstants;
 
 public class ButtonBoardInterface {
     private GenericHID buttonBoard;
-    private Command[][] buttonMap = new Command[this.buttonBoard.getButtonCount()+1][2];
+    private Command[][] buttonMap;
     
     public ButtonBoardInterface(int controlerPortID) {
         this.buttonBoard = new GenericHID(controlerPortID);
+        this.buttonMap = new Command[this.buttonBoard.getButtonCount()+1][2];
     }
 
     public void bindButton(Command onTrue, Command onFalse, int buttonIndex) {
