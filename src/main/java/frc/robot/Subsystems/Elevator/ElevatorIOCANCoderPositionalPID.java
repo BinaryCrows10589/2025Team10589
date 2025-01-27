@@ -1,9 +1,11 @@
 package frc.robot.Subsystems.Elevator;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -18,6 +20,8 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
     private TalonFX elevatorMasterMotor;
     private TalonFX elevatorSlaveMotor;
 
+    private CANcoder elevatorEncoder;
+
     private PositionVoltage desiredElevatorPosition = new PositionVoltage(ElevatorConstants.kDefaultElevatorPosition);
 
     private NetworkTablesTunablePIDConstants elevatorMotorPIDConstantTuner;
@@ -26,6 +30,7 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
     public ElevatorIOCANCoderPositionalPID() {
         this.elevatorMasterMotor = new TalonFX(ElevatorConstants.kElevatorMasterMotorCANID);
         this.elevatorSlaveMotor = new TalonFX(ElevatorConstants.kElevatorSlaveMotorCANID);
+        this.elevatorEncoder = new CANcoder(ElevatorConstants.kElevatorEncoderCANID);
 
         configureElevatorMotors();
 
@@ -37,9 +42,9 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         masterConfiguration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         masterConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         masterConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        masterConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ElevatorConstants.kForwardSoftLimit;
+        masterConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ElevatorConstants.kForwardSoftLimit + ElevatorConstants.kElevatorEncoderOffset;
         masterConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        masterConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ElevatorConstants.kReverseSoftLimit;
+        masterConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ElevatorConstants.kReverseSoftLimit + ElevatorConstants.kElevatorEncoderOffset;
         masterConfiguration.Feedback.SensorToMechanismRatio = 1.0;
         masterConfiguration.Feedback.RotorToSensorRatio = ElevatorConstants.kElevatorGearRatio;
         masterConfiguration.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
@@ -58,6 +63,11 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         elevatorPositionalPIDConfigs.kD = ElevatorConstants.kElevatorDPIDValue;
         elevatorPositionalPIDConfigs.kG = ElevatorConstants.kElevatorGPIDValue;
         elevatorPositionalPIDConfigs.kS = ElevatorConstants.kElevatorSPIDValue;
+
+        CANcoderConfiguration encoderConfig = new CANcoderConfiguration();
+        encoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.5;
+        encoderConfig.MagnetSensor.MagnetOffset = 0.0;
+        elevatorEncoder.getConfigurator().apply(encoderConfig);
 
         this.elevatorMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("Elevator/", 
             elevatorPositionalPIDConfigs.kP,

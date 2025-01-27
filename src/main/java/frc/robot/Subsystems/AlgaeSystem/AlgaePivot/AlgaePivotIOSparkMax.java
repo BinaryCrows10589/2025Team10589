@@ -37,6 +37,8 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
 
         pivotConfig.smartCurrentLimit(AlgaePivotConstants.kSmartCurrentLimit);
         pivotConfig.idleMode(IdleMode.kBrake);
+        pivotConfig.softLimit.forwardSoftLimit(AlgaePivotConstants.kForwardSoftLimit);
+        pivotConfig.softLimit.reverseSoftLimit(AlgaePivotConstants.kReverseSoftLimit);
 
         pivotConfig.closedLoop.pid(
             AlgaePivotConstants.kPivotPPIDValue, 
@@ -58,7 +60,7 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
     public void setDesiredPivotRotation(double desiredRotations) {
         desiredPivotRotations = desiredRotations;
 
-        pivotPIDController.setReference(desiredRotations, ControlType.kPosition);
+        pivotPIDController.setReference(desiredRotations + AlgaePivotConstants.kPivotEncoderOffset, ControlType.kPosition);
     }
 
     @Override
@@ -66,7 +68,7 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
         pivotIOInputs.rawDesiredPivotAngleRotations = desiredPivotRotations;
         pivotIOInputs.offsetDesiredPivotAngleRotations = desiredPivotRotations + AlgaePivotConstants.kPivotEncoderOffset;
         pivotIOInputs.rawPivotAngleRotations = pivotMotor.getAlternateEncoder().getPosition();
-        pivotIOInputs.offsetPivotAngleRotations = pivotMotor.getAlternateEncoder().getPosition() + AlgaePivotConstants.kPivotEncoderOffset;
+        pivotIOInputs.offsetPivotAngleRotations = pivotMotor.getAlternateEncoder().getPosition() - AlgaePivotConstants.kPivotEncoderOffset;
         pivotIOInputs.pivotMotorAppliedVolts = pivotMotor.getAppliedOutput() * pivotMotor.getBusVoltage();
         pivotIOInputs.pivotMotorCurrentAmps = new double[] {pivotMotor.getOutputCurrent()};
         pivotIOInputs.pivotRPM = pivotMotor.getAlternateEncoder().getVelocity();

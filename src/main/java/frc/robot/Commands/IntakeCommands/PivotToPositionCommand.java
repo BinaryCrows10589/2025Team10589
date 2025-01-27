@@ -9,14 +9,10 @@ public class PivotToPositionCommand extends Command {
     private final double targetPosition;
     
 
-    public PivotToPositionCommand(double maxTime, double targetPosition, PivotSubsystem pivotSubsystem) {
+    public PivotToPositionCommand(double targetPosition, PivotSubsystem pivotSubsystem) {
         this.pivotSubsystem = pivotSubsystem;
         this.targetPosition = targetPosition;
         addRequirements(this.pivotSubsystem);
-    }
-
-    public PivotToPositionCommand(double targetPosition, PivotSubsystem pivotSubsystem) {
-        this(150, targetPosition, pivotSubsystem);
     }
 
     @Override

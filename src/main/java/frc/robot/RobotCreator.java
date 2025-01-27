@@ -1,6 +1,7 @@
 package frc.robot;
 
 
+import frc.robot.Commands.ElevatorCommands.ElevatorReturnDefaultCommand;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeCoralSensorConstants;
 import frc.robot.Subsystems.Elevator.ElevatorIO;
@@ -55,6 +56,8 @@ public class RobotCreator {
     private final OuttakeWheelsSubsystem outtakeWheelsSubsystem;
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
 
+    private ElevatorReturnDefaultCommand elevatorReturnDefaultCommand; // Can't be final or RobotCreator will not work
+
 
  
     public RobotCreator() {
@@ -76,6 +79,8 @@ public class RobotCreator {
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
                 
                 this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderPositionalPID());
+                this.elevatorReturnDefaultCommand = new ElevatorReturnDefaultCommand(elevatorSubsystem);
+                this.elevatorSubsystem.setDefaultCommand(elevatorReturnDefaultCommand);
 
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
                 this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());

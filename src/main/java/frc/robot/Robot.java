@@ -43,6 +43,7 @@ public class Robot extends LoggedRobot {
          */
         @Override
         public void robotInit() {
+            
             //DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);
 
             // BuiltConstatns is generated when the project is built. No imports or anything is needed if it is red underlined just build the project

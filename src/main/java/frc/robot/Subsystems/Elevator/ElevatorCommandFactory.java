@@ -14,12 +14,9 @@ public class ElevatorCommandFactory {
     // All Subsystems needed for every command
     private final ElevatorSubsystem elevatorSubsystem;
 
-    // All other dependencies for every command that uses primarly DriveSubsystem
-    private final ControllerInterface mechanismController;
 
-    public ElevatorCommandFactory(ElevatorSubsystem elevatorSubsystem, ControllerInterface mechanismController) {
+    public ElevatorCommandFactory(ElevatorSubsystem elevatorSubsystem) {
         this.elevatorSubsystem = elevatorSubsystem;
-        this.mechanismController = mechanismController;
     }
 
     public ElevatorToPositionCommand createElevatorToBasementCommand() {

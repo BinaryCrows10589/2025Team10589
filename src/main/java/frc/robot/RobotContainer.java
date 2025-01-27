@@ -67,7 +67,7 @@ public class RobotContainer {
 
         this.outtakeCommandFactory = new OuttakeCommandFactory(this.robotCreator.getOuttakeWheelsSubsystem(),
             this.robotCreator.getOuttakeCoralSensorsSubsystem());
-        this.elevatorCommandFactory = new ElevatorCommandFactory(this.robotCreator.getElevatorSubsystem(), this.buttonBoardAlt);
+        this.elevatorCommandFactory = new ElevatorCommandFactory(this.robotCreator.getElevatorSubsystem());
         this.transitWheelsCommandFactory = new TransitWheelsCommandFactory(this.robotCreator.getTransitWheelsSubsystem(),
             this.robotCreator.getOuttakeCoralSensorsSubsystem());
 

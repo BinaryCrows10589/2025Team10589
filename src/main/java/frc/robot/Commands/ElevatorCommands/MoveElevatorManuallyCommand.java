@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorMode;
 
 public class MoveElevatorManuallyCommand extends Command {
 

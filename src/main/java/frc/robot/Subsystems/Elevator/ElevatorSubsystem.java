@@ -13,7 +13,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     ElevatorIO elevatorIO;
     ElevatorIOInputsAutoLogged elevatorInputs = new ElevatorIOInputsAutoLogged();
 
-    public enum ElevatorPosition {
+    ElevatorMode currentMode = ElevatorMode.AUTOMATIC_POSITIONING;
+
+    public static enum ElevatorPosition {
         BASEMENT,
         L1,
         L2,
@@ -24,6 +26,11 @@ public class ElevatorSubsystem extends SubsystemBase {
         SCORE_ALGAE_PROCESSOR,
         SCORE_ALGAE_BARGE,
         REEF_INTAKE_ALGAE
+    }
+
+    public static enum ElevatorMode {
+        MANUAL,
+        AUTOMATIC_POSITIONING
     }
 
     public ElevatorSubsystem(ElevatorIO elevatorIO) {
@@ -37,20 +44,31 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void setDesiredElevatorPosition(double desiredPosition) {
+        updateElevatorControlMode(ElevatorMode.AUTOMATIC_POSITIONING);
         elevatorIO.setDesiredPosition(desiredPosition);
     }
 
     public void setDesiredElevatorPosition(ElevatorPosition desiredPosition) {
+        updateElevatorControlMode(ElevatorMode.AUTOMATIC_POSITIONING);
+
         elevatorIO.setDesiredPosition(resolveElevatorPosition(desiredPosition));
     }
 
     public void incrementDesiredElevatorPosition(double increment) {
+        updateElevatorControlMode(ElevatorMode.MANUAL);
         elevatorIO.incrementDesiredPosition(increment);
     }
 
     public boolean isElevatorInTolorence(double toloranceRotations) {
         return Tolerance.inTolorance(this.elevatorInputs.elevatorRawPosition, this.elevatorInputs.offsetDesiredElevatorPosition,
         toloranceRotations);
+    }
+
+    public void updateElevatorControlMode(ElevatorMode controlMode) {
+        this.currentMode = controlMode;
+    }
+    public ElevatorMode getControlMode() {
+        return this.currentMode;
     }
 
     public static double resolveElevatorPosition(ElevatorPosition desiredPosition) {
