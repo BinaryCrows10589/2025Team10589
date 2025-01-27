@@ -44,6 +44,7 @@ public class PivotIOTalonFX implements PivotIO{
         pivotConfiguration.Feedback.RotorToSensorRatio = PivotContants.kPivotGearRatio;
         pivotConfiguration.Voltage.PeakForwardVoltage = PivotContants.kMaxVoltage;
         pivotConfiguration.Voltage.PeakReverseVoltage = -PivotContants.kMaxVoltage;
+        pivotConfiguration.ClosedLoopGeneral.ContinuousWrap = true;
 
         Slot0Configs pivotPositionalPIDConfigs = new Slot0Configs();
         pivotPositionalPIDConfigs.kP = PivotContants.kPivotPPIDValue;
@@ -81,7 +82,7 @@ public class PivotIOTalonFX implements PivotIO{
     private void configurePivotEncoder() {
         CANcoderConfiguration pivotEncoderConfigurations = new CANcoderConfiguration();
         MagnetSensorConfigs magnetConfigs = new MagnetSensorConfigs();
-        magnetConfigs.AbsoluteSensorDiscontinuityPoint = 1;
+        magnetConfigs.AbsoluteSensorDiscontinuityPoint = .5;
         magnetConfigs.MagnetOffset = 0.0;
         pivotEncoderConfigurations.MagnetSensor = magnetConfigs;
         this.pivotEncoder.getConfigurator().apply(pivotEncoderConfigurations);
@@ -89,8 +90,10 @@ public class PivotIOTalonFX implements PivotIO{
 
     @Override
     public void updateInputs(PivotIOInputs pivotIOInputs) {
-        pivotIOInputs.pivotAngleRotations = this.pivotMotor.getPosition().getValueAsDouble();
+        pivotIOInputs.pivotAngleRotationsRaw = this.pivotMotor.getPosition().getValueAsDouble();
+        pivotIOInputs.pivotAngleRotationsOffset = this.pivotMotor.getPosition().getValueAsDouble() - PivotContants.kRotationOffset;
         pivotIOInputs.desiredPivotAngleRotations = desiredPivotPosition.Position;
+        pivotIOInputs.offsetDesiredPivotAngleRotations = desiredPivotPosition.Position + PivotContants.kRotationOffset;
         pivotIOInputs.pivotRPM = this.pivotMotor.getVelocity().getValueAsDouble() * 60;
         pivotIOInputs.pivotMotorAppliedVolts = this.pivotMotor.getMotorVoltage().getValueAsDouble();
         pivotIOInputs.pivotMotorCurrentAmps = new double[] {this.pivotMotor.getSupplyCurrent().getValueAsDouble()};
@@ -99,7 +102,7 @@ public class PivotIOTalonFX implements PivotIO{
     }
 
     public void setDesiredPivotRotation(double desiredRotations) {
-        this.desiredPivotPosition.Position = desiredRotations;
+        this.desiredPivotPosition.Position = desiredRotations + PivotContants.kRotationOffset;
         this.pivotMotor.setControl(this.desiredPivotPosition);
     }
 

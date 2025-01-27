@@ -9,8 +9,10 @@ public interface PivotIO {
     @AutoLog
     public static class PivotIOInputs {
         public double pivotRPM = 0.0;
-        public double pivotAngleRotations = 0.0;
-        public double desiredPivotAngleRotations = PivotContants.kRotationOffset;
+        public double pivotAngleRotationsRaw = 0.0;
+        public double pivotAngleRotationsOffset = 0.0;
+        public double desiredPivotAngleRotations = 0.0;
+        public double offsetDesiredPivotAngleRotations = 0.0;
         public double pivotMotorAppliedVolts = 0.0;
         public double[] pivotMotorCurrentAmps = new double[] {};
     }

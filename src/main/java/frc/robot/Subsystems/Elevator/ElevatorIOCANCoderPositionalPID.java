@@ -46,6 +46,7 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         masterConfiguration.Feedback.FeedbackRemoteSensorID = ElevatorConstants.kElevatorEncoderCANID;
         masterConfiguration.Voltage.PeakForwardVoltage = ElevatorConstants.kMaxVoltage;
         masterConfiguration.Voltage.PeakReverseVoltage = -ElevatorConstants.kMaxVoltage;
+        masterConfiguration.ClosedLoopGeneral.ContinuousWrap = true;
         //masterConfiguration.Feedback.FeedbackRotorOffset = elevatorEncoder.getAbsoluteEncoder().getPosition(); // Reset the builtin encoder to the REV encoder's value
 
         //TODO: I don't think this requires more configuration, but we'll have to see
@@ -70,6 +71,8 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         this.elevatorSlaveMotor.getConfigurator().apply(masterConfiguration);
         this.elevatorMasterMotor.getConfigurator().apply(elevatorPositionalPIDConfigs); 
     }
+
+    
 
     /**
      * WORNING!!! There should only be one call of this method and that

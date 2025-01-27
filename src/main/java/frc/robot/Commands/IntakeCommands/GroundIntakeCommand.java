@@ -60,7 +60,6 @@ public class GroundIntakeCommand extends Command {
 
     @Override
     public void initialize() {
-        
         elevatorAndTransitCommand = new SequentialGroupCommand(
             elevatorCommandFactory.createElevatorToBasementCommand(),
             transitWheelsCommandFactory.createRunTransitToOuttakeCommand());
@@ -100,7 +99,7 @@ public class GroundIntakeCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-
+        
     }
 
     @Override

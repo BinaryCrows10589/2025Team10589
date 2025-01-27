@@ -24,7 +24,7 @@ public class PivotSubsystem extends SubsystemBase{
     }
 
     public boolean isPivotInTolorence() {
-        return Tolerance.inTolorance(this.pivotInputs.pivotAngleRotations, this.pivotInputs.desiredPivotAngleRotations,
+        return Tolerance.inTolorance(this.pivotInputs.pivotAngleRotationsRaw, this.pivotInputs.offsetDesiredPivotAngleRotations,
         PivotContants.kPivotAngleToloranceRotations);
     }
 }
