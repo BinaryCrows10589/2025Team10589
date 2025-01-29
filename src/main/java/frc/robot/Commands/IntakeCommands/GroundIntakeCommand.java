@@ -81,7 +81,7 @@ public class GroundIntakeCommand extends Command {
     @Override
     public void initialize() {
         elevatorAndTransitCommand = new SequentialGroupCommand(
-            //this.elevatorToBasementCommand, //TODO: RE ADD
+            this.elevatorToBasementCommand, //TODO: RE ADD
             this.runTransitToOuttakeCommand);        
         LEDManager.setSolidColor(ControlConstants.kCoralIntakingColor);
 
