@@ -4,6 +4,9 @@ import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Commands.ElevatorCommands.ElevatorToPositionCommand;
+import frc.robot.Commands.OuttakeWheelsCommands.HoldCoralInOuttakeCommand;
+import frc.robot.Commands.TransitCommands.RunTransitToOuttakeCommand;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
@@ -42,7 +45,14 @@ public class GroundIntakeCommand extends Command {
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
     private final TransitCoralSensorSubsystem transitCoralSensorSubsystem;
     private final ElevatorCommandFactory elevatorCommandFactory;
-
+    private final PivotToPositionCommand pivotUpCommand;
+    private final PivotToPositionCommand pivotDownCommand;
+    private final ElevatorToPositionCommand elevatorToL1Command;
+    private final ElevatorToPositionCommand elevatorToBasementCommand;
+    private final HoldCoralInOuttakeCommand holdCoralInOuttakeCommand;
+    private final RunTransitToOuttakeCommand runTransitToOuttakeCommand;
+    private final RunIntakeWheelsCommand runIntakeWheelsCommand;
+            
     private SequentialGroupCommand elevatorAndTransitCommand;
     
 
@@ -59,17 +69,22 @@ public class GroundIntakeCommand extends Command {
             this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
             this.transitCoralSensorSubsystem = transitCoralSensorSubsystem;
             this.elevatorCommandFactory = elevatorCommandFactory;
+            this.pivotUpCommand = this.groundIntakeCommandFactory.createPivotUpCommand();
+            this.elevatorToL1Command = this.elevatorCommandFactory.createElevatorToL1Command();
+            this.holdCoralInOuttakeCommand = this.outtakeCommandFactory.createHoldCoralInOuttakeCommand();
+            this.runTransitToOuttakeCommand = this.transitWheelsCommandFactory.createRunTransitToOuttakeCommand();
+            this.pivotDownCommand = this.groundIntakeCommandFactory.createPivotDownCommand();
+            this.elevatorToBasementCommand = this.elevatorCommandFactory.createElevatorToBasementCommand();
+            this.runIntakeWheelsCommand = this.groundIntakeCommandFactory.createRunIntakeWheelsCommand();
+
             addRequirements(outtakeCoralSensorsSubsystem, transitCoralSensorSubsystem);
     }
 
     @Override
     public void initialize() {
         elevatorAndTransitCommand = new SequentialGroupCommand(
-            //elevatorCommandFactory.createElevatorToBasementCommand(),
-            transitWheelsCommandFactory.createRunTransitToOuttakeCommand());
-
-        currentState = GroundIntakeCommandStage.INTAKING;
-        
+            //this.elevatorToBasementCommand, //TODO: RE ADD
+            this.runTransitToOuttakeCommand);        
         LEDManager.setSolidColor(ControlConstants.kCoralIntakingColor);
 
     }
@@ -91,31 +106,29 @@ public class GroundIntakeCommand extends Command {
     public void execute() {
         if (currentState == GroundIntakeCommandStage.INTAKING) {
             if (!checkIfStageStarted()) {
-                groundIntakeCommandFactory.createPivotDownCommand().schedule(); // Moves pivot down, stops when it's there
-                groundIntakeCommandFactory.createRunIntakeWheelsCommand().schedule(); // Starts pivot wheels, stops when coral is in the transit
-                elevatorAndTransitCommand.schedule();
+                this.pivotDownCommand.schedule(); // Moves pivot down, stops when it's there
+                this.runIntakeWheelsCommand.schedule(); // Starts pivot wheels, stops when coral is in the transit
+                this.elevatorAndTransitCommand.schedule();
             }
-            if (elevatorAndTransitCommand.isScheduled()) { // True when coral is in the outtake
+            if (elevatorAndTransitCommand.isFinished()) { // True when coral is in the outtake
                 goToNextStage(GroundIntakeCommandStage.RESETTING);
-            }
-        } else if (currentState == GroundIntakeCommandStage.RESETTING) {
-            if (!checkIfStageStarted()) {
-                groundIntakeCommandFactory.createPivotUpCommand().schedule(); // Pivots the pivot back into the robot
-                elevatorCommandFactory.createElevatorToL1Command().schedule(); // Brings elevator up to L1
-                outtakeCommandFactory.creatHoldCoralInOuttakeCommand().schedule();
-                LEDManager.setSolidColor(ControlConstants.kCoralIntakedColor);
             }
         } // TODO: BOOKMARK. This code does not work because when the transit command ends it does not start the outtake motors holdCoralInOuttakeCommand (or it doesn't do anything, maybe voltage too low)
     }     // Bonus: get distance sensor stuff working for the isValid. Maybe make whether to consider invalid values as true or false a parameter? but that's just my two cents
 
     @Override
     public void end(boolean interrupted) {
-        
+        this.currentState = GroundIntakeCommandStage.INTAKING;
+        this.hasStartedNextStage = false;
+        this.pivotUpCommand.schedule(); // Pivots the pivot back into the robot
+        this.elevatorToL1Command.schedule();// Brings elevator up to L1
+        this.holdCoralInOuttakeCommand.schedule();
+        LEDManager.setSolidColor(ControlConstants.kCoralIntakedColor);
     }
 
     @Override
     public boolean isFinished() {
-        return currentState == GroundIntakeCommandStage.RESETTING && hasStartedNextStage; // True when we have set everything up to return to where it needs to be
+        return currentState == GroundIntakeCommandStage.RESETTING;// True when we have set everything up to return to where it needs to be
     }
 
 
