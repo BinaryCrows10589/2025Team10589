@@ -5,6 +5,7 @@ import org.littletonrobotics.junction.Logger;
 import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Commands.OuttakeWheelsCommands.HoldCoralInOuttakeCommand;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.TransitConstants;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorSubsystem;
@@ -19,6 +20,7 @@ public class DetectFunnelCoralCommand extends Command {
     
     private final FunnelCoralSensorSubsystem funnelCoralSensorSubsystem;
     private final OuttakeCommandFactory outtakeCommandFactory;
+    private final HoldCoralInOuttakeCommand holdCoralInOuttakeCommand;
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
     private boolean isSameCoral = false;
 
@@ -28,7 +30,9 @@ public class DetectFunnelCoralCommand extends Command {
         this.funnelCoralSensorSubsystem = funnelCoralSensorSubsystem;
         this.outtakeCommandFactory = outtakeCommandFactory;
         this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
-        addRequirements(this.funnelCoralSensorSubsystem, this.outtakeCoralSensorsSubsystem);
+        this.holdCoralInOuttakeCommand = this.outtakeCommandFactory.createHoldCoralInOuttakeCommand();
+
+        addRequirements(funnelCoralSensorSubsystem);
     }
 
 
@@ -41,18 +45,19 @@ public class DetectFunnelCoralCommand extends Command {
     public void execute() {
         if(this.funnelCoralSensorSubsystem.isCoralInFunnel() && !isSameCoral) {
             LEDManager.setSolidColor(ControlConstants.kCoralIntakingColor);
+            this.holdCoralInOuttakeCommand.cancel();
             this.isSameCoral = true;
-        } else if(this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(true) && isSameCoral) {
+        } else if(this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(false) && isSameCoral) {
             LEDManager.setSolidColor(ControlConstants.kCoralIntakedColor);
-            this.outtakeCommandFactory.createHoldCoralInOuttakeCommand();
             this.isSameCoral = false;
+            this.holdCoralInOuttakeCommand.schedule();
         }
         Logger.recordOutput("Funnel/HasSeenCoral", this.isSameCoral);
     }
 
     @Override
     public void end(boolean interrupted) {
-
+        this.isSameCoral = false;
     }
 
     @Override

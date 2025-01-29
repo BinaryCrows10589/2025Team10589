@@ -19,6 +19,10 @@ public class OuttakeCommandFactory {
         return new HoldCoralInOuttakeCommand(outtakeWheelsSubsystem, outtakeCoralSensorsSubsystem);
     }
 
+    public HoldCoralInOuttakeCommand createHoldCoralInOuttakeCommandWithWaitTime(double waitTime) {
+        return new HoldCoralInOuttakeCommand(waitTime ,outtakeWheelsSubsystem, outtakeCoralSensorsSubsystem);
+    }
+
     public OuttakeCoralCommand createOuttakeCoralCommand() {
         return new OuttakeCoralCommand(outtakeWheelsSubsystem, outtakeCoralSensorsSubsystem);
     }

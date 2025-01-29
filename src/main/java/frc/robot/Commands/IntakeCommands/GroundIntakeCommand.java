@@ -71,7 +71,7 @@ public class GroundIntakeCommand extends Command {
             this.elevatorCommandFactory = elevatorCommandFactory;
             this.pivotUpCommand = this.groundIntakeCommandFactory.createPivotUpCommand();
             this.elevatorToL1Command = this.elevatorCommandFactory.createElevatorToL1Command();
-            this.holdCoralInOuttakeCommand = this.outtakeCommandFactory.createHoldCoralInOuttakeCommand();
+            this.holdCoralInOuttakeCommand = this.outtakeCommandFactory.createHoldCoralInOuttakeCommandWithWaitTime(.5);
             this.runTransitToOuttakeCommand = this.transitWheelsCommandFactory.createRunTransitToOuttakeCommand();
             this.pivotDownCommand = this.groundIntakeCommandFactory.createPivotDownCommand();
             this.elevatorToBasementCommand = this.elevatorCommandFactory.createElevatorToBasementCommand();
