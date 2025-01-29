@@ -3,6 +3,7 @@ package frc.robot.Subsystems.Climber;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Subsystems.Climber.ClimberIOInputsAutoLogged;
 
 public class ClimberSubsystem extends SubsystemBase {
     private ClimberIO climberIO;

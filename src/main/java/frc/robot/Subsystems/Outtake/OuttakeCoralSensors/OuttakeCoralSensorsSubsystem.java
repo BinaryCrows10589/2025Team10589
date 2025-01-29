@@ -26,11 +26,18 @@ public class OuttakeCoralSensorsSubsystem extends SubsystemBase {
     }
 
     public boolean isCoralInStartOfOuttake() {
-        return isCoralDetected(this.outtakeCoralSensorsInputs.startValidReading, this.outtakeCoralSensorsInputs.startDistanceSensorReadingMilameters);    
+        boolean coralDetected = isCoralDetected(this.outtakeCoralSensorsInputs.startValidReading, this.outtakeCoralSensorsInputs.startDistanceSensorReadingMilameters);    
+        Logger.recordOutput("Outtake/OuttakeCoralSensors/IsCoralInStart", coralDetected);
+        return coralDetected;
     }
 
     public boolean isCoralInEndOfOuttake() {
-        return isCoralDetected(this.outtakeCoralSensorsInputs.endValidReading, this.outtakeCoralSensorsInputs.endDistanceSensorReadingMilameters);    
+        boolean coralDetected = isCoralDetected(this.outtakeCoralSensorsInputs.endValidReading, this.outtakeCoralSensorsInputs.endDistanceSensorReadingMilameters);    
+        Logger.recordOutput("Outtake/OuttakeCoralSensors/IsCoralInEnd", coralDetected);
+        return coralDetected;
     }
+
+    public boolean isStartReadingValid() { return this.outtakeCoralSensorsInputs.startValidReading; }
+    public boolean isEndReadingValid() { return this.outtakeCoralSensorsInputs.endValidReading; }
 
 }

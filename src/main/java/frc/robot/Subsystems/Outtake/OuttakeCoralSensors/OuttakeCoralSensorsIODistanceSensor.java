@@ -12,8 +12,8 @@ public class OuttakeCoralSensorsIODistanceSensor implements OuttakeCoralSensorsI
         this.outtakeCoralSensorStart = new TimeOfFlight(OuttakeConstants.kOuttakeCoralSensorStartCANID);
         this.outtakeCoralSensorEnd = new TimeOfFlight(OuttakeConstants.kOuttakeCoralSensorEndCANID);
 
-        this.outtakeCoralSensorStart.setRangingMode(TimeOfFlight.RangingMode.Short, 24);
-        this.outtakeCoralSensorEnd.setRangingMode(TimeOfFlight.RangingMode.Short, 24);
+        this.outtakeCoralSensorStart.setRangingMode(TimeOfFlight.RangingMode.Long, 30);
+        this.outtakeCoralSensorEnd.setRangingMode(TimeOfFlight.RangingMode.Long, 30);
     }
 
     @Override

@@ -15,4 +15,6 @@ public interface FunnelCoralSensorIO {
      * @param inputs FunnelCoralSensorIOInputs: The inputes that will be logged. 
      */
     public default void updateInputs(FunnelCoralSensorIOInputs inputs) {}
+
+    public default double getReadingStandardDeviation() {return 0.0;}
 }

@@ -19,6 +19,7 @@ public class ElevatorReturnDefaultCommand extends Command {
 
     public ElevatorReturnDefaultCommand(ElevatorSubsystem elevatorSubsystem) {
         this.elevatorSubsystem = elevatorSubsystem;
+        addRequirements(elevatorSubsystem);
     }
 
     @Override

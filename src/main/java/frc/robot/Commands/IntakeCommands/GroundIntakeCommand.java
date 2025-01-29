@@ -65,9 +65,13 @@ public class GroundIntakeCommand extends Command {
     @Override
     public void initialize() {
         elevatorAndTransitCommand = new SequentialGroupCommand(
-            elevatorCommandFactory.createElevatorToBasementCommand(),
+            //elevatorCommandFactory.createElevatorToBasementCommand(),
             transitWheelsCommandFactory.createRunTransitToOuttakeCommand());
+
+        currentState = GroundIntakeCommandStage.INTAKING;
+        
         LEDManager.setSolidColor(ControlConstants.kCoralIntakingColor);
+
     }
 
     public boolean checkIfStageStarted() {
@@ -91,18 +95,18 @@ public class GroundIntakeCommand extends Command {
                 groundIntakeCommandFactory.createRunIntakeWheelsCommand().schedule(); // Starts pivot wheels, stops when coral is in the transit
                 elevatorAndTransitCommand.schedule();
             }
-            if (elevatorAndTransitCommand.isFinished()) { // True when coral is in the outtake
+            if (elevatorAndTransitCommand.isScheduled()) { // True when coral is in the outtake
                 goToNextStage(GroundIntakeCommandStage.RESETTING);
             }
         } else if (currentState == GroundIntakeCommandStage.RESETTING) {
             if (!checkIfStageStarted()) {
                 groundIntakeCommandFactory.createPivotUpCommand().schedule(); // Pivots the pivot back into the robot
                 elevatorCommandFactory.createElevatorToL1Command().schedule(); // Brings elevator up to L1
-                outtakeCommandFactory.creatHoldCoralInOuttakeCommand();
+                outtakeCommandFactory.creatHoldCoralInOuttakeCommand().schedule();
                 LEDManager.setSolidColor(ControlConstants.kCoralIntakedColor);
             }
-        }
-    }
+        } // TODO: BOOKMARK. This code does not work because when the transit command ends it does not start the outtake motors holdCoralInOuttakeCommand (or it doesn't do anything, maybe voltage too low)
+    }     // Bonus: get distance sensor stuff working for the isValid. Maybe make whether to consider invalid values as true or false a parameter? but that's just my two cents
 
     @Override
     public void end(boolean interrupted) {

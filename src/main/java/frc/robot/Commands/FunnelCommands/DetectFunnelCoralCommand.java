@@ -1,5 +1,7 @@
 package frc.robot.Commands.FunnelCommands;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +47,7 @@ public class DetectFunnelCoralCommand extends Command {
             this.outtakeCommandFactory.creatHoldCoralInOuttakeCommand();
             this.isSameCoral = false;
         }
+        Logger.recordOutput("Funnel/HasSeenCoral", this.isSameCoral);
     }
 
     @Override

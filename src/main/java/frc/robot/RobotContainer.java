@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
@@ -34,7 +35,7 @@ public class RobotContainer {
     // Controller Decloration and Instantiation
     private final ControllerInterface driverController = new ControllerInterface(ControlConstants.kDriverControllerPort);
     private final ButtonBoardInterface buttonBoard = new ButtonBoardInterface(ControlConstants.kButtonBoardPort);
-    private final ControllerInterface buttonBoardAlt = new ControllerInterface(ControlConstants.kButtonBoardAltPort);
+    private final XboxController buttonBoardAlt = new XboxController(2);//new ControllerInterface(ControlConstants.kButtonBoardAltPort);
     // Declare all Subsystems and Command Factories
     private final DriveSubsystem driveSubsystem;
     private final DriveCommandFactory driveCommandFactory;
@@ -80,7 +81,7 @@ public class RobotContainer {
             this.robotCreator.getTransitCoralSensorSubsystem(), this.robotCreator.getFunnelCoralSensorSubsystem(),
             this.elevatorCommandFactory);
 
-        this.robotCreator.getFunnelCoralSensorSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
+        //this.robotCreator.getFunnelCoralSensorSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
         configureBindings();
 
         this.autonManager = new AutonManager(this.driveCommandFactory, this.driveSubsystem);
@@ -96,6 +97,13 @@ public class RobotContainer {
         this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveRotationProfiler(), XboxController.Button.kB.value);
         this.driverController.bindToLeftTriggure(Commands.runOnce(this.driveSubsystem::setSlowModeTrue),
         Commands.runOnce(this.driveSubsystem::setSlowModeFalse));
+        JoystickButton buttonA = new JoystickButton(this.buttonBoardAlt, XboxController.Button.kA.value);
+        buttonA.whileTrue(this.outtakeCommandFactory.createOuttakeCoralCommand());
+
+        JoystickButton buttonB = new JoystickButton(this.buttonBoardAlt, XboxController.Button.kB.value);
+        buttonB.onTrue(this.highLevelCommandsFactory.createGroundIntakeCommand());
+        
+        //t(outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
     }
 
     /**
@@ -112,6 +120,7 @@ public class RobotContainer {
 
     public void updateButtonBoardInputs() {
         this.buttonBoard.periodic();
+        
     }
         
 }

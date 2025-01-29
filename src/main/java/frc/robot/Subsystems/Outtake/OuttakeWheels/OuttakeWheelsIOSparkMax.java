@@ -93,9 +93,10 @@ public class OuttakeWheelsIOSparkMax implements OuttakeWheelsIO {
         OuttakeConstants.kRightWheelIPIDValue,
         OuttakeConstants.kRightWheelDPIDValue,
         0);
+        
 
         leftConfiguration.idleMode(IdleMode.kBrake);
-        leftConfiguration.idleMode(IdleMode.kBrake);
+        rightConfiguration.idleMode(IdleMode.kBrake);
         
         leftWheel.configure(leftConfiguration, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         rightWheel.configure(rightConfiguration, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

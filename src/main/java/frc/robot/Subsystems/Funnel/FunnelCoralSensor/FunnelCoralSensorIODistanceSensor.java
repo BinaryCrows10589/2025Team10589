@@ -21,4 +21,8 @@ public class FunnelCoralSensorIODistanceSensor implements FunnelCoralSensorIO{
         inputs.distanceSensorReadingMilameters = this.funnleCoralSensor.getRange();
         inputs.validReading = this.funnleCoralSensor.isRangeValid();
     }
+
+    public double getReadingStandardDeviation() {
+        return this.funnleCoralSensor.getRangeSigma();
+    }
 }

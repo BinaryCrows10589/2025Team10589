@@ -1,5 +1,7 @@
 package frc.robot.Commands.OuttakeWheelsCommands;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,6 +37,7 @@ public class OuttakeCoralCommand extends Command{
     public void initialize() {  
         this.hardCutOffTimer.startTimer();
         this.outtakeWheelsSubsystem.setWheelVoltages(OuttakeConstants.kLeftWheelOuttake, OuttakeConstants.kRightWheelOuttake);
+        Logger.recordOutput("Outtake/IsRunningOuttakeCommand", true);
     }
 
     @Override
@@ -45,10 +48,12 @@ public class OuttakeCoralCommand extends Command{
     public void end(boolean interrupted) {
         this.outtakeWheelsSubsystem.setWheelVoltages(0, 0);
         LEDManager.setSolidColor(ControlConstants.kCoralOuttakedColor);
+        Logger.recordOutput("Outtake/IsRunningOuttakeCommand", false);
     }
 
     @Override
     public boolean isFinished() {
-        return !this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake() && !this.outtakeCoralSensorsSubsystem.isCoralInEndOfOuttake();
+
+        return (this.outtakeCoralSensorsSubsystem.isStartReadingValid() && this.outtakeCoralSensorsSubsystem.isEndReadingValid()) && !this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake() && !this.outtakeCoralSensorsSubsystem.isCoralInEndOfOuttake();
     }
 }
