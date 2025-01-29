@@ -76,8 +76,6 @@ public class GroundIntakeCommand extends Command {
             this.pivotDownCommand = this.groundIntakeCommandFactory.createPivotDownCommand();
             this.elevatorToBasementCommand = this.elevatorCommandFactory.createElevatorToBasementCommand();
             this.runIntakeWheelsCommand = this.groundIntakeCommandFactory.createRunIntakeWheelsCommand();
-
-            addRequirements(outtakeCoralSensorsSubsystem, transitCoralSensorSubsystem);
     }
 
     @Override
@@ -120,6 +118,9 @@ public class GroundIntakeCommand extends Command {
     public void end(boolean interrupted) {
         this.currentState = GroundIntakeCommandStage.INTAKING;
         this.hasStartedNextStage = false;
+        this.elevatorAndTransitCommand.cancel();
+        this.elevatorToBasementCommand.cancel();
+        this.pivotDownCommand.cancel();
         this.pivotUpCommand.schedule(); // Pivots the pivot back into the robot
         this.elevatorToL1Command.schedule();// Brings elevator up to L1
         this.holdCoralInOuttakeCommand.schedule();

@@ -8,6 +8,8 @@ import frc.robot.Constants.MechanismConstants.OuttakeConstants;
 public class OuttakeCoralSensorsSubsystem extends SubsystemBase {
     private OuttakeCoralSensorsIO outtakeCoralSensorsIO;
     private OuttakeCoralSensorsIOInputsAutoLogged outtakeCoralSensorsInputs = new OuttakeCoralSensorsIOInputsAutoLogged();
+    private double lastStartReading = -1;
+    private double lastEndReading = -1;
 
     public OuttakeCoralSensorsSubsystem(OuttakeCoralSensorsIO outtakeCoralSensorsIO) {
         this.outtakeCoralSensorsIO = outtakeCoralSensorsIO;
@@ -18,21 +20,35 @@ public class OuttakeCoralSensorsSubsystem extends SubsystemBase {
         this.outtakeCoralSensorsIO.updateInputs(outtakeCoralSensorsInputs);
         Logger.processInputs("Outtake/OuttakeCoralSensors", outtakeCoralSensorsInputs);
     }
-
-    private boolean isCoralDetected(boolean validReading, double distanceSensorReadingMillimeters) {
-        return
-            validReading &&
-            distanceSensorReadingMillimeters < OuttakeConstants.kOuttakeCoralSensorMaxCoralDistanceMillimeters;
+    
+    private boolean isCoralDetected(double distanceSensorReadingMillimeters) {
+        return distanceSensorReadingMillimeters < OuttakeConstants.kOuttakeCoralSensorMaxCoralDistanceMillimeters;
     }
 
-    public boolean isCoralInStartOfOuttake() {
-        boolean coralDetected = isCoralDetected(this.outtakeCoralSensorsInputs.startValidReading, this.outtakeCoralSensorsInputs.startDistanceSensorReadingMilameters);    
+    public boolean isCoralInStartOfOuttake(boolean defualtValue) {
+        double reading = 0; 
+        if(this.outtakeCoralSensorsInputs.startValidReading) {
+            reading = this.outtakeCoralSensorsInputs.startDistanceSensorReadingMilameters;
+            this.lastStartReading = reading;
+        } else {
+            reading = lastStartReading;
+        }
+
+        boolean coralDetected = reading == -1 ? defualtValue : isCoralDetected(reading);  
         Logger.recordOutput("Outtake/OuttakeCoralSensors/IsCoralInStart", coralDetected);
         return coralDetected;
     }
 
-    public boolean isCoralInEndOfOuttake() {
-        boolean coralDetected = isCoralDetected(this.outtakeCoralSensorsInputs.endValidReading, this.outtakeCoralSensorsInputs.endDistanceSensorReadingMilameters);    
+    public boolean isCoralInEndOfOuttake(boolean defualtValue) {
+        double reading = 0; 
+        if(this.outtakeCoralSensorsInputs.endValidReading) {
+            reading = this.outtakeCoralSensorsInputs.endDistanceSensorReadingMilameters;
+            this.lastEndReading = reading;
+        } else {
+            reading = lastEndReading;
+        }
+
+        boolean coralDetected = reading == -1 ? defualtValue : isCoralDetected(reading);  
         Logger.recordOutput("Outtake/OuttakeCoralSensors/IsCoralInEnd", coralDetected);
         return coralDetected;
     }

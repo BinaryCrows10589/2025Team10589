@@ -42,7 +42,7 @@ public class DetectFunnelCoralCommand extends Command {
         if(this.funnelCoralSensorSubsystem.isCoralInFunnel() && !isSameCoral) {
             LEDManager.setSolidColor(ControlConstants.kCoralIntakingColor);
             this.isSameCoral = true;
-        } else if(this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake() && isSameCoral) {
+        } else if(this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(true) && isSameCoral) {
             LEDManager.setSolidColor(ControlConstants.kCoralIntakedColor);
             this.outtakeCommandFactory.createHoldCoralInOuttakeCommand();
             this.isSameCoral = false;

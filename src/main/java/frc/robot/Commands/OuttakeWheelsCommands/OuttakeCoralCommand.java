@@ -49,11 +49,12 @@ public class OuttakeCoralCommand extends Command{
         this.outtakeWheelsSubsystem.setWheelVoltages(0, 0);
         LEDManager.setSolidColor(ControlConstants.kCoralOuttakedColor);
         Logger.recordOutput("Outtake/IsRunningOuttakeCommand", false);
+        
     }
 
     @Override
     public boolean isFinished() {
-
-        return (this.outtakeCoralSensorsSubsystem.isStartReadingValid() && this.outtakeCoralSensorsSubsystem.isEndReadingValid()) && !this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake() && !this.outtakeCoralSensorsSubsystem.isCoralInEndOfOuttake();
+        Logger.recordOutput("Checking is finished", true);
+        return !this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(true) || !this.outtakeCoralSensorsSubsystem.isCoralInEndOfOuttake(true);
     }
 }

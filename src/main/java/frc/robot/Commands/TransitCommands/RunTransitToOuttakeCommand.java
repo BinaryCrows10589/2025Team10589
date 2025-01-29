@@ -39,6 +39,6 @@ public class RunTransitToOuttakeCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake() || hardCutOffTimer.hasTimePassed();
+        return outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(false) || hardCutOffTimer.hasTimePassed();
     }
 }
