@@ -76,7 +76,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             case BASEMENT:
                 return 0;
             case L1:
-                return 0;
+                return 20;
             case L2:
                 return 0;
             case L3:
