@@ -13,6 +13,7 @@ import frc.robot.Constants.MechanismConstants.ReefTreeDetectorConstants;
 public class ReefTreeDetectorSubsystem extends SubsystemBase{
     private ReefTreeDetectorIO reefTreeDetectorIO;
     private ReefTreeDetectorIOInputsAutoLogged reefTreeDetectorInputs = new ReefTreeDetectorIOInputsAutoLogged();
+    private double lastValidReading = -1;
 
     public ReefTreeDetectorSubsystem(ReefTreeDetectorIO reefTreeDetectorIO) {
         this.reefTreeDetectorIO = reefTreeDetectorIO;
@@ -28,10 +29,23 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
         return this.reefTreeDetectorInputs.distanceSensorReadingMilameters;
     }
 
-    public boolean isReefTreeInRange() {
-        return this.reefTreeDetectorInputs.validReading && 
-            this.reefTreeDetectorInputs.distanceSensorReadingMilameters <
+    private boolean isReefTreeScean(double range) {
+        return range <
             ReefTreeDetectorConstants.kMaxReefTreeDistance;
+    }
+
+    public boolean isReefTreeInRange(boolean defualtValue) {
+        double reading = 0; 
+        if(this.reefTreeDetectorInputs.validReading) {
+            reading = this.reefTreeDetectorInputs.distanceSensorReadingMilameters;
+            this.lastValidReading = reading;
+        } else {
+            reading = lastValidReading;
+        }
+
+        boolean coralDetected = reading == -1 ? defualtValue : isReefTreeScean(reading);  
+        Logger.recordOutput("Outtake/OuttakeCoralSensors/IsCoralInStart", coralDetected);
+        return coralDetected;
     }
  
 

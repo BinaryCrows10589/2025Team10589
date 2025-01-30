@@ -169,6 +169,10 @@ public class AutonPoint {
         return this.attackAngleDegrees;
     }
 
+    public void setAngleOfAttack(double angleOfAttack) {
+        this.attackAngleDegrees = angleOfAttack;
+    }
+
     /**
      * Gets the auton point. Mirred bassed on the argument.
      * @param shouldMirror Boolean: shouldMirror Whether or not the point should be mirred
