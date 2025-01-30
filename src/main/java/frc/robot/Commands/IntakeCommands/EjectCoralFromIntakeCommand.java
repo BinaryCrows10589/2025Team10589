@@ -32,6 +32,7 @@ public class EjectCoralFromIntakeCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         intakeWheelsSubsystem.setDesiredIntakeWheelsVoltage(0);
+        this.hardCutOffTimer.disableTimer();
     }
 
     @Override

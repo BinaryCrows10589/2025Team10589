@@ -29,6 +29,7 @@ public class DriveForward extends Command{
     @Override
     public void end(boolean interrupt) {
         this.driveSubsystem.stop();
+        this.hardCutOffTimer.disableTimer();
     }
 
     @Override

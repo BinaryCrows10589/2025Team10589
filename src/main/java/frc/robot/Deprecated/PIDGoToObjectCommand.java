@@ -78,6 +78,7 @@ public class PIDGoToObjectCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         this.goToPoseCommand.end(interrupted);
+        this.hardCutOffTimer.disableTimer();
     }
 
     @Override

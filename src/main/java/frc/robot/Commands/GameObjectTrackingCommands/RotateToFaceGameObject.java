@@ -3,14 +3,11 @@ package frc.robot.Commands.GameObjectTrackingCommands;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.CameraConstants.GameObjectTrackingConstants.RotateToFaceGameObjectConstants;
 import frc.robot.Constants.GenericConstants.AutonConstants.PIDPositioningAutonConstants;
 import frc.robot.Subsystems.GameObjectTracking.GameObjectTracker;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
-import frc.robot.Utils.CommandUtils.Wait;
-import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class RotateToFaceGameObject extends Command {

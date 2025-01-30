@@ -19,6 +19,10 @@ public class RunIntakeWheelsCommand extends Command {
         addRequirements(intakeWheelsSubsystem, transitCoralSensorSubsystem);
     }
 
+    public RunIntakeWheelsCommand(IntakeWheelsSubsystem intakeWheelsSubsystem, TransitCoralSensorSubsystem transitCoralSensorSubsystem) {
+        this(150, intakeWheelsSubsystem, transitCoralSensorSubsystem);
+    }
+
 
     @Override
     public void initialize() {
@@ -32,6 +36,7 @@ public class RunIntakeWheelsCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         intakeWheelsSubsystem.setDesiredIntakeWheelsVoltage(0);
+        this.hardCutOffTimer.disableTimer();
     }
 
     @Override

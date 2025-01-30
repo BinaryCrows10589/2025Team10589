@@ -47,6 +47,7 @@ public class OuttakeCoralCommand extends Command{
     @Override
     public void end(boolean interrupted) {
         this.outtakeWheelsSubsystem.setWheelVoltages(0, 0);
+        this.hardCutOffTimer.disableTimer();
         LEDManager.setSolidColor(ControlConstants.kCoralOuttakedColor);
         Logger.recordOutput("Outtake/IsRunningOuttakeCommand", false);
         

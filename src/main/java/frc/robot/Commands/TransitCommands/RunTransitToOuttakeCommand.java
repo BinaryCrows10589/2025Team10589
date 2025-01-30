@@ -35,6 +35,7 @@ public class RunTransitToOuttakeCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         this.transitWheelsSubsystem.setDesiredTransitWheelsVoltage(0);
+        this.hardCutOffTimer.disableTimer();
     }
 
     @Override

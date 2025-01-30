@@ -2,18 +2,12 @@ package frc.robot.Commands.FunnelCommands;
 
 import org.littletonrobotics.junction.Logger;
 
-import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.OuttakeWheelsCommands.HoldCoralInOuttakeCommand;
 import frc.robot.Constants.GenericConstants.ControlConstants;
-import frc.robot.Constants.MechanismConstants.TransitConstants;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorSubsystem;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
-import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIO;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
-import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsSubsystem;
-import frc.robot.Utils.CommandUtils.Wait;
 import frc.robot.Utils.LEDUtils.LEDManager;
 
 public class DetectFunnelCoralCommand extends Command {
