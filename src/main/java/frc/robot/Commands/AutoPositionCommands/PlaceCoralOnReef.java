@@ -30,12 +30,10 @@ public class PlaceCoralOnReef extends Command{
 
     @Override
     public void execute() {
-        this.driveSubsystem.lockSwerves();
     }
 
     @Override
     public void end(boolean interrupted) {
-        this.driveSubsystem.stop();
     }
 
     @Override
