@@ -13,34 +13,34 @@ import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsCommandFact
 
 public class HighLevelCommandsFactory {
 
-    private final GroundIntakeCommandFactory groundIntakeCommandFactory;
-    private final TransitWheelsCommandFactory transitWheelsCommandFactory;
+    //private final GroundIntakeCommandFactory groundIntakeCommandFactory;
+    //private final TransitWheelsCommandFactory transitWheelsCommandFactory;
     private final OuttakeCommandFactory outtakeCommandFactory;
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
-    private final TransitCoralSensorSubsystem transitCoralSensorSubsystem;
+    //private final TransitCoralSensorSubsystem transitCoralSensorSubsystem;
     private final FunnelCoralSensorSubsystem funnelCoralSensorSubsystem;
     private final ElevatorCommandFactory elevatorCommandFactory;
 
     public HighLevelCommandsFactory(
-        GroundIntakeCommandFactory groundIntakeCommandFactory, 
-        TransitWheelsCommandFactory transitWheelsCommandFactory, 
+        //GroundIntakeCommandFactory groundIntakeCommandFactory, 
+        //TransitWheelsCommandFactory transitWheelsCommandFactory, 
         OuttakeCommandFactory outtakeCommandFactory, 
         OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem,
-        TransitCoralSensorSubsystem transitCoralSensorSubsystem,
+        //TransitCoralSensorSubsystem transitCoralSensorSubsystem,
         FunnelCoralSensorSubsystem funnelCoralSensorSubsystem,
         ElevatorCommandFactory elevatorCommandFactory
     ) {
-        this.groundIntakeCommandFactory = groundIntakeCommandFactory;
-        this.transitWheelsCommandFactory = transitWheelsCommandFactory;
+        //this.groundIntakeCommandFactory = groundIntakeCommandFactory;
+        //this.transitWheelsCommandFactory = transitWheelsCommandFactory;
         this.outtakeCommandFactory = outtakeCommandFactory;
         this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
-        this.transitCoralSensorSubsystem = transitCoralSensorSubsystem;
+        //this.transitCoralSensorSubsystem = transitCoralSensorSubsystem;
         this.funnelCoralSensorSubsystem = funnelCoralSensorSubsystem;
         this.elevatorCommandFactory = elevatorCommandFactory;
     }
     
     public GroundIntakeCommand createGroundIntakeCommand() {
-        return new GroundIntakeCommand(groundIntakeCommandFactory, transitWheelsCommandFactory, outtakeCommandFactory, outtakeCoralSensorsSubsystem, transitCoralSensorSubsystem, elevatorCommandFactory);
+        return null;//new GroundIntakeCommand(groundIntakeCommandFactory, transitWheelsCommandFactory, outtakeCommandFactory, outtakeCoralSensorsSubsystem, transitCoralSensorSubsystem, elevatorCommandFactory);
     }
     
     public DetectFunnelCoralCommand createDetectFunnelCoralCommand() {

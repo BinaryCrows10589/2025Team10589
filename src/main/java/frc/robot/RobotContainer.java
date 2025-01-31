@@ -43,8 +43,8 @@ public class RobotContainer {
 
     private final OuttakeCommandFactory outtakeCommandFactory;
     private final ElevatorCommandFactory elevatorCommandFactory;
-    private final TransitWheelsCommandFactory transitWheelsCommandFactory;
-    private final GroundIntakeCommandFactory groundIntakeCommandFactory;
+    //private final TransitWheelsCommandFactory transitWheelsCommandFactory;
+    //private final GroundIntakeCommandFactory groundIntakeCommandFactory;
 
     private final HighLevelCommandsFactory highLevelCommandsFactory;
     // Decloration of Commands
@@ -67,20 +67,23 @@ public class RobotContainer {
         this.lockSwerves = this.driveCommandFactory.createLockSwervesCommand();
         this.resetOdometry = this.driveCommandFactory.createResetOdometryCommand();
         
-        this.groundIntakeCommandFactory = new GroundIntakeCommandFactory(this.robotCreator.getPivotSubsystem(),
+        /*this.groundIntakeCommandFactory = new GroundIntakeCommandFactory(this.robotCreator.getPivotSubsystem(),
         this.robotCreator.getIntakeWheelsSubsystem(),
         this.robotCreator.getTransitCoralSensorSubsystem()
         );
-        this.outtakeCommandFactory = new OuttakeCommandFactory(this.robotCreator.getOuttakeWheelsSubsystem(),
-            this.robotCreator.getOuttakeCoralSensorsSubsystem());
-        this.elevatorCommandFactory = new ElevatorCommandFactory(this.robotCreator.getElevatorSubsystem());
+        
         this.transitWheelsCommandFactory = new TransitWheelsCommandFactory(this.robotCreator.getTransitWheelsSubsystem(),
             this.robotCreator.getOuttakeCoralSensorsSubsystem());
+        */
 
+        this.elevatorCommandFactory = new ElevatorCommandFactory(this.robotCreator.getElevatorSubsystem());
 
-        this.highLevelCommandsFactory = new HighLevelCommandsFactory(this.groundIntakeCommandFactory,
-            this.transitWheelsCommandFactory, this.outtakeCommandFactory, this.robotCreator.getOuttakeCoralSensorsSubsystem(),
-            this.robotCreator.getTransitCoralSensorSubsystem(), this.robotCreator.getFunnelCoralSensorSubsystem(),
+        this.outtakeCommandFactory = new OuttakeCommandFactory(this.robotCreator.getOuttakeWheelsSubsystem(),
+            this.robotCreator.getOuttakeCoralSensorsSubsystem());
+
+        this.highLevelCommandsFactory = new HighLevelCommandsFactory(
+            this.outtakeCommandFactory, this.robotCreator.getOuttakeCoralSensorsSubsystem(),
+             this.robotCreator.getFunnelCoralSensorSubsystem(),
             this.elevatorCommandFactory);
 
         this.robotCreator.getFunnelCoralSensorSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
@@ -101,8 +104,8 @@ public class RobotContainer {
         Commands.runOnce(this.driveSubsystem::setSlowModeFalse));
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createGroundIntakeCommand(), XboxController.Button.kB.value);
-        this.buttonBoardAlt.bindToButton(this.groundIntakeCommandFactory.createPivotDownCommand(), XboxController.Button.kLeftBumper.value);
-        this.buttonBoardAlt.bindToButton(this.groundIntakeCommandFactory.createPivotUpCommand(), XboxController.Button.kRightBumper.value);
+        //this.buttonBoardAlt.bindToButton(this.groundIntakeCommandFactory.createPivotDownCommand(), XboxController.Button.kLeftBumper.value);
+        //this.buttonBoardAlt.bindToButton(this.groundIntakeCommandFactory.createPivotUpCommand(), XboxController.Button.kRightBumper.value);
         //t(outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
     }
 

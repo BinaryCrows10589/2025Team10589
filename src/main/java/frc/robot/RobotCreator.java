@@ -41,12 +41,12 @@ public class RobotCreator {
     // Decloration of subsystem creators
     private final DriveSubsystemCreator driveSubsystemCreator;
 
-    private final PivotSubsystem pivotSubsystem;
-    private final IntakeWheelsSubsystem intakeWheelsSubsystem;
-    private final IntakeCoralSensorSubsystem intakeCoralSensorSubsystem;
+    //private final PivotSubsystem pivotSubsystem;
+    //private final IntakeWheelsSubsystem intakeWheelsSubsystem;
+    //private final IntakeCoralSensorSubsystem intakeCoralSensorSubsystem;
 
-    private final TransitWheelsSubsystem transitWheelsSubsystem;
-    private final TransitCoralSensorSubsystem transitCoralSensorSubsystem;
+    //private final TransitWheelsSubsystem transitWheelsSubsystem;
+    //private final TransitCoralSensorSubsystem transitCoralSensorSubsystem;
 
     private final FunnelCoralSensorSubsystem funnelCoralSensorSubsystem;
     private final ReefTreeDetectorSubsystem reefTreeDetectorSubsystem;
@@ -68,12 +68,12 @@ public class RobotCreator {
                 // Real robot, instantiate hardware IO implementations
                 this.driveSubsystemCreator.createTalonFXSwerve();
 
-                this.pivotSubsystem = new PivotSubsystem(new PivotIOTalonFX());
-                this.intakeWheelsSubsystem = new IntakeWheelsSubsystem(new IntakeWheelsIOSparkMax());
-                this.intakeCoralSensorSubsystem = new IntakeCoralSensorSubsystem(new IntakeCoralSensorIODistanceSensor());
+                //this.pivotSubsystem = new PivotSubsystem(new PivotIOTalonFX());
+                //this.intakeWheelsSubsystem = new IntakeWheelsSubsystem(new IntakeWheelsIOSparkMax());
+                //this.intakeCoralSensorSubsystem = new IntakeCoralSensorSubsystem(new IntakeCoralSensorIODistanceSensor());
 
-                this.transitWheelsSubsystem = new TransitWheelsSubsystem(new TransitWheelsIOSparkMax());
-                this.transitCoralSensorSubsystem = new TransitCoralSensorSubsystem(new TransitCoralSensorIODistanceSensor());
+                //this.transitWheelsSubsystem = new TransitWheelsSubsystem(new TransitWheelsIOSparkMax());
+                //this.transitCoralSensorSubsystem = new TransitCoralSensorSubsystem(new TransitCoralSensorIODistanceSensor());
 
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIODistanceSensor());
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
@@ -89,12 +89,12 @@ public class RobotCreator {
             case SIM:
                 // Sim robot, instantiate physics sim IO implementation
                 this.driveSubsystemCreator.createSimSwerve();
-                this.pivotSubsystem = new PivotSubsystem(new PivotIOTalonFX());
-                this.intakeWheelsSubsystem = new IntakeWheelsSubsystem(new IntakeWheelsIOSparkMax());
-                this.intakeCoralSensorSubsystem = new IntakeCoralSensorSubsystem(new IntakeCoralSensorIODistanceSensor());
+                //this.pivotSubsystem = new PivotSubsystem(new PivotIOTalonFX());
+                //this.intakeWheelsSubsystem = new IntakeWheelsSubsystem(new IntakeWheelsIOSparkMax());
+                //this.intakeCoralSensorSubsystem = new IntakeCoralSensorSubsystem(new IntakeCoralSensorIODistanceSensor());
 
-                this.transitWheelsSubsystem = new TransitWheelsSubsystem(new TransitWheelsIOSparkMax());
-                this.transitCoralSensorSubsystem = new TransitCoralSensorSubsystem(new TransitCoralSensorIODistanceSensor());
+                //this.transitWheelsSubsystem = new TransitWheelsSubsystem(new TransitWheelsIOSparkMax());
+                //this.transitCoralSensorSubsystem = new TransitCoralSensorSubsystem(new TransitCoralSensorIODistanceSensor());
 
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIODistanceSensor());
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
@@ -108,12 +108,12 @@ public class RobotCreator {
             case REPLAY:
                 // Replayed robot, disable IO implementations
                 this.driveSubsystemCreator.createReplaySwerve();
-                this.pivotSubsystem = new PivotSubsystem(new PivotIO() {});
-                this.intakeWheelsSubsystem = new IntakeWheelsSubsystem(new IntakeWheelsIO() {});
-                this.intakeCoralSensorSubsystem = new IntakeCoralSensorSubsystem(new IntakeCoralSensorIO() {});
+                //this.pivotSubsystem = new PivotSubsystem(new PivotIO() {});
+                //this.intakeWheelsSubsystem = new IntakeWheelsSubsystem(new IntakeWheelsIO() {});
+                //this.intakeCoralSensorSubsystem = new IntakeCoralSensorSubsystem(new IntakeCoralSensorIO() {});
 
-                this.transitWheelsSubsystem = new TransitWheelsSubsystem(new TransitWheelsIO() {});
-                this.transitCoralSensorSubsystem = new TransitCoralSensorSubsystem(new TransitCoralSensorIO() {});
+                //this.transitWheelsSubsystem = new TransitWheelsSubsystem(new TransitWheelsIO() {});
+                //this.transitCoralSensorSubsystem = new TransitCoralSensorSubsystem(new TransitCoralSensorIO() {});
 
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIO() {});
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIO() {});
@@ -135,23 +135,23 @@ public class RobotCreator {
     }
 
     public PivotSubsystem getPivotSubsystem() {
-        return this.pivotSubsystem;
+        return null;
     }
 
     public IntakeWheelsSubsystem getIntakeWheelsSubsystem() {
-        return this.intakeWheelsSubsystem;
+        return null;
     }
 
     public IntakeCoralSensorSubsystem getIntakeCoralSensorSubsystem() {
-        return this.intakeCoralSensorSubsystem;
+        return null;
     }
 
     public TransitWheelsSubsystem getTransitWheelsSubsystem() {
-        return this.transitWheelsSubsystem;
+        return null;
     }
 
     public TransitCoralSensorSubsystem getTransitCoralSensorSubsystem() {
-        return this.transitCoralSensorSubsystem;
+        return null;
     }
 
     public FunnelCoralSensorSubsystem getFunnelCoralSensorSubsystem() {
