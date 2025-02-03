@@ -244,8 +244,8 @@ public class WPILibFollowTrajectoryFromPointsCommand extends Command{
             this.positionTolorance.getX());
         boolean translationYInTolorence = Tolerance.inTolorance(robotPose.getY(), this.desiredEndPoint.getY(),
             this.positionTolorance.getY());
-        boolean rotationalInTolorence = Tolerance.inTolorance(
-            robotPose.getRotation().getRadians(), this.desiredEndPoint.getRotation().getRadians(),
+        boolean rotationalInTolorence = Tolerance.inToloranceRotation(
+            robotPose.getRotation(), this.desiredEndPoint.getRotation(),
             this.positionTolorance.getRotation().getRadians());
         Logger.recordOutput("Auton/" + pathName + "/XCorrect", translationXInTolorence);
         Logger.recordOutput("Auton/" + pathName + "/YCorrect", translationYInTolorence);

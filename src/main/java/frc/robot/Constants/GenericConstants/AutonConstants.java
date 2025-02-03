@@ -7,6 +7,25 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 // Do not create an instants of a constant class
 
 public final class AutonConstants {
+
+    public final class WPILibAutonConstants {
+        public static double kPTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : .5;
+        public static double kITranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
+        public static double kDTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
+        public static final double kMaxTranslationalSpeedInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.4 : 4.129;//4.4 : 4.129;
+        public static final double kMaxTranslationalAccelerationInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.45 : 5.129;//4.45 : 5.129;
+
+        public static double kPRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : .59;
+        public static double kIRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
+        public static double kDRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
+        public static final double kMaxRotationalSpeedInRadsPerSecond = RobotModeConstants.kIsNotSim ? 10.2 : 9.89199998351;
+        public static final double kMaxRotationalAccelerationInRadsPerSecond = RobotModeConstants.kIsNotSim ? 14.2 : 12.928;
+        public static final TrapezoidProfile.Constraints kRotationPIDControllerConstraints = new TrapezoidProfile.Constraints(
+        kMaxRotationalSpeedInRadsPerSecond, kMaxRotationalAccelerationInRadsPerSecond);
+
+        public static Pose2d kPositionTolorence = RobotModeConstants.kIsNotSim ?
+            new Pose2d(.02, .02, Rotation2d.fromDegrees(3)) : new Pose2d(.03, .03, Rotation2d.fromDegrees(3));
+    }
     public final class PIDPositioningAutonConstants {
         public static double kPTranslationPIDConstant = RobotModeConstants.kIsNotSim ? .93 : 3;
         public static double kITranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
@@ -37,25 +56,6 @@ public final class AutonConstants {
         public static final double kMaxRotationalAccelerationInDegrees = RobotModeConstants.kIsNotSim ? Math.toDegrees(9.146) : 131.83759;
         public static final double kTranslationToleranceMeters = RobotModeConstants.kIsNotSim ? 0.03 : 0.03; 
         public static final double kRotationToleranceDegrees = RobotModeConstants.kIsNotSim ? 3 : 3; 
-    }
-
-    public final class WPILibAutonConstants {
-        public static double kPTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : .5;
-        public static double kITranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
-        public static double kDTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
-        public static final double kMaxTranslationalSpeedInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.4 : 4.129;//4.4 : 4.129;
-        public static final double kMaxTranslationalAccelerationInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.45 : 5.129;//4.45 : 5.129;
-
-        public static double kPRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : .59;
-        public static double kIRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
-        public static double kDRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
-        public static final double kMaxRotationalSpeedInRadsPerSecond = RobotModeConstants.kIsNotSim ? 10.2 : 9.89199998351;
-        public static final double kMaxRotationalAccelerationInRadsPerSecond = RobotModeConstants.kIsNotSim ? 14.2 : 12.928;
-        public static final TrapezoidProfile.Constraints kRotationPIDControllerConstraints = new TrapezoidProfile.Constraints(
-        kMaxRotationalSpeedInRadsPerSecond, kMaxRotationalAccelerationInRadsPerSecond);
-
-        public static Pose2d kPositionTolorence = RobotModeConstants.kIsNotSim ?
-            new Pose2d(.02, .02, Rotation2d.fromDegrees(3)) : new Pose2d(.03, .03, Rotation2d.fromDegrees(3));
     }
 
     public final class ChoreoAutonConstants {
