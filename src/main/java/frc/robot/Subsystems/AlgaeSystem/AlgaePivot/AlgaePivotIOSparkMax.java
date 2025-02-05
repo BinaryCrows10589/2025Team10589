@@ -6,7 +6,9 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -35,6 +37,8 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
     private void configurePivotMotor() {
         SparkMaxConfig pivotConfig = new SparkMaxConfig();
 
+        pivotConfig.absoluteEncoder.setSparkMaxDataPortConfig();
+        pivotConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
         pivotConfig.smartCurrentLimit(AlgaePivotConstants.kSmartCurrentLimit);
         pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.softLimit.forwardSoftLimit(AlgaePivotConstants.kForwardSoftLimit);
@@ -67,11 +71,11 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
     public void updateInputs(AlgaePivotIOInputs pivotIOInputs) {
         pivotIOInputs.rawDesiredPivotAngleRotations = desiredPivotRotations;
         pivotIOInputs.offsetDesiredPivotAngleRotations = desiredPivotRotations + AlgaePivotConstants.kPivotEncoderOffset;
-        pivotIOInputs.rawPivotAngleRotations = pivotMotor.getAlternateEncoder().getPosition();
-        pivotIOInputs.offsetPivotAngleRotations = pivotMotor.getAlternateEncoder().getPosition() - AlgaePivotConstants.kPivotEncoderOffset;
+        pivotIOInputs.rawPivotAngleRotations = pivotMotor.getAbsoluteEncoder().getPosition();
+        pivotIOInputs.offsetPivotAngleRotations = pivotMotor.getAbsoluteEncoder().getPosition() - AlgaePivotConstants.kPivotEncoderOffset;
         pivotIOInputs.pivotMotorAppliedVolts = pivotMotor.getAppliedOutput() * pivotMotor.getBusVoltage();
         pivotIOInputs.pivotMotorCurrentAmps = new double[] {pivotMotor.getOutputCurrent()};
-        pivotIOInputs.pivotRPM = pivotMotor.getAlternateEncoder().getVelocity();
+        pivotIOInputs.pivotRPM = pivotMotor.getAbsoluteEncoder().getVelocity();
         
         updatePIDValuesFromNetworkTables();
     }

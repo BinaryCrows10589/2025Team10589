@@ -4,6 +4,12 @@ package frc.robot;
 import frc.robot.Commands.ElevatorCommands.ElevatorReturnDefaultCommand;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeCoralSensorConstants;
+import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotIO;
+import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotIOSparkMax;
+import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotSubsystem;
+import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelIO;
+import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelIOSparkMax;
+import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelSubsystem;
 import frc.robot.Subsystems.Elevator.ElevatorIO;
 import frc.robot.Subsystems.Elevator.ElevatorIOCANCoderPositionalPID;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
@@ -56,7 +62,10 @@ public class RobotCreator {
     private final OuttakeWheelsSubsystem outtakeWheelsSubsystem;
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
 
-    private ElevatorReturnDefaultCommand elevatorReturnDefaultCommand; // Can't be final or RobotCreator will not work
+    private ElevatorReturnDefaultCommand elevatorReturnDefaultCommand;
+
+    private final AlgaeWheelSubsystem algaeWheelSubsystem;
+    private final AlgaePivotSubsystem algaePivotSubsystem;
 
 
  
@@ -85,6 +94,9 @@ public class RobotCreator {
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
                 this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());
 
+                this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIOSparkMax());
+                this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIOSparkMax());
+
                 break;
             case SIM:
                 // Sim robot, instantiate physics sim IO implementation
@@ -104,6 +116,9 @@ public class RobotCreator {
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
                 this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());
 
+                this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIOSparkMax());
+                this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIOSparkMax());
+
                 break;
             case REPLAY:
                 // Replayed robot, disable IO implementations
@@ -122,6 +137,9 @@ public class RobotCreator {
                 
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIO() {});
                 this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIO() {});
+
+                this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIO() {});
+                this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIO() {});
 
 
                 break;
@@ -172,6 +190,14 @@ public class RobotCreator {
 
     public OuttakeCoralSensorsSubsystem getOuttakeCoralSensorsSubsystem() {
         return this.outtakeCoralSensorsSubsystem;
+    }
+
+    public AlgaeWheelSubsystem getAlgaeWheelSubsystem() {
+        return this.algaeWheelSubsystem;
+    }
+
+    public AlgaePivotSubsystem getAlgaePivotSubsystem() {
+        return this.algaePivotSubsystem;
     }
 
 }
