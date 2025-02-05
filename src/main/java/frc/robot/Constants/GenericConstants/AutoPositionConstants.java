@@ -11,11 +11,11 @@ import frc.robot.Utils.AutonUtils.AutonPointUtils.FudgeFactor;
 public class AutoPositionConstants {
 
     public class ReefPosition1Constants {
-        public static final AutonPoint kReefPosition = new AutonPoint(0.0, 0.0, 0.0,
+        public static final AutonPoint kReefPosition = new AutonPoint(5.250, 5.1518, 60,
             new FudgeFactor(0, 0, 0, 0, 0, 0));
-        public static final double[] kTranslationXPIDConstants = {0, 0, 0};
-        public static final double[] kTranslationYPIDConstants = {0, 0, 0};
-        public static final double[] kRotationPIDConstants = {0, 0, 0};
+        public static final double[] kTranslationXPIDConstants = {0.75, 0, 0};
+        public static final double[] kTranslationYPIDConstants = {.75, 0, 0};
+        public static final double[] kRotationPIDConstants = {.9, 0, 0};
         public static final Pose2d kPositionTolorence = new Pose2d(.05, .05, Rotation2d.fromDegrees(3));
         public static final double kMaxTranslationalSpeedInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.4 : 4.129;//4.4 : 4.129;
         public static final double kMaxTranslationalAccelerationInMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.45 : 5.129;//4.45 : 5.129;
@@ -23,9 +23,10 @@ public class AutoPositionConstants {
         public static final double kMaxRotationalAccelerationInRadsPerSecond = RobotModeConstants.kIsNotSim ? 14.2 : 12.928;
         public static final TrapezoidProfile.Constraints kRotationPIDControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxRotationalSpeedInRadsPerSecond, kMaxRotationalAccelerationInRadsPerSecond);
+        public static final double KAngleOfAttack = -60;
         public static final double kMaxTrajectoryTime = 5.0;
         
-        public static final double[] kScrollVelocityVector = {1, 0, 0};
+        public static final double[] kScrollVelocityVector = {4, 0, 0};
         public static final double[] kLockRotationPIDConstants = {0, 0, 0};
         public static final double kMaxScrollTime = 5;
     }

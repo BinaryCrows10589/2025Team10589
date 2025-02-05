@@ -11,15 +11,20 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
+import frc.robot.Commands.AutoPositionCommands.PlaceCoralOnReef;
+import frc.robot.Commands.AutoPositionCommands.PlaceCoralOnReef.ReefPosition;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
 import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
+import frc.robot.Constants.GenericConstants.AutoPositionConstants;
 import frc.robot.Constants.GenericConstants.ControlConstants;
+import frc.robot.Constants.GenericConstants.AutoPositionConstants.ReefPosition1Constants;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.GroundIntake.GroundIntakeCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsCommandFactory;
+import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
 import frc.robot.Utils.JoystickUtils.ButtonBoardInterface;
 import frc.robot.Utils.JoystickUtils.ControllerInterface;
 
@@ -47,6 +52,7 @@ public class RobotContainer {
     //private final GroundIntakeCommandFactory groundIntakeCommandFactory;
 
     private final HighLevelCommandsFactory highLevelCommandsFactory;
+    private final PlaceCoralOnReef placeCommand;
     // Decloration of Commands
     // SwerveDrive Commands
     private final FieldOrientedDriveCommand fieldOrientedDriveCommand;
@@ -67,6 +73,7 @@ public class RobotContainer {
         this.lockSwerves = this.driveCommandFactory.createLockSwervesCommand();
         this.resetOdometry = this.driveCommandFactory.createResetOdometryCommand();
         
+        
         /*this.groundIntakeCommandFactory = new GroundIntakeCommandFactory(this.robotCreator.getPivotSubsystem(),
         this.robotCreator.getIntakeWheelsSubsystem(),
         this.robotCreator.getTransitCoralSensorSubsystem()
@@ -85,6 +92,10 @@ public class RobotContainer {
             this.outtakeCommandFactory, this.robotCreator.getOuttakeCoralSensorsSubsystem(),
              this.robotCreator.getFunnelCoralSensorSubsystem(),
             this.elevatorCommandFactory);
+
+
+        this.placeCommand = new PlaceCoralOnReef(ReefPosition.Position1, driveSubsystem, this.robotCreator.getReefTreeDetectorSubsystem(),
+            this.robotCreator.getElevatorSubsystem(), outtakeCommandFactory);
 
         this.robotCreator.getFunnelCoralSensorSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
         configureBindings();
@@ -113,8 +124,9 @@ public class RobotContainer {
      * Used to select our send our selected autonomus command to the Robot.java file.
      * @return the command to run in autonomous
      */
-    public Command getAutonomousCommand() {    
-        return this.autonManager.getSelectedAuton();
+    public Command getAutonomousCommand() {   
+        this.driveSubsystem.setRobotPose(new AutonPoint(5.5, 5.5, 50));
+        return this.placeCommand;///this.autonManager.getSelectedAuton();
     }
 
     public void updateAlliance() {

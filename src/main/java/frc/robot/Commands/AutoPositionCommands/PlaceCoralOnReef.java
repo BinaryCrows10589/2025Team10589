@@ -1,5 +1,6 @@
 package frc.robot.Commands.AutoPositionCommands;
 
+import org.littletonrobotics.junction.Logger;
 import org.photonvision.jni.WpilibLoader;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -20,7 +21,7 @@ import frc.robot.Utils.AutonUtils.AutonPointUtils.FudgeFactor;
 
 
 public class PlaceCoralOnReef extends Command{  
-    enum ReefPosition {
+    public static enum ReefPosition {
         Position1,
         Position2,
         Position3,
@@ -53,6 +54,7 @@ public class PlaceCoralOnReef extends Command{
     private TrapezoidProfile.Constraints rotationPIDControllerConstraints;
     private double maxTrajectoryTime;
     private double maxScrollTime;
+    private double angleOfAttack;
     
     private double[] scrollVelocityVector;
     private double[] lockRotationPIDConstants;
@@ -88,6 +90,7 @@ public class PlaceCoralOnReef extends Command{
                 this.maxRotationalSpeedInRadsPerSecond = ReefPosition1Constants.kMaxRotationalSpeedInRadsPerSecond;
                 this.maxRotationalAccelerationInRadsPerSecond = ReefPosition1Constants.kMaxRotationalAccelerationInRadsPerSecond;
                 this.rotationPIDControllerConstraints = ReefPosition1Constants.kRotationPIDControllerConstraints;
+                this.angleOfAttack = ReefPosition1Constants.KAngleOfAttack;
                 this.scrollVelocityVector = ReefPosition1Constants.kScrollVelocityVector;
                 this.lockRotationPIDConstants = ReefPosition1Constants.kLockRotationPIDConstants;
                 this.maxTrajectoryTime = ReefPosition1Constants.kMaxTrajectoryTime;
@@ -102,7 +105,10 @@ public class PlaceCoralOnReef extends Command{
 
     @Override
     public void initialize() {
-        AutonPoint[] pointArray = {new AutonPoint(this.driveSubsystem.getRobotPose()), this.reefPosition};
+        AutonPoint autonPoint = new AutonPoint(this.driveSubsystem.getRobotPose());
+        autonPoint.setAngleOfAttack(this.angleOfAttack);
+        this.reefPosition.setAngleOfAttack(this.angleOfAttack);
+        AutonPoint[] pointArray = {autonPoint, this.reefPosition};
         
         this.lineUpTrajectory = new WPILibFollowTrajectoryFromPointsCommand(commandName,
             pointArray,
@@ -116,11 +122,16 @@ public class PlaceCoralOnReef extends Command{
             this.maxRotationalAccelerationInRadsPerSecond,
             this.positionTolorence,
             driveSubsystem);
+
+        this.lineUpTrajectory.schedule();
         
     }
 
     @Override
     public void execute() {
+        if(!this.lineUpTrajectory.isScheduled()) {
+            this.driveSubsystem.drive(this.scrollVelocityVector[0], this.scrollVelocityVector[1], this.scrollVelocityVector[2], false);
+        }
     }
 
     @Override
