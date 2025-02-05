@@ -71,6 +71,7 @@ public class OuttakeWheelsIOSparkMax implements OuttakeWheelsIO {
 
         leftConfiguration.smartCurrentLimit(OuttakeConstants.kWheelSmartCurrentLimit);
         rightConfiguration.smartCurrentLimit(OuttakeConstants.kWheelSmartCurrentLimit);
+        rightConfiguration.inverted(true);
 
         leftConfiguration.closedLoop.pid(
             OuttakeConstants.kLeftWheelPPIDValue,
