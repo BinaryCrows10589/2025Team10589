@@ -13,6 +13,7 @@ import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutoPositionCommands.PlaceCoralOnReef;
 import frc.robot.Commands.AutoPositionCommands.PlaceCoralOnReef.ReefPosition;
+import frc.robot.Commands.AlgaeCommands.RunAlgaeWheelsCommand;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
 import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
 import frc.robot.Constants.GenericConstants.AutoPositionConstants;
@@ -114,7 +115,8 @@ public class RobotContainer {
         this.driverController.bindToLeftTriggure(Commands.runOnce(this.driveSubsystem::setSlowModeTrue),
         Commands.runOnce(this.driveSubsystem::setSlowModeFalse));
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
-        this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createGroundIntakeCommand(), XboxController.Button.kB.value);
+        this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);
+        //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createGroundIntakeCommand(), XboxController.Button.kB.value);
         //this.buttonBoardAlt.bindToButton(this.groundIntakeCommandFactory.createPivotDownCommand(), XboxController.Button.kLeftBumper.value);
         //this.buttonBoardAlt.bindToButton(this.groundIntakeCommandFactory.createPivotUpCommand(), XboxController.Button.kRightBumper.value);
         //t(outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);

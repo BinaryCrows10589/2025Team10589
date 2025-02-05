@@ -27,5 +27,5 @@ public class OuttakeConstants {
     public static final int kRightWheelDPIDValue = 0;
     public static final int kOuttakeCoralSensorStartCANID = 30;
     public static final int kOuttakeCoralSensorEndCANID = 31;
-    public static final double kOuttakeCoralSensorMaxCoralDistanceMillimeters = 558.8;
+    public static final double kOuttakeCoralSensorMaxCoralDistanceMillimeters = 80;
 }
