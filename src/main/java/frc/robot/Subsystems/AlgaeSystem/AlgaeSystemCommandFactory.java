@@ -18,36 +18,39 @@ public class AlgaeSystemCommandFactory {
         this.algaeWheelSubsystem = algaeWheelSubsystem;
     }
 
-    public RunAlgaeWheelsCommand createAlgaeWheelIntakeCommand() {
-        return new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kIntakeVoltage);
+    public RunAlgaeWheelsCommand createAlgaeWheelGroundIntakeCommand() {
+        return new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kGroundIntakeVoltage);
     }
 
-    public RunAlgaeWheelsCommand createAlgaeWheelOuttakeCommand() {
-        return new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kOuttakeVoltage);
+    public RunAlgaeWheelsCommand createAlgaeWheelReefTreeIntakeCommand() {
+        return new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kReefTreeIntakeVoltage);
     }
 
-    public AlgaePivotToPositionCommand createAlgaePivotToIntakePositionCommand() {
-        return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kIntakePositionRotations);
+    public RunAlgaeWheelsCommand createAlgaeWheelBargeOuttakeCommand() {
+        return new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kOuttakeBargeVoltage);
     }
 
-    public AlgaePivotToPositionCommand createAlgaePivotToOuttakePositionCommand() {
-        return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakePositionRotations);
+    public RunAlgaeWheelsCommand createAlgaeWheelProcessorOuttakeCommand() {
+        return new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kOuttakeProcessorVoltage);
     }
 
-
-    public Command createAlgaeIntakeCommand() {
-        return new SequentialGroupCommand(
-            createAlgaePivotToIntakePositionCommand(),
-            createAlgaeWheelIntakeCommand()
-        );
+    public AlgaePivotToPositionCommand createAlgaePivotToGroundIntakePositionCommand() {
+        return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kGroundIntakePositionRotations);
     }
 
-    public Command createAlgaeOuttakeCommand() {
-        return new SequentialGroupCommand(
-            createAlgaePivotToOuttakePositionCommand(),
-            createAlgaeWheelOuttakeCommand()
-        );
+    public AlgaePivotToPositionCommand createAlgaePivotToReefTreeIntakePositionCommand() {
+        return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations);
     }
 
+    public AlgaePivotToPositionCommand createAlgaePivotToProcessorOuttakePositionCommand() {
+        return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeProcessorPositionRotations);
+    }
     
+    public AlgaePivotToPositionCommand createAlgaePivotToBargeOuttakePositionCommand() {
+        return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeBargePositionRotations);
+    }
+
+    public AlgaePivotToPositionCommand createAlgaePivotToDefualtPositionCommand() {
+        return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kDefultPivotPosition);
+    }
 }
