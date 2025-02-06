@@ -19,6 +19,7 @@ import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
 import frc.robot.Constants.GenericConstants.AutoPositionConstants;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.AutoPositionConstants.ReefPosition1Constants;
+import frc.robot.Subsystems.AlgaeSystem.AlgaeSystemCommandFactory;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.GroundIntake.GroundIntakeCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
@@ -54,6 +55,7 @@ public class RobotContainer {
 
     private final HighLevelCommandsFactory highLevelCommandsFactory;
     private final PlaceCoralOnReef placeCommand;
+    private final AlgaeSystemCommandFactory algaeSystemCommandFactory;
     // Decloration of Commands
     // SwerveDrive Commands
     private final FieldOrientedDriveCommand fieldOrientedDriveCommand;
@@ -94,9 +96,12 @@ public class RobotContainer {
              this.robotCreator.getFunnelCoralSensorSubsystem(),
             this.elevatorCommandFactory);
 
+        this.algaeSystemCommandFactory = new AlgaeSystemCommandFactory(this.robotCreator.getAlgaePivotSubsystem(),
+         this.robotCreator.getAlgaeWheelSubsystem());
 
         this.placeCommand = new PlaceCoralOnReef(ReefPosition.Position1, driveSubsystem, this.robotCreator.getReefTreeDetectorSubsystem(),
             this.robotCreator.getElevatorSubsystem(), outtakeCommandFactory);
+        
 
         this.robotCreator.getFunnelCoralSensorSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
         configureBindings();
@@ -116,6 +121,12 @@ public class RobotContainer {
         Commands.runOnce(this.driveSubsystem::setSlowModeFalse));
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);
+        this.buttonBoardAlt.bindToButton(this.algaeSystemCommandFactory.createAlgaeWheelGroundIntakeCommand(), XboxController.Button.kLeftBumper.value);
+        this.buttonBoardAlt.bindToButton(this.algaeSystemCommandFactory.createAlgaeWheelProcessorOuttakeCommand(), XboxController.Button.kRightBumper.value);
+        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL2Command(), XboxController.Button.kX.value); 
+        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL1Command(), XboxController.Button.kY.value);  
+ 
+
         //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createGroundIntakeCommand(), XboxController.Button.kB.value);
         //this.buttonBoardAlt.bindToButton(this.groundIntakeCommandFactory.createPivotDownCommand(), XboxController.Button.kLeftBumper.value);
         //this.buttonBoardAlt.bindToButton(this.groundIntakeCommandFactory.createPivotUpCommand(), XboxController.Button.kRightBumper.value);

@@ -88,8 +88,8 @@ public class RobotCreator {
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
                 
                 this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderPositionalPID());
-                this.elevatorReturnDefaultCommand = new ElevatorReturnDefaultCommand(elevatorSubsystem);
-                this.elevatorSubsystem.setDefaultCommand(elevatorReturnDefaultCommand);
+                //this.elevatorReturnDefaultCommand = new ElevatorReturnDefaultCommand(elevatorSubsystem);
+                //this.elevatorSubsystem.setDefaultCommand(elevatorReturnDefaultCommand);
 
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
                 this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());

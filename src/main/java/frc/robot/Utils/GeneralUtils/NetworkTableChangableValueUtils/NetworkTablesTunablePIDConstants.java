@@ -57,6 +57,8 @@ public class NetworkTablesTunablePIDConstants {
         this.changableSValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/SValue", (double)defaultSValue);
         isUsingAdvancedPID = true;
     }
+
+    
     
 
     /**

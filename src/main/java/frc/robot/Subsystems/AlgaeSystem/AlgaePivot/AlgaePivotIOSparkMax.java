@@ -39,6 +39,8 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
 
         pivotConfig.absoluteEncoder.setSparkMaxDataPortConfig();
         pivotConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+        pivotConfig.absoluteEncoder.inverted(true);
+        pivotConfig.inverted(true);
         pivotConfig.smartCurrentLimit(AlgaePivotConstants.kSmartCurrentLimit);
         pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.softLimit.forwardSoftLimit(AlgaePivotConstants.kForwardSoftLimit);

@@ -76,13 +76,14 @@ public class ElevatorSubsystem extends SubsystemBase {
             case BASEMENT:
                 return 0;
             case L1:
-                return 20;
+                return 0;
             case L2:
-                return 0;
+                return .7;
             case L3:
-                return 0;
+                return .5;
             case L4:
-                return 0;
+                return .6;
+
             case FUNNEL:
                 return 0;
             case GROUND_INTAKE_ALGAE:
