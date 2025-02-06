@@ -51,7 +51,7 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         masterConfiguration.Feedback.FeedbackRemoteSensorID = ElevatorConstants.kElevatorEncoderCANID;
         masterConfiguration.Voltage.PeakForwardVoltage = ElevatorConstants.kMaxVoltage;
         masterConfiguration.Voltage.PeakReverseVoltage = -ElevatorConstants.kMaxVoltage;
-        masterConfiguration.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 1;
+        masterConfiguration.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0;
         masterConfiguration.ClosedLoopGeneral.ContinuousWrap = false;
         //masterConfiguration.Feedback.FeedbackRotorOffset = elevatorEncoder.getAbsoluteEncoder().getPosition(); // Reset the builtin encoder to the REV encoder's value
 
