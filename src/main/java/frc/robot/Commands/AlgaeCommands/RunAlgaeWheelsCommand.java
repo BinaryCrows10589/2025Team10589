@@ -7,14 +7,12 @@ import frc.robot.Utils.CommandUtils.Wait;
 public class RunAlgaeWheelsCommand extends Command {
     private final AlgaeWheelSubsystem algaeWheelSubsystem;
     private final double desiredVoltage;
-    private final Wait hardCutOffTimer;
 
     public RunAlgaeWheelsCommand(AlgaeWheelSubsystem algaeWheelSubsystem, double desiredVoltage) {
         this(150, algaeWheelSubsystem, desiredVoltage);
     }
 
     public RunAlgaeWheelsCommand(double timeout, AlgaeWheelSubsystem algaeWheelSubsystem, double desiredVoltage) {
-        hardCutOffTimer = new Wait(timeout);
         this.algaeWheelSubsystem = algaeWheelSubsystem;
         this.desiredVoltage = desiredVoltage;
     }
@@ -34,6 +32,6 @@ public class RunAlgaeWheelsCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return this.hardCutOffTimer.hasTimePassed();
+        return false;
     }
 }

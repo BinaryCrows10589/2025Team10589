@@ -68,7 +68,6 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         //masterConfiguration.Feedback.FeedbackRotorOffset = elevatorEncoder.getAbsoluteEncoder().getPosition(); // Reset the builtin encoder to the REV encoder's value
 
         //TODO: I don't think this requires more configuration, but we'll have to see
-        elevatorSlaveMotor.setControl(new Follower(elevatorMasterMotor.getDeviceID(), ElevatorConstants.isSlaveReversed));
 
         Slot0Configs elevatorPositionalPIDConfigs = new Slot0Configs();
         elevatorPositionalPIDConfigs.kP = ElevatorConstants.kElevatorPPIDValue;
@@ -103,7 +102,8 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         
         this.elevatorSlaveMotor.getConfigurator().apply(masterConfiguration);
         this.elevatorMasterMotor.getConfigurator().apply(elevatorPositionalPIDConfigs); 
-        this.elevatorMasterMotor.getConfigurator().apply(elevatorMotionMagicConfigs);
+        elevatorSlaveMotor.setControl(new Follower(elevatorMasterMotor.getDeviceID(), ElevatorConstants.isSlaveReversed));
+
     }
 
     /**
@@ -140,9 +140,12 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         elevatorIOInputs.elevatorOffsetPosition = elevatorMasterMotor.getPosition().getValueAsDouble() - ElevatorConstants.kElevatorEncoderOffset;
         elevatorIOInputs.rawDesiredElevatorPosition = desiredElevatorPosition.Position;
         elevatorIOInputs.offsetDesiredElevatorPosition = getOffsetDesiredPosition().Position;
-        elevatorIOInputs.elevatorRPM = elevatorMasterMotor.getVelocity().getValueAsDouble();
-        elevatorIOInputs.elevatorAppliedVolts = elevatorMasterMotor.getMotorVoltage().getValueAsDouble();
-        elevatorIOInputs.elevatorCurrentAmps = new double[] {elevatorMasterMotor.getSupplyCurrent().getValueAsDouble()};
+        elevatorIOInputs.elevatorMasterRPM = elevatorMasterMotor.getVelocity().getValueAsDouble();
+        elevatorIOInputs.elevatorMasterAppliedVolts = elevatorMasterMotor.getMotorVoltage().getValueAsDouble();
+        elevatorIOInputs.elevatorMasterCurrentAmps = new double[] {elevatorMasterMotor.getSupplyCurrent().getValueAsDouble()};
+        elevatorIOInputs.elevatorSlaveRPM = elevatorSlaveMotor.getVelocity().getValueAsDouble();
+        elevatorIOInputs.elevatorSlaveAppliedVolts = elevatorSlaveMotor.getMotorVoltage().getValueAsDouble();
+        elevatorIOInputs.elevatorSlaveCurrentAmps = new double[] {elevatorSlaveMotor.getSupplyCurrent().getValueAsDouble()};
 
         updatePIDValuesFromNetworkTables();
     }

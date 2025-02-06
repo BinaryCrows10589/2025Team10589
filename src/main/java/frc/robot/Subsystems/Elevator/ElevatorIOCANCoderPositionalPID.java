@@ -22,7 +22,7 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
 
     private CANcoder elevatorEncoder;
 
-    private PositionVoltage desiredElevatorPosition = new PositionVoltage(ElevatorConstants.kDefaultElevatorPosition);
+    private PositionVoltage desiredElevatorPosition = new PositionVoltage(ElevatorConstants.kDefaultElevatorPosition).withEnableFOC(true);
 
     private NetworkTablesTunablePIDConstants elevatorMotorPIDConstantTuner;
 
@@ -51,11 +51,11 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         masterConfiguration.Feedback.FeedbackRemoteSensorID = ElevatorConstants.kElevatorEncoderCANID;
         masterConfiguration.Voltage.PeakForwardVoltage = ElevatorConstants.kMaxVoltage;
         masterConfiguration.Voltage.PeakReverseVoltage = -ElevatorConstants.kMaxVoltage;
-        masterConfiguration.ClosedLoopGeneral.ContinuousWrap = true;
+        masterConfiguration.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 1;
+        masterConfiguration.ClosedLoopGeneral.ContinuousWrap = false;
         //masterConfiguration.Feedback.FeedbackRotorOffset = elevatorEncoder.getAbsoluteEncoder().getPosition(); // Reset the builtin encoder to the REV encoder's value
 
         //TODO: I don't think this requires more configuration, but we'll have to see
-        elevatorSlaveMotor.setControl(new Follower(elevatorMasterMotor.getDeviceID(), ElevatorConstants.isSlaveReversed));
 
         Slot0Configs elevatorPositionalPIDConfigs = new Slot0Configs();
         elevatorPositionalPIDConfigs.kP = ElevatorConstants.kElevatorPPIDValue;
@@ -65,7 +65,7 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         elevatorPositionalPIDConfigs.kS = ElevatorConstants.kElevatorSPIDValue;
 
         CANcoderConfiguration encoderConfig = new CANcoderConfiguration();
-        encoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.5;
+        encoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 1.0;
         encoderConfig.MagnetSensor.MagnetOffset = 0.0;
         elevatorEncoder.getConfigurator().apply(encoderConfig);
 
@@ -80,6 +80,7 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
 
         this.elevatorMasterMotor.getConfigurator().apply(masterConfiguration);
         this.elevatorSlaveMotor.getConfigurator().apply(masterConfiguration);
+        elevatorSlaveMotor.setControl(new Follower(elevatorMasterMotor.getDeviceID(), ElevatorConstants.isSlaveReversed));
         this.elevatorMasterMotor.getConfigurator().apply(elevatorPositionalPIDConfigs); 
     }
 
@@ -110,15 +111,18 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         elevatorIOInputs.elevatorOffsetPosition = elevatorMasterMotor.getPosition().getValueAsDouble() - ElevatorConstants.kElevatorEncoderOffset;
         elevatorIOInputs.rawDesiredElevatorPosition = desiredElevatorPosition.Position;
         elevatorIOInputs.offsetDesiredElevatorPosition = getOffsetDesiredPosition().Position;
-        elevatorIOInputs.elevatorRPM = elevatorMasterMotor.getVelocity().getValueAsDouble();
-        elevatorIOInputs.elevatorAppliedVolts = elevatorMasterMotor.getMotorVoltage().getValueAsDouble();
-        elevatorIOInputs.elevatorCurrentAmps = new double[] {elevatorMasterMotor.getSupplyCurrent().getValueAsDouble()};
+        elevatorIOInputs.elevatorMasterRPM = elevatorMasterMotor.getVelocity().getValueAsDouble();
+        elevatorIOInputs.elevatorMasterAppliedVolts = elevatorMasterMotor.getMotorVoltage().getValueAsDouble();
+        elevatorIOInputs.elevatorMasterCurrentAmps = new double[] {elevatorMasterMotor.getSupplyCurrent().getValueAsDouble()};
+        elevatorIOInputs.elevatorSlaveRPM = elevatorSlaveMotor.getVelocity().getValueAsDouble();
+        elevatorIOInputs.elevatorSlaveAppliedVolts = elevatorSlaveMotor.getMotorVoltage().getValueAsDouble();
+        elevatorIOInputs.elevatorSlaveCurrentAmps = new double[] {elevatorSlaveMotor.getSupplyCurrent().getValueAsDouble()};
 
         updatePIDValuesFromNetworkTables();
     }
 
     private PositionVoltage getOffsetDesiredPosition() {
-        return new PositionVoltage(desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset);
+        return new PositionVoltage(desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset).withEnableFOC(true);
     }
 
     @Override

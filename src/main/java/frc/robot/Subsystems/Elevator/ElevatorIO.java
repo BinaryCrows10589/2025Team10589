@@ -13,9 +13,13 @@ public interface ElevatorIO {
         public double rawDesiredElevatorPosition = ElevatorConstants.kDefaultElevatorPosition;
         public double offsetDesiredElevatorPosition = ElevatorConstants.kDefaultElevatorPosition;
 
-        public double elevatorRPM = 0.0;
-        public double elevatorAppliedVolts = 0.0;
-        public double[] elevatorCurrentAmps = new double[] {};
+        public double elevatorMasterRPM = 0.0;
+        public double elevatorMasterAppliedVolts = 0.0;
+        public double[] elevatorMasterCurrentAmps = new double[] {};
+
+        public double elevatorSlaveRPM = 0.0;
+        public double elevatorSlaveAppliedVolts = 0.0;
+        public double[] elevatorSlaveCurrentAmps = new double[] {};
     }
 
     /**

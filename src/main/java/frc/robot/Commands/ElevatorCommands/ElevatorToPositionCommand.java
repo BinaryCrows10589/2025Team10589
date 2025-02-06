@@ -48,4 +48,8 @@ public class ElevatorToPositionCommand extends Command {
     public boolean isFinished() {
         return this.elevatorSubsystem.isElevatorInTolorence(this.elevatorToloranceRotations);
     }
+
+    public boolean isWithinTolerance(double tolerance) {
+        return this.elevatorSubsystem.isElevatorInTolorence(tolerance);
+    }
 }
