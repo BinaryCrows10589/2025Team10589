@@ -1,6 +1,7 @@
 package frc.robot.Subsystems.Elevator;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
@@ -75,6 +76,12 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         elevatorPositionalPIDConfigs.kD = ElevatorConstants.kElevatorDPIDValue;
         elevatorPositionalPIDConfigs.kG = ElevatorConstants.kElevatorGPIDValue;
         elevatorPositionalPIDConfigs.kS = ElevatorConstants.kElevatorSPIDValue;
+        elevatorPositionalPIDConfigs.kV = ElevatorConstants.kElevatorVPIDValue;
+        elevatorPositionalPIDConfigs.kA = ElevatorConstants.kElevatorAPIDValue;
+        MotionMagicConfigs elevatorMotionMagicConfigs = new MotionMagicConfigs();
+        elevatorMotionMagicConfigs.MotionMagicCruiseVelocity = ElevatorConstants.kMotionMagicCruiseVelocity;
+        elevatorMotionMagicConfigs.MotionMagicAcceleration = ElevatorConstants.kMotionMagicAcceleration;
+        elevatorMotionMagicConfigs.MotionMagicJerk = ElevatorConstants.kMotionMagicJerk;
 
         this.elevatorMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants("Elevator/", 
             elevatorPositionalPIDConfigs.kP,
@@ -82,7 +89,13 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
             elevatorPositionalPIDConfigs.kD,
             0,
             elevatorPositionalPIDConfigs.kG,
-            elevatorPositionalPIDConfigs.kS);
+            elevatorPositionalPIDConfigs.kS,
+            elevatorPositionalPIDConfigs.kV,
+            elevatorPositionalPIDConfigs.kA,
+            elevatorMotionMagicConfigs.MotionMagicCruiseVelocity,
+            elevatorMotionMagicConfigs.MotionMagicAcceleration,
+            elevatorMotionMagicConfigs.MotionMagicJerk
+            );
 
         
 
@@ -90,6 +103,7 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         
         this.elevatorSlaveMotor.getConfigurator().apply(masterConfiguration);
         this.elevatorMasterMotor.getConfigurator().apply(elevatorPositionalPIDConfigs); 
+        this.elevatorMasterMotor.getConfigurator().apply(elevatorMotionMagicConfigs);
     }
 
     /**
@@ -99,15 +113,24 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
      * Must be called periodicly.
      */
     private void updatePIDValuesFromNetworkTables() {
-        double[] currentDrivePIDValues = this.elevatorMotorPIDConstantTuner.getUpdatedPIDConstants();
+        double[] currentElevatorPIDValues = this.elevatorMotorPIDConstantTuner.getUpdatedPIDConstants();
         if(this.elevatorMotorPIDConstantTuner.hasAnyPIDValueChanged()) {
-            Slot0Configs newDrivePIDConfigs = new Slot0Configs();
-            newDrivePIDConfigs.kP = currentDrivePIDValues[0];
-            newDrivePIDConfigs.kI = currentDrivePIDValues[1];
-            newDrivePIDConfigs.kD = currentDrivePIDValues[2];
-            newDrivePIDConfigs.kG = currentDrivePIDValues[4];
-            newDrivePIDConfigs.kS = currentDrivePIDValues[5];
-            this.elevatorMasterMotor.getConfigurator().apply(newDrivePIDConfigs);
+            Slot0Configs newElevatorPIDConfigs = new Slot0Configs();
+            newElevatorPIDConfigs.kP = currentElevatorPIDValues[0];
+            newElevatorPIDConfigs.kI = currentElevatorPIDValues[1];
+            newElevatorPIDConfigs.kD = currentElevatorPIDValues[2];
+            newElevatorPIDConfigs.kG = currentElevatorPIDValues[4];
+            newElevatorPIDConfigs.kS = currentElevatorPIDValues[5];
+            newElevatorPIDConfigs.kV = currentElevatorPIDValues[6];
+            newElevatorPIDConfigs.kA = currentElevatorPIDValues[7];
+
+            MotionMagicConfigs motionMagicConfigs = new MotionMagicConfigs();
+            motionMagicConfigs.MotionMagicCruiseVelocity = currentElevatorPIDValues[8];
+            motionMagicConfigs.MotionMagicAcceleration = currentElevatorPIDValues[9];
+            motionMagicConfigs.MotionMagicJerk = currentElevatorPIDValues[10];
+            
+            this.elevatorMasterMotor.getConfigurator().apply(newElevatorPIDConfigs);
+            this.elevatorMasterMotor.getConfigurator().apply(motionMagicConfigs);
         }
     }
 

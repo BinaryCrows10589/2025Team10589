@@ -16,6 +16,8 @@ public class ElevatorConstants {
     public static final double kElevatorDPIDValue = 0;
     public static final double kElevatorGPIDValue = 0;
     public static final double kElevatorSPIDValue = 0;
+    public static final double kElevatorVPIDValue = 0;
+    public static final double kElevatorAPIDValue = 0;
 
     public static final double kMotionMagicCruiseVelocity = 0;
     public static final double kMotionMagicAcceleration = 0;

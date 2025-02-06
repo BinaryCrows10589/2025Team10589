@@ -75,7 +75,8 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
             elevatorPositionalPIDConfigs.kD,
             0,
             elevatorPositionalPIDConfigs.kG,
-            elevatorPositionalPIDConfigs.kS);
+            elevatorPositionalPIDConfigs.kS,
+            0, 0, 0, 0, 0);
 
         this.elevatorMasterMotor.getConfigurator().apply(masterConfiguration);
         this.elevatorSlaveMotor.getConfigurator().apply(masterConfiguration);
