@@ -38,5 +38,9 @@ public class ElevatorConstants {
 
     public static final double kElevatorEncoderOffset = 0;
 
+    public static final double kElevatorOuttakeTolerance = 1;
+
+    public static final double kElevatorIntakeTolerance = 2;
+
 
 }
