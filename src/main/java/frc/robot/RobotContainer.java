@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,6 +19,7 @@ import frc.robot.Commands.AlgaeCommands.RunAlgaeWheelsCommand;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
 import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
 import frc.robot.Constants.GenericConstants.AutoPositionConstants;
+import frc.robot.Constants.GenericConstants.ButtonBoardButtonConstants;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.AutoPositionConstants.ReefPosition1Constants;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeSystemCommandFactory;
@@ -42,7 +45,7 @@ public class RobotContainer {
 
     // Controller Decloration and Instantiation
     private final ControllerInterface driverController = new ControllerInterface(ControlConstants.kDriverControllerPort);
-    private final ButtonBoardInterface buttonBoard = new ButtonBoardInterface(ControlConstants.kButtonBoardPort);
+    private final ButtonBoardInterface buttonBoard = new ButtonBoardInterface(ControlConstants.kButtonBoardAutoPositioningPort, ControlConstants.kButtonBoardNormalPort);
     private final ControllerInterface buttonBoardAlt = new ControllerInterface(ControlConstants.kButtonBoardAltPort);
     // Declare all Subsystems and Command Factories
     private final DriveSubsystem driveSubsystem;
@@ -94,7 +97,12 @@ public class RobotContainer {
         this.highLevelCommandsFactory = new HighLevelCommandsFactory(
             this.outtakeCommandFactory, this.robotCreator.getOuttakeCoralSensorsSubsystem(),
              this.robotCreator.getFunnelCoralSensorSubsystem(),
-            this.elevatorCommandFactory);
+            this.elevatorCommandFactory,
+            this.robotCreator.getPivotSubsystem(),
+            this.robotCreator.getAlgaeWheelSubsystem(),
+            this.robotCreator.getAlgaePivotSubsystem(),
+            buttonBoard.getNormalButtonSupplier(ButtonBoardButtonConstants.ButtonBoardNormalButtons.algaeOuttake)
+            );
 
         this.algaeSystemCommandFactory = new AlgaeSystemCommandFactory(this.robotCreator.getAlgaePivotSubsystem(),
          this.robotCreator.getAlgaeWheelSubsystem());
