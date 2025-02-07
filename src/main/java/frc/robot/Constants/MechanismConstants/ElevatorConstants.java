@@ -11,10 +11,10 @@ public class ElevatorConstants {
 
     public static final double kMaxVoltage = 12;
 
-    public static final double kElevatorPPIDValue = 0;
+    public static final double kElevatorPPIDValue = 55;
     public static final double kElevatorIPIDValue = 0;
     public static final double kElevatorDPIDValue = 0;
-    public static final double kElevatorGPIDValue = .6;
+    public static final double kElevatorGPIDValue = 1.25;
 
     public static final double kElevatorSPIDValue = 0;
     public static final double kElevatorVPIDValue = 0;

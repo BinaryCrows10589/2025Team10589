@@ -1,5 +1,7 @@
 package frc.robot.Subsystems.Elevator;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -146,6 +148,7 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         elevatorIOInputs.elevatorSlaveRPM = elevatorSlaveMotor.getVelocity().getValueAsDouble();
         elevatorIOInputs.elevatorSlaveAppliedVolts = elevatorSlaveMotor.getMotorVoltage().getValueAsDouble();
         elevatorIOInputs.elevatorSlaveCurrentAmps = new double[] {elevatorSlaveMotor.getSupplyCurrent().getValueAsDouble()};
+        Logger.recordOutput("Elevator/Temp", this.elevatorMasterMotor.getDeviceTemp().getValueAsDouble());
 
         updatePIDValuesFromNetworkTables();
     }

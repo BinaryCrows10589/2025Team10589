@@ -75,12 +75,13 @@ public class ElevatorSubsystem extends SubsystemBase {
         switch (desiredPosition) {
             case BASEMENT:
                 return 0;
-            case L1:
-                return .1;
+            case L1://.255
+            ////.75
+                return .295;
             case L2:
-                return .4;
+                return .365;
             case L3:
-                return .5;
+                return .65;
             case L4:
                 return .6;
 
