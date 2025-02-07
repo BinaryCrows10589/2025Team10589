@@ -16,10 +16,12 @@ public interface ElevatorIO {
         public double elevatorMasterRPM = 0.0;
         public double elevatorMasterAppliedVolts = 0.0;
         public double[] elevatorMasterCurrentAmps = new double[] {};
+        public double elevatorMasterMotorTemputureC = 0;
 
         public double elevatorSlaveRPM = 0.0;
         public double elevatorSlaveAppliedVolts = 0.0;
         public double[] elevatorSlaveCurrentAmps = new double[] {};
+        public double elevatorSlaveMotorTemputureC = 0;
     }
 
     /**
