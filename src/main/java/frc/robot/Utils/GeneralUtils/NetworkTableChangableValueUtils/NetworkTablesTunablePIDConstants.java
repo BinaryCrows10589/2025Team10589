@@ -17,6 +17,12 @@ public class NetworkTablesTunablePIDConstants {
     // Specific to certain implementations of PID
     private NetworkTablesChangableValue changableGValue; // Gravity
     private NetworkTablesChangableValue changableSValue; // Static friction
+    private NetworkTablesChangableValue changableVValue; // Velocity
+    private NetworkTablesChangableValue changableAValue; // Acceleration
+    private NetworkTablesChangableValue changableCruseVelocityValue;
+    private NetworkTablesChangableValue changableAccelerationValue;
+    private NetworkTablesChangableValue changableJerkValue;
+    
     private boolean isUsingAdvancedPID = false; // Whether the variables above will be used
 
 
@@ -48,13 +54,23 @@ public class NetworkTablesTunablePIDConstants {
     double defaultDValue,
     double defaultFFValue,
     double defaultGValue,
-    double defaultSValue) {
+    double defaultSValue,
+    double defaultVValue,
+    double defaultAValue,
+    double defaultVelocityValue,
+    double defaultAccelerationValue,
+    double defaultJerkValue) {
         this.changablePValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/PValue", (double)defaultPValue);
         this.changableIValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/IValue", (double)defaultIValue);
         this.changableDValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/DValue", (double)defaultDValue);
         this.changableFFValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/FFValue", (double)defaultFFValue);
         this.changableGValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/GValue", (double)defaultGValue);
         this.changableSValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/SValue", (double)defaultSValue);
+        this.changableVValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/VValue", (double)defaultVValue);
+        this.changableAValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/AValue", (double)defaultAValue);
+        this.changableCruseVelocityValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/CruseVelocityValue", (double) defaultVelocityValue);
+        this.changableAccelerationValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/AccelerationValue", (double)defaultAccelerationValue);
+        this.changableJerkValue = new NetworkTablesChangableValue(baseNetworkTablesKey + "/JerkValue", (double)defaultJerkValue);
         isUsingAdvancedPID = true;
     }
 
@@ -76,7 +92,12 @@ public class NetworkTablesTunablePIDConstants {
                 (double)this.changableDValue.getChangableValueOnNetworkTables(),
                 (double)this.changableFFValue.getChangableValueOnNetworkTables(),
                 (double)this.changableGValue.getChangableValueOnNetworkTables(),
-                (double)this.changableSValue.getChangableValueOnNetworkTables()
+                (double)this.changableSValue.getChangableValueOnNetworkTables(),
+                (double)this.changableVValue.getChangableValueOnNetworkTables(),
+                (double)this.changableAValue.getChangableValueOnNetworkTables(),
+                (double)this.changableCruseVelocityValue.getChangableValueOnNetworkTables(),
+                (double)this.changableAccelerationValue.getChangableValueOnNetworkTables(),
+                (double)this.changableJerkValue.getChangableValueOnNetworkTables()
             };
 
         } else {
@@ -101,7 +122,12 @@ public class NetworkTablesTunablePIDConstants {
         if (isUsingAdvancedPID) {
             return valuesChanged ||
             this.changableGValue.hasChangableValueChanged() ||
-            this.changableSValue.hasChangableValueChanged();
+            this.changableSValue.hasChangableValueChanged() ||
+            this.changableVValue.hasChangableValueChanged() ||
+            this.changableAValue.hasChangableValueChanged() ||
+            this.changableCruseVelocityValue.hasChangableValueChanged() ||
+            this.changableAccelerationValue.hasChangableValueChanged() ||
+            this.changableJerkValue.hasChangableValueChanged();
         } else {
             return valuesChanged;
         }

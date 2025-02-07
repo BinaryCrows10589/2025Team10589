@@ -17,10 +17,13 @@ public class ElevatorConstants {
     public static final double kElevatorGPIDValue = .6;
 
     public static final double kElevatorSPIDValue = 0;
+    public static final double kElevatorVPIDValue = 0;
+    public static final double kElevatorAPIDValue = 0;
 
     public static final double kMotionMagicCruiseVelocity = 0;
     public static final double kMotionMagicAcceleration = 0;
     public static final double kMotionMagicJerk = 0;
+    
     public static final boolean isSlaveReversed = false;
 
     public static final double kGroundIntakePassoffTolorence = 0.00833333333;
