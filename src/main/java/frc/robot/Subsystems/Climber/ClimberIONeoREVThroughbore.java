@@ -9,6 +9,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import frc.robot.Constants.MechanismConstants.ClimberConstants;
+import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class ClimberIONeoREVThroughbore implements ClimberIO {
@@ -75,6 +76,12 @@ public class ClimberIONeoREVThroughbore implements ClimberIO {
     public void setDesiredPosition(double desiredPosition) {
         desiredClimberPosition = desiredPosition;
         climberPIDController.setReference(desiredPosition, ControlType.kPosition);
+    }
+
+    @Override
+    public void incrementDesiredPosition(double increment) {
+        desiredClimberPosition += increment;//no gear ratio? * ClimberConstants.k;
+        this.climberPIDController.setReference(increment, ControlType.kPosition);
     }
 
 }

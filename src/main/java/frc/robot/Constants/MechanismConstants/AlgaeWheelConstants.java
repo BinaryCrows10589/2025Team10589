@@ -11,5 +11,6 @@ public class AlgaeWheelConstants {
     public static final double kReefTreeIntakeVoltage = 4;
     public static final double kOuttakeBargeVoltage = -4;
     public static final double kOuttakeProcessorVoltage = -12;
+    public static final double kOuttakeDefaultVoltage = -6;
     
 }

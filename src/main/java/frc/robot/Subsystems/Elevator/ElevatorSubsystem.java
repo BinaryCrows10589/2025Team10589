@@ -15,6 +15,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     ElevatorMode currentMode = ElevatorMode.AUTOMATIC_POSITIONING;
 
+    ElevatorPosition lastAssignedDesiredPosition = null;
+
     public static enum ElevatorPosition {
         BASEMENT,
         L1,
@@ -25,7 +27,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         GROUND_INTAKE_ALGAE,
         SCORE_ALGAE_PROCESSOR,
         SCORE_ALGAE_BARGE,
-        REEF_INTAKE_ALGAE
+        REEF_INTAKE_ALGAE_LOW,
+        REEF_INTAKE_ALGAE_HIGH
     }
 
     public static enum ElevatorMode {
@@ -44,11 +47,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void setDesiredElevatorPosition(double desiredPosition) {
+        lastAssignedDesiredPosition = null;
         updateElevatorControlMode(ElevatorMode.AUTOMATIC_POSITIONING);
         elevatorIO.setDesiredPosition(desiredPosition);
     }
 
     public void setDesiredElevatorPosition(ElevatorPosition desiredPosition) {
+        lastAssignedDesiredPosition = desiredPosition;
         updateElevatorControlMode(ElevatorMode.AUTOMATIC_POSITIONING);
 
         elevatorIO.setDesiredPosition(resolveElevatorPosition(desiredPosition));
@@ -71,6 +76,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         return this.currentMode;
     }
 
+    public ElevatorPosition getDesiredElevatorPosition() {
+        return lastAssignedDesiredPosition;
+    }
+
     public static double resolveElevatorPosition(ElevatorPosition desiredPosition) {
         switch (desiredPosition) {
             case BASEMENT:
@@ -88,7 +97,9 @@ public class ElevatorSubsystem extends SubsystemBase {
                 return 0;
             case GROUND_INTAKE_ALGAE:
                 return 0;
-            case REEF_INTAKE_ALGAE:
+            case REEF_INTAKE_ALGAE_LOW:
+                return 0;
+            case REEF_INTAKE_ALGAE_HIGH:
                 return 0;
             case SCORE_ALGAE_PROCESSOR:
                 return 0;

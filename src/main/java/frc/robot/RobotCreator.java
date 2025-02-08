@@ -10,6 +10,8 @@ import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotSubsystem;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelIO;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelIOSparkMax;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelSubsystem;
+import frc.robot.Subsystems.Climber.ClimberIONeoREVThroughbore;
+import frc.robot.Subsystems.Climber.ClimberSubsystem;
 import frc.robot.Subsystems.Elevator.ElevatorIO;
 import frc.robot.Subsystems.Elevator.ElevatorIOCANCoderPositionalPID;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
@@ -64,6 +66,8 @@ public class RobotCreator {
 
     private ElevatorReturnDefaultCommand elevatorReturnDefaultCommand;
 
+    private ClimberSubsystem climberSubsystem;
+
     private final AlgaeWheelSubsystem algaeWheelSubsystem;
     private final AlgaePivotSubsystem algaePivotSubsystem;
 
@@ -96,6 +100,8 @@ public class RobotCreator {
 
                 this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIOSparkMax());
                 this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIOSparkMax());
+
+                this.climberSubsystem = new ClimberSubsystem(new ClimberIONeoREVThroughbore());
 
                 break;
             case SIM:
@@ -170,6 +176,10 @@ public class RobotCreator {
 
     public TransitCoralSensorSubsystem getTransitCoralSensorSubsystem() {
         return null;
+    }
+
+    public ClimberSubsystem getClimberSubsystem() {
+        return this.climberSubsystem;
     }
 
     public FunnelCoralSensorSubsystem getFunnelCoralSensorSubsystem() {

@@ -6,4 +6,6 @@ public class ClimberConstants {
     public static final double kClimberPPIDValue = 0;
     public static final double kClimberIPIDValue = 0;
     public static final double kClimberDPIDValue = 0;
+    public static final double kClimberUpSpeed = 4;
+    public static final double kClimberDownSpeed = -2;
 }

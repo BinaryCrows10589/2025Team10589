@@ -73,18 +73,23 @@ public class ElevatorCommandFactory {
         elevatorSubsystem);
     }
 
-    public ElevatorToPositionCommand createElevatorToReefIntakeAlgaeCommand() {
-        return new ElevatorToPositionCommand(ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.REEF_INTAKE_ALGAE),
+    public ElevatorToPositionCommand createElevatorToReefIntakeAlgaeLowCommand() {
+        return new ElevatorToPositionCommand(ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.REEF_INTAKE_ALGAE_LOW),
+        ElevatorConstants.kElevatorScoreProcessorPositionTolorence,
+        elevatorSubsystem);
+    }
+    public ElevatorToPositionCommand createElevatorToReefIntakeAlgaeHighCommand() {
+        return new ElevatorToPositionCommand(ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.REEF_INTAKE_ALGAE_LOW),
         ElevatorConstants.kElevatorScoreProcessorPositionTolorence,
         elevatorSubsystem);
     }
 
-    public MoveElevatorManuallyCommand createMoveElevatorUpCommand(Supplier<Boolean> condition) {
-        return new MoveElevatorManuallyCommand(ElevatorConstants.kManualMovementUpSpeed, condition, elevatorSubsystem);
+    public MoveElevatorManuallyCommand createMoveElevatorUpCommand() {
+        return new MoveElevatorManuallyCommand(ElevatorConstants.kManualMovementUpSpeed, elevatorSubsystem);
     }
 
-    public MoveElevatorManuallyCommand createMoveElevatorDownCommand(Supplier<Boolean> condition) {
-        return new MoveElevatorManuallyCommand(ElevatorConstants.kManualMovementDownSpeed, condition, elevatorSubsystem);
+    public MoveElevatorManuallyCommand createMoveElevatorDownCommand() {
+        return new MoveElevatorManuallyCommand(ElevatorConstants.kManualMovementDownSpeed, elevatorSubsystem);
     }
     
 }

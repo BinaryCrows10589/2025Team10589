@@ -19,8 +19,12 @@ public final class ControlConstants {
     public static final int[] kCoralIntakedColor = {0, 255, 0}; // Green
     public static final int[] kCoralOuttakedColor = {255, 0, 255}; // Purple
     public static final int[] kAlgaeOuttakeReady = {255, 200, 0}; // Orange
+    public static final int[] kClimberInMotionColor = {200, 255, 255}; // Baby Blue
+    public static final int[] kClimberInPositionColor = {255, 200, 200}; // Pink
+
     public static final int kButtonBoardAutoPositioningPort = 1;
     public static final int kButtonBoardNormalPort = 3; // TODO: Change this?
+    
 
     public static boolean kIsDriverControlled = true;
 }

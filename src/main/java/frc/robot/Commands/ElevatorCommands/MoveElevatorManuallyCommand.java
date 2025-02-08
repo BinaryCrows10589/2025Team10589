@@ -10,12 +10,10 @@ public class MoveElevatorManuallyCommand extends Command {
 
     private final ElevatorSubsystem elevatorSubsystem;
     private final double elevatorSpeed;
-    private final Supplier<Boolean> isRunning;
-    
-    public MoveElevatorManuallyCommand(double elevatorSpeed, Supplier<Boolean> isRunning, ElevatorSubsystem elevatorSubsystem) {
+
+    public MoveElevatorManuallyCommand(double elevatorSpeed, ElevatorSubsystem elevatorSubsystem) {
         this.elevatorSubsystem = elevatorSubsystem;
         this.elevatorSpeed = elevatorSpeed;
-        this.isRunning = isRunning;
         addRequirements(elevatorSubsystem);
     }
 
@@ -34,6 +32,6 @@ public class MoveElevatorManuallyCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return isRunning.get();
+        return false;
     }
 }

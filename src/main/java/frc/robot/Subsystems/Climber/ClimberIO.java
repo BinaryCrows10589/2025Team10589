@@ -19,4 +19,6 @@ public interface ClimberIO {
     public default void updateInputs(ClimberIOInputs inputs) {}
 
     public default void setDesiredPosition(double desiredPosition) {}
+
+    public default void incrementDesiredPosition(double increment) {}
 }
