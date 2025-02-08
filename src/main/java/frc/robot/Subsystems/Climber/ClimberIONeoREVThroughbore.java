@@ -52,8 +52,8 @@ public class ClimberIONeoREVThroughbore implements ClimberIO {
 
     @Override
     public void updateInputs(ClimberIOInputs climberIOInputs) {
-        climberIOInputs.climberRPM = climberMotor.getAlternateEncoder().getVelocity();
-        climberIOInputs.climberPosition = climberMotor.getAlternateEncoder().getPosition();
+        climberIOInputs.climberRPM = climberMotor.getEncoder().getVelocity();
+        climberIOInputs.climberPosition = climberMotor.getEncoder().getPosition();
         climberIOInputs.desiredClimberPosition = desiredClimberPosition;
         climberIOInputs.climberAppliedVolts = climberMotor.getAppliedOutput() * climberMotor.getBusVoltage();
         climberIOInputs.climberCurrentAmps = new double[] {climberMotor.getOutputCurrent()};

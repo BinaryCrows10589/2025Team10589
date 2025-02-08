@@ -126,6 +126,9 @@ public class RobotCreator {
                 this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIOSparkMax());
                 this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIOSparkMax());
 
+                this.climberSubsystem = new ClimberSubsystem(new ClimberIONeoREVThroughbore());
+
+
                 break;
             case REPLAY:
                 // Replayed robot, disable IO implementations
@@ -147,6 +150,8 @@ public class RobotCreator {
 
                 this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIO() {});
                 this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIO() {});
+
+                this.climberSubsystem = new ClimberSubsystem(new ClimberIONeoREVThroughbore());
 
 
                 break;

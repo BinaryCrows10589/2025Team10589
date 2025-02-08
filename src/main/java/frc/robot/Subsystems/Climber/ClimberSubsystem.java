@@ -9,7 +9,7 @@ import frc.robot.Utils.GeneralUtils.Tolerance;
 
 public class ClimberSubsystem extends SubsystemBase {
     private ClimberIO climberIO;
-    private ClimberIOInputsAutoLogged climberIOInputs;
+    private ClimberIOInputsAutoLogged climberIOInputs = new ClimberIOInputsAutoLogged();
 
     ClimberControlMode currentMode = ClimberControlMode.AUTOMATIC_POSITIONING;
 

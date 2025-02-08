@@ -11,12 +11,15 @@ public class ButtonBoardInterface {
     private GenericHID buttonBoardNormal; // 18 (for now) button normals
     private Command[] autoPositioningButtonMap;
     private Command[][] normalButtonMap;
+
+    private int buttonBoardAutoPositioningButtonCount = 12;
+    private int buttonBoardNormalButtonCount = 18;
     
     public ButtonBoardInterface(int autoPositioningPortID, int normalPortID) {
         this.buttonBoardAutoPositioning = new GenericHID(autoPositioningPortID);
         this.buttonBoardNormal = new GenericHID(normalPortID);
-        this.autoPositioningButtonMap = new Command[this.buttonBoardAutoPositioning.getButtonCount()+1];
-        this.normalButtonMap = new Command[this.buttonBoardNormal.getButtonCount()+1][2];
+        this.autoPositioningButtonMap = new Command[buttonBoardAutoPositioningButtonCount];
+        this.normalButtonMap = new Command[buttonBoardNormalButtonCount][2];
     }
     /*
      * TODO: Find which ports will be for these and list here
@@ -45,13 +48,14 @@ public class ButtonBoardInterface {
     }   
 
     public void periodic() {
+        System.out.println("Updating button board inputs");
         // Normal button board
-        for(int i = 1; i < normalButtonMap.length; i++) {
-            if(this.buttonBoardNormal.getRawButtonPressed(i)) {
+        for(int i = 0; i < normalButtonMap.length; i++) {
+            if(this.buttonBoardNormal.getRawButtonPressed(i+1)) {
                 if(this.normalButtonMap[i][0] != null)
                     this.normalButtonMap[i][0].schedule();
             }
-            if(this.buttonBoardNormal.getRawButtonReleased(i)) {
+            if(this.buttonBoardNormal.getRawButtonReleased(i+1)) {
                 if(this.normalButtonMap[i][1] == null) {
                     if(this.normalButtonMap[i][0] != null)
                         this.normalButtonMap[i][0].cancel();
@@ -63,13 +67,13 @@ public class ButtonBoardInterface {
         }
 
         // Auto positioning
-        for(int i = 1; i < autoPositioningButtonMap.length; i++) {
-            if(this.buttonBoardAutoPositioning.getRawButtonPressed(i)) {
+        for(int i = 0; i < autoPositioningButtonMap.length; i++) {
+            if(this.buttonBoardAutoPositioning.getRawButtonPressed(i+1)) {
                 if(this.autoPositioningButtonMap[i] != null) {
                     this.autoPositioningButtonMap[i].schedule();
                 }
             }
-            if(this.buttonBoardAutoPositioning.getRawButtonReleased(i)) {
+            if(this.buttonBoardAutoPositioning.getRawButtonReleased(i+1)) {
                 if(this.autoPositioningButtonMap[i] != null) {
                     this.autoPositioningButtonMap[i].cancel();
                 }
