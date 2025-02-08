@@ -114,9 +114,11 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         elevatorIOInputs.elevatorMasterRPM = elevatorMasterMotor.getVelocity().getValueAsDouble();
         elevatorIOInputs.elevatorMasterAppliedVolts = elevatorMasterMotor.getMotorVoltage().getValueAsDouble();
         elevatorIOInputs.elevatorMasterCurrentAmps = new double[] {elevatorMasterMotor.getSupplyCurrent().getValueAsDouble()};
+        elevatorIOInputs.elevatorMasterMotorTemputureC = this.elevatorMasterMotor.getDeviceTemp().getValueAsDouble();
         elevatorIOInputs.elevatorSlaveRPM = elevatorSlaveMotor.getVelocity().getValueAsDouble();
         elevatorIOInputs.elevatorSlaveAppliedVolts = elevatorSlaveMotor.getMotorVoltage().getValueAsDouble();
         elevatorIOInputs.elevatorSlaveCurrentAmps = new double[] {elevatorSlaveMotor.getSupplyCurrent().getValueAsDouble()};
+        elevatorIOInputs.elevatorSlaveMotorTemputureC = this.elevatorSlaveMotor.getDeviceTemp().getValueAsDouble();
 
         updatePIDValuesFromNetworkTables();
     }

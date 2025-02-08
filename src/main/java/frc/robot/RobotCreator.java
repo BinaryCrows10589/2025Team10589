@@ -13,6 +13,7 @@ import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelSubsystem;
 import frc.robot.Subsystems.Climber.ClimberIONeoREVThroughbore;
 import frc.robot.Subsystems.Climber.ClimberSubsystem;
 import frc.robot.Subsystems.Elevator.ElevatorIO;
+import frc.robot.Subsystems.Elevator.ElevatorIOCANCoderMotionMagic;
 import frc.robot.Subsystems.Elevator.ElevatorIOCANCoderPositionalPID;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIO;
@@ -91,7 +92,7 @@ public class RobotCreator {
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIODistanceSensor());
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
                 
-                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderPositionalPID());
+                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderMotionMagic());
                 //this.elevatorReturnDefaultCommand = new ElevatorReturnDefaultCommand(elevatorSubsystem);
                 //this.elevatorSubsystem.setDefaultCommand(elevatorReturnDefaultCommand);
 

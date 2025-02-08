@@ -2,8 +2,8 @@ package frc.robot.Constants.MechanismConstants;
 
 public class OuttakeConstants {
     // speeds or voltages for the wheels
-    public static final double kLeftWheelOuttake = 6.0;
-    public static final double kRightWheelOuttake = 6.0;
+    public static final double kLeftWheelOuttake = 6;
+    public static final double kRightWheelOuttake = 6;
 
     public static final double kLeftWheelL1 = 0.0;
     public static final double kRightWheelL1 = 0.0;

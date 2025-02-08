@@ -1,8 +1,11 @@
 package frc.robot.Subsystems.Elevator;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -63,8 +66,6 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         encoderConfig.MagnetSensor.MagnetOffset = 0.0;
         elevatorEncoder.getConfigurator().apply(encoderConfig);
         
-        
-        
         //masterConfiguration.Feedback.FeedbackRotorOffset = elevatorEncoder.getAbsoluteEncoder().getPosition(); // Reset the builtin encoder to the REV encoder's value
 
         //TODO: I don't think this requires more configuration, but we'll have to see
@@ -77,6 +78,7 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         elevatorPositionalPIDConfigs.kS = ElevatorConstants.kElevatorSPIDValue;
         elevatorPositionalPIDConfigs.kV = ElevatorConstants.kElevatorVPIDValue;
         elevatorPositionalPIDConfigs.kA = ElevatorConstants.kElevatorAPIDValue;
+        
         MotionMagicConfigs elevatorMotionMagicConfigs = new MotionMagicConfigs();
         elevatorMotionMagicConfigs.MotionMagicCruiseVelocity = ElevatorConstants.kMotionMagicCruiseVelocity;
         elevatorMotionMagicConfigs.MotionMagicAcceleration = ElevatorConstants.kMotionMagicAcceleration;
@@ -95,8 +97,6 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
             elevatorMotionMagicConfigs.MotionMagicAcceleration,
             elevatorMotionMagicConfigs.MotionMagicJerk
             );
-
-        
 
         this.elevatorMasterMotor.getConfigurator().apply(masterConfiguration);
         
@@ -143,10 +143,13 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         elevatorIOInputs.elevatorMasterRPM = elevatorMasterMotor.getVelocity().getValueAsDouble();
         elevatorIOInputs.elevatorMasterAppliedVolts = elevatorMasterMotor.getMotorVoltage().getValueAsDouble();
         elevatorIOInputs.elevatorMasterCurrentAmps = new double[] {elevatorMasterMotor.getSupplyCurrent().getValueAsDouble()};
+        elevatorIOInputs.elevatorMasterMotorTemputureC = this.elevatorMasterMotor.getDeviceTemp().getValueAsDouble();
         elevatorIOInputs.elevatorSlaveRPM = elevatorSlaveMotor.getVelocity().getValueAsDouble();
         elevatorIOInputs.elevatorSlaveAppliedVolts = elevatorSlaveMotor.getMotorVoltage().getValueAsDouble();
         elevatorIOInputs.elevatorSlaveCurrentAmps = new double[] {elevatorSlaveMotor.getSupplyCurrent().getValueAsDouble()};
+        elevatorIOInputs.elevatorSlaveMotorTemputureC = this.elevatorSlaveMotor.getDeviceTemp().getValueAsDouble();
 
+    
         updatePIDValuesFromNetworkTables();
     }
 
