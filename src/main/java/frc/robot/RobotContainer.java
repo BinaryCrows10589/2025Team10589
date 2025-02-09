@@ -22,7 +22,6 @@ import frc.robot.Constants.GenericConstants.AutoPositionConstants;
 import frc.robot.Constants.GenericConstants.ButtonBoardButtonConstants;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.AutoPositionConstants.ReefPosition1Constants;
-import frc.robot.Subsystems.AlgaeSystem.AlgaeSystemCommandFactory;
 import frc.robot.Subsystems.Climber.ClimberCommandFactory;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.GroundIntake.GroundIntakeCommandFactory;
@@ -60,7 +59,6 @@ public class RobotContainer {
 
     private final HighLevelCommandsFactory highLevelCommandsFactory;
     private final PlaceCoralOnReef placeCommand;
-    private final AlgaeSystemCommandFactory algaeSystemCommandFactory;
     // Decloration of Commands
     // SwerveDrive Commands
     private final FieldOrientedDriveCommand fieldOrientedDriveCommand;
@@ -108,9 +106,6 @@ public class RobotContainer {
             buttonBoard.getNormalButtonSupplier(ButtonBoardButtonConstants.ButtonBoardNormalButtons.ejectAlgae)
             );
 
-        this.algaeSystemCommandFactory = new AlgaeSystemCommandFactory(this.robotCreator.getAlgaePivotSubsystem(),
-         this.robotCreator.getAlgaeWheelSubsystem());
-
         this.placeCommand = new PlaceCoralOnReef(ReefPosition.Position1, driveSubsystem, this.robotCreator.getReefTreeDetectorSubsystem(),
             this.robotCreator.getElevatorSubsystem(), outtakeCommandFactory);
         
@@ -155,10 +150,15 @@ public class RobotContainer {
 
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);
-        this.buttonBoardAlt.bindToButton(this.algaeSystemCommandFactory.createAlgaeWheelGroundIntakeCommand(), XboxController.Button.kLeftBumper.value);
-        this.buttonBoardAlt.bindToButton(this.algaeSystemCommandFactory.createAlgaeWheelProcessorOuttakeCommand(), XboxController.Button.kRightBumper.value);
-        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL1Command(), XboxController.Button.kY.value);  
-        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL2Command(), XboxController.Button.kX.value); 
+        this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.intakeAlgaeFromGroundCommand(), XboxController.Button.kX.value);
+        this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.outtakeAlgaeInProcessorCommand(), XboxController.Button.kY.value);
+        this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(), 0);
+        this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createOutakeWheelsAlgaeProcessorCommand(), 90);
+        this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeGroundCommand(), 180);
+        this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeReefTreeCommand(), 270);
+
+        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL1Command(), XboxController.Button.kLeftBumper.value);  
+        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL2Command(), XboxController.Button.kRightBumper.value); 
         this.buttonBoardAlt.bindToLeftTriggure(this.elevatorCommandFactory.createElevatorToL3Command());  
         this.buttonBoardAlt.bindToRightTriggure(this.elevatorCommandFactory.createElevatorToL4Command());  
     }
