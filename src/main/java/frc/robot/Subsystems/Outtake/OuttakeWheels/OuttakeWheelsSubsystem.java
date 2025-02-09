@@ -18,17 +18,15 @@ public class OuttakeWheelsSubsystem extends SubsystemBase{
         Logger.processInputs("Outtake/Wheels", outtakeWheelsInputs);
     }
     public void stopOuttake() {
-        outtakeWheelsIO.setWheelVoltages(0, 0);
+        outtakeWheelsIO.setWheelVoltages( 0);
     }
 
-    public void setWheelVoltages(double leftWheel, double rightWheel) {
-        outtakeWheelsIO.setWheelVoltages(leftWheel, rightWheel);
+    public void setWheelVoltages(double rightWheel) {
+        outtakeWheelsIO.setWheelVoltages(rightWheel);
     }
     
-    public void setWheelPositionsReletiveToCurrentPose(double leftWheel, double rightWheel) {
-        // Boyne do this
-        // Ok
-        outtakeWheelsIO.setWheelPositionsRelative(leftWheel, rightWheel);
+    public void setWheelPositionsReletiveToCurrentPose(double rightWheel) {
+        outtakeWheelsIO.setWheelPositionsRelative(rightWheel);
     }
 
 }

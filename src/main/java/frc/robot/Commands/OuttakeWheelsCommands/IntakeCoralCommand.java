@@ -28,7 +28,7 @@ public class IntakeCoralCommand extends Command{
 
     @Override
     public void initialize() {  
-        this.outtakeWheelsSubsystem.setWheelVoltages(OuttakeConstants.kLeftWheelIntake, OuttakeConstants.kRightWheelIntake);
+        this.outtakeWheelsSubsystem.setWheelVoltages(OuttakeConstants.kRightWheelIntake);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class IntakeCoralCommand extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        this.outtakeWheelsSubsystem.setWheelVoltages(0, 0);
+        this.outtakeWheelsSubsystem.setWheelVoltages(0);
         
     }
 

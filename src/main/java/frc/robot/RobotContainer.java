@@ -131,7 +131,7 @@ public class RobotContainer {
         this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveRotationProfiler(), XboxController.Button.kB.value);
         this.driverController.bindToLeftTriggure(Commands.runOnce(this.driveSubsystem::setSlowModeTrue),
         Commands.runOnce(this.driveSubsystem::setSlowModeFalse));
-
+        /*
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l0);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToL1Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l1);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToL2Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l2);
@@ -150,22 +150,17 @@ public class RobotContainer {
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToProcessorScoreCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.groundOuttakeAlgae);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToBargeScoreCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.bargeOuttakeAlgae);
         //this.buttonBoard.bindButton(x, ButtonBoardButtonConstants.ButtonBoardNormalButtons.reefIntake); // This does not apply because this button is only used as a supplier for other buttons
+         */
 
 
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);
         this.buttonBoardAlt.bindToButton(this.algaeSystemCommandFactory.createAlgaeWheelGroundIntakeCommand(), XboxController.Button.kLeftBumper.value);
         this.buttonBoardAlt.bindToButton(this.algaeSystemCommandFactory.createAlgaeWheelProcessorOuttakeCommand(), XboxController.Button.kRightBumper.value);
-        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL2Command(), XboxController.Button.kX.value); 
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL1Command(), XboxController.Button.kY.value);  
-        this.buttonBoardAlt.bindToRightTriggure(this.elevatorCommandFactory.createElevatorToL3Command());  
-
- 
-
-        //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createGroundIntakeCommand(), XboxController.Button.kB.value);
-        //this.buttonBoardAlt.bindToButton(this.groundIntakeCommandFactory.createPivotDownCommand(), XboxController.Button.kLeftBumper.value);
-        //this.buttonBoardAlt.bindToButton(this.groundIntakeCommandFactory.createPivotUpCommand(), XboxController.Button.kRightBumper.value);
-        //t(outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
+        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL2Command(), XboxController.Button.kX.value); 
+        this.buttonBoardAlt.bindToLeftTriggure(this.elevatorCommandFactory.createElevatorToL3Command());  
+        this.buttonBoardAlt.bindToRightTriggure(this.elevatorCommandFactory.createElevatorToL4Command());  
     }
 
     /**

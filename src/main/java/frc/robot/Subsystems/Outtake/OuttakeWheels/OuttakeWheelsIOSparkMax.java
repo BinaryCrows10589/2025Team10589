@@ -15,23 +15,17 @@ import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTable
 
 public class OuttakeWheelsIOSparkMax implements OuttakeWheelsIO {
     
-    private SparkMax leftWheel;
     private SparkMax rightWheel;
 
-    private SparkClosedLoopController leftWheelPIDController;
     private SparkClosedLoopController rightWheelPIDController;
 
-    private double desiredLeftWheelVoltage = 0;
     private double desiredRightWheelVoltage = 0;
 
-    private double desiredLeftWheelPosition = 0;
     private double desiredRightWheelPosition = 0;
 
-    private NetworkTablesTunablePIDConstants leftWheelPIDConstantTuner;
     private NetworkTablesTunablePIDConstants rightWheelPIDConstantTuner;
 
     public OuttakeWheelsIOSparkMax() {
-        this.leftWheel = new SparkMax(OuttakeConstants.kLeftWheelMotorCANID, MotorType.kBrushless);
         this.rightWheel = new SparkMax(OuttakeConstants.kRightWheelMotorCANID, MotorType.kBrushless);
 
         configureWheels();
@@ -40,101 +34,60 @@ public class OuttakeWheelsIOSparkMax implements OuttakeWheelsIO {
     }
 
     @Override
-    public void setWheelPositions(double leftWheelPosition, double rightWheelPosition) {
-        desiredLeftWheelPosition = leftWheelPosition;
+    public void setWheelPositions(double rightWheelPosition) {
         desiredRightWheelPosition = rightWheelPosition;
 
-        leftWheelPIDController.setReference(desiredLeftWheelPosition, ControlType.kPosition);
         rightWheelPIDController.setReference(desiredRightWheelPosition, ControlType.kPosition);
     }
 
     @Override
-    public void setWheelPositionsRelative(double leftWheelPosition, double rightWheelPosition) {
-        desiredLeftWheelPosition += leftWheelPosition;
-        desiredRightWheelPosition += leftWheelPosition;
+    public void setWheelPositionsRelative(double rightWheelPosition) {
+        desiredRightWheelPosition += rightWheelPosition;
 
-        leftWheelPIDController.setReference(desiredLeftWheelPosition, ControlType.kPosition);
         rightWheelPIDController.setReference(desiredRightWheelPosition, ControlType.kPosition);
     }
 
     @Override
-    public void setWheelVoltages(double leftWheelVoltage, double rightWheelVoltage) {
-        desiredLeftWheelVoltage = leftWheelVoltage;
+    public void setWheelVoltages(double rightWheelVoltage) {
         desiredRightWheelVoltage = rightWheelVoltage;
-        leftWheel.setVoltage(desiredLeftWheelVoltage);
         rightWheel.setVoltage(desiredRightWheelVoltage);
     }
 
     private void configureWheels() {
-        SparkMaxConfig leftConfiguration = new SparkMaxConfig();
         SparkMaxConfig rightConfiguration = new SparkMaxConfig();
 
-        leftConfiguration.smartCurrentLimit(OuttakeConstants.kWheelSmartCurrentLimit);
         rightConfiguration.smartCurrentLimit(OuttakeConstants.kWheelSmartCurrentLimit);
         rightConfiguration.inverted(true);
 
-        leftConfiguration.closedLoop.pid(
-            OuttakeConstants.kLeftWheelPPIDValue,
-            OuttakeConstants.kLeftWheelIPIDValue,
-            OuttakeConstants.kLeftWheelDPIDValue
-        );
         rightConfiguration.closedLoop.pid(
             OuttakeConstants.kRightWheelPPIDValue,
             OuttakeConstants.kRightWheelIPIDValue,
             OuttakeConstants.kRightWheelDPIDValue
         );
-
-        this.leftWheelPIDConstantTuner = new NetworkTablesTunablePIDConstants("/Outtake/Wheels/Left", 
-        OuttakeConstants.kLeftWheelPPIDValue,
-        OuttakeConstants.kLeftWheelIPIDValue,
-        OuttakeConstants.kLeftWheelDPIDValue,
-        0);
+     
         this.rightWheelPIDConstantTuner = new NetworkTablesTunablePIDConstants("/Outtake/Wheels/Right", 
         OuttakeConstants.kRightWheelPPIDValue,
         OuttakeConstants.kRightWheelIPIDValue,
         OuttakeConstants.kRightWheelDPIDValue,
         0);
-        
 
-        leftConfiguration.idleMode(IdleMode.kBrake);
         rightConfiguration.idleMode(IdleMode.kBrake);
-        
-        leftWheel.configure(leftConfiguration, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         rightWheel.configure(rightConfiguration, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        
-        leftWheelPIDController = leftWheel.getClosedLoopController();
         rightWheelPIDController = rightWheel.getClosedLoopController();
-
-        
     
     }
 
     @Override
     public void updateInputs(OuttakeWheelsIOInputs outtakeIOInputs) {
-        outtakeIOInputs.leftWheelRPM = leftWheel.getEncoder().getVelocity();
-        outtakeIOInputs.leftWheelDesiredVoltage = desiredLeftWheelVoltage;
-        outtakeIOInputs.leftWheelDesiredPosition = desiredLeftWheelPosition;
         outtakeIOInputs.rightWheelRPM = rightWheel.getEncoder().getVelocity();
         outtakeIOInputs.rightWheelDesiredVoltage = desiredRightWheelVoltage;
         outtakeIOInputs.rightWheelDesiredPosition = desiredRightWheelPosition;
-        outtakeIOInputs.leftWheelAppliedVolts = leftWheel.getAppliedOutput() * leftWheel.getBusVoltage();
         outtakeIOInputs.rightWheelAppliedVolts = rightWheel.getAppliedOutput() * rightWheel.getBusVoltage();
-        outtakeIOInputs.leftWheelCurrentAmps = new double[] {leftWheel.getOutputCurrent()};
-        outtakeIOInputs.rightWheelCurrentAmps = new double[] {leftWheel.getOutputCurrent()};
+        outtakeIOInputs.rightWheelCurrentAmps = new double[] {rightWheel.getOutputCurrent()};
         updatePIDValuesFromNetworkTables();
     }
 
     private void updatePIDValuesFromNetworkTables() {
-        double[] leftWheelPIDValues = this.leftWheelPIDConstantTuner.getUpdatedPIDConstants();
-        if(this.leftWheelPIDConstantTuner.hasAnyPIDValueChanged()) {
-            SparkMaxConfig newDrivePIDConfigs = new SparkMaxConfig();
-            newDrivePIDConfigs.closedLoop.pid(
-                leftWheelPIDValues[0], 
-                leftWheelPIDValues[1], 
-                leftWheelPIDValues[2]);
-            this.leftWheel.configure(newDrivePIDConfigs, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        }
-
         double[] rightWheelPIDValues = this.rightWheelPIDConstantTuner.getUpdatedPIDConstants();
         if(this.rightWheelPIDConstantTuner.hasAnyPIDValueChanged()) {
             SparkMaxConfig newDrivePIDConfigs = new SparkMaxConfig();
