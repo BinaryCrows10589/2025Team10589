@@ -6,8 +6,8 @@ public class AlgaeWheelConstants {
     public static final double kWheelIPIDValue = 0;
     public static final double kWheelPPIDValue = 0;
     public static final double kWheelDPIDValue = 0;
-    public static final int kWheelSmartCurrentLimit = 0;
-    public static final double kGroundIntakeVoltage = 4;
+    public static final int kWheelSmartCurrentLimit = 20;
+    public static final double kGroundIntakeVoltage = 12;
     public static final double kReefTreeIntakeVoltage = 4;
     public static final double kOuttakeBargeVoltage = -4;
     public static final double kOuttakeProcessorVoltage = -12;

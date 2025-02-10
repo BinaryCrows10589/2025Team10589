@@ -88,11 +88,11 @@ public class ElevatorSubsystem extends SubsystemBase {
             ////.75
                 return .295;
             case L2:
-                return .365;
+                return .385;
             case L3:
-                return .65;
+                return .605;
             case L4:
-                return .6;
+                return .864;
 
             case FUNNEL:
                 return 0;

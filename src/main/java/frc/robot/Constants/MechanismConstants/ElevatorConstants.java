@@ -11,10 +11,10 @@ public class ElevatorConstants {
 
     public static final double kMaxVoltage = 12;
 
-    public static final double kElevatorPPIDValue = 55;
+    public static final double kElevatorPPIDValue = 50;
     public static final double kElevatorIPIDValue = 0;
     public static final double kElevatorDPIDValue = 0;
-    public static final double kElevatorGPIDValue = 1.25;
+    public static final double kElevatorGPIDValue = .85;
 
     public static final double kElevatorSPIDValue = 0;
     public static final double kElevatorVPIDValue = 0;
@@ -32,7 +32,7 @@ public class ElevatorConstants {
     public static final double kElevatorScoreProcessorPositionTolorence = 0.00833333333;
     public static final double kElevatorFunnelTolorence = 0.00833333333;
 
-    public static final double kForwardSoftLimit = .9; // ???
+    public static final double kForwardSoftLimit = .8643; // ???
 
     public static final double kReverseSoftLimit = 0.0;
 

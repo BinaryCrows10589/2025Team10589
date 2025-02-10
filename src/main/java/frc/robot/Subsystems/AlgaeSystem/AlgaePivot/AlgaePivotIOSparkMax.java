@@ -13,7 +13,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.MechanismConstants.AlgaePivotConstants;
-
+import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.PivotContants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class AlgaePivotIOSparkMax implements AlgaePivotIO {
@@ -39,24 +39,25 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
 
         pivotConfig.absoluteEncoder.setSparkMaxDataPortConfig();
         pivotConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
-        pivotConfig.absoluteEncoder.inverted(true);
-        pivotConfig.inverted(true);
+        pivotConfig.absoluteEncoder.inverted(false);
+        pivotConfig.inverted(false);
         pivotConfig.smartCurrentLimit(AlgaePivotConstants.kSmartCurrentLimit);
-        pivotConfig.idleMode(IdleMode.kBrake);
-        pivotConfig.softLimit.forwardSoftLimit(AlgaePivotConstants.kForwardSoftLimit);
-        pivotConfig.softLimit.reverseSoftLimit(AlgaePivotConstants.kReverseSoftLimit);
-
+        pivotConfig.idleMode(IdleMode.kCoast);
+        pivotConfig.softLimit.forwardSoftLimit(AlgaePivotConstants.kForwardSoftLimit + PivotContants.kRotationOffset);
+        pivotConfig.softLimit.reverseSoftLimit(AlgaePivotConstants.kReverseSoftLimit + PivotContants.kRotationOffset);
+    
         pivotConfig.closedLoop.pid(
             AlgaePivotConstants.kPivotPPIDValue, 
             AlgaePivotConstants.kPivotIPIDValue,
             AlgaePivotConstants.kPivotDPIDValue);
+        //pivotConfig.closedLoop.maxMotion.maxAcceleration(.2);
 
         pivotMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants(
             "/Algae/Pivot", 
             AlgaePivotConstants.kPivotPPIDValue, 
             AlgaePivotConstants.kPivotIPIDValue, 
             AlgaePivotConstants.kPivotDPIDValue,
-            0);
+            AlgaePivotConstants.kPivotFPIDValue);
 
         pivotMotor.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         pivotPIDController = pivotMotor.getClosedLoopController();
@@ -86,10 +87,11 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
         double[] pivotPIDValues = pivotMotorPIDConstantTuner.getUpdatedPIDConstants();
         if (pivotMotorPIDConstantTuner.hasAnyPIDValueChanged()) {
             SparkMaxConfig newPIDConfig = new SparkMaxConfig();
-            newPIDConfig.closedLoop.pid(
+            newPIDConfig.closedLoop.pidf(
                 pivotPIDValues[0],
                 pivotPIDValues[1],
-                pivotPIDValues[2]
+                pivotPIDValues[2],
+                pivotPIDValues[3]
             );
             this.pivotMotor.configure(newPIDConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         }
