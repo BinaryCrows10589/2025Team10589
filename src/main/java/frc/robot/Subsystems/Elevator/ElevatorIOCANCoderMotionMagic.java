@@ -160,18 +160,18 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
 
     
         updatePIDValuesFromNetworkTables();
-        Logger.recordOutput("Elevator/", this.goingDown);
+        Logger.recordOutput("Elevator/GoingDown/", this.goingDown);
         if (this.goingDown) {
-            if (!Tolerance.inTolorance(positionError, 0, ElevatorConstants.kCatchTolorence)) {
+            if (Tolerance.inTolorance(positionError, 0, ElevatorConstants.kCatchTolorence)) {
                 if(desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {
                     elevatorMasterMotor.stopMotor();
                 } else {
-                    this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
+                   this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
                 }
                 goingDown = false;
             } else {
                 double desiredVoltage = MathUtil.clamp(Math.pow(positionError, 3), -1, 0);            
-                this.elevatorMasterMotor.setVoltage(desiredVoltage);
+                this.elevatorMasterMotor.setVoltage(-2);
             }
         }
         //if (desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {//

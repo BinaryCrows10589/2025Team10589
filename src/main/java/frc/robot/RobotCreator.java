@@ -118,7 +118,7 @@ public class RobotCreator {
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIODistanceSensor());
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
 
-                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderPositionalPID());
+                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderMotionMagic());
 
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
                 this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());

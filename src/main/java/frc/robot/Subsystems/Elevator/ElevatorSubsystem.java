@@ -56,7 +56,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         lastAssignedDesiredPosition = desiredPosition;
         updateElevatorControlMode(ElevatorMode.AUTOMATIC_POSITIONING);
 
-        elevatorIO.setDesiredPosition(resolveElevatorPosition(desiredPosition));
+        //elevatorIO.setDesiredPosition(resolveElevatorPosition(desiredPosition));
     }
 
     public void incrementDesiredElevatorPosition(double increment) {
