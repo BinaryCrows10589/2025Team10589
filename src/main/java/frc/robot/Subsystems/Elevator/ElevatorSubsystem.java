@@ -80,6 +80,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         return lastAssignedDesiredPosition;
     }
 
+    public double getCurrentElevatorPosition() {
+        return this.elevatorInputs.elevatorOffsetPosition;
+    }
+
     public static double resolveElevatorPosition(ElevatorPosition desiredPosition) {
         switch (desiredPosition) {
             case BASEMENT:

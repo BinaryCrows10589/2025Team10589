@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
+import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 
 /**
@@ -23,9 +24,13 @@ import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
  */
 public class FieldOrientedDriveCommand extends Command {
     private final DriveSubsystem m_driveSubsystem;
+    private final ElevatorSubsystem m_elevatorSubsystem;
     private final DoubleSupplier translationXSupplier;
     private final DoubleSupplier translationYSupplier;
     private final DoubleSupplier rotationSupplier;
+    private double translationMultiplier = 1;
+    private double rotationMultiplier = 1;
+    private int elevatorCheckFrameCount = 0;
     /**
      * Constructor
      * 
@@ -39,10 +44,12 @@ public class FieldOrientedDriveCommand extends Command {
      *                             second
      */
     public FieldOrientedDriveCommand(
-        DriveSubsystem m_driveSubsystem, DoubleSupplier translationXSupplier,
-        DoubleSupplier translationYSupplier, DoubleSupplier rotationSupplier) {
+        DriveSubsystem m_driveSubsystem, ElevatorSubsystem m_elevatorSubsystem,
+        DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier, 
+        DoubleSupplier rotationSupplier) {
 
         this.m_driveSubsystem = m_driveSubsystem;
+        this.m_elevatorSubsystem = m_elevatorSubsystem;
         this.translationXSupplier = translationXSupplier;
         this.translationYSupplier = translationYSupplier;
         this.rotationSupplier = rotationSupplier;
@@ -72,7 +79,22 @@ public class FieldOrientedDriveCommand extends Command {
             Logger.recordOutput("SwerveDrive/Inputs/InputedYSpeedMPS", translationY);
             Logger.recordOutput("SwerveDrive/Inputs/InputedRotationSpeed", rotation);
 
-            m_driveSubsystem.drive(translationX, translationY, rotation);
+            double position = m_elevatorSubsystem.getCurrentElevatorPosition();
+            
+            if (elevatorCheckFrameCount++ >= SwerveDriveConstants.kframesPerCheck) {
+                elevatorCheckFrameCount = 0;
+
+                for (int level = 0; level < SwerveDriveConstants.kElevatorThresholds.length; level++) {
+                    if (position > SwerveDriveConstants.kElevatorThresholds[level]) {
+                        translationMultiplier = SwerveDriveConstants.kElevatorThresholdVelocityMultipliers[level];
+                        rotationMultiplier = SwerveDriveConstants.kElevatorThresholdRotationMultipliers[level];
+                        break;
+                    }
+                }
+            }
+
+
+            m_driveSubsystem.drive(translationX * translationMultiplier, translationY * translationMultiplier, rotation * rotationMultiplier);
         }
     }
 

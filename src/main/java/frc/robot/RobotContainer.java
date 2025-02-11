@@ -75,7 +75,7 @@ public class RobotContainer {
         this.robotCreator = new RobotCreator();
 
         this.driveSubsystem = this.robotCreator.getDriveSubsystem();
-        this.driveCommandFactory = new DriveCommandFactory(this.driveSubsystem, this.driverController);   
+        this.driveCommandFactory = new DriveCommandFactory(this.driveSubsystem, this.robotCreator.getElevatorSubsystem(), this.driverController);   
         this.fieldOrientedDriveCommand = this.driveCommandFactory.createFieldOrientedDriveCommand();
         this.driveSubsystem.setDefaultCommand(this.fieldOrientedDriveCommand);
         this.lockSwerves = this.driveCommandFactory.createLockSwervesCommand();

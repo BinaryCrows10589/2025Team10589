@@ -4,6 +4,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
+import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorPosition;
 
 // Do not create an instants of a constant class
 
@@ -91,6 +93,24 @@ public final class DrivetrainConstants {
         public static final String kSwerveDriveDesiredChassisSpeedLoggerBase = "SwerveDrive/DesiredChassisSpeeds/";
         public static final double kVoltageForMaxSpeed = 12;
         public static final double kVoltageFeedforward = 0.1;
+
+        public static final double[] kElevatorThresholds = {
+            ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L1),
+            ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L2),
+            ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L3)
+        };
+        public static final double[] kElevatorThresholdVelocityMultipliers = {
+            0.8,
+            0.4,
+            0.2,
+        };
+        public static final double[] kElevatorThresholdRotationMultipliers = {
+            0.9,
+            0.8,
+            0.7,
+        };
+
+        public static final int kframesPerCheck = 100;
     }
 
     /**
