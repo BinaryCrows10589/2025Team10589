@@ -160,8 +160,8 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
 
     
         updatePIDValuesFromNetworkTables();
-
-        if (goingDown) {
+        Logger.recordOutput("Elevator/", this.goingDown);
+        if (this.goingDown) {
             if (!Tolerance.inTolorance(positionError, 0, ElevatorConstants.kCatchTolorence)) {
                 if(desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {
                     elevatorMasterMotor.stopMotor();
