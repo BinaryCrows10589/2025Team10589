@@ -48,7 +48,6 @@ public class ButtonBoardInterface {
     }   
 
     public void periodic() {
-        System.out.println("Updating button board inputs");
         // Normal button board
         for(int i = 0; i < normalButtonMap.length; i++) {
             if(this.buttonBoardNormal.getRawButtonPressed(i+1)) {

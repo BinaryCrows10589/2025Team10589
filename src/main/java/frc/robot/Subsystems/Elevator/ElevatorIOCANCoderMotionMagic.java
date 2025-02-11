@@ -18,6 +18,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.MechanismConstants.ElevatorConstants;
+import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorPosition;
+import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
@@ -151,6 +153,10 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
 
     
         updatePIDValuesFromNetworkTables();
+
+        if (desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {// && Tolerance.inTolorance(elevatorIOInputs.elevatorRawPosition, getOffsetDesiredPosition().Position, ElevatorConstants.kBasementShutoffTolerance)) {
+            elevatorMasterMotor.stopMotor();
+        }
     }
 
     private PositionVoltage getOffsetDesiredPosition() {

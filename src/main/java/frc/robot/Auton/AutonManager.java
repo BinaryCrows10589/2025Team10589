@@ -19,6 +19,8 @@ import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDStarting
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndHumanPlayerStartingOnOwnAliance;
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBStartingOnOwnAliance;
 import frc.robot.Auton.Autons.TestAutons.ExampleAuton;
+import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
+import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.CommandUtils.CustomWaitCommand;
@@ -46,10 +48,14 @@ public class AutonManager {
     // Decloration of all auton dependencies
     private DriveCommandFactory driveCommandFactory;
     private DriveSubsystem driveSubsystem;
+    private ElevatorCommandFactory elevatorCommandFactory;
+    private OuttakeCommandFactory outtakeCommandFactory;
 
-    public AutonManager(DriveCommandFactory driveCommandFactory, DriveSubsystem driveSubsystem) {
+    public AutonManager(DriveCommandFactory driveCommandFactory, DriveSubsystem driveSubsystem, ElevatorCommandFactory elevatorCommandFactory, OuttakeCommandFactory outtakeCommandFactory) {
         this.driveCommandFactory = driveCommandFactory;
         this.driveSubsystem = driveSubsystem;
+        this.elevatorCommandFactory = elevatorCommandFactory;
+        this.outtakeCommandFactory = outtakeCommandFactory;
         //registerAllPathPlannerCommands();
 
         this.autonChooser = new LoggedDashboardChooser<>("AutonChooser");
@@ -92,40 +98,40 @@ public class AutonManager {
         Logger.recordOutput("Selected Auto", autonChooser.get());
         switch (autonChooser.get()) {
             case placeCoralBStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralBStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralBAndHumanPlayerStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBAndHumanPlayerStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralBAndHumanPlayerStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralBAndDStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBAndDStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralBAndDStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralBAndDAndEStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBAndDAndEStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralBAndDAndEStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralLStartingCenterBarge:
-                selectedAuton = PlaceCoralLStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralLStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralKStartingOnOtherAlianceAuton:
-                selectedAuton = PlaceCoralKStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralKStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralKAndHumanPlayerStartingOnOtherAlianceAuton:
-                selectedAuton = PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralKAndIStartingOnOtherAlianceAuton:
-                selectedAuton = PlaceCoralKAndIStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralKAndIStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralKAndIAndHumanPlayerStationStartingOnOtherAlianceAuton:
-                selectedAuton = PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralKAndIAndHStartingOnOtherAlianceAuton:
-                selectedAuton = PlaceCoralKAndIAndHStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralKAndIAndHStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             case placeCoralAStartingCenterBarge:
-                selectedAuton = PlaceCoralAStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem);
+                selectedAuton = PlaceCoralAStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory);
                 break;
             default:
                 selectedAuton = new Command() {};

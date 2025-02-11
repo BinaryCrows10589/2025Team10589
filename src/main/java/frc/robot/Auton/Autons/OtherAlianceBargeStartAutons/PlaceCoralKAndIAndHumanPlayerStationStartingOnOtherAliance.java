@@ -8,18 +8,25 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
 import frc.robot.Constants.GenericConstants.AutonConstants.WPILibAutonConstants;
+import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
+import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
 public class PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance {
-    public static Command getAuton(DriveCommandFactory driveCommandFactory, DriveSubsystem driveSubsystem) {
+    public static Command getAuton(
+        DriveCommandFactory driveCommandFactory, 
+        DriveSubsystem driveSubsystem, 
+        ElevatorCommandFactory elevatorCommandFactory, 
+        OuttakeCommandFactory outtakeCommandFactory
+    ) {
         driveSubsystem.setRobotPose(AutonPointManager.kOtherAllianceBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         
-        autonCommands.add(PlaceCoralKAndIStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem));
+        autonCommands.add(PlaceCoralKAndIStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory));
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CoralIToHumanPlayer",
         AutonPointManager.kCoralIToHumanPlayer,
         5,

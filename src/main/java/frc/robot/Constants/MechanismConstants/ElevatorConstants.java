@@ -40,11 +40,13 @@ public class ElevatorConstants {
 
     public static final double kManualMovementDownSpeed = -0.005;
 
-    public static final double kElevatorEncoderOffset = .022;
+    public static final double kElevatorEncoderOffset = .032;
 
     public static final double kElevatorOuttakeTolerance = 1;
 
     public static final double kElevatorIntakeTolerance = 2;
+
+    public static final double kBasementShutoffTolerance = 0.02;
 
 
 }

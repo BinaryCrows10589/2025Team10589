@@ -115,7 +115,9 @@ public class RobotContainer {
         this.robotCreator.getFunnelCoralSensorSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
         configureBindings();
 
-        this.autonManager = new AutonManager(this.driveCommandFactory, this.driveSubsystem);
+        this.autonManager = new AutonManager(this.driveCommandFactory, this.driveSubsystem, this.elevatorCommandFactory, this.outtakeCommandFactory);
+        
+        this.onRobotEnable();
     }
 
     /**
@@ -153,15 +155,15 @@ public class RobotContainer {
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);
         this.buttonBoardAlt.bindToButton(new AlgaePivotToPositionCommand(this.robotCreator.getAlgaePivotSubsystem(), AlgaePivotConstants.kDefultPivotPosition), XboxController.Button.kX.value);//this.highLevelCommandsFactory.intakeAlgaeFromGroundCommand(), XboxController.Button.kX.value);
-        this.buttonBoardAlt.bindToButton(new AlgaePivotToPositionCommand(this.robotCreator.getAlgaePivotSubsystem(), AlgaePivotConstants.kGroundIntakePositionRotations), XboxController.Button.kY.value);
+        this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.outtakeAlgaeOnBargeCommand(), XboxController.Button.kY.value);
         //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.outtakeAlgaeInProcessorCommand(), XboxController.Button.kY.value);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(), 0);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createOutakeWheelsAlgaeProcessorCommand(), 90);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeGroundCommand(), 180);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeReefTreeCommand(), 270);
          
-        
-        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL1Command(), XboxController.Button.kLeftBumper.value);  
+        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), XboxController.Button.kLeftStick.value);  
+        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToReefIntakeAlgaeHighCommand(), XboxController.Button.kLeftBumper.value);  
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL2Command(), XboxController.Button.kRightBumper.value); 
         this.buttonBoardAlt.bindToLeftTriggure(this.elevatorCommandFactory.createElevatorToL3Command());  
         this.buttonBoardAlt.bindToRightTriggure(this.elevatorCommandFactory.createElevatorToL4Command());  
@@ -173,8 +175,9 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {   
-        this.driveSubsystem.setRobotPose(new AutonPoint(5.5, 5.5, 50));
-        return this.placeCommand;///this.autonManager.getSelectedAuton();
+       // this.driveSubsystem.setRobotPose(new AutonPoint(5.5, 5.5, 50));
+      // this.placeCommand;//
+        return this.autonManager.getSelectedAuton();
     }
 
     public void updateAlliance() {
@@ -184,6 +187,10 @@ public class RobotContainer {
     public void updateButtonBoardInputs() {
         this.buttonBoard.periodic();
         
+    }
+
+    public void onRobotEnable() {
+        this.robotCreator.getAlgaePivotSubsystem().setDesiredPivotRotation(AlgaePivotConstants.kDefultPivotPosition);
     }
         
 }

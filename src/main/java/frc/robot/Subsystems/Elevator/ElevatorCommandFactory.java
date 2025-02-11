@@ -79,7 +79,7 @@ public class ElevatorCommandFactory {
         elevatorSubsystem);
     }
     public ElevatorToPositionCommand createElevatorToReefIntakeAlgaeHighCommand() {
-        return new ElevatorToPositionCommand(ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.REEF_INTAKE_ALGAE_LOW),
+        return new ElevatorToPositionCommand(ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.REEF_INTAKE_ALGAE_HIGH),
         ElevatorConstants.kElevatorScoreProcessorPositionTolorence,
         elevatorSubsystem);
     }

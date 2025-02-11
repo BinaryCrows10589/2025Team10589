@@ -15,7 +15,10 @@ public class AlgaePivotSubsystem extends SubsystemBase {
         this.algaePivotIO = algaePivotIO;
     }
 
+
+    @Override
     public void periodic() {
+
         this.algaePivotIO.updateInputs(this.algaePivotInputs);
         Logger.processInputs("AlgaeSystem/AlgaePivot/", algaePivotInputs);
     }

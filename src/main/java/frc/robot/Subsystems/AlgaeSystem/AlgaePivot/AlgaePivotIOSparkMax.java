@@ -42,7 +42,7 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
         pivotConfig.absoluteEncoder.inverted(false);
         pivotConfig.inverted(false);
         pivotConfig.smartCurrentLimit(AlgaePivotConstants.kSmartCurrentLimit);
-        pivotConfig.idleMode(IdleMode.kCoast);
+        pivotConfig.idleMode(IdleMode.kBrake);
         pivotConfig.softLimit.forwardSoftLimit(AlgaePivotConstants.kForwardSoftLimit + PivotContants.kRotationOffset);
         pivotConfig.softLimit.reverseSoftLimit(AlgaePivotConstants.kReverseSoftLimit + PivotContants.kRotationOffset);
     
