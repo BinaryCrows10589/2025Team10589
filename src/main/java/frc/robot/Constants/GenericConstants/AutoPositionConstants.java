@@ -10,6 +10,15 @@ import frc.robot.Utils.AutonUtils.AutonPointUtils.FudgeFactor;
 
 public class AutoPositionConstants {
 
+    public class AutonScrollConstants {
+        public static final double kMaxRotationalSpeedInRadsPerSecond = RobotModeConstants.kIsNotSim ? 10.2 : 9.89199998351;
+        public static final double kMaxRotationalAccelerationInRadsPerSecond = RobotModeConstants.kIsNotSim ? 14.2 : 12.928;
+        public static final TrapezoidProfile.Constraints kRotationPIDControllerConstraints = new TrapezoidProfile.Constraints(
+        kMaxRotationalSpeedInRadsPerSecond, kMaxRotationalAccelerationInRadsPerSecond);
+        public static final double[] kRotationPIDConstants = {.75, 0, 0};
+
+    }
+
     public class ReefPosition1Constants {
         public static final AutonPoint kReefPosition = new AutonPoint(5.250, 5.1518, 60,
             new FudgeFactor(0, 0, 0, 0, 0, 0));

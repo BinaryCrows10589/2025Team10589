@@ -23,8 +23,8 @@ public class AlgaeWheelSubsystem {
             algaeWheelPullInTimer.startTimer();
             if(this.algaeWheelInputs.wheelDesiredVoltage == 0) {
                 this.algaeWheelIO.setWheelVoltage(AlgaeWheelConstants.kPullInVoltage);
-            } else if(this.algaeWheelInputs.wheelDesiredVoltage == 0) {
-                this.algaeWheelIO.setWheelVoltage(AlgaeWheelConstants.kPullInVoltage);
+            } else if(this.algaeWheelInputs.wheelDesiredVoltage == AlgaeWheelConstants.kPullInVoltage) {
+                this.algaeWheelIO.setWheelVoltage(0);
             }
         }
     }

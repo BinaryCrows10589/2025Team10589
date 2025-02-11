@@ -50,7 +50,6 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
             AlgaePivotConstants.kPivotPPIDValue, 
             AlgaePivotConstants.kPivotIPIDValue,
             AlgaePivotConstants.kPivotDPIDValue);
-        //pivotConfig.closedLoop.maxMotion.maxAcceleration(.2);
 
         pivotMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants(
             "/Algae/Pivot", 
