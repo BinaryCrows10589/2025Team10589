@@ -48,5 +48,9 @@ public class ElevatorConstants {
 
     public static final double kBasementShutoffTolerance = 0.02;
 
+    public static final double kInPositionTolorence = 0.02;
+
+    public static final double kCatchTolorence = 0.04;
+
 
 }

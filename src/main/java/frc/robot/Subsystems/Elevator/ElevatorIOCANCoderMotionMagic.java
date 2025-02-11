@@ -1,5 +1,7 @@
 package frc.robot.Subsystems.Elevator;
 
+import java.util.spi.ToolProvider;
+
 import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
@@ -16,6 +18,7 @@ import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorPosition;
@@ -32,6 +35,8 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
     private MotionMagicVoltage desiredElevatorPosition = new MotionMagicVoltage(ElevatorConstants.kDefaultElevatorPosition);
 
     private NetworkTablesTunablePIDConstants elevatorMotorPIDConstantTuner;
+    private double positionError = 0.0;
+    private boolean goingDown = false;
 
 
     public ElevatorIOCANCoderMotionMagic() {
@@ -150,13 +155,29 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         elevatorIOInputs.elevatorSlaveAppliedVolts = elevatorSlaveMotor.getMotorVoltage().getValueAsDouble();
         elevatorIOInputs.elevatorSlaveCurrentAmps = new double[] {elevatorSlaveMotor.getSupplyCurrent().getValueAsDouble()};
         elevatorIOInputs.elevatorSlaveMotorTemputureC = this.elevatorSlaveMotor.getDeviceTemp().getValueAsDouble();
+        this.positionError = getOffsetDesiredPosition().Position - elevatorIOInputs.elevatorRawPosition;
+        elevatorIOInputs.positionError = this.positionError;
 
     
         updatePIDValuesFromNetworkTables();
 
-        if (desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {// && Tolerance.inTolorance(elevatorIOInputs.elevatorRawPosition, getOffsetDesiredPosition().Position, ElevatorConstants.kBasementShutoffTolerance)) {
-            elevatorMasterMotor.stopMotor();
+        if (goingDown) {
+            if (!Tolerance.inTolorance(positionError, 0, ElevatorConstants.kCatchTolorence)) {
+                if(desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {
+                    elevatorMasterMotor.stopMotor();
+                } else {
+                    this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
+                }
+                goingDown = false;
+            } else {
+                double desiredVoltage = MathUtil.clamp(Math.pow(positionError, 3), -1, 0);            
+                this.elevatorMasterMotor.setVoltage(desiredVoltage);
+            }
         }
+        //if (desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {//
+        // && Tolerance.inTolorance(elevatorIOInputs.elevatorRawPosition, getOffsetDesiredPosition().Position, ElevatorConstants.kBasementShutoffTolerance)) {
+        //    elevatorMasterMotor.stopMotor();
+        //}
     }
 
     private PositionVoltage getOffsetDesiredPosition() {
@@ -166,7 +187,16 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
     @Override
     public void setDesiredPosition(double desiredPosition) {
         desiredElevatorPosition.Position = desiredPosition;
-        this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
+        this.positionError = (desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset) - this.elevatorMasterMotor.getPosition().getValueAsDouble();
+        if (positionError < 0 && !Tolerance.inTolorance(positionError, 0, ElevatorConstants.kInPositionTolorence)) {
+            this.goingDown = true;
+        } else {
+            this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
+            this.goingDown = false;
+        }
+    }
+
+    private void smoothDown(double positionError) {
         
     }
 
