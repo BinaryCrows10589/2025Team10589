@@ -84,7 +84,7 @@ public class FieldOrientedDriveCommand extends Command {
             if (elevatorCheckFrameCount++ >= SwerveDriveConstants.kframesPerCheck) {
                 elevatorCheckFrameCount = 0;
 
-                for (int level = 0; level < SwerveDriveConstants.kElevatorThresholds.length; level++) {
+                for (int level = SwerveDriveConstants.kElevatorThresholds.length-1; level >= 0; level--) {
                     if (position > SwerveDriveConstants.kElevatorThresholds[level]) {
                         translationMultiplier = SwerveDriveConstants.kElevatorThresholdVelocityMultipliers[level];
                         rotationMultiplier = SwerveDriveConstants.kElevatorThresholdRotationMultipliers[level];
@@ -92,7 +92,6 @@ public class FieldOrientedDriveCommand extends Command {
                     }
                 }
             }
-
 
             m_driveSubsystem.drive(translationX * translationMultiplier, translationY * translationMultiplier, rotation * rotationMultiplier);
         }
