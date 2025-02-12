@@ -84,6 +84,9 @@ public class FieldOrientedDriveCommand extends Command {
             if (elevatorCheckFrameCount++ >= SwerveDriveConstants.kframesPerCheck) {
                 elevatorCheckFrameCount = 0;
 
+                translationMultiplier = 1;
+                rotationMultiplier = 1;
+
                 for (int level = SwerveDriveConstants.kElevatorThresholds.length-1; level >= 0; level--) {
                     if (position > SwerveDriveConstants.kElevatorThresholds[level]) {
                         translationMultiplier = SwerveDriveConstants.kElevatorThresholdVelocityMultipliers[level];
