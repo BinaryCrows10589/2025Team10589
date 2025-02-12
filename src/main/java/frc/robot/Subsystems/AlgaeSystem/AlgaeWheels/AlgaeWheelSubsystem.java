@@ -2,11 +2,12 @@ package frc.robot.Subsystems.AlgaeSystem.AlgaeWheels;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MechanismConstants.AlgaeWheelConstants;
 import frc.robot.Utils.CommandUtils.Wait;
 
 
-public class AlgaeWheelSubsystem {
+public class AlgaeWheelSubsystem extends SubsystemBase{
     AlgaeWheelIO algaeWheelIO;
     AlgaeWheelIOInputsAutoLogged algaeWheelInputs = new AlgaeWheelIOInputsAutoLogged();
     Wait algaeWheelPullInTimer;
@@ -19,6 +20,7 @@ public class AlgaeWheelSubsystem {
     public void periodic() {
         this.algaeWheelIO.updateInputs(this.algaeWheelInputs);
         Logger.processInputs("AlgaeSystem/Wheels", algaeWheelInputs);
+        Logger.recordOutput("AlgaeSystem/Wheels/Timer", algaeWheelPullInTimer.hasTimePassed());
         if(algaeWheelPullInTimer.hasTimePassed()) {
             algaeWheelPullInTimer.startTimer();
             if(this.algaeWheelInputs.wheelDesiredVoltage == 0) {

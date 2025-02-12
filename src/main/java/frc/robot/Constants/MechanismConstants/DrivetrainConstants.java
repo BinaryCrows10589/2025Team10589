@@ -100,17 +100,17 @@ public final class DrivetrainConstants {
             ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L3)
         };
         public static final double[] kElevatorThresholdVelocityMultipliers = {
-            0.8,
-            0.4,
-            0.2,
+            1,
+            1,
+            1 
         };
         public static final double[] kElevatorThresholdRotationMultipliers = {
-            0.9,
-            0.8,
-            0.7,
+            1,
+            1,
+            1
         };
 
-        public static final int kframesPerCheck = 100;
+        public static final int kframesPerCheck = 5;
     }
 
     /**

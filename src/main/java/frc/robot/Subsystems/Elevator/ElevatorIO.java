@@ -39,5 +39,7 @@ public interface ElevatorIO {
     public default void setDesiredPosition(double desiredPosition) {}
 
     public default void incrementDesiredPosition(double increment) {}
+
+    public default void disableElevatorMotors() {}
     
 }

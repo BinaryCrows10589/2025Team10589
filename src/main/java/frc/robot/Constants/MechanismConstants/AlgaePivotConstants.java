@@ -12,7 +12,7 @@ public class AlgaePivotConstants {
     public static final double kPivotEncoderOffset = .198;
     public static final double kForwardSoftLimit = .477; // .67 .
     public static final double kReverseSoftLimit = .03; //.198
-    public static final double kGroundIntakePositionRotations = .475; // TODO: CHANGE THESE BEFORE TESTING THE PIVOT! I'M NOT JOKING WITH YOU
+    public static final double kGroundIntakePositionRotations = .42; // TODO: CHANGE THESE BEFORE TESTING THE PIVOT! I'M NOT JOKING WITH YOU
     public static final double kReefTreeIntakePositionRotations = .475; // TODO: CHANGE THESE BEFORE TESTING THE PIVOT! I'M NOT JOKING WITH YOU
     public static final double kOuttakeProcessorPositionRotations = .3;
     public static final double kOuttakeBargePositionRotations = .05;

@@ -46,6 +46,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         Logger.processInputs("Elevator/", elevatorInputs);
     }
 
+    public void disableElevatorMotors() {
+        this.elevatorIO.disableElevatorMotors();
+    }
+
     public void setDesiredElevatorPosition(double desiredPosition) {
         lastAssignedDesiredPosition = null;
         updateElevatorControlMode(ElevatorMode.AUTOMATIC_POSITIONING);

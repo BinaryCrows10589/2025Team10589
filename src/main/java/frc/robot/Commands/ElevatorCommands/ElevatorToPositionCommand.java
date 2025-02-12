@@ -40,6 +40,7 @@ public class ElevatorToPositionCommand extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        this.elevatorSubsystem.setDesiredElevatorPosition(desiredElevatorPosition);
         LEDManager.setSolidColor(ControlConstants.kElevatorInPositionColor);
     }
 

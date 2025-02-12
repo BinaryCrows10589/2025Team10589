@@ -170,7 +170,7 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
                 }
                 goingDown = false;
             } else {
-                double desiredVoltage = MathUtil.clamp(Math.pow(positionError, 3), -1, 0);            
+                //double desiredVoltage = MathUtil.clamp(Math.pow(positionError, 3), -1, 0);            
                 this.elevatorMasterMotor.setVoltage(-2);
             }
         }
@@ -184,11 +184,15 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         return new PositionVoltage(desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset);
     }
 
+    public void disableElevatorMotors() {
+        this.elevatorMasterMotor.disable();
+    }
+
     @Override
     public void setDesiredPosition(double desiredPosition) {
         desiredElevatorPosition.Position = desiredPosition;
         this.positionError = (desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset) - this.elevatorMasterMotor.getPosition().getValueAsDouble();
-        if (positionError < 0 && !Tolerance.inTolorance(positionError, 0, ElevatorConstants.kInPositionTolorence)) {
+        if (positionError < 0) {
             this.goingDown = true;
         } else {
             this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
