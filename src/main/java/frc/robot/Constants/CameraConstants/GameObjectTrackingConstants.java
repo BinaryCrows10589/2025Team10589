@@ -11,7 +11,7 @@ public class GameObjectTrackingConstants {
     public static final Transform3d kExampleGameObjectCameraToRobotCenter =  new Transform3d(0, 0, 0, new Rotation3d());
     public static final Translation2d kGoToObjectPositionTolerance = new Translation2d(1, 1); // TODO: Hone in on these
     public static final double kGameObjectHeight = Units.inchesToMeters(2);
-    public static final String kObjectCameraName = "GameObjectCamera";
+    public static final String kObjectCameraName = "ObjectCamera";
 
     public static class RotateToFaceGameObjectConstants {
         public static final double kPRotationConstant = RobotModeConstants.kIsNotSim ? .59 : .59;

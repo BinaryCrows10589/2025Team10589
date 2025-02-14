@@ -19,7 +19,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase{
     private OdometryIOInputsAutoLogged odometryInputs = new OdometryIOInputsAutoLogged();
 
 
-    private PhotonCamera[] photonCameras = {new PhotonCamera("FLModuleCam"), new PhotonCamera("BLModuleCam")};
+    private PhotonCamera[] photonCameras = {new PhotonCamera("BLModule"), new PhotonCamera("BLModuleCam")};
     private PhotonPoseEstimator[] photonPoseEstimators = new PhotonPoseEstimator[photonCameras.length];
 
     public PoseEstimatorSubsystem(DriveSubsystem driveSubsystem) {

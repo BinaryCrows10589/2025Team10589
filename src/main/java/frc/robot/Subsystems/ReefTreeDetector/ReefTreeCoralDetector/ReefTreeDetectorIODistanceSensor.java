@@ -2,6 +2,7 @@ package frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector;
 
 import com.playingwithfusion.TimeOfFlight;
 
+import frc.robot.Constants.MechanismConstants.ReefTreeDetectorConstants;
 import frc.robot.Constants.MechanismConstants.TransitConstants.TransitCoralSensorConstants;
 
 /**
@@ -12,8 +13,8 @@ public class ReefTreeDetectorIODistanceSensor implements ReefTreeDetectorIO{
     private TimeOfFlight reefTreeDetector;
 
     public ReefTreeDetectorIODistanceSensor() {
-        this.reefTreeDetector = new TimeOfFlight(TransitCoralSensorConstants.kTransitCoralSensorCANID);
-        this.reefTreeDetector.setRangingMode(TimeOfFlight.RangingMode.Short, 24);
+        this.reefTreeDetector = new TimeOfFlight(ReefTreeDetectorConstants.kReefTreeDetectorCANID);
+        this.reefTreeDetector.setRangingMode(TimeOfFlight.RangingMode.Short, 50);
     }
 
     @Override

@@ -157,7 +157,11 @@ public class RobotContainer {
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);
         this.buttonBoardAlt.bindToButton(new AlgaePivotToPositionCommand(this.robotCreator.getAlgaePivotSubsystem(), AlgaePivotConstants.kDefultPivotPosition), XboxController.Button.kX.value);//this.highLevelCommandsFactory.intakeAlgaeFromGroundCommand(), XboxController.Button.kX.value);
-        this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.intakeAlgaeFromReefL2Command(), XboxController.Button.kY.value);
+        this.buttonBoardAlt.bindToButton(new ScrollWithReefTreeDetectorCommand("TelopScroll",
+        new double[] {0, .5, 0}, 
+        AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
+        5, driveSubsystem, 
+        this.robotCreator.getReefTreeDetectorSubsystem()), XboxController.Button.kY.value);
         //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.outtakeAlgaeInProcessorCommand(), XboxController.Button.kY.value);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(), 0);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createOutakeWheelsAlgaeProcessorCommand(), 90);

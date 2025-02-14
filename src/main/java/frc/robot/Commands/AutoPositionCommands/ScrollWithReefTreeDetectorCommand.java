@@ -42,6 +42,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
         lockRotationPIDConstants[2], 0);
         this.hardCutOffTimmer = new Wait(maxScrollTime);
         addRequirements(this.driveSubsystem);
+
     }
 
     /**
@@ -65,6 +66,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     public void initialize() {
         this.hardCutOffTimmer.startTimer();
         this.initialRotation = this.driveSubsystem.getRobotPose().getRotation().getRadians();
+
     }
 
     @Override
@@ -83,7 +85,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
 
     @Override
     public boolean isFinished() {
-        return this.reefTreeDetectorSubsystem.isReefTreeInRange(false) || this.hardCutOffTimmer.hasTimePassed();
+        return false;//this.reefTreeDetectorSubsystem.isReefTreeInRange(false) || this.hardCutOffTimmer.hasTimePassed();
     }
 }
 
