@@ -21,14 +21,14 @@ public class AlgaeWheelSubsystem extends SubsystemBase{
         this.algaeWheelIO.updateInputs(this.algaeWheelInputs);
         Logger.processInputs("AlgaeSystem/Wheels", algaeWheelInputs);
         Logger.recordOutput("AlgaeSystem/Wheels/Timer", algaeWheelPullInTimer.hasTimePassed());
-        if(algaeWheelPullInTimer.hasTimePassed()) {
+        /*if(algaeWheelPullInTimer.hasTimePassed()) {
             algaeWheelPullInTimer.startTimer();
             if(this.algaeWheelInputs.wheelDesiredVoltage == 0) {
                 this.algaeWheelIO.setWheelVoltage(AlgaeWheelConstants.kPullInVoltage);
             } else if(this.algaeWheelInputs.wheelDesiredVoltage == AlgaeWheelConstants.kPullInVoltage) {
                 this.algaeWheelIO.setWheelVoltage(0);
             }
-        }
+        }*/
     }
     public void stopWheel() {
         algaeWheelIO.setWheelVoltage(0);

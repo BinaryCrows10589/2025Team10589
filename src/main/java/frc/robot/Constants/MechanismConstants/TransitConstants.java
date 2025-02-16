@@ -8,7 +8,7 @@ public class TransitConstants {
     }
 
     public class TransitCoralSensorConstants {
-        public static final int kTransitCoralSensorCANID = 23;
+        public static final int kTransitCoralSensorCANID = 51;
         public static final double kTransitCoralSensorMaxCoralDistanceMilameters = 150;
     }
 }

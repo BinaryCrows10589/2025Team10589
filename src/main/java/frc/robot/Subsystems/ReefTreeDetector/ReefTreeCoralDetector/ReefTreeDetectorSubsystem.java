@@ -36,13 +36,8 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
 
     public boolean isReefTreeInRange(boolean defualtValue) {
         double reading = 0; 
-        if(this.reefTreeDetectorInputs.validReading) {
-            reading = this.reefTreeDetectorInputs.distanceSensorReadingMilameters;
-            this.lastValidReading = reading;
-        } else {
-            reading = lastValidReading;
-        }
-
+        reading = this.reefTreeDetectorInputs.distanceSensorReadingMilameters;
+            
         boolean coralDetected = reading == -1 ? defualtValue : isReefTreeScean(reading);  
         Logger.recordOutput("Outtake/OuttakeCoralSensors/IsCoralInStart", coralDetected);
         return coralDetected;

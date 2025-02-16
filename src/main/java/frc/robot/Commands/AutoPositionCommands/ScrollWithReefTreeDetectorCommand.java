@@ -73,19 +73,19 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     public void execute() {
         updatePIDValuesFromNetworkTables();
         this.driveSubsystem.drive(this.scrollVelocityVector[0], this.scrollVelocityVector[1],
-            this.lockRotationController.calculate(this.driveSubsystem.getRobotPose().getRotation().getRadians(),
-            initialRotation), false);
+            0, false);
     }
 
     @Override
     public void end(boolean interrupted) {
         this.driveSubsystem.stop();
+        this.driveSubsystem.lockSwerves();
         this.hardCutOffTimmer.disableTimer();
     }
 
     @Override
     public boolean isFinished() {
-        return false;//this.reefTreeDetectorSubsystem.isReefTreeInRange(false) || this.hardCutOffTimmer.hasTimePassed();
+        return !(this.reefTreeDetectorSubsystem.isReefTreeInRange(false)) || this.hardCutOffTimmer.hasTimePassed();
     }
 }
 
