@@ -22,19 +22,27 @@ public class ButtonBoardButtonConstants {
         public static int l2 = 2;
         public static int l3 = 3;
         public static int l4 = 4;
-        public static int indexCoral = 5;
-        public static int reefIntakeLow = 6;
-        public static int reefIntakeHigh = 7;
-        public static int outtakeIn = 8;
-        public static int outtakeOut = 9;
-        public static int climberDown = 10;
-        public static int climberUp = 11;
-        public static int elevatorUp = 12;
-        public static int elevatorDown = 13;
-        public static int ejectAlgae = 14;
-        public static int groundOuttakeAlgae = 15;
-        public static int processorOuttakeAlgae = 16;
-        public static int bargeOuttakeAlgae = 17;
-        public static int reefIntake = 18;
+
+        public static int outtakeIn = 5;
+        public static int outtakeOut = 6;
+        public static int indexCoral = 7;
+
+        public static int groundIntake = 8;
+        public static int reefIntakeLow = 9;
+        public static int reefIntakeHigh = 10;
+        
+        public static int processorOuttakeAlgae = 11;
+        public static int bargeOuttakeAlgae = 12;
+        public static int processorOuttakeAlgaeWheels = 13;
+        public static int bargeOuttakeAlgaeWheels = 14;
+
+        public static int elevatorUp = 15;
+        public static int elevatorDown = 16;
+
+        public static int climberDown = 17;
+        public static int climberUp = 18;
+
+        public static int scoreCoralLeft = 19;
+        public static int scoreCoralRight = 20;
     }
 }
