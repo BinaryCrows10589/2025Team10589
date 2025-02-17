@@ -111,7 +111,7 @@ public class RobotContainer {
         this.robotCreator.getOuttakeWheelsSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
 
         this.autonManager = new AutonManager(this.driveCommandFactory, this.driveSubsystem, this.elevatorCommandFactory, this.outtakeCommandFactory);
-        
+        configureBindings();
         this.onRobotEnable();
     }
 
