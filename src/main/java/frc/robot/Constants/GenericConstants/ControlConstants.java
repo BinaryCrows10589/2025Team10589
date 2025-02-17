@@ -27,4 +27,5 @@ public final class ControlConstants {
     
 
     public static boolean kIsDriverControlled = true;
+    public static boolean axisLockMode = false;
 }

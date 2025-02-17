@@ -96,7 +96,12 @@ public class FieldOrientedDriveCommand extends Command {
                 }
             }
 
-            m_driveSubsystem.drive(translationX * translationMultiplier, translationY * translationMultiplier, rotation * rotationMultiplier);
+            if(ControlConstants.axisLockMode) {
+                m_driveSubsystem.drive(translationX * translationMultiplier, translationY * translationMultiplier, rotation * rotationMultiplier, false);
+            } else {
+                m_driveSubsystem.drive(translationX * translationMultiplier, translationY * translationMultiplier, rotation * rotationMultiplier, true);
+
+            }
         }
     }
 

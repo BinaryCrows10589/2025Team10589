@@ -127,6 +127,18 @@ public class ControllerInterface {
         }
     }
 
+    public void bindToRightTriggure(Command onTrue, Command onFalse) {
+        BooleanSupplier triggureBooleanSupplier = () -> {return this.controller.getRightTriggerAxis() >= .2;};
+        Trigger trigger = new Trigger(triggureBooleanSupplier);
+
+        if(onTrue != null) {
+            trigger.onTrue(onTrue);
+        }
+        if(onFalse != null) {
+            trigger.onFalse(onFalse);
+        }
+    }
+
     /**
      * Returns the Left Joysticks X axis value after the deadband has bean applied.
      * @return Double: The Left Joysticks x axis value after the deadband has bean applied.

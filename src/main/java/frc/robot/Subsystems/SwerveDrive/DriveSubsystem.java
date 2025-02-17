@@ -13,10 +13,10 @@ import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Subsystems.PoseEstimation.PoseEstimatorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIO;
+import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOInputsAutoLogged;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModule;
 import frc.robot.Subsystems.SwerveDrive.SwerveModule.SwerveModuleIO;
 import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
-import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOInputsAutoLogged;
 
 public class DriveSubsystem extends SubsystemBase{
 
@@ -239,6 +239,14 @@ public class DriveSubsystem extends SubsystemBase{
 
     public void setSlowModeFalse() {
         ControlConstants.slowModeActive = false;
+    }
+
+    public void setAxisLockModeFalse() {
+        ControlConstants.axisLockMode = false;
+    }
+
+    public void setAxisLockModeTrue() {
+        ControlConstants.axisLockMode = true;
     }
 
     private void configurePathPlannerAutoBuilder() {
