@@ -12,7 +12,6 @@ import frc.robot.Utils.LEDUtils.LEDManager;
 
 public class DetectFunnelCoralCommand extends Command {
     
-    private final FunnelCoralSensorSubsystem funnelCoralSensorSubsystem;
     private final OuttakeCommandFactory outtakeCommandFactory;
     private final HoldCoralInOuttakeCommand holdCoralInOuttakeCommand;
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
@@ -20,31 +19,27 @@ public class DetectFunnelCoralCommand extends Command {
 
     public DetectFunnelCoralCommand(
         OuttakeCommandFactory outtakeCommandFactory,
-        OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem, FunnelCoralSensorSubsystem funnelCoralSensorSubsystem) {
-        this.funnelCoralSensorSubsystem = funnelCoralSensorSubsystem;
+        OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem) {
         this.outtakeCommandFactory = outtakeCommandFactory;
         this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
         this.holdCoralInOuttakeCommand = this.outtakeCommandFactory.createHoldCoralInOuttakeCommand();
-
-        addRequirements(funnelCoralSensorSubsystem);
     }
 
 
     @Override
     public void initialize() {
-       this.isSameCoral = false;
     }
 
     @Override
     public void execute() {
-        if(this.funnelCoralSensorSubsystem.isCoralInFunnel() && !isSameCoral) {
-            LEDManager.setSolidColor(ControlConstants.kCoralIntakingColor);
-            this.holdCoralInOuttakeCommand.cancel();
-            this.isSameCoral = true;
-        } else if(this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(false) && isSameCoral) {
-            LEDManager.setSolidColor(ControlConstants.kCoralIntakedColor);
-            this.isSameCoral = false;
+        this.isSameCoral = false;
+        boolean coralInStartOfOuttake = this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(false);
+        if(coralInStartOfOuttake && !isSameCoral) {
             this.holdCoralInOuttakeCommand.schedule();
+            this.isSameCoral = true;
+        }
+        if(!coralInStartOfOuttake && !this.outtakeCoralSensorsSubsystem.isCoralInEndOfOuttake(false)) {
+            this.isSameCoral = false;
         }
         Logger.recordOutput("Funnel/HasSeenCoral", this.isSameCoral);
     }

@@ -18,7 +18,7 @@ import frc.robot.Utils.AutonUtils.AutonPointUtils.FudgeFactor;
 
 public final class VisionConstants {
     public static final Transform3d kBackLeftCameraToCenter =  new Transform3d(-Units.inchesToMeters(1.5), -Units.inchesToMeters(13), Units.inchesToMeters(35.5 + .25 + 1.625),  new Rotation3d(0, Units.degreesToRadians(35), Units.degreesToRadians(-135)));//new Transform3d(-Units.inchesToMeters(1.5), -Units.inchesToMeters(13), Units.inchesToMeters(35.5 + .25 + 1.625), new Rotation3d(0, 35, -135));
-    public static final Transform3d kBackRightCameraToCenter =  new Transform3d(-Units.inchesToMeters(1.5), Units.inchesToMeters(13.125), Units.inchesToMeters(35.5 + .25 + 1.625), new Rotation3d(0, 35, 135));
+    public static final Transform3d kBackRightCameraToCenter =  new Transform3d(-Units.inchesToMeters(1.5), Units.inchesToMeters(13.125), Units.inchesToMeters(35.5 + .25 + 1.625), new Rotation3d(0, Units.degreesToRadians(35), Units.degreesToRadians(135)));
 
 
     public static final AprilTagFieldLayout kAprilTagLayout = AprilTagFields.k2025Reefscape.loadAprilTagLayoutField();

@@ -79,7 +79,7 @@ public class HighLevelCommandsFactory {
     }
     
     public DetectFunnelCoralCommand createDetectFunnelCoralCommand() {
-        return new DetectFunnelCoralCommand(outtakeCommandFactory, outtakeCoralSensorsSubsystem, funnelCoralSensorSubsystem);
+        return new DetectFunnelCoralCommand(outtakeCommandFactory, outtakeCoralSensorsSubsystem);
     }
 
     public IntakeAlgaeCommand createIntakeAlgaeFromReefL2Command() {
