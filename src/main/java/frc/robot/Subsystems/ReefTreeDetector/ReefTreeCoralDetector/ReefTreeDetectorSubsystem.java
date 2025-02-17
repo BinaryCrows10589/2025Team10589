@@ -25,8 +25,12 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
         Logger.processInputs("ReefTreeDetector/", this.reefTreeDetectorInputs);
     }
 
-    public double getReefTreeDistance() {
-        return this.reefTreeDetectorInputs.distanceSensorReadingMilameters;
+    public double getReefTreeDistanceLeft() {
+        return this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft;
+    }
+
+    public double getReefTreeDistanceRight() {
+        return this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight;
     }
 
     private boolean isReefTreeScean(double range) {
@@ -34,13 +38,20 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
             ReefTreeDetectorConstants.kMaxReefTreeDistance;
     }
 
-    public boolean isReefTreeInRange(boolean defualtValue) {
+    private boolean isReefTreeInRange(double rawReading, boolean defualtValue) {
         double reading = 0; 
-        reading = this.reefTreeDetectorInputs.distanceSensorReadingMilameters;
-            
+        reading = rawReading;
         boolean coralDetected = reading == -1 ? defualtValue : isReefTreeScean(reading);  
         Logger.recordOutput("Outtake/OuttakeCoralSensors/IsCoralInStart", coralDetected);
         return coralDetected;
+    }
+
+    public boolean isInLeftSensorInRange() {
+        return isReefTreeInRange(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft, false);
+    }
+
+    public boolean isInRightSensorInRange() {
+        return isReefTreeInRange(this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight, false);
     }
  
 

@@ -13,9 +13,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
-import frc.robot.Commands.AutoPositionCommands.PlaceCoralOnReef;
 import frc.robot.Commands.AutoPositionCommands.ScrollWithReefTreeDetectorCommand;
-import frc.robot.Commands.AutoPositionCommands.PlaceCoralOnReef.ReefPosition;
 import frc.robot.Commands.AlgaeCommands.AlgaePivotToPositionCommand;
 import frc.robot.Commands.AlgaeCommands.RunAlgaeWheelsCommand;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
@@ -62,7 +60,6 @@ public class RobotContainer {
     //private final GroundIntakeCommandFactory groundIntakeCommandFactory;
 
     private final HighLevelCommandsFactory highLevelCommandsFactory;
-    private final PlaceCoralOnReef placeCommand;
     // Decloration of Commands
     // SwerveDrive Commands
     private final FieldOrientedDriveCommand fieldOrientedDriveCommand;
@@ -107,11 +104,9 @@ public class RobotContainer {
             this.robotCreator.getPivotSubsystem(),
             this.robotCreator.getAlgaeWheelSubsystem(),
             this.robotCreator.getAlgaePivotSubsystem(),
-            buttonBoard.getNormalButtonSupplier(ButtonBoardButtonConstants.ButtonBoardNormalButtons.ejectAlgae)
+            this.robotCreator.getReefTreeDetectorSubsystem(),
+            this.driveSubsystem
             );
-
-        this.placeCommand = new PlaceCoralOnReef(ReefPosition.Position1, driveSubsystem, this.robotCreator.getReefTreeDetectorSubsystem(),
-            this.robotCreator.getElevatorSubsystem(), outtakeCommandFactory);
         
 
         this.robotCreator.getFunnelCoralSensorSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
@@ -156,21 +151,18 @@ public class RobotContainer {
 
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);
-        this.buttonBoardAlt.bindToButton(new AlgaePivotToPositionCommand(this.robotCreator.getAlgaePivotSubsystem(), AlgaePivotConstants.kDefultPivotPosition), XboxController.Button.kX.value);//this.highLevelCommandsFactory.intakeAlgaeFromGroundCommand(), XboxController.Button.kX.value);
-        this.buttonBoardAlt.bindToButton(new ScrollWithReefTreeDetectorCommand("TelopScroll",
-        new double[] {0, -.5, 0}, 
-        AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-        5, driveSubsystem, 
-        this.robotCreator.getReefTreeDetectorSubsystem()), XboxController.Button.kY.value);
-        this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.outtakeAlgaeInProcessorCommand(), XboxController.Button.kY.value);
+        
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(), 0);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createOutakeWheelsAlgaeProcessorCommand(), 90);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeGroundCommand(), 180);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeReefTreeCommand(), 270);
+
+        this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), XboxController.Button.kX.value);
+        this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), XboxController.Button.kY.value);
          
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), XboxController.Button.kLeftStick.value);  
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToReefIntakeAlgaeHighCommand(), XboxController.Button.kLeftBumper.value);  
-        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL2Command(), XboxController.Button.kRightBumper.value); 
+        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL2Command(), XboxController.Button.kLeftBumper.value); 
         this.buttonBoardAlt.bindToLeftTriggure(this.elevatorCommandFactory.createElevatorToL3Command());  
         this.buttonBoardAlt.bindToRightTriggure(this.elevatorCommandFactory.createElevatorToL4Command());  
         

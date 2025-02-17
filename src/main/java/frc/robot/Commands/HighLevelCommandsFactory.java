@@ -2,15 +2,18 @@ package frc.robot.Commands;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.AlgaeCommands.AlgaePivotToPositionCommand;
 import frc.robot.Commands.AlgaeCommands.IntakeAlgaeCommand;
 import frc.robot.Commands.AlgaeCommands.OuttakeAlgaeCommand;
 import frc.robot.Commands.AlgaeCommands.IntakeAlgaeCommand;
 import frc.robot.Commands.AlgaeCommands.RunAlgaeWheelsCommand;
+import frc.robot.Commands.AutoPositionCommands.ScrollWithReefTreeDetectorCommand;
 import frc.robot.Commands.FunnelCommands.DetectFunnelCoralCommand;
 import frc.robot.Commands.IntakeCommands.GroundIntakeCommand;
 import frc.robot.Commands.IntakeCommands.PivotToPositionCommand;
+import frc.robot.Constants.GenericConstants.AutoPositionConstants;
 import frc.robot.Constants.MechanismConstants.AlgaePivotConstants;
 import frc.robot.Constants.MechanismConstants.AlgaeWheelConstants;
 import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.PivotContants;
@@ -22,8 +25,11 @@ import frc.robot.Subsystems.GroundIntake.GroundIntakeCommandFactory;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotSubsystem;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
+import frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector.ReefTreeDetectorSubsystem;
+import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Subsystems.TransitTunnel.TransitCoralSensor.TransitCoralSensorSubsystem;
 import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsCommandFactory;
+import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
 public class HighLevelCommandsFactory {
 
@@ -37,8 +43,8 @@ public class HighLevelCommandsFactory {
     private final PivotSubsystem pivotSubsystem;
     private final AlgaePivotSubsystem algaePivotSubsystem;
     private final AlgaeWheelSubsystem algaeWheelSubsystem;
-
-    private final BooleanSupplier algaeOuttakeButtonSupplier;
+    private final ReefTreeDetectorSubsystem reefTreeDetectorSubsystem;
+    private final DriveSubsystem driveSubsystem;
 
     public HighLevelCommandsFactory(
         //GroundIntakeCommandFactory groundIntakeCommandFactory, 
@@ -51,8 +57,8 @@ public class HighLevelCommandsFactory {
         PivotSubsystem pivotSubsystem,
         AlgaeWheelSubsystem algaeWheelSubsystem,
         AlgaePivotSubsystem algaePivotSubsystem,
-
-        BooleanSupplier algaeOuttakeButtonSupplier
+        ReefTreeDetectorSubsystem reefTreeDetectorSubsystem,
+        DriveSubsystem driveSubsystem
     ) {
         //this.groundIntakeCommandFactory = groundIntakeCommandFactory;
         //this.transitWheelsCommandFactory = transitWheelsCommandFactory;
@@ -64,8 +70,8 @@ public class HighLevelCommandsFactory {
         this.pivotSubsystem = pivotSubsystem;
         this.algaeWheelSubsystem = algaeWheelSubsystem;
         this.algaePivotSubsystem = algaePivotSubsystem;
-
-        this.algaeOuttakeButtonSupplier = algaeOuttakeButtonSupplier;
+        this.reefTreeDetectorSubsystem = reefTreeDetectorSubsystem;
+        this.driveSubsystem = driveSubsystem;
     }
     
     public GroundIntakeCommand createGroundIntakeCommand() {
@@ -76,30 +82,30 @@ public class HighLevelCommandsFactory {
         return new DetectFunnelCoralCommand(outtakeCommandFactory, outtakeCoralSensorsSubsystem, funnelCoralSensorSubsystem);
     }
 
-    public IntakeAlgaeCommand intakeAlgaeFromReefL2Command() {
+    public IntakeAlgaeCommand createIntakeAlgaeFromReefL2Command() {
         return new IntakeAlgaeCommand(elevatorCommandFactory.createElevatorToReefIntakeAlgaeLowCommand(), new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations),
             new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kReefTreeIntakeVoltage),
             this.elevatorCommandFactory, this.algaePivotSubsystem);
     }
-    public IntakeAlgaeCommand intakeAlgaeFromReefL3Command() {
+    public IntakeAlgaeCommand createIntakeAlgaeFromReefL3Command() {
         return new IntakeAlgaeCommand(elevatorCommandFactory.createElevatorToReefIntakeAlgaeHighCommand(), new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations),
             new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kReefTreeIntakeVoltage),
             this.elevatorCommandFactory, this.algaePivotSubsystem);    
     }
     
-    public IntakeAlgaeCommand intakeAlgaeFromGroundCommand() {
+    public IntakeAlgaeCommand createIntakeAlgaeFromGroundCommand() {
         return new IntakeAlgaeCommand(elevatorCommandFactory.createElevatorToGroundIntakeAlgaeCommand(), new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kGroundIntakePositionRotations),
             new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kGroundIntakeVoltage),
             this.elevatorCommandFactory, this.algaePivotSubsystem);    }
 
-    public OuttakeAlgaeCommand outtakeAlgaeOnBargeCommand() {
+    public OuttakeAlgaeCommand createOuttakeAlgaeOnBargeCommand() {
         return new OuttakeAlgaeCommand(elevatorCommandFactory.createElevatorToBargeScoreCommand(),
             new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeBargePositionRotations), 
             this.elevatorCommandFactory,
             this.algaePivotSubsystem);
     }
 
-    public OuttakeAlgaeCommand outtakeAlgaeInProcessorCommand() {
+    public OuttakeAlgaeCommand createOuttakeAlgaeInProcessorCommand() {
         return new OuttakeAlgaeCommand(elevatorCommandFactory.createElevatorToProcessorScoreCommand(),
             new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeBargePositionRotations), 
             this.elevatorCommandFactory,
@@ -122,5 +128,26 @@ public class HighLevelCommandsFactory {
         return new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kOuttakeProcessorVoltage);
     }
 
+    public SequentialGroupCommand createPlaceCoralLeftCommand() {
+        return new SequentialGroupCommand(
+            new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
+                new double[] {0, 0.5, 0}, 
+                AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange
+            )
+            //this.outtakeCommandFactory.createOuttakeCoralCommand()
+        );
+    }
+
+    public SequentialGroupCommand createPlaceCoralRightCommand() {
+        return new SequentialGroupCommand(
+            new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
+                new double[] {0, -0.5, 0}, 
+                AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange
+            )
+            //this.outtakeCommandFactory.createOuttakeCoralCommand()
+        );
+    }
 }
 

@@ -10,16 +10,23 @@ import frc.robot.Constants.MechanismConstants.TransitConstants.TransitCoralSenso
  * This is for checking whether a note is loaded in our robot.
  */
 public class ReefTreeDetectorIODistanceSensor implements ReefTreeDetectorIO{
-    private TimeOfFlight reefTreeDetector;
+    private TimeOfFlight reefTreeDetectorLeft;
+    private TimeOfFlight reefTreeDetectorRight;
 
     public ReefTreeDetectorIODistanceSensor() {
-        this.reefTreeDetector = new TimeOfFlight(ReefTreeDetectorConstants.kReefTreeDetectorCANID);
-        this.reefTreeDetector.setRangingMode(TimeOfFlight.RangingMode.Short, 50);
+        this.reefTreeDetectorLeft = new TimeOfFlight(ReefTreeDetectorConstants.kReefTreeDetectorLeftCANID);
+        this.reefTreeDetectorRight = new TimeOfFlight(ReefTreeDetectorConstants.kReefTreeDetectorRightCANID);
+        this.reefTreeDetectorLeft.setRangingMode(TimeOfFlight.RangingMode.Short, 50);
+        this.reefTreeDetectorRight.setRangingMode(TimeOfFlight.RangingMode.Short, 50);
+
     }
 
     @Override
     public void updateInputs(ReefTreeDetectorIOInputs inputs) {
-        inputs.distanceSensorReadingMilameters = this.reefTreeDetector.getRange();
-        inputs.validReading = this.reefTreeDetector.isRangeValid();
-    }
+        inputs.distanceSensorReadingMilametersLeft = this.reefTreeDetectorLeft.getRange();
+        inputs.distanceSensorReadingMilametersRight = this.reefTreeDetectorRight.getRange();
+        inputs.validReadingLeft = this.reefTreeDetectorLeft.isRangeValid();
+        inputs.validReadingRight = this.reefTreeDetectorRight.isRangeValid();
+
+    } 
 }

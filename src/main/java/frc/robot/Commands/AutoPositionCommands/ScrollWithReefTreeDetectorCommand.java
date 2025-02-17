@@ -1,11 +1,13 @@
 package frc.robot.Commands.AutoPositionCommands;
 
 import java.security.CodeSource;
+import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.AutoPositionConstants.AutonScrollConstants;
 import frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector.ReefTreeDetectorSubsystem;
@@ -25,22 +27,22 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
 
     private final DriveSubsystem driveSubsystem;
     private double initialRotation;
-    private final ReefTreeDetectorSubsystem reefTreeDetectorSubsystem;
+    private BooleanSupplier isSensorInRange;
 
     public ScrollWithReefTreeDetectorCommand(String pathname, double[] scrollVelocityVector, 
         double[] lockRotationPIDConstants,
-        double maxScrollTime, DriveSubsystem driveSubsystem, ReefTreeDetectorSubsystem reefTreeDetectorSubsystem) {
+        double maxScrollTime, DriveSubsystem driveSubsystem, BooleanSupplier isSensorInRange) {
         this.scrollVelocityVector = scrollVelocityVector;
         this.lockRotationPIDConstants = lockRotationPIDConstants;
 
         this.driveSubsystem = driveSubsystem;
-        this.reefTreeDetectorSubsystem = reefTreeDetectorSubsystem;
         this.lockRotationController = new ProfiledPIDController(lockRotationPIDConstants[0], lockRotationPIDConstants[1],
         lockRotationPIDConstants[2], AutonScrollConstants.kRotationPIDControllerConstraints);
         this.lockRotationController.enableContinuousInput(-Math.PI, Math.PI);
         this.lockRotationPIDConstantTuner = new NetworkTablesTunablePIDConstants(pathname + "/AutonScroll", lockRotationPIDConstants[0], lockRotationPIDConstants[1],
         lockRotationPIDConstants[2], 0);
         this.hardCutOffTimmer = new Wait(maxScrollTime);
+        this.isSensorInRange = isSensorInRange;
         addRequirements(this.driveSubsystem);
 
     }
@@ -85,7 +87,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
 
     @Override
     public boolean isFinished() {
-        return !(this.reefTreeDetectorSubsystem.isReefTreeInRange(false)) || this.hardCutOffTimmer.hasTimePassed();
+        return !this.isSensorInRange.getAsBoolean() || this.hardCutOffTimmer.hasTimePassed();
     }
 }
 

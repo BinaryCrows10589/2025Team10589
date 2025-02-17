@@ -6,8 +6,11 @@ public interface ReefTreeDetectorIO {
 
     @AutoLog
     public static class ReefTreeDetectorIOInputs {
-        public double distanceSensorReadingMilameters = 0.0;
-        public boolean validReading = false;
+        public double distanceSensorReadingMilametersLeft = 0.0;
+        public double distanceSensorReadingMilametersRight = 0.0;
+        public boolean validReadingRight = false;
+        public boolean validReadingLeft = false;
+
     }
 
     /**
