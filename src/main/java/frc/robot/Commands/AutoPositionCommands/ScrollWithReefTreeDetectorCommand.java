@@ -83,6 +83,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
         this.driveSubsystem.stop();
         this.driveSubsystem.lockSwerves();
         this.hardCutOffTimmer.disableTimer();
+        
     }
 
     @Override
