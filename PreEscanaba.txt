@@ -1,0 +1,39 @@
+Teleop:
+    Max Speed Limiter
+    AutoPlacment:
+        LeftScroll
+        RightScroll
+    Barge Score:
+        BargeScoreAngle
+        BargeScoreHeight
+    Algae Processor Score:
+        Pivot Angle:
+        Elevator Height
+    Intaking Coral:
+        Auto Index Coral
+    Outtake Wheel Velocity:
+        Try Increasing Wheel Velocity
+
+General:
+    Robot Power One Optimization:
+    Test Cameras On Red
+3 Coral Auto Other Start-Red and Blue
+    Coral1PreScrollPosition
+    Coral2And3PreScrollPosition
+    Coral2And3IntakingPosition
+    ElevatorUpAndDownWhenDrivingLeg1
+    ElevatorUpAndDownWhenDrivingLeg2
+    ElevatorUpAndDownWhenDrivingLeg3
+    ElevatorUpAndDownWhenDrivingLeg4
+    ElevatorUpAndDownWhenDrivingLeg5
+3 Coral Auto Own Start-Red and Blue
+    Coral1PreScrollPosition
+    Coral2And3PreScrollPosition
+    Coral2And3IntakingPosition
+    ElevatorUpAndDownWhenDrivingLeg1
+    ElevatorUpAndDownWhenDrivingLeg2
+    ElevatorUpAndDownWhenDrivingLeg3
+    ElevatorUpAndDownWhenDrivingLeg4
+    ElevatorUpAndDownWhenDrivingLeg5
+1 Coral Center Start-Red and Blue
+    Coral1ScrollPosition
