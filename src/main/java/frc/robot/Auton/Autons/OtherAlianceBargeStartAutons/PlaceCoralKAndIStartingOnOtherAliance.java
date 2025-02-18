@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Auton.AutonPointManager;
+import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
 import frc.robot.Constants.GenericConstants.AutonConstants.WPILibAutonConstants;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
@@ -18,13 +19,14 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         DriveCommandFactory driveCommandFactory, 
         DriveSubsystem driveSubsystem, 
         ElevatorCommandFactory elevatorCommandFactory, 
-        OuttakeCommandFactory outtakeCommandFactory
+        OuttakeCommandFactory outtakeCommandFactory,
+        HighLevelCommandsFactory highLevelCommandsFactory
     ) {
         driveSubsystem.setRobotPose(AutonPointManager.kOtherAllianceBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         
-        //autonCommands.add(PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory));
+        autonCommands.add(PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralI",
         AutonPointManager.kHumanPlayerToCoralI,
         5,

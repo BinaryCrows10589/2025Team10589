@@ -9,9 +9,7 @@ public class SequentialGroupCommand extends Command {
     public SequentialGroupCommand(Command... commands) {
         this.commands = commands;
     }
-    /*public SequentialGroupCommand(Command[] commands) {
-        this.commands = commands;
-    }*/
+   
 
     @Override
     public void initialize() {
@@ -39,6 +37,9 @@ public class SequentialGroupCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        for(Command command : commands) {
+            command.cancel();
+        }
     }
 
     @Override
