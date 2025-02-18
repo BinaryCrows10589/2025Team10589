@@ -23,6 +23,7 @@ public class DetectFunnelCoralCommand extends Command {
         this.outtakeCommandFactory = outtakeCommandFactory;
         this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
         this.holdCoralInOuttakeCommand = this.outtakeCommandFactory.createHoldCoralInOuttakeCommand();
+        addRequirements(outtakeCommandFactory.getOuttakeWheelsSubsystem(), outtakeCoralSensorsSubsystem);
     }
 
 

@@ -15,6 +15,10 @@ public class OuttakeCommandFactory {
         this.outtakeWheelsSubsystem = outtakeWheelsSubsystem;
         this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
     }
+
+    public OuttakeWheelsSubsystem getOuttakeWheelsSubsystem() {
+        return outtakeWheelsSubsystem;
+    }
     
     public HoldCoralInOuttakeCommand createHoldCoralInOuttakeCommand() {
         return new HoldCoralInOuttakeCommand(outtakeWheelsSubsystem, outtakeCoralSensorsSubsystem);

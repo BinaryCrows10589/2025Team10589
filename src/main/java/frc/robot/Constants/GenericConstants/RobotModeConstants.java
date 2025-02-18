@@ -1,7 +1,13 @@
 package frc.robot.Constants.GenericConstants;
 
+import edu.wpi.first.wpilibj.RobotBase;
+
 public class RobotModeConstants {
-    public static final Mode currentMode = Mode.REAL;
+    public static final boolean isInReplay = false;
+    public static final boolean isInSimulation = RobotBase.isSimulation();
+    public static final Mode currentMode = 
+    isInReplay ? Mode.REPLAY : 
+                 (isInSimulation ? Mode.SIM : Mode.REAL);
     public static boolean isBlueAlliance = true;
     public static boolean hasAllianceChanged = false;
     /* Must be set to false before in code before full drive practice and before comp.

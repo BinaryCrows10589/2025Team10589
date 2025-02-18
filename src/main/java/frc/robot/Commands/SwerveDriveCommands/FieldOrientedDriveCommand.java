@@ -5,6 +5,7 @@ import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.ControlConstants;
@@ -28,8 +29,8 @@ public class FieldOrientedDriveCommand extends Command {
     private final DoubleSupplier translationXSupplier;
     private final DoubleSupplier translationYSupplier;
     private final DoubleSupplier rotationSupplier;
-    private double translationMultiplier = 1;
-    private double rotationMultiplier = 1;
+    private double translationMax = 1;
+    private double rotationMax = 1;
     private int elevatorCheckFrameCount = 0;
     /**
      * Constructor
@@ -84,23 +85,26 @@ public class FieldOrientedDriveCommand extends Command {
             if (elevatorCheckFrameCount++ >= SwerveDriveConstants.kframesPerCheck) {
                 elevatorCheckFrameCount = 0;
 
-                translationMultiplier = 1;
-                rotationMultiplier = 1;
+                translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
+                rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
 
                 for (int level = SwerveDriveConstants.kElevatorThresholds.length-1; level >= 0; level--) {
                     if (position > SwerveDriveConstants.kElevatorThresholds[level]) {
-                        translationMultiplier = SwerveDriveConstants.kElevatorThresholdVelocityMultipliers[level];
-                        rotationMultiplier = SwerveDriveConstants.kElevatorThresholdRotationMultipliers[level];
+                        translationMax = SwerveDriveConstants.kElevatorThresholdVelocityCaps[level];
+                        rotationMax = SwerveDriveConstants.kElevatorThresholdRotationCaps[level];
                         break;
                     }
                 }
             }
+            double translationXSpeed = MathUtil.clamp(translationX, -translationX, translationX);
+            double translationYSpeed = MathUtil.clamp(translationY, -translationY, translationY);
+            double rotationSpeed = MathUtil.clamp(rotation, -rotationMax, rotationMax);
+
 
             if(ControlConstants.axisLockMode) {
-                m_driveSubsystem.drive(translationX * translationMultiplier, translationY * translationMultiplier, rotation * rotationMultiplier, false);
+                m_driveSubsystem.drive(translationXSpeed, translationYSpeed, rotationSpeed, false);
             } else {
-                m_driveSubsystem.drive(translationX * translationMultiplier, translationY * translationMultiplier, rotation * rotationMultiplier, true);
-
+                m_driveSubsystem.drive(translationXSpeed, translationYSpeed, rotationSpeed,true);
             }
         }
     }
