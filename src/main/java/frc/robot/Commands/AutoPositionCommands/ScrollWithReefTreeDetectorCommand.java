@@ -3,6 +3,8 @@ package frc.robot.Commands.AutoPositionCommands;
 import java.security.CodeSource;
 import java.util.function.BooleanSupplier;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.configs.Slot0Configs;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -88,7 +90,8 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
 
     @Override
     public boolean isFinished() {
-        return !this.isSensorInRange.getAsBoolean() || this.hardCutOffTimmer.hasTimePassed();
+        Logger.recordOutput("ScrollBoolean", !this.isSensorInRange.getAsBoolean());
+        return !this.isSensorInRange.getAsBoolean();// || this.hardCutOffTimmer.hasTimePassed();
     }
 }
 

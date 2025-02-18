@@ -47,11 +47,11 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
     }
 
     public boolean isInLeftSensorInRange() {
-        return isReefTreeInRange(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft, false);
+        return isReefTreeInRange(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft, true);
     }
 
     public boolean isInRightSensorInRange() {
-        return isReefTreeInRange(this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight, false);
+        return isReefTreeInRange(this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight, true);
     }
  
 

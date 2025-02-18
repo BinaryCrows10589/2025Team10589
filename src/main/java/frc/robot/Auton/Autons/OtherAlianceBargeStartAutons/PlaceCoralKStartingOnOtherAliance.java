@@ -1,11 +1,15 @@
 package frc.robot.Auton.Autons.OtherAlianceBargeStartAutons;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import java.util.ArrayList;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
+import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
 import frc.robot.Constants.GenericConstants.AutonConstants.WPILibAutonConstants;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
@@ -20,7 +24,8 @@ public class PlaceCoralKStartingOnOtherAliance {
         DriveCommandFactory driveCommandFactory, 
         DriveSubsystem driveSubsystem, 
         ElevatorCommandFactory elevatorCommandFactory, 
-        OuttakeCommandFactory outtakeCommandFactory
+        OuttakeCommandFactory outtakeCommandFactory,
+        HighLevelCommandsFactory highLevelCommandsFactory
     ) {
         driveSubsystem.setRobotPose(AutonPointManager.kOtherAllianceBargeStartPosition);
         
@@ -36,9 +41,10 @@ public class PlaceCoralKStartingOnOtherAliance {
         WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
         WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
         WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
-        WPILibAutonConstants.kPositionTolorence,
+        new Pose2d(.05, .05, Rotation2d.fromDegrees(5)),// WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
+        autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand());
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 

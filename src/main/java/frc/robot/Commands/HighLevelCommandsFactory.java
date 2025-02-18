@@ -139,15 +139,11 @@ public class HighLevelCommandsFactory {
         );
     }
 
-    public SequentialGroupCommand createPlaceCoralRightCommand() {
-        return new SequentialGroupCommand(
-            new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
-                new double[] {0, -0.5, 0}, 
+    public ScrollWithReefTreeDetectorCommand createPlaceCoralRightCommand() {
+        return new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
+                new double[] {-0.1, -0.4, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange
-            )
-            //this.outtakeCommandFactory.createOuttakeCoralCommand()
-        );
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange);
     }
 }
 

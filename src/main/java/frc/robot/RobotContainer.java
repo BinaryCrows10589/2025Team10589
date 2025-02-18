@@ -108,9 +108,9 @@ public class RobotContainer {
             this.driveSubsystem
             );
         
-        this.robotCreator.getOuttakeWheelsSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
+        //this.robotCreator.getOuttakeWheelsSubsystem().setDefaultCommand(this.highLevelCommandsFactory.createDetectFunnelCoralCommand());
 
-        this.autonManager = new AutonManager(this.driveCommandFactory, this.driveSubsystem, this.elevatorCommandFactory, this.outtakeCommandFactory);
+        this.autonManager = new AutonManager(this.driveCommandFactory, this.driveSubsystem, this.elevatorCommandFactory, this.outtakeCommandFactory, this.highLevelCommandsFactory);
         configureBindings();
         this.onRobotEnable();
     }
@@ -164,8 +164,8 @@ public class RobotContainer {
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeGroundCommand(), 180);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeReefTreeCommand(), 270);
 
-        this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), XboxController.Button.kX.value);
         this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), XboxController.Button.kY.value);
+        //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), XboxController.Button.kY.value);
          
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), XboxController.Button.kLeftStick.value);  
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToReefIntakeAlgaeHighCommand(), XboxController.Button.kLeftBumper.value);  

@@ -24,7 +24,7 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         
-        autonCommands.add(PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory));
+        //autonCommands.add(PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory));
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralI",
         AutonPointManager.kHumanPlayerToCoralI,
         5,

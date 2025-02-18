@@ -56,6 +56,6 @@ public class OuttakeCoralCommand extends Command{
     @Override
     public boolean isFinished() {
         Logger.recordOutput("Checking is finished", true);
-        return !this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(false) || !this.outtakeCoralSensorsSubsystem.isCoralInEndOfOuttake(false);
+        return !this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(true) && !this.outtakeCoralSensorsSubsystem.isCoralInEndOfOuttake(true);
     }
 }
