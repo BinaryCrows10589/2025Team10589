@@ -1,39 +1,45 @@
 Teleop:
-    Max Speed Limiter
+    Max Speed Limiter-30 Minutes
     AutoPlacment:
-        LeftScroll
-        RightScroll
+        LeftScroll- 60 Minutes
+        RightScroll- 20 Minutes
     Barge Score:
-        BargeScoreAngle
-        BargeScoreHeight
+        BargeScoreAngle-15 Minutes
+        BargeScoreHeight- 0 Minutes
     Algae Processor Score:
-        Pivot Angle:
-        Elevator Height
+        Pivot Angle:-15 Minutes
+        Elevator Height-5 Minutes
     Intaking Coral:
-        Auto Index Coral
+        Auto Index Coral-60 Minutes
     Outtake Wheel Velocity:
-        Try Increasing Wheel Velocity
-
+        Try Increasing Wheel Velocity-10 Minutes
 General:
-    Robot Power One Optimization:
-    Test Cameras On Red
+    Robot Power One Optimization-15 Minutes
+    Test Cameras On Red-5 Minutes/ multuple hours depending on result
 3 Coral Auto Other Start-Red and Blue
-    Coral1PreScrollPosition
-    Coral2And3PreScrollPosition
-    Coral2And3IntakingPosition
-    ElevatorUpAndDownWhenDrivingLeg1
-    ElevatorUpAndDownWhenDrivingLeg2
-    ElevatorUpAndDownWhenDrivingLeg3
-    ElevatorUpAndDownWhenDrivingLeg4
-    ElevatorUpAndDownWhenDrivingLeg5
+    Coral1PreScrollPosition-120 Minutes
+    Coral2And3PreScrollPosition-120 Minutes
+    Coral2And3IntakingPosition-60 Minutes
+    Coral1Placment-120 Minutes
+    Coral2Placment-30 Minutes
+    Coral3Placment-30 Minutes
+    ElevatorUpAndDownWhenDrivingLeg1-IDK
+    ElevatorUpAndDownWhenDrivingLeg2-IDK
+    ElevatorUpAndDownWhenDrivingLeg3-IDK
+    ElevatorUpAndDownWhenDrivingLeg4-IDK
+    ElevatorUpAndDownWhenDrivingLeg5-IDK
 3 Coral Auto Own Start-Red and Blue
-    Coral1PreScrollPosition
-    Coral2And3PreScrollPosition
-    Coral2And3IntakingPosition
-    ElevatorUpAndDownWhenDrivingLeg1
-    ElevatorUpAndDownWhenDrivingLeg2
-    ElevatorUpAndDownWhenDrivingLeg3
-    ElevatorUpAndDownWhenDrivingLeg4
-    ElevatorUpAndDownWhenDrivingLeg5
+    Coral1PreScrollPosition-60 Minutes
+    Coral2And3PreScrollPosition-60 Minutes
+    Coral2And3IntakingPosition- 60 Minutes
+    Coral1Placment-30 Minutes
+    Coral2Placment-30 Minutes
+    Coral3Placment-30 Minutes
+    ElevatorUpAndDownWhenDrivingLeg1-IDK
+    ElevatorUpAndDownWhenDrivingLeg2-IDK
+    ElevatorUpAndDownWhenDrivingLeg3-IDK
+    ElevatorUpAndDownWhenDrivingLeg4-IDK
+    ElevatorUpAndDownWhenDrivingLeg5-IDK
 1 Coral Center Start-Red and Blue
-    Coral1ScrollPosition
+    Coral1ScrollPosition-60 min
+    Coral1Placment-60 Minutes
