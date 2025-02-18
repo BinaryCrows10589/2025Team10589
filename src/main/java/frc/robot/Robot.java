@@ -125,7 +125,6 @@ public class Robot extends LoggedRobot {
         CommandScheduler.getInstance().run();
         this.robotContainer.updateButtonBoardInputs();
         checkDriverStationUpdate();
-        GameObjectTracker.getTargetDistanceAndHeading();
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
