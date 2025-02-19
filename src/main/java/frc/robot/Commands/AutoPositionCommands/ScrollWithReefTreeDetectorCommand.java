@@ -11,6 +11,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Commands.SwerveDriveCommands.LockSwervesAuton;
 import frc.robot.Constants.GenericConstants.AutoPositionConstants.AutonScrollConstants;
 import frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector.ReefTreeDetectorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
@@ -28,6 +29,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     private final Wait hardCutOffTimmer;
 
     private final DriveSubsystem driveSubsystem;
+    private final LockSwervesAuton lockSwerves;
     private double initialRotation;
     private BooleanSupplier isSensorInRange;
 
@@ -44,6 +46,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
         this.lockRotationPIDConstantTuner = new NetworkTablesTunablePIDConstants(pathname + "/AutonScroll", lockRotationPIDConstants[0], lockRotationPIDConstants[1],
         lockRotationPIDConstants[2], 0);
         this.hardCutOffTimmer = new Wait(maxScrollTime);
+        this.lockSwerves = new LockSwervesAuton(this.driveSubsystem, AutonScrollConstants.kLockSwervesTime);
         this.isSensorInRange = isSensorInRange;
         addRequirements(this.driveSubsystem);
 
@@ -68,7 +71,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
 
     @Override
     public void initialize() {
-        this.hardCutOffTimmer.startTimer();
+        //this.hardCutOffTimmer.startTimer();
         this.initialRotation = this.driveSubsystem.getRobotPose().getRotation().getRadians();
 
     }
@@ -76,15 +79,14 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     @Override
     public void execute() {
         updatePIDValuesFromNetworkTables();
-        this.driveSubsystem.drive(this.scrollVelocityVector[0], this.scrollVelocityVector[1],
-            0, false);
+        this.driveSubsystem.drive(this.scrollVelocityVector[0], this.scrollVelocityVector[1], 0, false);
     }
 
     @Override
     public void end(boolean interrupted) {
         this.driveSubsystem.stop();
-        this.driveSubsystem.lockSwerves();
-        this.hardCutOffTimmer.disableTimer();
+        this.lockSwerves.schedule();
+        //this.hardCutOffTimmer.disableTimer();
         
     }
 
@@ -94,4 +96,3 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
         return !this.isSensorInRange.getAsBoolean();// || this.hardCutOffTimmer.hasTimePassed();
     }
 }
-

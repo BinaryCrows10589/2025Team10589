@@ -13,7 +13,8 @@ import frc.robot.Constants.MechanismConstants.ReefTreeDetectorConstants;
 public class ReefTreeDetectorSubsystem extends SubsystemBase{
     private ReefTreeDetectorIO reefTreeDetectorIO;
     private ReefTreeDetectorIOInputsAutoLogged reefTreeDetectorInputs = new ReefTreeDetectorIOInputsAutoLogged();
-    private double lastValidReading = -1;
+    private int leftDistenceSensorInvalidCount = 0;
+    private int rightDistenceSensorInvalidCount = 0;
 
     public ReefTreeDetectorSubsystem(ReefTreeDetectorIO reefTreeDetectorIO) {
         this.reefTreeDetectorIO = reefTreeDetectorIO;
@@ -38,20 +39,30 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
             ReefTreeDetectorConstants.kMaxReefTreeDistance;
     }
 
-    private boolean isReefTreeInRange(double rawReading, boolean defualtValue) {
-        double reading = 0; 
-        reading = rawReading;
-        boolean coralDetected = reading == -1 ? defualtValue : isReefTreeScean(reading);  
-        Logger.recordOutput("Outtake/OuttakeCoralSensors/IsCoralInStart", coralDetected);
-        return coralDetected;
-    }
-
     public boolean isInLeftSensorInRange() {
-        return isReefTreeInRange(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft, true);
+        if(this.reefTreeDetectorInputs.validReadingLeft) {
+            this.leftDistenceSensorInvalidCount = 0;
+        } else {
+            this.leftDistenceSensorInvalidCount++;
+        }
+        if(this.leftDistenceSensorInvalidCount > ReefTreeDetectorConstants.kMaxInvalidCount) {
+            return false;
+        } else {
+            return isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft);
+        }
     }
 
     public boolean isInRightSensorInRange() {
-        return isReefTreeInRange(this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight, true);
+        if(this.reefTreeDetectorInputs.validReadingRight) {
+            this.rightDistenceSensorInvalidCount = 0;
+        } else {
+            this.rightDistenceSensorInvalidCount++;
+        }
+        if(this.rightDistenceSensorInvalidCount > ReefTreeDetectorConstants.kMaxInvalidCount) {
+            return false;
+        } else {
+            return isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight);
+        }
     }
  
 

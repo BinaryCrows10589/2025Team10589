@@ -29,10 +29,10 @@ public class AutonPointManager {
     public static final AutonPoint kPlaceOnCoralL = new AutonPoint(5.82, 3.85, 0, 180, false);
     public static final AutonPoint kPlaceOnCoralA = new AutonPoint(5.82, 4.20, 0, 180, false);
     // Points For Other Alliance 3.0318
-    public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.28, 2.91, -60, 180, false);
+    public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.20, 3, -60, 180, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralK = new AutonPoint(5.25, 2.9, -60, -155, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralKConstrant = new AutonPoint(4.5, FieldConstants.kFieldWidthMeters-5.8, -60, -155, false);
-    public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.300, 1.2, -126, -180, false);
+    public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.10, 1.2, -126, -180, false);
     public static final AutonPoint kLeaveFromOtherAllianceHumanPlayer = new AutonPoint(1.300, 1.2, -126, -0, false);
     // 2.8018
     public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.95, FieldConstants.kFieldWidthMeters-5.25, -120, 50, false);
@@ -42,6 +42,7 @@ public class AutonPointManager {
     
     // Decloration of Path Points
 
+    
     // Path Points for Own Alliance
     public static final AutonPoint[] kOwnAllianceBargeStartPositionToPlaceOnCoralB = {kOwnAllianceBargeStartPosition, kPlaceOnCoralB};
     public static final AutonPoint[] kPlaceOnCoralBToHumanPlayer = {kLeaveFromPlaceOnCoralB, kLeaveFromPlaceOnCoralBConstrant, kIntakeFromOwnAllianceHumanPlayer};

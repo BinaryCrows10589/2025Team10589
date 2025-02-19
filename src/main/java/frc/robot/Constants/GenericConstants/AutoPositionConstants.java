@@ -16,6 +16,7 @@ public class AutoPositionConstants {
         public static final TrapezoidProfile.Constraints kRotationPIDControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxRotationalSpeedInRadsPerSecond, kMaxRotationalAccelerationInRadsPerSecond);
         public static final double[] kRotationPIDConstants = {.75, 0, 0};
+        public static final double kLockSwervesTime = .1;
 
     }
 

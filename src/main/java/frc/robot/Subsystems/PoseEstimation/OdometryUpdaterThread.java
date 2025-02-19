@@ -43,13 +43,13 @@ public class OdometryUpdaterThread extends Thread{
                                     highPoseAmbiguity = target.getPoseAmbiguity() > VisionConstants.kMaxAmbiguity;
                                 }
                                 if(usedExcludedTag || highPoseAmbiguity) {
-                                        break;
+                                    break;
                                 }
                             }
                             if(visionReading != null && !usedExcludedTag && !highPoseAmbiguity) {
                                 Pose2d estimatedPosition = visionReading.estimatedPose.toPose2d();
                                 Pose2d estimatedPositionWithGyroAngle = new Pose2d(estimatedPosition.getTranslation(),
-                                    this.driveSubsystem.getRobotPose().getRotation());
+                                    this.driveSubsystem.getGyroAngleRotation2d());
                                 FudgedPoint fudgedEstimatedPosition = new FudgedPoint(estimatedPositionWithGyroAngle, VisionConstants.kFudgeFactor);
                                 updatedPoseEstimationWithVisionData(fudgedEstimatedPosition, visionReading.timestampSeconds);
                             }

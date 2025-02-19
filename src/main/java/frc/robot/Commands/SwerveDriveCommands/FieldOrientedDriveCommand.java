@@ -29,8 +29,8 @@ public class FieldOrientedDriveCommand extends Command {
     private final DoubleSupplier translationXSupplier;
     private final DoubleSupplier translationYSupplier;
     private final DoubleSupplier rotationSupplier;
-    private double translationMax = 1;
-    private double rotationMax = 1;
+    private double translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
+    private double rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
     private int elevatorCheckFrameCount = 0;
     /**
      * Constructor
@@ -96,15 +96,15 @@ public class FieldOrientedDriveCommand extends Command {
                     }
                 }
             }
-            double translationXSpeed = MathUtil.clamp(translationX, -translationX, translationX);
-            double translationYSpeed = MathUtil.clamp(translationY, -translationY, translationY);
+            double translationXSpeed = MathUtil.clamp(translationX, -translationMax, translationMax);
+            double translationYSpeed = MathUtil.clamp(translationY, -translationMax, translationMax);
             double rotationSpeed = MathUtil.clamp(rotation, -rotationMax, rotationMax);
 
 
             if(ControlConstants.axisLockMode) {
-                m_driveSubsystem.drive(translationX, translationY, rotation, false);
+                m_driveSubsystem.drive(translationXSpeed, translationYSpeed, rotationSpeed, false);
             } else {
-                m_driveSubsystem.drive(translationX, translationY, rotation,true);
+                m_driveSubsystem.drive(translationXSpeed, translationYSpeed, rotationSpeed,true);
             }
         }
     }
