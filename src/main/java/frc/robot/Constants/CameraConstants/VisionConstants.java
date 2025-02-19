@@ -32,7 +32,7 @@ public final class VisionConstants {
      * matrix is in the form [x, y, theta]ᵀ, with units in meters and radians, then
      * meters.
      */
-    public static final Vector<N3> kSwerveDrivePoseEstimateTrust = VecBuilder.fill(0.05, 0.05, 0.1);
+    public static final Vector<N3> kSwerveDrivePoseEstimateTrust = VecBuilder.fill(0.05, 0.05, 0);
 
     /**
      * Standard deviations of the vision measurements. Increase these numbers to
@@ -40,7 +40,7 @@ public final class VisionConstants {
      * less. This matrix is in the form [x, y, theta]ᵀ, with units in meters and
      * radians.
      */
-    public static final Vector<N3> kVisionPoseEstimateTrust = VecBuilder.fill(.4, .4, 0);
+    public static final Vector<N3> kVisionPoseEstimateTrust = VecBuilder.fill(.4, .4, Double.MAX_VALUE);
     public static final FudgeFactor kFudgeFactor = new FudgeFactor(
     0, 0, 0,
     0, 0, 0);

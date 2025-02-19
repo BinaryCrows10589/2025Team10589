@@ -1,8 +1,11 @@
 package frc.robot.Subsystems.SwerveDrive.Gyro;
 
+import org.photonvision.estimation.RotTrlTransform3d;
+
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 
 public class GyroIOPigeon2 implements GyroIO{
@@ -24,5 +27,10 @@ public class GyroIOPigeon2 implements GyroIO{
     public void updateInputs(GyroIOInputs inputs, double rotationRate) {
         inputs.yawAngle = this.gyro.getRotation2d();
         inputs.yawVelocityDegreesPerSecond = this.gyro.getAngularVelocityZWorld().getValueAsDouble();
+    }
+
+    @Override
+    public void resetAngle(Rotation2d newZero) {
+        this.gyro.setYaw(newZero.getDegrees());
     }
 }

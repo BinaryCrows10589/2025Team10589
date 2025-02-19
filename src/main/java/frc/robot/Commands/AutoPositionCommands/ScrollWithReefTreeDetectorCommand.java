@@ -76,8 +76,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     @Override
     public void execute() {
         updatePIDValuesFromNetworkTables();
-        this.driveSubsystem.drive(this.scrollVelocityVector[0], this.scrollVelocityVector[1],
-            0, false);
+        this.driveSubsystem.drive(this.scrollVelocityVector[0], this.scrollVelocityVector[1], 0, false);
     }
 
     @Override
@@ -91,7 +90,6 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     @Override
     public boolean isFinished() {
         Logger.recordOutput("ScrollBoolean", !this.isSensorInRange.getAsBoolean());
-        return !this.isSensorInRange.getAsBoolean();// || this.hardCutOffTimmer.hasTimePassed();
+        return !this.isSensorInRange.getAsBoolean(); //|| this.hardCutOffTimmer.hasTimePassed();
     }
 }
-

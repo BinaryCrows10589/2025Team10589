@@ -63,11 +63,13 @@ public class OdometryIOUpdater implements OdometryIO{
     }
 
     public void setRobotPose(Pose2d newRobotPose) {
+        this.driveSubsystem.resetGyro(newRobotPose.getRotation());
         this.swerveDrivePoseEstimator.resetPosition(this.driveSubsystem.getGyroAngleRotation2d(),
         this.driveSubsystem.getModulePositions(), newRobotPose);
     }
 
     public void resetRobotPose() {
+        this.driveSubsystem.resetGyro(new Rotation2d());
         this.swerveDrivePoseEstimator.resetPosition(this.driveSubsystem.getGyroAngleRotation2d(),
         this.driveSubsystem.getModulePositions(), new Pose2d());
     }

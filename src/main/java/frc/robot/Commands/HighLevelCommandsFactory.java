@@ -9,6 +9,7 @@ import frc.robot.Commands.AlgaeCommands.IntakeAlgaeCommand;
 import frc.robot.Commands.AlgaeCommands.OuttakeAlgaeCommand;
 import frc.robot.Commands.AlgaeCommands.IntakeAlgaeCommand;
 import frc.robot.Commands.AlgaeCommands.RunAlgaeWheelsCommand;
+import frc.robot.Commands.AutoPositionCommands.ScrollThanOuttakeCommand;
 import frc.robot.Commands.AutoPositionCommands.ScrollWithReefTreeDetectorCommand;
 import frc.robot.Commands.FunnelCommands.DetectFunnelCoralCommand;
 import frc.robot.Commands.IntakeCommands.GroundIntakeCommand;
@@ -128,22 +129,20 @@ public class HighLevelCommandsFactory {
         return new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kOuttakeProcessorVoltage);
     }
 
-    public SequentialGroupCommand createPlaceCoralLeftCommand() {
-        return new SequentialGroupCommand(
-            new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
-                new double[] {0, 0.5, 0}, 
+    public ScrollThanOuttakeCommand createPlaceCoralLeftCommand() {
+        return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
+                new double[] {-.1, 0.7, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange
-            )
-            //this.outtakeCommandFactory.createOuttakeCoralCommand()
-        );
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange),
+             outtakeCommandFactory);
     }
 
-    public ScrollWithReefTreeDetectorCommand createPlaceCoralRightCommand() {
-        return new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
-                new double[] {-0.1, -0.4, 0}, 
+    public ScrollThanOuttakeCommand createPlaceCoralRightCommand() {
+        return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
+                new double[] {-0.1, -0.7, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange);
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange),
+                this.outtakeCommandFactory);
     }
 }
 

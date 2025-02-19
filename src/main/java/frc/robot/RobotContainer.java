@@ -121,8 +121,8 @@ public class RobotContainer {
     private void configureBindings() {
         this.driverController.bindToButton(this.lockSwerves, XboxController.Button.kLeftBumper.value);
         this.driverController.bindToButton(this.resetOdometry, XboxController.Button.kY.value);
-        this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveTranslationProfiler(), XboxController.Button.kX.value);
-        this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveRotationProfiler(), XboxController.Button.kB.value);
+        //this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveTranslationProfiler(), XboxController.Button.kX.value);
+        //this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveRotationProfiler(), XboxController.Button.kB.value);
         this.driverController.bindToLeftTriggure(Commands.runOnce(this.driveSubsystem::setSlowModeTrue),
         Commands.runOnce(this.driveSubsystem::setSlowModeFalse));
         this.driverController.bindToRightTriggure(Commands.runOnce(this.driveSubsystem::setAxisLockModeTrue),
@@ -164,8 +164,8 @@ public class RobotContainer {
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeGroundCommand(), 180);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeReefTreeCommand(), 270);
 
+        this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), XboxController.Button.kX.value);
         this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), XboxController.Button.kY.value);
-        //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), XboxController.Button.kY.value);
          
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), XboxController.Button.kLeftStick.value);  
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToReefIntakeAlgaeHighCommand(), XboxController.Button.kLeftBumper.value);  

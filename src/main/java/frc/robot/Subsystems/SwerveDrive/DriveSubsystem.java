@@ -213,6 +213,10 @@ public class DriveSubsystem extends SubsystemBase{
         return this.gyroInputs.yawAngle;
     }
 
+    public void resetGyro(Rotation2d newZero) {
+        this.gyroIO.resetAngle(newZero);
+    }
+
     public Pose2d getRobotPose() {
         return this.poseEstimatorSubsystem.getRobotPose();
     }
