@@ -43,7 +43,7 @@ public class OdometryUpdaterThread extends Thread{
                                     highPoseAmbiguity = target.getPoseAmbiguity() > VisionConstants.kMaxAmbiguity;
                                 }
                                 if(usedExcludedTag || highPoseAmbiguity) {
-                                        break;
+                                    break;
                                 }
                             }
                             if(visionReading != null && !usedExcludedTag && !highPoseAmbiguity) {
