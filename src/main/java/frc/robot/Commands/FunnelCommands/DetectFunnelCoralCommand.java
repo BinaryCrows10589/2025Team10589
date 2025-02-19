@@ -33,7 +33,7 @@ public class DetectFunnelCoralCommand extends Command {
 
     @Override
     public void execute() {
-        this.isSameCoral = false;
+        //this.isSameCoral = false;
         boolean coralInStartOfOuttake = this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(false);
         if(coralInStartOfOuttake && !isSameCoral) {
             this.holdCoralInOuttakeCommand.schedule();
