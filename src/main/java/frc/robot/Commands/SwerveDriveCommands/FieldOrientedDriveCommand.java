@@ -29,8 +29,8 @@ public class FieldOrientedDriveCommand extends Command {
     private final DoubleSupplier translationXSupplier;
     private final DoubleSupplier translationYSupplier;
     private final DoubleSupplier rotationSupplier;
-    private double translationMax = 1;
-    private double rotationMax = 1;
+    private double translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
+    private double rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
     private int elevatorCheckFrameCount = 0;
     /**
      * Constructor
