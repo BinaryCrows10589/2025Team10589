@@ -1,6 +1,8 @@
 package frc.robot;
 
 
+import java.util.function.BooleanSupplier;
+
 import frc.robot.Commands.ElevatorCommands.ElevatorReturnDefaultCommand;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeCoralSensorConstants;
@@ -91,13 +93,13 @@ public class RobotCreator {
 
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIODistanceSensor());
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
-                
-                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderMotionMagic());
+                this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());
+
+                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderMotionMagic(), this.funnelCoralSensorSubsystem::isCoralInFunnel, this.outtakeCoralSensorsSubsystem::isCoralOutOfElevator);
                 //this.elevatorReturnDefaultCommand = new ElevatorReturnDefaultCommand(elevatorSubsystem);
                 //this.elevatorSubsystem.setDefaultCommand(elevatorReturnDefaultCommand);
 
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
-                this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());
 
                 this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIOSparkMax());
                 this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIOSparkMax());
@@ -117,11 +119,11 @@ public class RobotCreator {
 
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIODistanceSensor());
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
-
-                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderMotionMagic());
+                this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());
+                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderMotionMagic(), this.funnelCoralSensorSubsystem::isCoralInFunnel, this.outtakeCoralSensorsSubsystem::isCoralOutOfElevator);
 
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
-                this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());
+                
 
                 this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIOSparkMax());
                 this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIOSparkMax());
@@ -143,10 +145,11 @@ public class RobotCreator {
                 this.funnelCoralSensorSubsystem = new FunnelCoralSensorSubsystem(new FunnelCoralSensorIO() {});
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIO() {});
 
-                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
+                this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIO() {});
+
+                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {}, this.funnelCoralSensorSubsystem::isCoralInFunnel, this.outtakeCoralSensorsSubsystem::isCoralOutOfElevator);
                 
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIO() {});
-                this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIO() {});
 
                 this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIO() {});
                 this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIO() {});
