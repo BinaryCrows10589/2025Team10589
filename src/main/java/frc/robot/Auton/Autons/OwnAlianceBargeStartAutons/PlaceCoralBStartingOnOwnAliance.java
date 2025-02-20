@@ -42,7 +42,8 @@ public class PlaceCoralBStartingOnOwnAliance {
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
+        autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
+        autonCommands.add(new WaitCommand(.5));
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);

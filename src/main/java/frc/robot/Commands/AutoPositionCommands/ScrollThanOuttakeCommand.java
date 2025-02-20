@@ -1,6 +1,7 @@
 package frc.robot.Commands.AutoPositionCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.OuttakeWheelsCommands.OuttakeCoralCommand;
 import frc.robot.Constants.MechanismConstants.TransitConstants;
@@ -8,6 +9,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIO;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
 import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsSubsystem;
+import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 import frc.robot.Utils.CommandUtils.Wait;
 
 public class ScrollThanOuttakeCommand extends Command {
@@ -15,12 +17,17 @@ public class ScrollThanOuttakeCommand extends Command {
     private ScrollWithReefTreeDetectorCommand scrollWithReefTreeDetectorCommand;
     private OuttakeCommandFactory outtakeCommandFactory;
     private OuttakeCoralCommand outtakeWheelsCommand;
+    private WaitCommand timeBeforeOuttake;
+    private SequentialGroupCommand waitThenOuttake;
 
-    public ScrollThanOuttakeCommand(ScrollWithReefTreeDetectorCommand scrollWithReefTreeDetectorCommand,
+    public ScrollThanOuttakeCommand(ScrollWithReefTreeDetectorCommand scrollWithReefTreeDetectorCommand, double timeBeforeOutput,
      OuttakeCommandFactory outtakeCommandFactory) {
         this.scrollWithReefTreeDetectorCommand = scrollWithReefTreeDetectorCommand;
         this.outtakeCommandFactory = outtakeCommandFactory;
         this.outtakeWheelsCommand = this.outtakeCommandFactory.createOuttakeCoralCommand();
+        this.timeBeforeOuttake = new WaitCommand(timeBeforeOutput);
+        this.waitThenOuttake = new SequentialGroupCommand(this.timeBeforeOuttake, this.outtakeWheelsCommand);
+
     }
     
     @Override
@@ -34,7 +41,7 @@ public class ScrollThanOuttakeCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         if(!interrupted) {
-            //this.outtakeWheelsCommand.schedule();
+            this.waitThenOuttake.schedule();
         }
     }
 

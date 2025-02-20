@@ -42,9 +42,7 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand());
-        autonCommands.add(new WaitCommand(.3));
-        autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
+        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
         autonCommands.add(new WaitCommand(.5));
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
         //autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());

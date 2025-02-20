@@ -133,7 +133,7 @@ public class HighLevelCommandsFactory {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
                 new double[] {-.1, 0.7, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange),
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange), .3,
              outtakeCommandFactory);
     }
 
@@ -141,8 +141,25 @@ public class HighLevelCommandsFactory {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
                 new double[] {-0.1, -0.7, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange),
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange), .3,
                 this.outtakeCommandFactory);
     }
+
+    public ScrollThanOuttakeCommand createPlaceCoralLeftCommand(double waitBeforeOuttake) {
+        return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
+                new double[] {-.1, 0.7, 0}, 
+                AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange), waitBeforeOuttake,
+             outtakeCommandFactory);
+    }
+
+    public ScrollThanOuttakeCommand createPlaceCoralRightCommand(double waitBeforeOuttake) {
+        return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
+                new double[] {-0.1, -0.7, 0}, 
+                AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange), waitBeforeOuttake,
+                this.outtakeCommandFactory);
+    }
+
 }
 
