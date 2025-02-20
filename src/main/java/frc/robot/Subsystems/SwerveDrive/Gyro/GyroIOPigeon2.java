@@ -30,6 +30,7 @@ public class GyroIOPigeon2 implements GyroIO{
         this.gyro.getConfigurator().apply(new Pigeon2Configuration());
         this.gyro.reset();
         previousGyroValue = gyro.getRotation2d();
+        Logger.recordOutput("Gyro/FixedGyro", false);
     } 
 
     @Override
@@ -38,6 +39,7 @@ public class GyroIOPigeon2 implements GyroIO{
         inputs.yawAngle = this.gyro.getRotation2d();
         if (Math.abs(previousGyroValue.minus(inputs.yawAngle).getDegrees()) > DrivetrainConstants.SwerveDriveConstants.kMaxAngleDeltaPerFrameDegrees) {
             this.gyro.setYaw(Angle.ofBaseUnits(previousGyroValue.getDegrees(), Degrees));
+            Logger.recordOutput("Gyro/FixedGyro", true);
         } else {
             previousGyroValue = inputs.yawAngle;
         }

@@ -35,8 +35,8 @@ public class PlaceCoralKStartingOnOtherAliance {
         AutonPointManager.kOtherAllianceBargeStartPositionToPlaceOnCoralK,
         5,
         new double[] {1.3, 0, 0},
-        new double[] {.75, 0, 0},
-        new double[] {.75, 0, 0},
+        new double[] {1.3, 0, 0},
+        new double[] {4, 0, 0},
         WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
         WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
         WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
@@ -45,7 +45,7 @@ public class PlaceCoralKStartingOnOtherAliance {
         driveSubsystem));
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand());
-        autonCommands.add(new WaitCommand(.1));
+        autonCommands.add(new WaitCommand(.3));
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         autonCommands.add(new WaitCommand(.5));
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());

@@ -35,7 +35,7 @@ public class AutonPointManager {
     public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.10, 1.22, -126, -180, false);
     public static final AutonPoint kLeaveFromOtherAllianceHumanPlayer = new AutonPoint(1.300, 1.2, -126, -0, false);
     // 2.8018
-    public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.95, FieldConstants.kFieldWidthMeters-5.25, -120, 50, false);
+    public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.87, 3.13, -120, 50, false);
     // 2.6518
     public static final AutonPoint kLeaveFromPlaceOnCoralI = new AutonPoint(3.95, FieldConstants.kFieldWidthMeters-5.25, -120, -130, false);
     public static final AutonPoint kPlaceOnCoralH = new AutonPoint(3.65, FieldConstants.kFieldWidthMeters-5.1, -120, -310, false);

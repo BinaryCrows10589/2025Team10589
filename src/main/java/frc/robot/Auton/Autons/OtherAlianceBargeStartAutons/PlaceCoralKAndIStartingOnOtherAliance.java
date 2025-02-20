@@ -3,6 +3,7 @@ package frc.robot.Auton.Autons.OtherAlianceBargeStartAutons;
 import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
@@ -31,8 +32,8 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         AutonPointManager.kHumanPlayerToCoralI,
         5,
         new double[] {1.5, 0, 0},
-        new double[] {3, 0, 0},
-        new double[] {1, 0, 0},
+        new double[] {5, 0, 0},
+        new double[] {6, 0, 0},
         WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
         WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
         WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
@@ -40,8 +41,13 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
+        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand());
+        autonCommands.add(new WaitCommand(.3));
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
+        autonCommands.add(new WaitCommand(.5));
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
+        //autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
+        //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;
