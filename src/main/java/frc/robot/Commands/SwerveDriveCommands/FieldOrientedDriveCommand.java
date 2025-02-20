@@ -30,6 +30,7 @@ public class FieldOrientedDriveCommand extends Command {
     private final DoubleSupplier translationYSupplier;
     private final DoubleSupplier rotationSupplier;
     private double translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
+    private boolean normalizeTranslationMaximum = false;
     private double rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
     private int elevatorCheckFrameCount = 0;
     /**
@@ -87,17 +88,29 @@ public class FieldOrientedDriveCommand extends Command {
 
                 translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
                 rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
+                normalizeTranslationMaximum = false;
 
                 for (int level = SwerveDriveConstants.kElevatorThresholds.length-1; level >= 0; level--) {
                     if (position > SwerveDriveConstants.kElevatorThresholds[level]) {
                         translationMax = SwerveDriveConstants.kElevatorThresholdVelocityCaps[level];
+                        normalizeTranslationMaximum = true;
                         rotationMax = SwerveDriveConstants.kElevatorThresholdRotationCaps[level];
                         break;
                     }
                 }
             }
-            double translationXSpeed = MathUtil.clamp(translationX, -translationMax, translationMax);
-            double translationYSpeed = MathUtil.clamp(translationY, -translationMax, translationMax);
+
+            double translationXSpeed;
+            double translationYSpeed;
+            if (normalizeTranslationMaximum) {
+                double normalizedSpeed = Math.sqrt(Math.pow(translationX, 2) + Math.pow(translationY, 2));
+                double translationFactor = MathUtil.clamp(normalizedSpeed, -translationMax, translationMax) / normalizedSpeed;
+                translationXSpeed = translationX * translationFactor;
+                translationYSpeed = translationY * translationFactor;
+            } else {
+                translationXSpeed = MathUtil.clamp(translationX, -translationMax, translationMax);
+                translationYSpeed = MathUtil.clamp(translationY, -translationMax, translationMax);
+            }
             double rotationSpeed = MathUtil.clamp(rotation, -rotationMax, rotationMax);
 
 
