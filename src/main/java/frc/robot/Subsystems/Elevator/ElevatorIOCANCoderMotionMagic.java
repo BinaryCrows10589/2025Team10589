@@ -46,7 +46,7 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
 
         configureElevatorMotors();
 
-        Timer.delay(.5);
+        Timer.delay(.2);
     }
 
     private void configureElevatorMotors() {
@@ -156,6 +156,7 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         elevatorIOInputs.elevatorSlaveCurrentAmps = new double[] {elevatorSlaveMotor.getSupplyCurrent().getValueAsDouble()};
         elevatorIOInputs.elevatorSlaveMotorTemputureC = this.elevatorSlaveMotor.getDeviceTemp().getValueAsDouble();
         this.positionError = getOffsetDesiredPosition().Position - elevatorIOInputs.elevatorRawPosition;
+        
         elevatorIOInputs.positionError = this.positionError;
 
     
@@ -174,6 +175,8 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
                 this.elevatorMasterMotor.setVoltage(-2);
             }
         }
+
+
         //if (desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {//
         // && Tolerance.inTolorance(elevatorIOInputs.elevatorRawPosition, getOffsetDesiredPosition().Position, ElevatorConstants.kBasementShutoffTolerance)) {
         //    elevatorMasterMotor.stopMotor();

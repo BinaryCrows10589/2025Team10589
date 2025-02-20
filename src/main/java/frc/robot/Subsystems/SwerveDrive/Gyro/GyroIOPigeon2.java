@@ -1,5 +1,6 @@
 package frc.robot.Subsystems.SwerveDrive.Gyro;
 
+import org.littletonrobotics.junction.Logger;
 import org.photonvision.estimation.RotTrlTransform3d;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
@@ -27,6 +28,7 @@ public class GyroIOPigeon2 implements GyroIO{
     public void updateInputs(GyroIOInputs inputs, double rotationRate) {
         inputs.yawAngle = this.gyro.getRotation2d();
         inputs.yawVelocityDegreesPerSecond = this.gyro.getAngularVelocityZWorld().getValueAsDouble();
+        Logger.recordOutput("Gyro/IsConnected", this.gyro.isConnected(.5));
     }
 
     @Override

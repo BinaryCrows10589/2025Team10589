@@ -74,7 +74,7 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO{
 
         configDirvePID();
         configTurnPID();
-        Timer.delay(1); // We should see if we can reduce this to dramaticly increase robot boot time. 
+        Timer.delay(.1); // We should see if we can reduce this to dramaticly increase robot boot time. 
         resetTurningMotorToAbsolute();
 
         addInitLogs();
@@ -96,6 +96,7 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO{
         this.driveMotor.getAcceleration().setUpdateFrequency(20);
         this.driveMotor.getPosition().setUpdateFrequency(20);
         this.driveMotor.getTorqueCurrent().setUpdateFrequency(50);
+        
     
         driveMotorConfig.Voltage.PeakForwardVoltage = SwerveModuleConstants.kDriveMotorMaxVoltageSparkMaxTalonFX;
         driveMotorConfig.Voltage.PeakReverseVoltage = -SwerveModuleConstants.kDriveMotorMaxVoltageSparkMaxTalonFX;

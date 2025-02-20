@@ -34,7 +34,7 @@ public class ScrollThanOuttakeCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         if(!interrupted) {
-            this.outtakeWheelsCommand.schedule();
+            //this.outtakeWheelsCommand.schedule();
         }
     }
 

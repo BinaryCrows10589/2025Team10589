@@ -95,14 +95,14 @@ public final class DrivetrainConstants {
         public static final double kVoltageFeedforward = 0.1;
 
         public static final double[] kElevatorThresholds = {
-            ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L1),
             ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L2),
-            ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L3)
+            ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L3),
+            ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L4)
         };
         public static final double[] kElevatorThresholdVelocityCaps = {
-            2,
+            2.5,
             1,
-            .75 
+            .25 
         };
         public static final double[] kElevatorThresholdRotationCaps = {
             15,
