@@ -39,6 +39,10 @@ public class OuttakeCoralSensorsSubsystem extends SubsystemBase {
         return coralDetected;
     }
 
+    public boolean isCoralOutOfElevator() {
+        return isCoralInStartOfOuttake(false);
+    }
+
     public boolean isCoralInEndOfOuttake(boolean defualtValue) {
         double reading = 0; 
         if(this.outtakeCoralSensorsInputs.endValidReading) {

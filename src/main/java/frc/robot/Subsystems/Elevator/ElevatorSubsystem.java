@@ -1,6 +1,7 @@
 package frc.robot.Subsystems.Elevator;
 
 import java.util.Base64;
+import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
@@ -16,6 +17,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     ElevatorMode currentMode = ElevatorMode.AUTOMATIC_POSITIONING;
 
     ElevatorPosition lastAssignedDesiredPosition = null;
+
+    private final BooleanSupplier coralInFunnel;
+    private final BooleanSupplier coralInOuttake;
+    private boolean isCoralInTransit = false;
+    private int coralTransitFrameCounter = 0; // Counts frames between seeing the coral in the funnel and not seeing it in the outtake
+    private final int coralTransitFrameTimeout = 20 * 10; // Frames until elevator unlocks itself if no coral is detected
 
     public static enum ElevatorPosition {
         BASEMENT,
@@ -36,14 +43,32 @@ public class ElevatorSubsystem extends SubsystemBase {
         AUTOMATIC_POSITIONING
     }
 
-    public ElevatorSubsystem(ElevatorIO elevatorIO) {
+    public ElevatorSubsystem(ElevatorIO elevatorIO, BooleanSupplier coralInFunnel, BooleanSupplier coralInOuttake) {
         this.elevatorIO = elevatorIO;
+        this.coralInFunnel = coralInFunnel;
+        this.coralInOuttake = coralInOuttake;
     }
 
     public void periodic() {
         
         this.elevatorIO.updateInputs(this.elevatorInputs);
         Logger.processInputs("Elevator/", elevatorInputs);
+
+        if (coralInFunnel.getAsBoolean()) {
+            coralTransitFrameCounter = 0;
+            this.isCoralInTransit = true;
+        }
+        else if (coralInOuttake.getAsBoolean()) {
+            coralTransitFrameCounter = 0;
+            this.isCoralInTransit = false;
+        } else {
+            if (this.isCoralInTransit) {
+                coralTransitFrameCounter++;
+                if (coralTransitFrameCounter > coralTransitFrameTimeout) {
+                    this.isCoralInTransit = false; // Unlock elevator
+                }
+            }
+        }
     }
 
     public void disableElevatorMotors() {
@@ -51,12 +76,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void setDesiredElevatorPosition(double desiredPosition) {
+        if (this.isCoralInTransit) return;
         lastAssignedDesiredPosition = null;
         updateElevatorControlMode(ElevatorMode.AUTOMATIC_POSITIONING);
         elevatorIO.setDesiredPosition(desiredPosition);
     }
 
     public void setDesiredElevatorPosition(ElevatorPosition desiredPosition) {
+        if (this.isCoralInTransit) return;
         lastAssignedDesiredPosition = desiredPosition;
         updateElevatorControlMode(ElevatorMode.AUTOMATIC_POSITIONING);
 
@@ -64,6 +91,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void incrementDesiredElevatorPosition(double increment) {
+        if (this.isCoralInTransit) return;
         updateElevatorControlMode(ElevatorMode.MANUAL);
         elevatorIO.incrementDesiredPosition(increment);
     }
