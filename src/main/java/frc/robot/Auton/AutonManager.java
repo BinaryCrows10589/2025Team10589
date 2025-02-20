@@ -1,5 +1,9 @@
 package frc.robot.Auton;
 
+import java.util.HashMap;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -53,6 +57,9 @@ public class AutonManager {
     private OuttakeCommandFactory outtakeCommandFactory;
     private HighLevelCommandsFactory highLevelCommandsFactory;
 
+    private HashMap<String, Supplier<Command>> autonomousCommands = new HashMap<>();
+    private Command selectedAutonomousCommand = new Command() {}; // Default to empty
+
     public AutonManager(DriveCommandFactory driveCommandFactory, DriveSubsystem driveSubsystem, ElevatorCommandFactory elevatorCommandFactory, OuttakeCommandFactory outtakeCommandFactory, HighLevelCommandsFactory highLevelCommandsFactory) {
         this.driveCommandFactory = driveCommandFactory;
         this.driveSubsystem = driveSubsystem;
@@ -66,80 +73,59 @@ public class AutonManager {
 
     }
 
+    
+
     private void addAllAutons() {
-        addAuton(placeCoralBStartingOnOwnAlianceAuton);
-        addAuton(placeCoralBAndHumanPlayerStartingOnOwnAlianceAuton);
-        addAuton(placeCoralBAndDStartingOnOwnAlianceAuton);
-        addAuton(placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton);
-        addAuton(placeCoralBAndDAndEStartingOnOwnAlianceAuton);
+        addAuton(placeCoralBStartingOnOwnAlianceAuton, PlaceCoralBStartingOnOwnAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        addAuton(placeCoralBAndHumanPlayerStartingOnOwnAlianceAuton, PlaceCoralBAndHumanPlayerStartingOnOwnAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        addAuton(placeCoralBAndDStartingOnOwnAlianceAuton, PlaceCoralBAndDStartingOnOwnAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        addAuton(placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton, PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        addAuton(placeCoralBAndDAndEStartingOnOwnAlianceAuton, PlaceCoralBAndDAndEStartingOnOwnAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
 
-        addAuton(placeCoralAStartingCenterBarge);
-        addAuton(placeCoralLStartingCenterBarge);
+        addAuton(placeCoralAStartingCenterBarge, PlaceCoralAStartingCenterBarge.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        addAuton(placeCoralLStartingCenterBarge, PlaceCoralLStartingCenterBarge.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
 
-        addAuton(placeCoralKStartingOnOtherAlianceAuton);
-        addAuton(placeCoralKAndHumanPlayerStartingOnOtherAlianceAuton);
-        addAuton(placeCoralKAndIStartingOnOtherAlianceAuton);
-        addAuton(placeCoralKAndIAndHumanPlayerStationStartingOnOtherAlianceAuton);
-        addAuton(placeCoralKAndIAndHStartingOnOtherAlianceAuton);
+        addAuton(placeCoralKStartingOnOtherAlianceAuton, PlaceCoralKStartingOnOtherAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, this.highLevelCommandsFactory));
+        addAuton(placeCoralKAndHumanPlayerStartingOnOtherAlianceAuton, PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, this.highLevelCommandsFactory));
+        addAuton(placeCoralKAndIStartingOnOtherAlianceAuton, PlaceCoralKAndIStartingOnOtherAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        addAuton(placeCoralKAndIAndHumanPlayerStationStartingOnOtherAlianceAuton, PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        addAuton(placeCoralKAndIAndHStartingOnOtherAlianceAuton, PlaceCoralKAndIAndHStartingOnOtherAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         
         this.autonChooser.addDefaultOption(placeCoralKAndIAndHStartingOnOtherAlianceAuton,
         placeCoralKAndIAndHStartingOnOtherAlianceAuton);
+
+        // When the sendable chooser value is updated, construct the new autonomous command
+        this.autonChooser.getSendableChooser().onChange(new Consumer<String>() {
+            @Override
+            public void accept(String t) {
+                onSelectedAutonChange(t);
+            }
+        });
+
+        // Initialize the default autonomous
+        onSelectedAutonChange(placeCoralKAndIAndHStartingOnOtherAlianceAuton);
+
+
+
     }
 
-    private void addAuton(String autonName) {
+    private void addAuton(String autonName, Supplier<Command> autonomousCommand) {
+        // Add each auton to the chooser and place each auton supplier in the map
         this.autonChooser.addOption(autonName, autonName);
+        autonomousCommands.put(autonName, autonomousCommand);
     }
 
     private void registerAllPathPlannerCommands() {
         NamedCommands.registerCommand("WaitCommand", new CustomWaitCommand(.2));
     }
 
+    public void onSelectedAutonChange(String newAutonomous) {
+        // When selected auton changes, construct the new one
+        Logger.recordOutput("Selected Auto", newAutonomous);
+        selectedAutonomousCommand = autonomousCommands.getOrDefault(newAutonomous, () -> new Command() {}).get();
+    }
+
     public Command getSelectedAuton() {
-        // This system allows for auton to be run multable times in one robot init.
-        // If this results in a noticable wait before the start of motion this can be swaped out before comp
-        Command selectedAuton;
-        Logger.recordOutput("Selected Auto", autonChooser.get());
-        switch (autonChooser.get()) {
-            case placeCoralBStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
-                break;
-            case placeCoralBAndHumanPlayerStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBAndHumanPlayerStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
-                break;
-            case placeCoralBAndDStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBAndDStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
-                break;
-            case placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
-                break;
-            case placeCoralBAndDAndEStartingOnOwnAlianceAuton:
-                selectedAuton = PlaceCoralBAndDAndEStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
-                break;
-            case placeCoralLStartingCenterBarge:
-                selectedAuton = PlaceCoralLStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
-                break;
-            case placeCoralKStartingOnOtherAlianceAuton:
-                selectedAuton = PlaceCoralKStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, this.highLevelCommandsFactory);
-                break;
-            case placeCoralKAndHumanPlayerStartingOnOtherAlianceAuton:
-                selectedAuton = PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, this.highLevelCommandsFactory);
-                break;
-            case placeCoralKAndIStartingOnOtherAlianceAuton:
-                selectedAuton = PlaceCoralKAndIStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
-                break;
-            case placeCoralKAndIAndHumanPlayerStationStartingOnOtherAlianceAuton:
-                selectedAuton = PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
-                break;
-            case placeCoralKAndIAndHStartingOnOtherAlianceAuton:
-                selectedAuton = PlaceCoralKAndIAndHStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
-                break;
-            case placeCoralAStartingCenterBarge:
-                selectedAuton = PlaceCoralAStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
-                break;
-            default:
-                selectedAuton = new Command() {};
-                Logger.recordOutput("InvalidAutonName", "InvalidAutonName");
-        }
-        return selectedAuton;
+        return selectedAutonomousCommand;
     }
 }

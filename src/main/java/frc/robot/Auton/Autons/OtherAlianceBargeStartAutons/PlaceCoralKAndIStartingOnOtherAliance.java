@@ -1,6 +1,7 @@
 package frc.robot.Auton.Autons.OtherAlianceBargeStartAutons;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -52,4 +53,14 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;
     } 
+
+    public static Supplier<Command> getAutonSupplier(
+        DriveCommandFactory driveCommandFactory, 
+        DriveSubsystem driveSubsystem, 
+        ElevatorCommandFactory elevatorCommandFactory, 
+        OuttakeCommandFactory outtakeCommandFactory,
+        HighLevelCommandsFactory highLevelCommandsFactory
+    ) {
+        return () -> getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
+    }
 }
