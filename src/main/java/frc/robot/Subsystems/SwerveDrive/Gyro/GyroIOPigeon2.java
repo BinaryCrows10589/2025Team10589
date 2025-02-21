@@ -38,7 +38,8 @@ public class GyroIOPigeon2 implements GyroIO{
 
         inputs.yawAngle = this.gyro.getRotation2d();
         if (Math.abs(previousGyroValue.minus(inputs.yawAngle).getDegrees()) > DrivetrainConstants.SwerveDriveConstants.kMaxAngleDeltaPerFrameDegrees) {
-            this.gyro.setYaw(Angle.ofBaseUnits(previousGyroValue.getDegrees(), Degrees));
+            Logger.recordOutput("Gyro/DetlaAngle", Math.abs(previousGyroValue.minus(inputs.yawAngle).getDegrees()));
+            this.gyro.setYaw(previousGyroValue.getDegrees());
             Logger.recordOutput("Gyro/FixedGyro", true);
         } else {
             previousGyroValue = inputs.yawAngle;
@@ -50,5 +51,6 @@ public class GyroIOPigeon2 implements GyroIO{
     @Override
     public void resetAngle(Rotation2d newZero) {
         this.gyro.setYaw(newZero.getDegrees());
+        previousGyroValue = gyro.getRotation2d();
     }
 }

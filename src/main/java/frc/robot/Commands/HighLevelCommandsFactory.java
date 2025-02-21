@@ -147,7 +147,7 @@ public class HighLevelCommandsFactory {
 
     public ScrollThanOuttakeCommand createPlaceCoralLeftCommand(double waitBeforeOuttake) {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
-                new double[] {-.1, 0.7, 0}, 
+                new double[] {-.1, 0.5, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
                 5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange), waitBeforeOuttake,
              outtakeCommandFactory);
@@ -155,7 +155,7 @@ public class HighLevelCommandsFactory {
 
     public ScrollThanOuttakeCommand createPlaceCoralRightCommand(double waitBeforeOuttake) {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
-                new double[] {-0.1, -0.7, 0}, 
+                new double[] {-0.1, -0.5, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
                 5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange), waitBeforeOuttake,
                 this.outtakeCommandFactory);

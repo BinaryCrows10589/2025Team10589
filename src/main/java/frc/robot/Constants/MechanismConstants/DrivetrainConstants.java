@@ -23,7 +23,7 @@ public final class DrivetrainConstants {
         public static final double kRotationMaxRateOfChangePerSecond = RobotModeConstants.kIsNotSim ? 100 : 100;
         public static final double kDriveFeedForward = 0.04;
 
-        public static final double kMaxAngleDeltaPerFrameDegrees = 30;
+        public static final double kMaxAngleDeltaPerFrameDegrees = 30;//30;
 
         // Name of the CAN Bus the Swerve Drive is on.
         public static final String kCANLoopName = "SwerveDrive"; // To swich to CANivor set the CANLoopName to the CANivors serial number or name

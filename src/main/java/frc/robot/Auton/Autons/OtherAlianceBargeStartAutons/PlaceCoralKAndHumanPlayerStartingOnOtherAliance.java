@@ -33,7 +33,7 @@ public class PlaceCoralKAndHumanPlayerStartingOnOtherAliance {
         5,
         new double[] {1.3, 0, 0},
         new double[] {1.3, 0, 0},
-        new double[] {4, 0, 0},
+        new double[] {6, 0, 0},
         WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
         WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
         WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
