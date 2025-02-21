@@ -19,7 +19,7 @@ public class HoldCoralInOuttakeCommand extends Command {
         this.outtakeWheelsSubsystem = outtakeWheelsSubsystem;
         this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
         hardCutOffTimer = new Wait(waitTime);
-        addRequirements(outtakeWheelsSubsystem, outtakeCoralSensorsSubsystem);
+        addRequirements(outtakeCoralSensorsSubsystem);
     }
 
     public HoldCoralInOuttakeCommand(OuttakeWheelsSubsystem outtakeWheelsSubsystem, OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem) {
@@ -28,6 +28,7 @@ public class HoldCoralInOuttakeCommand extends Command {
 
     @Override
     public void initialize() {
+        Logger.recordOutput("CheckingHoldCoralIsFinishee", false);
         this.outtakeWheelsSubsystem.setWheelVoltages(OuttakeConstants.kHoldCoralVoltage);
         hardCutOffTimer.startTimer();
     }

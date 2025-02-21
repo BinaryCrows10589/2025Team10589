@@ -23,7 +23,7 @@ public class DetectFunnelCoralCommand extends Command {
         this.outtakeCommandFactory = outtakeCommandFactory;
         this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
         this.holdCoralInOuttakeCommand = this.outtakeCommandFactory.createHoldCoralInOuttakeCommand();
-        addRequirements(outtakeCommandFactory.getOuttakeWheelsSubsystem(), outtakeCoralSensorsSubsystem);
+        addRequirements(outtakeCommandFactory.getOuttakeWheelsSubsystem());
     }
 
 
@@ -35,11 +35,12 @@ public class DetectFunnelCoralCommand extends Command {
     public void execute() {
         //this.isSameCoral = false;
         boolean coralInStartOfOuttake = this.outtakeCoralSensorsSubsystem.isCoralInStartOfOuttake(false);
-        if(coralInStartOfOuttake && !isSameCoral) {
+        boolean isCoralInEndOfOuttake = this.outtakeCoralSensorsSubsystem.isCoralInEndOfOuttake(false);
+        if(coralInStartOfOuttake && !isCoralInEndOfOuttake && !isSameCoral) {
             this.holdCoralInOuttakeCommand.schedule();
             this.isSameCoral = true;
         }
-        if(!coralInStartOfOuttake && !this.outtakeCoralSensorsSubsystem.isCoralInEndOfOuttake(false)) {
+        if(this.holdCoralInOuttakeCommand.isFinished() && this.isSameCoral) {
             this.isSameCoral = false;
         }
         Logger.recordOutput("Funnel/HasSeenCoral", this.isSameCoral);

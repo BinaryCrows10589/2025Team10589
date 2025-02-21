@@ -1,6 +1,7 @@
 package frc.robot.Commands.AutoPositionCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.OuttakeWheelsCommands.OuttakeCoralCommand;
@@ -18,7 +19,7 @@ public class ScrollThanOuttakeCommand extends Command {
     private OuttakeCommandFactory outtakeCommandFactory;
     private OuttakeCoralCommand outtakeWheelsCommand;
     private WaitCommand timeBeforeOuttake;
-    private SequentialGroupCommand waitThenOuttake;
+    private SequentialCommandGroup waitThenOuttake;
 
     public ScrollThanOuttakeCommand(ScrollWithReefTreeDetectorCommand scrollWithReefTreeDetectorCommand, double timeBeforeOutput,
      OuttakeCommandFactory outtakeCommandFactory) {
@@ -26,7 +27,7 @@ public class ScrollThanOuttakeCommand extends Command {
         this.outtakeCommandFactory = outtakeCommandFactory;
         this.outtakeWheelsCommand = this.outtakeCommandFactory.createOuttakeCoralCommand();
         this.timeBeforeOuttake = new WaitCommand(timeBeforeOutput);
-        this.waitThenOuttake = new SequentialGroupCommand(this.timeBeforeOuttake, this.outtakeWheelsCommand);
+        this.waitThenOuttake = new SequentialCommandGroup(this.timeBeforeOuttake, this.outtakeWheelsCommand);
 
     }
     

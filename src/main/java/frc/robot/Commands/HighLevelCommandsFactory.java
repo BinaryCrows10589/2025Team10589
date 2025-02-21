@@ -133,7 +133,7 @@ public class HighLevelCommandsFactory {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
                 new double[] {-.1, 0.7, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange), .3,
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange), .2,
              outtakeCommandFactory);
     }
 
@@ -141,7 +141,7 @@ public class HighLevelCommandsFactory {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
                 new double[] {-0.1, -0.7, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange), .3,
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange), .2,
                 this.outtakeCommandFactory);
     }
 
