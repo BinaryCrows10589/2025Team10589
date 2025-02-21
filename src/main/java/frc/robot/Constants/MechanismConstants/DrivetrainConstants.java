@@ -63,10 +63,10 @@ public final class DrivetrainConstants {
         public static final int kBackRightTurningAbsoluteEncoderCANID = 16;
 
         // Turning Absolute Encoder Offsets in rotations
-        public static final double kFrontLeftTurningAbsoluteEncoderOffsetRotations = 0.458008; //Done
-        public static final double kFrontRightTurningAbsoluteEncoderOffsetRotations= 0.963379; //
-        public static final double kBackLeftTurningAbsoluteEncoderOffsetRotations = 0.925537;
-        public static final double kBackRightTurningAbsoluteEncoderOffsetRotations = 0.749268;
+        public static final double kFrontLeftTurningAbsoluteEncoderOffsetRotations = 0.457275; //Done
+        public static final double kFrontRightTurningAbsoluteEncoderOffsetRotations= 0.964600; //
+        public static final double kBackLeftTurningAbsoluteEncoderOffsetRotations = 0.925049;
+        public static final double kBackRightTurningAbsoluteEncoderOffsetRotations = 0.749756;
     
         // End of Swerve Module Configuration Constants
 
