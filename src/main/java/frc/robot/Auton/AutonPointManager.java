@@ -16,12 +16,12 @@ public class AutonPointManager {
     // Deloration of Points
 
     // Points For Own Alliance
-    public static final AutonPoint kPlaceOnCoralB = new AutonPoint(5.250, 5.1518, 60, 180, false);
-    public static final AutonPoint kLeaveFromPlaceOnCoralB = new AutonPoint(5.250, 5.1518, 60, 155, false);
+    public static final AutonPoint kPlaceOnCoralB = new AutonPoint(5.18, 5.0572, 60, 180, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralB = new AutonPoint(5.250, 5.1772, 60, 155, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralBConstrant = new AutonPoint(4.5, 5.8, 60, 155, false);
-    public static final AutonPoint kIntakeFromOwnAllianceHumanPlayer = new AutonPoint(1.300, 6.8772, 126, 180, false);
+    public static final AutonPoint kIntakeFromOwnAllianceHumanPlayer = new AutonPoint(1.1, 6.8572, 126, 180, false);
     public static final AutonPoint kLeaveFromOwnAllianceHumanPlayer = new AutonPoint(1.300, 6.8772, 126, 0, false);
-    public static final AutonPoint kPlaceOnCoralD = new AutonPoint(3.95, 5.25, 120, 310, false);
+    public static final AutonPoint kPlaceOnCoralD = new AutonPoint(3.87, 4.9472, 120, 310, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralD = new AutonPoint(3.95, 5.25, 120, 130, false);
     public static final AutonPoint kPlaceOnCoralE = new AutonPoint(3.65, 5.1, 120, 310, false);
 
@@ -31,14 +31,12 @@ public class AutonPointManager {
     // Points For Other Alliance 3.0318
     public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.18, 3.02, -60, 180, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralK = new AutonPoint(5.25, 2.9, -60, -155, false);
-    public static final AutonPoint kLeaveFromPlaceOnCoralKConstrant = new AutonPoint(4.5, FieldConstants.kFieldWidthMeters-5.8, -60, -155, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralKConstrant = new AutonPoint(4.5, 2.2772, -60, -155, false);
     public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.10, 1.22, -126, -180, false);
     public static final AutonPoint kLeaveFromOtherAllianceHumanPlayer = new AutonPoint(1.300, 1.2, -126, -0, false);
-    // 2.8018
     public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.87, 3.13, -120, 50, false);
-    // 2.6518
-    public static final AutonPoint kLeaveFromPlaceOnCoralI = new AutonPoint(3.95, FieldConstants.kFieldWidthMeters-5.25, -120, -130, false);
-    public static final AutonPoint kPlaceOnCoralH = new AutonPoint(3.65, FieldConstants.kFieldWidthMeters-5.1, -120, -310, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralI = new AutonPoint(3.95, 2.8272, -120, -130, false);
+    public static final AutonPoint kPlaceOnCoralH = new AutonPoint(3.65, 2.9772, -120, -310, false);
     
     // Decloration of Path Points
 

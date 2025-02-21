@@ -3,6 +3,7 @@ package frc.robot.Auton.Autons.OtherAlianceBargeStartAutons;
 import static edu.wpi.first.units.Units.Rotation;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -44,13 +45,21 @@ public class PlaceCoralKStartingOnOtherAliance {
         new Pose2d(.06, .06, Rotation2d.fromDegrees(5)),// WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand());
-        autonCommands.add(new WaitCommand(.3));
-        autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
+        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
         autonCommands.add(new WaitCommand(.5));
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;
     } 
+
+    public static Supplier<Command> getAutonSupplier(
+        DriveCommandFactory driveCommandFactory, 
+        DriveSubsystem driveSubsystem, 
+        ElevatorCommandFactory elevatorCommandFactory, 
+        OuttakeCommandFactory outtakeCommandFactory,
+        HighLevelCommandsFactory highLevelCommandsFactory
+    ) {
+        return () -> getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
+    }
 }

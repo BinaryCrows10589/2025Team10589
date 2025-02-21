@@ -1,6 +1,7 @@
 package frc.robot.Auton.Autons.OwnAlianceBargeStartAutons;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -45,4 +46,14 @@ public class PlaceCoralBAndHumanPlayerStartingOnOwnAliance {
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;
     } 
+
+    public static Supplier<Command> getAutonSupplier(
+        DriveCommandFactory driveCommandFactory, 
+        DriveSubsystem driveSubsystem, 
+        ElevatorCommandFactory elevatorCommandFactory, 
+        OuttakeCommandFactory outtakeCommandFactory,
+        HighLevelCommandsFactory highLevelCommandsFactory
+    ) {
+        return () -> getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory);
+    }
 }
