@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
@@ -32,16 +33,17 @@ public class PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance {
         autonCommands.add(PlaceCoralKAndIStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CoralIToHumanPlayer",
         AutonPointManager.kCoralIToHumanPlayer,
-        5,
-        new double[] {1.5, 0, 0},
-        new double[] {3, 0, 0},
-        new double[] {1, 0, 0},
+        3,
+        new double[] {1.7, 0, 0},
+        new double[] {.5, 0, 0},
+        new double[] {6, 0, 0},
         WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
         WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
         WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
         WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
         new Pose2d(.08, .08, Rotation2d.fromDegrees(5)),
         driveSubsystem));
+        autonCommands.add(new WaitCommand(.5));
         
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;

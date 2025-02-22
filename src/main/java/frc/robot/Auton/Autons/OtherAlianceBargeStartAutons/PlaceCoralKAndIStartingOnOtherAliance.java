@@ -31,7 +31,7 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         autonCommands.add(PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralI",
         AutonPointManager.kHumanPlayerToCoralI,
-        5,
+        2,
         new double[] {2, 0, 0},
         new double[] {6, 0, 0},
         new double[] {6, 0, 0},
@@ -43,7 +43,7 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         driveSubsystem));
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
-        autonCommands.add(new WaitCommand(.5));
+        autonCommands.add(new WaitCommand(.6));
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
         //autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());

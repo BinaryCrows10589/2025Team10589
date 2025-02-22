@@ -34,7 +34,7 @@ public class PlaceCoralKStartingOnOtherAliance {
         
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("OtherAllianceBargeStartPositionToPlaceOnCoralK",
         AutonPointManager.kOtherAllianceBargeStartPositionToPlaceOnCoralK,
-        5,
+        2,
         new double[] {1.3, 0, 0},
         new double[] {1.3, 0, 0},
         new double[] {4, 0, 0},

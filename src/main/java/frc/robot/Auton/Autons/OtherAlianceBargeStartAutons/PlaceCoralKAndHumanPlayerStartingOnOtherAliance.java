@@ -30,9 +30,9 @@ public class PlaceCoralKAndHumanPlayerStartingOnOtherAliance {
         autonCommands.add(PlaceCoralKStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("PlaceOnCoralKToHumanPlayer",
         AutonPointManager.kPlaceOnCoralKToHumanPlayer,
-        5,
-        new double[] {1.3, 0, 0},
-        new double[] {1.3, 0, 0},
+        4,
+        new double[] {1.2, 0, 0},
+        new double[] {1.2, 0, 0},
         new double[] {6, 0, 0},
         WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
         WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
