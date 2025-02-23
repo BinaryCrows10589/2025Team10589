@@ -1,5 +1,7 @@
 package frc.robot.Utils.LEDUtils;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;

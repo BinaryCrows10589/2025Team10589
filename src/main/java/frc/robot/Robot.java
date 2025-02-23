@@ -15,6 +15,8 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -24,6 +26,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Subsystems.GameObjectTracking.GameObjectTracker;
@@ -102,6 +105,7 @@ public class Robot extends LoggedRobot {
             // Initalized the LEDs
             LEDManager.init(); 
 
+
             // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
             // autonomous chooser on the dashboard.
             robotContainer = new RobotContainer();
@@ -125,6 +129,7 @@ public class Robot extends LoggedRobot {
         CommandScheduler.getInstance().run();
         this.robotContainer.updateButtonBoardInputs();
         checkDriverStationUpdate();
+
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
