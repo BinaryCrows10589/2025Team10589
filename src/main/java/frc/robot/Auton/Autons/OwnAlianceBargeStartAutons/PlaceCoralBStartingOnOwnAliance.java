@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
@@ -15,6 +16,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
+import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
 public class PlaceCoralBStartingOnOwnAliance {
@@ -29,25 +31,31 @@ public class PlaceCoralBStartingOnOwnAliance {
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         
-        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("OwnAllianceBargeStartPositionToPlaceOnCoralB",
-        AutonPointManager.kOwnAllianceBargeStartPositionToPlaceOnCoralB,
-        5,
-        new double[] {.9, 0, 0},
-        new double[] {.75, 0, 0},
-        new double[] {.75, 0, 0},
-        WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
-        WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
-        WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
-        WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
-        WPILibAutonConstants.kPositionTolorence,
-        driveSubsystem));
-        autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
+        
+        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new WaitCommand(.75),
+            elevatorCommandFactory.createElevatorToL4Command());
+        ParallelGroupCommand elevate = new ParallelGroupCommand(sequentialGroupCommand,
+            new WPILibFollowTrajectoryFromPointsCommand("OwnAllianceBargeStartPositionToPlaceOnCoralB",
+            AutonPointManager.kOwnAllianceBargeStartPositionToPlaceOnCoralB,
+            2,
+            new double[] {1.3, 0, 0},
+            new double[] {1.3, 0, 0},
+            new double[] {4, 0, 0},
+            WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
+            WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
+            WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
+            WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
+            new Pose2d(.06, .06, Rotation2d.fromDegrees(5)),
+            driveSubsystem));
+
+        autonCommands.add(elevate);
+        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
         autonCommands.add(new WaitCommand(.5));
-        autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;
+        
+        
     } 
 
     public static Supplier<Command> getAutonSupplier(
