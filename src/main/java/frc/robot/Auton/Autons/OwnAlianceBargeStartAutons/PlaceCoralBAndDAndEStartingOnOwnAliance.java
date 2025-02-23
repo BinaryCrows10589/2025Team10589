@@ -41,9 +41,9 @@ public class PlaceCoralBAndDAndEStartingOnOwnAliance {
             WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
             WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
             WPILibAutonConstants.kPositionTolorence,
-            driveSubsystem));
+        driveSubsystem));
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
+        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
         autonCommands.add(new WaitCommand(.5));
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
