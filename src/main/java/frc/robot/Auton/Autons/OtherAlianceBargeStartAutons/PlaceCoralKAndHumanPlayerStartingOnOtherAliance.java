@@ -16,6 +16,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
+import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
 public class PlaceCoralKAndHumanPlayerStartingOnOtherAliance {
@@ -26,21 +27,24 @@ public class PlaceCoralKAndHumanPlayerStartingOnOtherAliance {
         driveSubsystem.setRobotPose(AutonPointManager.kOtherAllianceBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
-        
         autonCommands.add(PlaceCoralKStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
-        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("PlaceOnCoralKToHumanPlayer",
-        AutonPointManager.kPlaceOnCoralKToHumanPlayer,
-        4,
-        new double[] {1.2, 0, 0},
-        new double[] {1.2, 0, 0},
-        new double[] {6, 0, 0},
-        WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
-        WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
-        WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
-        WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
-        new Pose2d(.08, .08, Rotation2d.fromDegrees(5)),
-        driveSubsystem));
-        autonCommands.add(new WaitCommand(.5));
+        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new WaitCommand(.9),
+            new WPILibFollowTrajectoryFromPointsCommand("PlaceOnCoralKToHumanPlayer",
+            AutonPointManager.kPlaceOnCoralKToHumanPlayer,
+            3,
+            new double[] {1.2, 0, 0},
+            new double[] {1.2, 0, 0},
+            new double[] {6, 0, 0},
+            WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
+            WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
+            WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
+            WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
+            new Pose2d(.08, .08, Rotation2d.fromDegrees(5)),
+            driveSubsystem));
+        ParallelGroupCommand elevatorDownWhileDrive = new ParallelGroupCommand(sequentialGroupCommand,
+         elevatorCommandFactory.createElevatorToBasementCommand());
+        autonCommands.add(elevatorDownWhileDrive);
+        autonCommands.add(new WaitCommand(.25));
         
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;

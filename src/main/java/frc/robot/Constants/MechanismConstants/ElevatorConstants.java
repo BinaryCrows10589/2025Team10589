@@ -26,11 +26,11 @@ public class ElevatorConstants {
     
     public static final boolean isSlaveReversed = false;
 
-    public static final double kGroundIntakePassoffTolorence = 0.00833333333;
-    public static final double kElevatorScorePositionTolorence = 0.00833333333;
-    public static final double kElevatorScoreBargePositionTolorence = 0.00833333333;
-    public static final double kElevatorScoreProcessorPositionTolorence = 0.00833333333;
-    public static final double kElevatorFunnelTolorence = 0.00833333333;
+    public static final double kGroundIntakePassoffTolorence = 0.02;
+    public static final double kElevatorScorePositionTolorence = 0.02;
+    public static final double kElevatorScoreBargePositionTolorence = 0.02;
+    public static final double kElevatorScoreProcessorPositionTolorence = 0.02;
+    public static final double kElevatorFunnelTolorence = 0.02;
 
     public static final double kForwardSoftLimit = .8643; // ???
 

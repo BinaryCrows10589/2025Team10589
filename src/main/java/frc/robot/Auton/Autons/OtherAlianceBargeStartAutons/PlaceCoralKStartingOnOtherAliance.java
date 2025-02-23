@@ -18,6 +18,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
+import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
 public class PlaceCoralKStartingOnOtherAliance {
@@ -31,23 +32,25 @@ public class PlaceCoralKStartingOnOtherAliance {
         driveSubsystem.setRobotPose(AutonPointManager.kOtherAllianceBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
+        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new WaitCommand(.75),
+            elevatorCommandFactory.createElevatorToL4Command());
+        ParallelGroupCommand elevate = new ParallelGroupCommand(sequentialGroupCommand,
+            new WPILibFollowTrajectoryFromPointsCommand("OtherAllianceBargeStartPositionToPlaceOnCoralK",
+            AutonPointManager.kOtherAllianceBargeStartPositionToPlaceOnCoralK,
+            2,
+            new double[] {1.3, 0, 0},
+            new double[] {1.3, 0, 0},
+            new double[] {4, 0, 0},
+            WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
+            WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
+            WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
+            WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
+            new Pose2d(.06, .06, Rotation2d.fromDegrees(5)),// WPILibAutonConstants.kPositionTolorence,
+            driveSubsystem));
         
-        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("OtherAllianceBargeStartPositionToPlaceOnCoralK",
-        AutonPointManager.kOtherAllianceBargeStartPositionToPlaceOnCoralK,
-        2,
-        new double[] {1.3, 0, 0},
-        new double[] {1.3, 0, 0},
-        new double[] {4, 0, 0},
-        WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
-        WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
-        WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
-        WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
-        new Pose2d(.06, .06, Rotation2d.fromDegrees(5)),// WPILibAutonConstants.kPositionTolorence,
-        driveSubsystem));
-        autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
+        autonCommands.add(elevate);
+        autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
         autonCommands.add(new WaitCommand(.5));
-        autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;

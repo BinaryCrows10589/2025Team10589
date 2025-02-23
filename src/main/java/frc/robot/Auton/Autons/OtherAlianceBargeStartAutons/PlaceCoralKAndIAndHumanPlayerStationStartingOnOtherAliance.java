@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
@@ -16,6 +17,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
+import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
 public class PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance {
@@ -31,18 +33,25 @@ public class PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance {
         ArrayList<Command> autonCommands = new ArrayList<>();
         
         autonCommands.add(PlaceCoralKAndIStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
-        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CoralIToHumanPlayer",
-        AutonPointManager.kCoralIToHumanPlayer,
-        3,
-        new double[] {1.7, 0, 0},
-        new double[] {.5, 0, 0},
-        new double[] {6, 0, 0},
-        WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
-        WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
-        WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
-        WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
-        new Pose2d(.08, .08, Rotation2d.fromDegrees(5)),
-        driveSubsystem));
+        
+        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new WaitCommand(.9),
+            new WPILibFollowTrajectoryFromPointsCommand("CoralIToHumanPlayer",
+            AutonPointManager.kCoralIToHumanPlayer,
+            2.5,
+            new double[] {1.7, 0, 0},
+            new double[] {.5, 0, 0},
+            new double[] {6, 0, 0},
+            WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
+            WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
+            WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
+            WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
+            new Pose2d(.08, .08, Rotation2d.fromDegrees(5)),
+            driveSubsystem));
+
+        ParallelGroupCommand elevatorDownWhileDrive = new ParallelGroupCommand(sequentialGroupCommand,
+         elevatorCommandFactory.createElevatorToBasementCommand());
+
+        autonCommands.add(elevatorDownWhileDrive);
         autonCommands.add(new WaitCommand(.5));
         
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);

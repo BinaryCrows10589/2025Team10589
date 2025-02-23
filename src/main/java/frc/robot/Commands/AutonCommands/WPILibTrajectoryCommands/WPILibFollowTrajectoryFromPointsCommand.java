@@ -232,7 +232,6 @@ public class WPILibFollowTrajectoryFromPointsCommand extends Command{
         Logger.recordOutput("Auton/" + pathName + "/Started", false);
         Logger.recordOutput("Auton/" + pathName + "/PathTime", Timer.getFPGATimestamp() - startTime);
         this.driveSubsystem.stop();
-        this.hardCutOffTimer.disableTimer();
         LEDManager.setSolidColor(new int[] {0, 0, 255});        
     }
 

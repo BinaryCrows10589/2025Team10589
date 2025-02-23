@@ -4,6 +4,8 @@
 
 package frc.robot.Commands.ElevatorCommands;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
@@ -28,6 +30,7 @@ public class ElevatorToPositionCommand extends Command {
     public void initialize() {
         this.elevatorSubsystem.setDesiredElevatorPosition(desiredElevatorPosition);
         LEDManager.setSolidColor(ControlConstants.kElevatorInMotionColor);
+        Logger.recordOutput("Elevator/InPosition", false);
 
     }
 
@@ -42,6 +45,7 @@ public class ElevatorToPositionCommand extends Command {
     public void end(boolean interrupted) {
         this.elevatorSubsystem.setDesiredElevatorPosition(desiredElevatorPosition);
         LEDManager.setSolidColor(ControlConstants.kElevatorInPositionColor);
+        Logger.recordOutput("Elevator/InPosition", true);
     }
 
     // Returns true when the command should end.
