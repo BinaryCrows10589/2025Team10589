@@ -80,9 +80,11 @@ public class OdometryIOUpdater implements OdometryIO{
             if(RobotModeConstants.isBlueAlliance) {
                 fieldTags.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
                 VisionConstants.originPosition = OriginPosition.kBlueAllianceWallRightSide;
+                VisionConstants.kExcludedTags = VisionConstants.kExcludedTagsBlue;
             } else {
                 fieldTags.setOrigin(OriginPosition.kRedAllianceWallRightSide);
                 VisionConstants.originPosition = OriginPosition.kRedAllianceWallRightSide;
+                VisionConstants.kExcludedTags = VisionConstants.kExcludedTagsRed;
             }
             
             setRobotPose(flipAlliance(getRobotPose()));
