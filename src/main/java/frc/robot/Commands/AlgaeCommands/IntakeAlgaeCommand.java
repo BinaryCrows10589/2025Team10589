@@ -21,7 +21,6 @@ public class IntakeAlgaeCommand extends Command {
      */
 
     private final ElevatorToPositionCommand elevatorToPositionCommand;
-    private final ElevatorToPositionCommand elevatorToBasementCommand;
     private final AlgaePivotToPositionCommand pivotCommand;
     private final AlgaePivotToPositionCommand defualtPivotPositionCommand;
     private final RunAlgaeWheelsCommand algaeWheelsCommand;
@@ -32,7 +31,6 @@ public class IntakeAlgaeCommand extends Command {
         ElevatorCommandFactory elevatorCommandFactory,
         AlgaePivotSubsystem algaePivotSubsystem) {
         this.elevatorToPositionCommand = elevatorToPositionCommand;
-        this.elevatorToBasementCommand = elevatorCommandFactory.createElevatorToBasementCommand();
         this.defualtPivotPositionCommand = new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kDefultPivotPosition);
         this.pivotCommand = pivotCommand;
         this.algaeWheelsCommand = algaeWheelsCommand;
@@ -52,7 +50,6 @@ public class IntakeAlgaeCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        this.elevatorToBasementCommand.schedule();
         this.defualtPivotPositionCommand.schedule();
         this.algaeWheelsCommand.cancel();
     }

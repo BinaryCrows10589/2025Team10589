@@ -124,7 +124,7 @@ public class RobotContainer {
         this.buttonBoard.bindButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.indexCoral);
         this.buttonBoard.bindButton(this.outtakeCommandFactory.createIntakeCoralCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.outtakeIn);
         this.buttonBoard.bindButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.outtakeOut);
-        
+
         this.buttonBoard.bindButton(highLevelCommandsFactory.createIntakeAlgaeFromGroundCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.groundIntake);
         this.buttonBoard.bindButton(highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.reefIntakeLow);
         this.buttonBoard.bindButton(highLevelCommandsFactory.createIntakeAlgaeFromReefL3Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.reefIntakeHigh);
