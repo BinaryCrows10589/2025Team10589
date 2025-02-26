@@ -202,14 +202,10 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
             this.goingDown = false;
         }
     }
-
-    private void smoothDown(double positionError) {
-        
-    }
-
+    
     @Override
     public void incrementDesiredPosition(double increment) {
-        desiredElevatorPosition.Position += increment * ElevatorConstants.kElevatorGearRatio;
+        desiredElevatorPosition.Position += increment;
         this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
     }
 

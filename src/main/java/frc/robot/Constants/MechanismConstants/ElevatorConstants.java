@@ -36,9 +36,9 @@ public class ElevatorConstants {
 
     public static final double kReverseSoftLimit = 0.0;
 
-    public static final double kManualMovementUpSpeed = 0.005;
+    public static final double kManualMovementUpSpeed = 0.03583333333 / 2; // Revelutions Per Frame
 
-    public static final double kManualMovementDownSpeed = -0.005;
+    public static final double kManualMovementDownSpeed = -0.03583333333 / 2; // Revelutions Per Frame
 
     public static final double kElevatorEncoderOffset = .01;
 

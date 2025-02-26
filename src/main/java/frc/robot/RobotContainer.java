@@ -125,7 +125,6 @@ public class RobotContainer {
         this.buttonBoard.bindButton(this.outtakeCommandFactory.createIntakeCoralCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.outtakeIn);
         this.buttonBoard.bindButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.outtakeOut);
         
-
         this.buttonBoard.bindButton(highLevelCommandsFactory.createIntakeAlgaeFromGroundCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.groundIntake);
         this.buttonBoard.bindButton(highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.reefIntakeLow);
         this.buttonBoard.bindButton(highLevelCommandsFactory.createIntakeAlgaeFromReefL3Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.reefIntakeHigh);
@@ -148,8 +147,9 @@ public class RobotContainer {
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeTen);
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeEleven);
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeTwelve);
-        //this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorUpCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorUp);
-        //this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorDown);
+        
+        this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorUpCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorUp);
+        this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorDown);
         
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberDownManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown); // We have no climber command factory yet.
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberUpManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);

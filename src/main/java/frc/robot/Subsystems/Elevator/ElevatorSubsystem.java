@@ -78,34 +78,23 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void setDesiredElevatorPosition(double desiredPosition) {
         if (this.isCoralInTransit) return;
         lastAssignedDesiredPosition = null;
-        updateElevatorControlMode(ElevatorMode.AUTOMATIC_POSITIONING);
         elevatorIO.setDesiredPosition(desiredPosition);
     }
 
     public void setDesiredElevatorPosition(ElevatorPosition desiredPosition) {
         if (this.isCoralInTransit) return;
         lastAssignedDesiredPosition = desiredPosition;
-        updateElevatorControlMode(ElevatorMode.AUTOMATIC_POSITIONING);
 
         //elevatorIO.setDesiredPosition(resolveElevatorPosition(desiredPosition));
     }
 
     public void incrementDesiredElevatorPosition(double increment) {
-        if (this.isCoralInTransit) return;
-        updateElevatorControlMode(ElevatorMode.MANUAL);
         elevatorIO.incrementDesiredPosition(increment);
     }
 
     public boolean isElevatorInTolorence(double toloranceRotations) {
         return Tolerance.inTolorance(this.elevatorInputs.elevatorRawPosition, this.elevatorInputs.offsetDesiredElevatorPosition,
         toloranceRotations);
-    }
-
-    public void updateElevatorControlMode(ElevatorMode controlMode) {
-        this.currentMode = controlMode;
-    }
-    public ElevatorMode getControlMode() {
-        return this.currentMode;
     }
 
     public ElevatorPosition getDesiredElevatorPosition() {
@@ -129,7 +118,6 @@ public class ElevatorSubsystem extends SubsystemBase {
                 return .56;
             case L4:
                 return .864;
-
             case FUNNEL:
                 return 0;
             case GROUND_INTAKE_ALGAE:

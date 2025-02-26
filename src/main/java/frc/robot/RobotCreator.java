@@ -3,7 +3,6 @@ package frc.robot;
 
 import java.util.function.BooleanSupplier;
 
-import frc.robot.Commands.ElevatorCommands.ElevatorReturnDefaultCommand;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeCoralSensorConstants;
 import frc.robot.Deprecated.ElevatorIOCANCoderPositionalPID;
@@ -67,8 +66,6 @@ public class RobotCreator {
     private final OuttakeWheelsSubsystem outtakeWheelsSubsystem;
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
 
-    private ElevatorReturnDefaultCommand elevatorReturnDefaultCommand;
-
     //private ClimberSubsystem climberSubsystem;
 
     private final AlgaeWheelSubsystem algaeWheelSubsystem;
@@ -96,8 +93,6 @@ public class RobotCreator {
                 this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());
 
                 this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderMotionMagic(), this.funnelCoralSensorSubsystem::isCoralInFunnel, this.outtakeCoralSensorsSubsystem::isCoralOutOfElevator);
-                //this.elevatorReturnDefaultCommand = new ElevatorReturnDefaultCommand(elevatorSubsystem);
-                //this.elevatorSubsystem.setDefaultCommand(elevatorReturnDefaultCommand);
 
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
 
