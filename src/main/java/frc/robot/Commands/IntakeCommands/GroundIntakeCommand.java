@@ -83,7 +83,7 @@ public class GroundIntakeCommand extends Command {
         elevatorAndTransitCommand = new SequentialGroupCommand(
             this.elevatorToBasementCommand, //TODO: RE ADD
             this.runTransitToOuttakeCommand);        
-        LEDManager.setSolidColor(ControlConstants.kCoralIntakingColor);
+        //LEDManager.setSolidColor(ControlConstants.kCoralIntakingColor);
 
     }
 

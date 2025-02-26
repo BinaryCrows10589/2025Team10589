@@ -28,7 +28,7 @@ public class ClimberToPositionCommand extends Command {
     @Override
     public void initialize() {
         this.climberSubsystem.setDesiredClimberPosition(desiredClimberPosition);
-        LEDManager.setSolidColor(ControlConstants.kClimberInMotionColor);
+        //LEDManager.setSolidColor(ControlConstants.kClimberInMotionColor);
 
     }
 
@@ -41,7 +41,7 @@ public class ClimberToPositionCommand extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        LEDManager.setSolidColor(ControlConstants.kClimberInPositionColor);
+        ///LEDManager.setSolidColor(ControlConstants.kClimberInPositionColor);
     }
 
     // Returns true when the command should end.
