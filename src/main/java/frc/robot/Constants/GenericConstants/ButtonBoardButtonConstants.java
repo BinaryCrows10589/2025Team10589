@@ -2,18 +2,18 @@ package frc.robot.Constants.GenericConstants;
 
 public class ButtonBoardButtonConstants {
     public class ButtonBoardAutoPositioningButtons {
-        public static int reefPostOne = 0;
-        public static int reefPostTwo = 1;
-        public static int reefPostThree = 2;
-        public static int reefPostFour = 3;
-        public static int reefPostFive = 4;
-        public static int reefPostSix = 5;
-        public static int reefPostSeven = 6;
-        public static int reefPostEight = 7;
-        public static int reefPostNine = 8;
-        public static int reefPostTen = 9;
-        public static int reefPostEleven = 10;
-        public static int reefPostTwelve = 11;
+        public static int reefTreeOne = 0;
+        public static int reefTreeTwo = 1;
+        public static int reefTreeThree = 2;
+        public static int reefTreeFour = 3;
+        public static int reefTreeFive = 4;
+        public static int reefTreeSix = 5;
+        public static int reefTreeSeven = 6;
+        public static int reefTreeEight = 7;
+        public static int reefTreeNine = 8;
+        public static int reefTreeTen = 9;
+        public static int reefTreeEleven = 10;
+        public static int reefTreeTwelve = 11;
     }
 
     public class ButtonBoardNormalButtons {
@@ -41,8 +41,5 @@ public class ButtonBoardButtonConstants {
 
         public static int climberDown = 17;
         public static int climberUp = 18;
-
-        public static int scoreCoralLeft = 19;
-        public static int scoreCoralRight = 20;
     }
 }

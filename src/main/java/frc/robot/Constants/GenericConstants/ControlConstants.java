@@ -5,8 +5,8 @@ package frc.robot.Constants.GenericConstants;
 public final class ControlConstants {
 
     public static final int kDriverControllerPort = 0;
-    public static final int kButtonBoardPort = 1;
-    public static final int kButtonBoardAltPort = 2;
+    //public static final int kButtonBoardPort = 1;
+    public static final int kButtonBoardAltPort = 3;
     public static final double kDeadband = .07;
     public static boolean slowModeActive = false;
     public static final double kTranslationXSlowModeMultipler = .2;
@@ -22,8 +22,9 @@ public final class ControlConstants {
     public static final int[] kClimberInMotionColor = {200, 255, 255}; // Baby Blue
     public static final int[] kClimberInPositionColor = {255, 200, 200}; // Pink
 
-    public static final int kButtonBoardAutoPositioningPort = 1;
-    public static final int kButtonBoardNormalPort = 3; // TODO: Change this?
+    public static final int kButtonBoardNormalPort = 1; // TODO: Change this?
+    public static final int kButtonBoardAutoPositioningPort = 2;
+
     
 
     public static boolean kIsDriverControlled = true;
