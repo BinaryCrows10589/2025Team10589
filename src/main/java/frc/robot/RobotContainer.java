@@ -167,7 +167,6 @@ public class RobotContainer {
         this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), XboxController.Button.kY.value);
          
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), XboxController.Button.kLeftStick.value);  
-        this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToReefIntakeAlgaeHighCommand(), XboxController.Button.kLeftBumper.value);  
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL2Command(), XboxController.Button.kLeftBumper.value); 
         this.buttonBoardAlt.bindToLeftTriggure(this.elevatorCommandFactory.createElevatorToL3Command());  
         this.buttonBoardAlt.bindToRightTriggure(this.elevatorCommandFactory.createElevatorToL4Command());  
