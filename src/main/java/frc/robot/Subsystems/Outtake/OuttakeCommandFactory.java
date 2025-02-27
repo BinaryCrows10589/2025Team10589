@@ -31,6 +31,7 @@ public class OuttakeCommandFactory {
     public OuttakeCoralCommand createOuttakeCoralCommand() {
         return new OuttakeCoralCommand(outtakeWheelsSubsystem, outtakeCoralSensorsSubsystem);
     }
+    
     public IntakeCoralCommand createIntakeCoralCommand() {
         return new IntakeCoralCommand(outtakeWheelsSubsystem, outtakeCoralSensorsSubsystem);
     }
