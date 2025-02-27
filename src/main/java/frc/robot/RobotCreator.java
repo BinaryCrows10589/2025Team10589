@@ -1,18 +1,13 @@
 package frc.robot;
 
 
-import java.util.function.BooleanSupplier;
-
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
-import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.IntakeCoralSensorConstants;
-import frc.robot.Deprecated.ElevatorIOCANCoderPositionalPID;
 import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotIO;
 import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotIOSparkMax;
 import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotSubsystem;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelIO;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelIOSparkMax;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelSubsystem;
-import frc.robot.Subsystems.Climber.ClimberIONeoREVThroughbore;
 import frc.robot.Subsystems.Climber.ClimberSubsystem;
 import frc.robot.Subsystems.Elevator.ElevatorIO;
 import frc.robot.Subsystems.Elevator.ElevatorIOCANCoderMotionMagic;
@@ -20,14 +15,8 @@ import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIO;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIODistanceSensor;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorSubsystem;
-import frc.robot.Subsystems.GroundIntake.IntakeCoralSensor.IntakeCoralSensorIO;
-import frc.robot.Subsystems.GroundIntake.IntakeCoralSensor.IntakeCoralSensorIODistanceSensor;
 import frc.robot.Subsystems.GroundIntake.IntakeCoralSensor.IntakeCoralSensorSubsystem;
-import frc.robot.Subsystems.GroundIntake.IntakeWheels.IntakeWheelsIO;
-import frc.robot.Subsystems.GroundIntake.IntakeWheels.IntakeWheelsIOSparkMax;
 import frc.robot.Subsystems.GroundIntake.IntakeWheels.IntakeWheelsSubsystem;
-import frc.robot.Subsystems.GroundIntake.Pivot.PivotIO;
-import frc.robot.Subsystems.GroundIntake.Pivot.PivotIOTalonFX;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotSubsystem;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIO;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIODistanceSensor;
@@ -40,11 +29,7 @@ import frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector.ReefTreeDetec
 import frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector.ReefTreeDetectorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystemCreator;
-import frc.robot.Subsystems.TransitTunnel.TransitCoralSensor.TransitCoralSensorIO;
-import frc.robot.Subsystems.TransitTunnel.TransitCoralSensor.TransitCoralSensorIODistanceSensor;
 import frc.robot.Subsystems.TransitTunnel.TransitCoralSensor.TransitCoralSensorSubsystem;
-import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsIO;
-import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsIOSparkMax;
 import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsSubsystem;
 
 public class RobotCreator {

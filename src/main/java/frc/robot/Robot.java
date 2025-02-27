@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.Rotation;
-
 import java.util.Optional;
 
 import org.littletonrobotics.junction.LogFileUtil;
@@ -15,22 +13,14 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
-
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.CameraConstants.VisionConstants;
-import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
-import frc.robot.Subsystems.GameObjectTracking.GameObjectTracker;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesChangableValue;
 import frc.robot.Utils.LEDUtils.LEDManager;
 

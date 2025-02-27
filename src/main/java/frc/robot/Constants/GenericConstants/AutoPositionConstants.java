@@ -1,8 +1,6 @@
 package frc.robot.Constants.GenericConstants;
 
-import static edu.wpi.first.units.Units.Rotation;
-
-import edu.wpi.first.math.geometry.Pose2d;
+import  edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
