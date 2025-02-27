@@ -15,10 +15,11 @@ public class SwerveModuleAngleOptimizer {
         return new SwerveModuleState(targetSpeed, Rotation2d.fromDegrees(targetAngle));
       }
  
-    private static double placeInAppropriate0To360Scope(double scopeReference, double newAngle) {
+      public static double placeInAppropriate0To360Scope(double scopeReference, double newAngle) {
         double lowerBound;
         double upperBound;
         double lowerOffset = scopeReference % 360;
+        
         if (lowerOffset >= 0) {
             lowerBound = scopeReference - lowerOffset;
             upperBound = scopeReference + (360 - lowerOffset);
@@ -26,12 +27,10 @@ public class SwerveModuleAngleOptimizer {
             upperBound = scopeReference - lowerOffset;
             lowerBound = scopeReference - (360 + lowerOffset);
         }
-        while (newAngle < lowerBound) {
-            newAngle += 360;
-        }
-        while (newAngle > upperBound) {
-            newAngle -= 360;
-        }
+
+         newAngle += (newAngle < lowerBound) ? Math.ceil((lowerBound - newAngle) / 360) * 360 :
+                    (newAngle > upperBound) ? Math.ceil((newAngle - upperBound) / 360) * -360 : 0;
+
         if (newAngle - scopeReference > 180) {
             newAngle -= 360;
         } else if (newAngle - scopeReference < -180) {
