@@ -172,7 +172,7 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
                 goingDown = false;
             } else {
                 //double desiredVoltage = MathUtil.clamp(Math.pow(positionError, 3), -1, 0);            
-                this.elevatorMasterMotor.setVoltage(-2);
+                this.elevatorMasterMotor.setVoltage(-3.25);
             }
         }
 

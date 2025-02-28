@@ -22,6 +22,7 @@ public class ElevatorToPositionCommand extends Command {
         this.elevatorSubsystem = elevatorSubsystem;
         this.desiredElevatorPosition = desiredElevatorPosition;
         this.elevatorToloranceRotations = elevatorToloranceRotations;
+        Logger.recordOutput("Elevator/InPosition", false);
         addRequirements(this.elevatorSubsystem);
     }
 

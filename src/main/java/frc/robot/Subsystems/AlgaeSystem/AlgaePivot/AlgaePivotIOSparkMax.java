@@ -42,7 +42,7 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
         pivotConfig.absoluteEncoder.inverted(false);
         pivotConfig.inverted(false);
         pivotConfig.smartCurrentLimit(AlgaePivotConstants.kSmartCurrentLimit);
-        pivotConfig.idleMode(IdleMode.kBrake);
+        pivotConfig.idleMode(IdleMode.kCoast);
         pivotConfig.softLimit.forwardSoftLimit(AlgaePivotConstants.kForwardSoftLimit + PivotContants.kRotationOffset);
         pivotConfig.softLimit.reverseSoftLimit(AlgaePivotConstants.kReverseSoftLimit + PivotContants.kRotationOffset);
     
@@ -50,7 +50,7 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
             AlgaePivotConstants.kPivotPPIDValue, 
             AlgaePivotConstants.kPivotIPIDValue,
             AlgaePivotConstants.kPivotDPIDValue);
-
+            
         pivotMotorPIDConstantTuner = new NetworkTablesTunablePIDConstants(
             "/Algae/Pivot", 
             AlgaePivotConstants.kPivotPPIDValue, 
@@ -66,7 +66,7 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
     public void setDesiredPivotRotation(double desiredRotations) {
         desiredPivotRotations = desiredRotations;
 
-        //pivotPIDController.setReference(desiredRotations + AlgaePivotConstants.kPivotEncoderOffset, ControlType.kPosition);
+        pivotPIDController.setReference(desiredRotations + AlgaePivotConstants.kPivotEncoderOffset, ControlType.kPosition);
     }
 
     @Override
