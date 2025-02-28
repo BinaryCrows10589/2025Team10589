@@ -1,5 +1,7 @@
 package frc.robot.Subsystems.AlgaeSystem.AlgaeWheels;
 
+import java.util.function.Consumer;
+
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,6 +13,7 @@ public class AlgaeWheelSubsystem extends SubsystemBase{
     AlgaeWheelIO algaeWheelIO;
     AlgaeWheelIOInputsAutoLogged algaeWheelInputs = new AlgaeWheelIOInputsAutoLogged();
     Wait algaeWheelPullInTimer;
+    private boolean toggleAlgaeWheels = false;
     public AlgaeWheelSubsystem(AlgaeWheelIO algaeWheelIO) {
         this.algaeWheelIO = algaeWheelIO;
         this.algaeWheelPullInTimer = new Wait(AlgaeWheelConstants.kPullInTime);
@@ -21,14 +24,30 @@ public class AlgaeWheelSubsystem extends SubsystemBase{
         this.algaeWheelIO.updateInputs(this.algaeWheelInputs);
         Logger.processInputs("AlgaeSystem/Wheels", algaeWheelInputs);
         Logger.recordOutput("AlgaeSystem/Wheels/Timer", algaeWheelPullInTimer.hasTimePassed());
-        /*if(algaeWheelPullInTimer.hasTimePassed()) {
-            algaeWheelPullInTimer.startTimer();
-            if(this.algaeWheelInputs.wheelDesiredVoltage == 0) {
-                this.algaeWheelIO.setWheelVoltage(AlgaeWheelConstants.kPullInVoltage);
-            } else if(this.algaeWheelInputs.wheelDesiredVoltage == AlgaeWheelConstants.kPullInVoltage) {
-                this.algaeWheelIO.setWheelVoltage(0);
+        if (toggleAlgaeWheels) {
+            if(algaeWheelPullInTimer.hasTimePassed()) {
+                algaeWheelPullInTimer.startTimer();
+                if(this.algaeWheelInputs.wheelDesiredVoltage == 0) {
+                    this.algaeWheelIO.setWheelVoltage(AlgaeWheelConstants.kPullInVoltage);
+                } else if(this.algaeWheelInputs.wheelDesiredVoltage == AlgaeWheelConstants.kPullInVoltage) {
+                    this.algaeWheelIO.setWheelVoltage(0);
+                }
             }
-        }*/
+        }
+    }
+    public Consumer<Boolean> getAlgaeWheelPulseConsumer() {
+        return new Consumer<Boolean>() {
+
+            @Override
+            public void accept(Boolean t) {
+                toggleAlgaeWheels = t;
+            }
+            
+        };
+    }
+
+    public void toggleAlgaeWheelPulse() {
+        toggleAlgaeWheels = !toggleAlgaeWheels;
     }
     public void stopWheel() {
         algaeWheelIO.setWheelVoltage(0);

@@ -151,6 +151,10 @@ public class RobotContainer {
         
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorUpCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorUp);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorDown);
+
+        //TODO: ELIJAH please put your magic secret button binding here
+        this.buttonBoard.bindButton(fieldOrientedDriveCommand, ButtonBoardButtonConstants.ButtonBoardNormalButtons.toggleAlgaeWheelPulse);
+
         
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberDownManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown); // We have no climber command factory yet.
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberUpManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);

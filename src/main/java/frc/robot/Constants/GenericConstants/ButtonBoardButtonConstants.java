@@ -17,6 +17,7 @@ public class ButtonBoardButtonConstants {
     }
 
     public class ButtonBoardNormalButtons {
+        
         public static int l0 = 0;
         public static int l1 = 1;
         public static int l2 = 2;
@@ -41,5 +42,7 @@ public class ButtonBoardButtonConstants {
 
         public static int climberDown = 17;
         public static int climberUp = 18;
+
+        public static int toggleAlgaeWheelPulse = -1; // ok eli
     }
 }
