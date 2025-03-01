@@ -8,6 +8,7 @@ import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.AlgaePivotConstants;
 import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotSubsystem;
+import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelSubsystem;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Utils.LEDUtils.LEDManager;
 
@@ -25,15 +26,21 @@ public class IntakeAlgaeCommand extends Command {
     private final AlgaePivotToPositionCommand defualtPivotPositionCommand;
     private final RunAlgaeWheelsCommand algaeWheelsCommand;
 
+    private final AlgaeWheelSubsystem algaeWheelSubsystem;
+
     public IntakeAlgaeCommand(ElevatorToPositionCommand elevatorToPositionCommand,
         AlgaePivotToPositionCommand pivotCommand,
         RunAlgaeWheelsCommand algaeWheelsCommand,
         ElevatorCommandFactory elevatorCommandFactory,
-        AlgaePivotSubsystem algaePivotSubsystem) {
+        AlgaePivotSubsystem algaePivotSubsystem,
+        AlgaeWheelSubsystem algaeWheelSubsystem) {
         this.elevatorToPositionCommand = elevatorToPositionCommand;
         this.defualtPivotPositionCommand = new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kDefultPivotPosition);
         this.pivotCommand = pivotCommand;
         this.algaeWheelsCommand = algaeWheelsCommand;
+        this.algaeWheelSubsystem = algaeWheelSubsystem;
+
+        addRequirements(algaeWheelSubsystem);
     }
 
     @Override
@@ -41,6 +48,8 @@ public class IntakeAlgaeCommand extends Command {
         this.elevatorToPositionCommand.schedule();
         this.pivotCommand.schedule();
         this.algaeWheelsCommand.schedule();
+
+        algaeWheelSubsystem.setAlgaeWheelPulse(true);
     }
 
     @Override
