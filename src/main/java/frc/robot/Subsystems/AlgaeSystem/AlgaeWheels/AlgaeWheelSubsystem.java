@@ -35,20 +35,10 @@ public class AlgaeWheelSubsystem extends SubsystemBase{
             }
         }
     }
-    public Consumer<Boolean> getAlgaeWheelPulseConsumer() {
-        return new Consumer<Boolean>() {
-
-            @Override
-            public void accept(Boolean t) {
-                toggleAlgaeWheels = t;
-            }
-            
-        };
+    public void setAlgaeWheelPulse(boolean isPulsing) {
+        toggleAlgaeWheels = isPulsing;
     }
 
-    public void toggleAlgaeWheelPulse() {
-        toggleAlgaeWheels = !toggleAlgaeWheels;
-    }
     public void stopWheel() {
         algaeWheelIO.setWheelVoltage(0);
     }

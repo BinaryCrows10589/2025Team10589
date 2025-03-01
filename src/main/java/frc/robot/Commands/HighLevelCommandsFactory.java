@@ -86,31 +86,32 @@ public class HighLevelCommandsFactory {
     public IntakeAlgaeCommand createIntakeAlgaeFromReefL2Command() {
         return new IntakeAlgaeCommand(elevatorCommandFactory.createElevatorToReefIntakeAlgaeLowCommand(), new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations),
             new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kReefTreeIntakeVoltage),
-            this.elevatorCommandFactory, this.algaePivotSubsystem);
+            this.elevatorCommandFactory, this.algaePivotSubsystem, this.algaeWheelSubsystem);
     }
     public IntakeAlgaeCommand createIntakeAlgaeFromReefL3Command() {
         return new IntakeAlgaeCommand(elevatorCommandFactory.createElevatorToReefIntakeAlgaeHighCommand(), new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations),
             new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kReefTreeIntakeVoltage),
-            this.elevatorCommandFactory, this.algaePivotSubsystem);    
+            this.elevatorCommandFactory, this.algaePivotSubsystem, this.algaeWheelSubsystem);    
     }
     
     public IntakeAlgaeCommand createIntakeAlgaeFromGroundCommand() {
         return new IntakeAlgaeCommand(elevatorCommandFactory.createElevatorToGroundIntakeAlgaeCommand(), new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kGroundIntakePositionRotations),
             new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kGroundIntakeVoltage),
-            this.elevatorCommandFactory, this.algaePivotSubsystem);    }
+            this.elevatorCommandFactory, this.algaePivotSubsystem, this.algaeWheelSubsystem);    
+    }
 
     public OuttakeAlgaeCommand createOuttakeAlgaeOnBargeCommand() {
         return new OuttakeAlgaeCommand(elevatorCommandFactory.createElevatorToBargeScoreCommand(),
             new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeBargePositionRotations), 
             this.elevatorCommandFactory,
-            this.algaePivotSubsystem);
+            this.algaePivotSubsystem, this.algaeWheelSubsystem);
     }
 
     public OuttakeAlgaeCommand createOuttakeAlgaeInProcessorCommand() {
         return new OuttakeAlgaeCommand(elevatorCommandFactory.createElevatorToProcessorScoreCommand(),
             new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeBargePositionRotations), 
             this.elevatorCommandFactory,
-            this.algaePivotSubsystem);
+            this.algaePivotSubsystem, this.algaeWheelSubsystem);
     }
 
     public RunAlgaeWheelsCommand createAlgaeWheelsIntakeGroundCommand() {
