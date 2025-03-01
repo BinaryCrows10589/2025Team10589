@@ -120,6 +120,7 @@ public class Robot extends LoggedRobot {
         CommandScheduler.getInstance().run();
         this.robotContainer.updateButtonBoardInputs();
         checkDriverStationUpdate();
+        this.robotContainer.updateLEDs();
     }
 
     /** This function is called once each time the robot enters Disabled mode. */

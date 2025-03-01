@@ -21,7 +21,6 @@ public class MoveElevatorManuallyCommand extends Command {
 
     @Override
     public void initialize() {
-        LEDManager.setSolidColor(ControlConstants.kElevatorInMotionColor);
     }
 
     @Override
@@ -31,7 +30,6 @@ public class MoveElevatorManuallyCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        LEDManager.setSolidColor(ControlConstants.kElevatorInPositionColor);
     }
 
     @Override

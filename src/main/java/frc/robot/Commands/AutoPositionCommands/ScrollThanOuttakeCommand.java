@@ -44,6 +44,7 @@ public class ScrollThanOuttakeCommand extends Command {
         if(!interrupted) {
             this.waitThenOuttake.schedule();
         }
+        this.scrollWithReefTreeDetectorCommand.cancel();
     }
 
     @Override

@@ -14,12 +14,19 @@ public final class ControlConstants {
     public static final double kTranslationYSlowModeMultipler = .2;
     public static final double kRotationSlowModeMultipler = .2;
 
-    public static final int[] kElevatorInPositionColor = {50, 200, 150}; // Greenish Cyan
-    public static final int[] kElevatorInMotionColor = {255, 0, 0}; // Red
+    public static final int[] kElevatorInBasement = {50, 200, 150}; // Greenish Cyan
+    public static final int[] kElevatorInBasementWithCoral = {0, 255, 0}; // Greenish 
+    public static final int[] kElevatorAtL2 = {255, 255, 0}; // Red
+    public static final int[] kElevatorAtL3 = {255, 100, 0}; // Red
+    public static final int[] kElevatorAtL4 = {255, 0, 0}; // Red
+
+
+
     //public static final int[] kCoralIntakingColor = {255, 0, 0}; // Red
     public static final int[] kCoralIntakedColor = {0, 255, 0}; // Green
     public static final int[] kCoralOuttakedColor = {255, 0, 255}; // Purple
     public static final int[] kAutoPositionColor = {220, 80, 10}; // Orange
+    public static boolean kHasCoral = false;
     //public static final int[] kClimberInMotionColor = {200, 255, 255}; // Baby Blue
     //public static final int[] kClimberInPositionColor = {255, 200, 200}; // Pink
     public static boolean kIsDriverControlled = true;

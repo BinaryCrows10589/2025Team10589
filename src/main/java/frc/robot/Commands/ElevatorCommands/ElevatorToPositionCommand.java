@@ -9,6 +9,7 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorPosition;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.LEDUtils.LEDManager;
 
@@ -30,7 +31,23 @@ public class ElevatorToPositionCommand extends Command {
     @Override
     public void initialize() {
         this.elevatorSubsystem.setDesiredElevatorPosition(desiredElevatorPosition);
-        LEDManager.setSolidColor(ControlConstants.kElevatorInMotionColor);
+        if(this.desiredElevatorPosition == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {
+            if(ControlConstants.kHasCoral) {
+                LEDManager.setSolidColor(ControlConstants.kElevatorInBasementWithCoral);
+            } else {
+                LEDManager.setSolidColor(ControlConstants.kElevatorInBasement);
+            }
+            LEDManager.setSolidColor(ControlConstants.kElevatorInBasement);
+        } else if(this.desiredElevatorPosition == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L2) || 
+            this.desiredElevatorPosition == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.REEF_INTAKE_ALGAE_LOW)) {
+            LEDManager.setSolidColor(ControlConstants.kElevatorAtL2);
+        } else if(this.desiredElevatorPosition == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L3) || 
+            this.desiredElevatorPosition == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.REEF_INTAKE_ALGAE_HIGH)) {
+            LEDManager.setSolidColor(ControlConstants.kElevatorAtL3);
+        } else if(this.desiredElevatorPosition == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L4) ||
+            this.desiredElevatorPosition == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.SCORE_ALGAE_BARGE)) {
+            LEDManager.setSolidColor(ControlConstants.kElevatorAtL4);
+        }
         Logger.recordOutput("Elevator/InPosition", false);
 
     }
@@ -45,7 +62,6 @@ public class ElevatorToPositionCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         this.elevatorSubsystem.setDesiredElevatorPosition(desiredElevatorPosition);
-        LEDManager.setSolidColor(ControlConstants.kElevatorInPositionColor);
         Logger.recordOutput("Elevator/InPosition", true);
     }
 

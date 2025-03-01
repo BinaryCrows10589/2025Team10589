@@ -12,8 +12,8 @@ public class ButtonBoardInterface {
     private Command[] autoPositioningButtonMap;
     private Command[][] normalButtonMap;
 
-    private int buttonBoardAutoPositioningButtonCount = 12;
-    private int buttonBoardNormalButtonCount = 18;
+    private int buttonBoardAutoPositioningButtonCount = 13;
+    private int buttonBoardNormalButtonCount = 19;
     
     public ButtonBoardInterface(int autoPositioningPortID, int normalPortID) {
         this.buttonBoardAutoPositioning = new GenericHID(autoPositioningPortID);

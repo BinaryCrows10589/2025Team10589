@@ -40,7 +40,7 @@ public class ElevatorConstants {
 
     public static final double kManualMovementDownSpeed = -0.03583333333 / 2; // Revelutions Per Frame
 
-    public static final double kElevatorEncoderOffset = .029;
+    public static final double kElevatorEncoderOffset = .035;
 
     public static final double kElevatorOuttakeTolerance = 1;
 

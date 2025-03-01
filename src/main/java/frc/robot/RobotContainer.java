@@ -107,7 +107,7 @@ public class RobotContainer {
      * Used to configure button binding
      */
     private void configureBindings() {
-        this.driverController.bindToButton(this.lockSwerves, XboxController.Button.kLeftBumper.value);
+        this.driverController.bindToButton(this.lockSwerves, XboxController.Button.kRightBumper.value);
         this.driverController.bindToButton(this.resetOdometry, XboxController.Button.kY.value);
         //this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveTranslationProfiler(), XboxController.Button.kX.value);
         //this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveRotationProfiler(), XboxController.Button.kB.value);
@@ -117,12 +117,12 @@ public class RobotContainer {
         Commands.runOnce(this.driveSubsystem::setAxisLockModeFalse));
          
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l0);
-        this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToL1Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l1);
+        //this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToL1Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l1);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToL2Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l2);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToL3Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l3);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToL4Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l4);
 
-        this.buttonBoard.bindButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.indexCoral);
+        //this.buttonBoard.bindButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.indexCoral);
         this.buttonBoard.bindButton(this.outtakeCommandFactory.createIntakeCoralCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.outtakeIn);
         this.buttonBoard.bindButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.outtakeOut);
 
@@ -132,15 +132,15 @@ public class RobotContainer {
         
         this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOuttakeAlgaeInProcessorCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.processorOuttakeAlgae);
         this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOuttakeAlgaeOnBargeCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.bargeOuttakeAlgae);
-        this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOutakeWheelsAlgaeProcessorCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.processorOuttakeAlgae);
-        this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.bargeOuttakeAlgae);
+        this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOutakeWheelsAlgaeProcessorCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.processorOuttakeAlgaeWheels);
+        this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.bargeOuttakeAlgaeWheels);
         
-        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeOne);
-        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeTwo);
-        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeThree);
-        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeFour);
-        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeFive);
-        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeSix);
+        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeOne);
+        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeTwo);
+        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeThree);
+        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeFour);
+        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeFive);
+        this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeSix);
 
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeSeven);
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeEight);
@@ -153,7 +153,7 @@ public class RobotContainer {
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorDown);
 
         //TODO: ELIJAH please put your magic secret button binding here
-        this.buttonBoard.bindButton(fieldOrientedDriveCommand, ButtonBoardButtonConstants.ButtonBoardNormalButtons.toggleAlgaeWheelPulse);
+        //this.buttonBoard.bindButton(fieldOrientedDriveCommand, ButtonBoardButtonConstants.ButtonBoardNormalButtons.toggleAlgaeWheelPulse);
 
         
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberDownManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown); // We have no climber command factory yet.
@@ -167,8 +167,8 @@ public class RobotContainer {
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeGroundCommand(), 180);
         this.buttonBoardAlt.bindToPOV(this.highLevelCommandsFactory.createAlgaeWheelsIntakeReefTreeCommand(), 270);
 
-        //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), XboxController.Button.kX.value);
-        //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), XboxController.Button.kY.value);
+        //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), XboxController.Button.kX.value);
+        //this.buttonBoardAlt.bindToButton(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), XboxController.Button.kY.value);
          this.buttonBoardAlt.bindToButton(new AlgaePivotToPositionCommand(this.robotCreator.getAlgaePivotSubsystem(), AlgaePivotConstants.kDefultPivotPosition), XboxController.Button.kX.value);
          this.buttonBoardAlt.bindToButton(new AlgaePivotToPositionCommand(this.robotCreator.getAlgaePivotSubsystem(), AlgaePivotConstants.kGroundIntakePositionRotations), XboxController.Button.kY.value);
 
@@ -196,6 +196,10 @@ public class RobotContainer {
     public void updateButtonBoardInputs() {
         this.buttonBoard.periodic();
         
+    }
+
+    public void updateLEDs() {
+        ControlConstants.kHasCoral = this.robotCreator.getOuttakeCoralSensorsSubsystem().isCoralInEndOfOuttake(false);
     }
 
     public void onRobotEnable() {
