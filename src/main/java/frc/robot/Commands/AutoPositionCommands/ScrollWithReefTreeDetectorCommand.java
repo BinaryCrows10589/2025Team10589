@@ -52,6 +52,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
         this.lockSwerves = new LockSwervesAuton(this.driveSubsystem, AutonScrollConstants.kLockSwervesTime);
         this.isSensorInRange = isSensorInRange;
         addRequirements(this.driveSubsystem);
+        Logger.recordOutput("Scrolling/IsScrolling", false);
 
     }
 
@@ -76,6 +77,8 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     public void initialize() {
         //this.hardCutOffTimmer.startTimer();
         this.initialRotation = this.driveSubsystem.getRobotPose().getRotation().getRadians();
+        ControlConstants.isScrolling = true;
+        Logger.recordOutput("Scrolling/IsScrolling", true);
         LEDManager.setSolidColor(ControlConstants.kAutoPositionColor);
     }
 
@@ -89,8 +92,10 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     public void end(boolean interrupted) {
         this.driveSubsystem.stop();
         this.lockSwerves.schedule();
+        ControlConstants.isScrolling = false;
+        Logger.recordOutput("Scrolling/IsScrolling", false);
+
         //this.hardCutOffTimmer.disableTimer();
-        
     }
 
     @Override

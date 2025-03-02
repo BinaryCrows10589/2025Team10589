@@ -195,7 +195,7 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
     public void setDesiredPosition(double desiredPosition) {
         desiredElevatorPosition.Position = desiredPosition;
         this.positionError = (desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset) - this.elevatorMasterMotor.getPosition().getValueAsDouble();
-        if (positionError < 0) {
+        if (positionError < 0 || Tolerance.inTolorance(desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset, ElevatorConstants.kElevatorEncoderOffset, ElevatorConstants.kCatchTolorence)) {
             this.goingDown = true;
         } else {
             this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());

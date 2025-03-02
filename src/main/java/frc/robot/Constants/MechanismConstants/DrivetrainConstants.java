@@ -103,13 +103,13 @@ public final class DrivetrainConstants {
         };
         public static final double[] kElevatorThresholdVelocityCaps = {
             2.5,
-            1,
-            .25 
+            1.3,
+            1 
         };
         public static final double[] kElevatorThresholdRotationCaps = {
             15,
             12,
-            5,
+            8,
         };
 
         public static final int kframesPerCheck = 5;

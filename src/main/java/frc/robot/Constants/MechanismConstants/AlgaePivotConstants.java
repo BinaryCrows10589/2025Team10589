@@ -15,7 +15,7 @@ public class AlgaePivotConstants {
     public static final double kGroundIntakePositionRotations = .45; 
     public static final double kLollypopIntakePositionRotations = .35; 
     public static final double kReefTreeIntakePositionRotations = .475; 
-    public static final double kOuttakeProcessorPositionRotations = .3;
-    public static final double kOuttakeBargePositionRotations = .25;
+    public static final double kOuttakeProcessorPositionRotations = .35;
+    public static final double kOuttakeBargePositionRotations = .235;
     public static final double kDefultPivotPosition = 0.0;
 }

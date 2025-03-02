@@ -31,4 +31,5 @@ public final class ControlConstants {
     //public static final int[] kClimberInPositionColor = {255, 200, 200}; // Pink
     public static boolean kIsDriverControlled = true;
     public static boolean axisLockMode = false;
+    public static boolean isScrolling = false;
 }

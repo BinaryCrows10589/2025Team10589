@@ -116,7 +116,7 @@ public class HighLevelCommandsFactory {
 
     public OuttakeAlgaeCommand createOuttakeAlgaeInProcessorCommand() {
         return new OuttakeAlgaeCommand(elevatorCommandFactory.createElevatorToProcessorScoreCommand(),
-            new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeBargePositionRotations), 
+            new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeProcessorPositionRotations), 
             this.elevatorCommandFactory,
             this.algaePivotSubsystem, this.algaeWheelSubsystem);
     }
