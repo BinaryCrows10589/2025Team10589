@@ -34,7 +34,7 @@ public class PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance {
         
         autonCommands.add(PlaceCoralBAndDStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         
-        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new WaitCommand(.9),
+        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new WaitCommand(.4),
             new WPILibFollowTrajectoryFromPointsCommand("CoralDToHumanPlayer",
             AutonPointManager.kCoralDToHumanPlayer,
             2.5,

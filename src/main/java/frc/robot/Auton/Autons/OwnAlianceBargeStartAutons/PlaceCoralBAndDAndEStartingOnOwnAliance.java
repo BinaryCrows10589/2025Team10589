@@ -32,7 +32,7 @@ public class PlaceCoralBAndDAndEStartingOnOwnAliance {
         
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralE",
             AutonPointManager.kHumanPlayerToCoralE,
-            5,
+            1.7,
             new double[] {2, 0, 0},
             new double[] {6, 0, 0},
             new double[] {6, 0, 0},

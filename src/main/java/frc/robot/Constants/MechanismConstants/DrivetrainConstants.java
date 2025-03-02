@@ -160,7 +160,7 @@ public final class DrivetrainConstants {
         public static final int kTurnMotorMaxVoltageSparkMaxTalonFX = 2; 
 
         // Swerve Module Configuration Values
-        public static final double kWheelDiameterMeters = Units.inchesToMeters(3.86060506);//Units.inchesToMeters(3.733428923);// 3.83931974016;
+        public static final double kWheelDiameterMeters = Units.inchesToMeters(3.9547073083);//Units.inchesToMeters(3.86060506);//Units.inchesToMeters(3.733428923);// 3.83931974016;
         public static final double kDriveGearRatio = 7.125;//7.125;// 6.75/1.0;
         public static final double kTurningGearRatio = 12.8/1;
 

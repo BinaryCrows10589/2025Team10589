@@ -48,7 +48,7 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
         if(this.leftDistenceSensorInvalidCount > ReefTreeDetectorConstants.kMaxInvalidCount) {
             return false;
         } else {
-            return isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft);
+            return true;//isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft);
         }
     }
 
@@ -61,7 +61,7 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
         if(this.rightDistenceSensorInvalidCount > ReefTreeDetectorConstants.kMaxInvalidCount) {
             return false;
         } else {
-            return isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight);
+            return true;//isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight);
         }
     }
  
