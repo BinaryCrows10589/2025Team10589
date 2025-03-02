@@ -10,6 +10,9 @@ public class LEDManager {
     private static AddressableLED LEDStrip;
     private static AddressableLEDBuffer LEDBuffer;
 
+    private static AddressableLED LEDStrip2;
+    private static AddressableLEDBuffer LEDBuffer2;
+
     public static void init() {
         if(RobotModeConstants.currentMode == Mode.REAL) {
             LEDStrip = new AddressableLED(LEDConstants.kLEDPortID);

@@ -31,7 +31,7 @@ public class ButtonBoardButtonConstants {
         public static int groundIntake = 5;
         public static int reefIntakeLow = 7;
         public static int reefIntakeHigh = 6;
-        public static int reefIntakeLolypop = 13;
+        public static int intakeLolypop = 14;
 
         
         public static int processorOuttakeAlgae = 16;

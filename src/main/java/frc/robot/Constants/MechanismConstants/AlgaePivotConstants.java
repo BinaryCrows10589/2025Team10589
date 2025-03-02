@@ -13,8 +13,9 @@ public class AlgaePivotConstants {
     public static final double kForwardSoftLimit = .477; // .67 .
     public static final double kReverseSoftLimit = .03; //.198
     public static final double kGroundIntakePositionRotations = .45; 
+    public static final double kLollypopIntakePositionRotations = .35; 
     public static final double kReefTreeIntakePositionRotations = .475; 
     public static final double kOuttakeProcessorPositionRotations = .3;
-    public static final double kOuttakeBargePositionRotations = .35;
-    public static final double kDefultPivotPosition = .05;
+    public static final double kOuttakeBargePositionRotations = .25;
+    public static final double kDefultPivotPosition = 0.0;
 }

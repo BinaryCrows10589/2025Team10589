@@ -129,11 +129,13 @@ public class RobotContainer {
         this.buttonBoard.bindButton(highLevelCommandsFactory.createIntakeAlgaeFromGroundCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.groundIntake);
         this.buttonBoard.bindButton(highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.reefIntakeLow);
         this.buttonBoard.bindButton(highLevelCommandsFactory.createIntakeAlgaeFromReefL3Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.reefIntakeHigh);
-        
+        this.buttonBoard.bindButton(this.highLevelCommandsFactory.createLollypopIntakeCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.intakeLolypop);
+
         this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOuttakeAlgaeInProcessorCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.processorOuttakeAlgae);
         this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOuttakeAlgaeOnBargeCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.bargeOuttakeAlgae);
         this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOutakeWheelsAlgaeProcessorCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.processorOuttakeAlgaeWheels);
         this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.bargeOuttakeAlgaeWheels);
+
         
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeOne);
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeTwo);

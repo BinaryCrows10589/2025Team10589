@@ -20,6 +20,9 @@ public class RunAlgaeWheelsCommand extends Command {
     @Override
     public void initialize() {
         this.algaeWheelSubsystem.setWheelVoltage(desiredVoltage);
+        if (desiredVoltage < 0) { // If we are outtakingsP
+            this.algaeWheelSubsystem.setAlgaeWheelPulse(false);
+        }
     }
 
     @Override

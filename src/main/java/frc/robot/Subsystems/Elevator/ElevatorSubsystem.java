@@ -78,6 +78,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void setDesiredElevatorPosition(double desiredPosition) {
         if (this.isCoralInTransit) return;
         lastAssignedDesiredPosition = null;
+       
         elevatorIO.setDesiredPosition(desiredPosition);
     }
 
@@ -117,7 +118,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             case L3:
                 return .56;
             case L4:
-                return .864;
+                return .860;//.864;
             case FUNNEL:
                 return 0;
             case GROUND_INTAKE_ALGAE:
@@ -125,7 +126,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             case REEF_INTAKE_ALGAE_LOW:
                 return .349;
             case REEF_INTAKE_ALGAE_HIGH:
-                return .569;
+                return .56;
             case SCORE_ALGAE_PROCESSOR:
                 return 0;
             case SCORE_ALGAE_BARGE:

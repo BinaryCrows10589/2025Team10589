@@ -48,7 +48,6 @@ public class OuttakeAlgaeCommand extends Command {
         this.elevatorToPositionCommand.schedule();
         this.pivotCommand.schedule();
 
-        algaeWheelSubsystem.setAlgaeWheelPulse(false);
     }
 
     @Override
@@ -58,7 +57,6 @@ public class OuttakeAlgaeCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        this.elevatorToBasementCommand.schedule();
         this.defualtPivotPositionCommand.schedule();
     }
 

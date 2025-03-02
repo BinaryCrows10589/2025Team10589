@@ -100,6 +100,13 @@ public class HighLevelCommandsFactory {
             this.elevatorCommandFactory, this.algaePivotSubsystem, this.algaeWheelSubsystem);    
     }
 
+    public IntakeAlgaeCommand createLollypopIntakeCommand() {
+        return new IntakeAlgaeCommand(elevatorCommandFactory.createElevatorToGroundIntakeAlgaeCommand(), new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kLollypopIntakePositionRotations),
+            new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kGroundIntakeVoltage),
+            this.elevatorCommandFactory, this.algaePivotSubsystem, this.algaeWheelSubsystem);    
+    }
+
+
     public OuttakeAlgaeCommand createOuttakeAlgaeOnBargeCommand() {
         return new OuttakeAlgaeCommand(elevatorCommandFactory.createElevatorToBargeScoreCommand(),
             new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeBargePositionRotations), 
@@ -132,7 +139,7 @@ public class HighLevelCommandsFactory {
 
     public ScrollThanOuttakeCommand createPlaceCoralLeftCommand() {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
-                new double[] {-.1, 0.5, 0}, 
+                new double[] {-.1, 0.6, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
                 5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange), .3,
              outtakeCommandFactory);
@@ -140,7 +147,7 @@ public class HighLevelCommandsFactory {
 
     public ScrollThanOuttakeCommand createPlaceCoralRightCommand() {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
-                new double[] {-0.1, -0.5, 0}, 
+                new double[] {-0.1, -0.6, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
                 5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange), .3,
                 this.outtakeCommandFactory);

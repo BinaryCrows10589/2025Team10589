@@ -115,7 +115,7 @@ public class FieldOrientedDriveCommand extends Command {
 
 
             if(ControlConstants.axisLockMode) {
-                m_driveSubsystem.drive(translationXSpeed, translationYSpeed, rotationSpeed, false);
+                m_driveSubsystem.drive(-translationXSpeed, -translationYSpeed, rotationSpeed, false);
             } else {
                 m_driveSubsystem.drive(translationXSpeed, translationYSpeed, rotationSpeed,true);
             }

@@ -17,7 +17,7 @@ public final class ControlConstants {
     public static final int[] kElevatorInBasement = {50, 200, 150}; // Greenish Cyan
     public static final int[] kElevatorInBasementWithCoral = {0, 255, 0}; // Greenish 
     public static final int[] kElevatorAtL2 = {255, 255, 0}; // Red
-    public static final int[] kElevatorAtL3 = {255, 100, 0}; // Red
+    public static final int[] kElevatorAtL3 = {255, 255, 255}; // Red
     public static final int[] kElevatorAtL4 = {255, 0, 0}; // Red
 
 
