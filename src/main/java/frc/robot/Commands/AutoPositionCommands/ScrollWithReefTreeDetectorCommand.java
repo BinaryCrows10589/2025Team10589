@@ -35,10 +35,11 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     private final LockSwervesAuton lockSwerves;
     private double initialRotation;
     private BooleanSupplier isSensorInRange;
+    private BooleanSupplier isOtherSensorInRange;
 
     public ScrollWithReefTreeDetectorCommand(String pathname, double[] scrollVelocityVector, 
         double[] lockRotationPIDConstants,
-        double maxScrollTime, DriveSubsystem driveSubsystem, BooleanSupplier isSensorInRange) {
+        double maxScrollTime, DriveSubsystem driveSubsystem, BooleanSupplier isSensorInRange, BooleanSupplier isOtherSensorInRange) {
         this.scrollVelocityVector = scrollVelocityVector;
         this.lockRotationPIDConstants = lockRotationPIDConstants;
 
@@ -51,6 +52,7 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
         this.hardCutOffTimmer = new Wait(maxScrollTime);
         this.lockSwerves = new LockSwervesAuton(this.driveSubsystem, AutonScrollConstants.kLockSwervesTime);
         this.isSensorInRange = isSensorInRange;
+        this.isOtherSensorInRange = isOtherSensorInRange;
         addRequirements(this.driveSubsystem);
         Logger.recordOutput("Scrolling/IsScrolling", false);
 
@@ -101,6 +103,6 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     @Override
     public boolean isFinished() {
         Logger.recordOutput("ScrollBoolean", !this.isSensorInRange.getAsBoolean());
-        return !this.isSensorInRange.getAsBoolean();// || this.hardCutOffTimmer.hasTimePassed();
+        return !this.isSensorInRange.getAsBoolean() && this.isOtherSensorInRange.getAsBoolean();// || this.hardCutOffTimmer.hasTimePassed();
     }
 }

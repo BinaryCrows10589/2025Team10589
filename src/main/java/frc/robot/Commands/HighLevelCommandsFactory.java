@@ -141,7 +141,8 @@ public class HighLevelCommandsFactory {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
                 new double[] {-.1, 0.6, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange), .3,
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange,
+                this.reefTreeDetectorSubsystem::isInRightSensorInRange), .3,
              outtakeCommandFactory);
     }
 
@@ -149,7 +150,8 @@ public class HighLevelCommandsFactory {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
                 new double[] {-0.1, -0.6, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange), .3,
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange, 
+                this.reefTreeDetectorSubsystem::isInLeftSensorInRange), .3,
                 this.outtakeCommandFactory);
     }
 
@@ -157,7 +159,8 @@ public class HighLevelCommandsFactory {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
                 new double[] {-.1, 0.5, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange), waitBeforeOuttake,
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInLeftSensorInRange,
+                this.reefTreeDetectorSubsystem::isInRightSensorInRange), waitBeforeOuttake,
              outtakeCommandFactory);
     }
 
@@ -165,7 +168,8 @@ public class HighLevelCommandsFactory {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollRight",
                 new double[] {-0.1, -0.5, 0}, 
                 AutoPositionConstants.AutonScrollConstants.kRotationPIDConstants, 
-                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange), waitBeforeOuttake,
+                5, this.driveSubsystem, this.reefTreeDetectorSubsystem::isInRightSensorInRange, 
+                this.reefTreeDetectorSubsystem::isInLeftSensorInRange), waitBeforeOuttake,
                 this.outtakeCommandFactory);
     }
 

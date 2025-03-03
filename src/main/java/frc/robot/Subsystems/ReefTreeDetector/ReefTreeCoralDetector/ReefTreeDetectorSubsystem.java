@@ -16,6 +16,8 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
     private ReefTreeDetectorIOInputsAutoLogged reefTreeDetectorInputs = new ReefTreeDetectorIOInputsAutoLogged();
     private int leftDistenceSensorInvalidCount = 0;
     private int rightDistenceSensorInvalidCount = 0;
+    private int leftDistenceSensorInRangeCount = 0;
+    private int rightDistenceSensorInRangeCount;
 
     public ReefTreeDetectorSubsystem(ReefTreeDetectorIO reefTreeDetectorIO) {
         this.reefTreeDetectorIO = reefTreeDetectorIO;
@@ -41,7 +43,7 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
     }
 
     public boolean isInLeftSensorInRange() {
-       // if(ControlConstants.isScrolling) {
+        if(ControlConstants.isScrolling) {
             if(this.reefTreeDetectorInputs.validReadingLeft) {
                 this.leftDistenceSensorInvalidCount = 0;
             } else {
@@ -50,15 +52,15 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
             if(this.leftDistenceSensorInvalidCount > ReefTreeDetectorConstants.kMaxInvalidCount) {
                 return false;
             } else {
-                return true;//isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft);
+                return isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft);
             }
-      //  }
-        //this.leftDistenceSensorInvalidCount = 0;
-        //return true;
+        }
+        this.leftDistenceSensorInvalidCount = 0;
+        return true;
     }
 
     public boolean isInRightSensorInRange() {
-        //if(ControlConstants.isScrolling) {
+        if(ControlConstants.isScrolling) {
             if(this.reefTreeDetectorInputs.validReadingRight) {
                 this.rightDistenceSensorInvalidCount = 0;
             } else {
@@ -67,15 +69,33 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
             if(this.rightDistenceSensorInvalidCount > ReefTreeDetectorConstants.kMaxInvalidCount) {
                 return false;
             } else {
-                return true;//isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight);
+                return isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight);
             }
-        //}
-        //this.rightDistenceSensorInvalidCount = 0;
-        //return true;
+        }
+        this.rightDistenceSensorInvalidCount = 0;
+        return true;
     }
  
 
   
+/*
+ * public boolean isLeftSensorInRangeNew() {
+        if(ControlConstants.isScrolling) {
+            if(this.reefTreeDetectorInputs.validReadingLeft) {
+                this.leftDistenceSensorInRangeCount = 0;
+            } else {
+                this.leftDistenceSensorInvalidCount++;
+            }
+            if(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft > ReefTreeDetectorConstants.kMaxReefTreeDistance) {
+                this.leftDistenceSensorInRangeCount++;
+            } else {
+                this.leftDistenceSensorInRangeCount = 0;
+            }
 
+            return !(leftDistenceSensorInvalidCount < ReefTreeDetectorConstants.kMaxInvalidCount) || (this.leftDistenceSensorInRangeCount < ReefTreeDetectorConstants.kMaxInvalidCount);
+        }
+        return false;
+    }
+ */
     
 }
