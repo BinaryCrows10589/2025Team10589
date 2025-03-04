@@ -1,5 +1,7 @@
 package frc.robot.Commands.AutoPositionCommands;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -34,6 +36,8 @@ public class ScrollThanOuttakeCommand extends Command {
     @Override
     public void initialize() {
         this.scrollWithReefTreeDetectorCommand.schedule();
+        Logger.recordOutput("Scroll/ScrollFinished", false);
+
     }
 
     @Override
@@ -49,6 +53,7 @@ public class ScrollThanOuttakeCommand extends Command {
 
     @Override
     public boolean isFinished() {
+        Logger.recordOutput("Scroll/ScrollFinished", this.scrollWithReefTreeDetectorCommand.isFinished());
         return this.scrollWithReefTreeDetectorCommand.isFinished();
     }
 }

@@ -103,6 +103,6 @@ public class ScrollWithReefTreeDetectorCommand extends Command{
     @Override
     public boolean isFinished() {
         Logger.recordOutput("ScrollBoolean", !this.isSensorInRange.getAsBoolean());
-        return !this.isSensorInRange.getAsBoolean() && this.isOtherSensorInRange.getAsBoolean();// || this.hardCutOffTimmer.hasTimePassed();
+        return !this.isSensorInRange.getAsBoolean();// || this.hardCutOffTimmer.hasTimePassed();
     }
 }

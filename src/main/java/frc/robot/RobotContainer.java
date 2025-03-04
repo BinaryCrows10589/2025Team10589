@@ -110,7 +110,7 @@ public class RobotContainer {
         this.driverController.bindToButton(this.lockSwerves, XboxController.Button.kRightBumper.value);
         this.driverController.bindToButton(this.resetOdometry, XboxController.Button.kY.value);
         //this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveTranslationProfiler(), XboxController.Button.kX.value);
-        //this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveRotationProfiler(), XboxController.Button.kB.value);
+        this.driverController.bindToButton(this.driveCommandFactory.createSwerveDriveRotationProfiler(), XboxController.Button.kB.value);
         this.driverController.bindToLeftTriggure(Commands.runOnce(this.driveSubsystem::setSlowModeTrue),
         Commands.runOnce(this.driveSubsystem::setSlowModeFalse));
         this.driverController.bindToRightTriggure(Commands.runOnce(this.driveSubsystem::setAxisLockModeTrue),
@@ -154,8 +154,6 @@ public class RobotContainer {
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorUpCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorUp);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorDown);
 
-
-        
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberDownManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown); // We have no climber command factory yet.
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberUpManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);
 

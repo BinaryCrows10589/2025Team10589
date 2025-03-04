@@ -118,6 +118,7 @@ public class DriveSubsystem extends SubsystemBase{
             }
             // Positive angles should be counter clockwise.
             Logger.recordOutput(SwerveDriveConstants.kSwerveDriveModuleStatesLoggerBase + "DesiredModuleStates", desiredStates);
+            Logger.recordOutput("Swerve/Setting States", false);
             setModuleStates(desiredStates);
         }
         
@@ -197,6 +198,7 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     public void setModuleStates(SwerveModuleState[] desiredStates) {
+        Logger.recordOutput("Swerve/Setting States", true);
         SwerveDriveKinematics.desaturateWheelSpeeds(
         desiredStates, SwerveDriveConstants.kMaxSpeedMetersPerSecond);
         this.frontLeftSwerveModule.setDesiredModuleState(desiredStates[0]);

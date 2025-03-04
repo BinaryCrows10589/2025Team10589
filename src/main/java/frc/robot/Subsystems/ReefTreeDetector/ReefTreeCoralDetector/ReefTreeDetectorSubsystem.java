@@ -75,6 +75,73 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
         this.rightDistenceSensorInvalidCount = 0;
         return true;
     }
+
+    /*
+     * Process is as follows
+     * If the reading is valid:
+     *  - check if the reading tells us that we're in front of the reef tree
+     *  - if it does, reset counter and return true.
+     *  - if it doesn't, increment the counter
+     * Otherwise:
+     *  - increment the counter
+     *  - if the counter is above the requirement, reset the counter and return false
+     *  - return true
+     */
+    public boolean isReefTreeInFrontOfLeft() {
+        if (ControlConstants.isScrolling) {
+
+            if (this.reefTreeDetectorInputs.validReadingLeft) { // If the reading is valid...
+                
+                if (isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersLeft) && this.reefTreeDetectorInputs.validReadingLeft) { // ..check if we're in front of the reef tree...
+                    this.leftDistenceSensorInvalidCount = 0; // ...reset counter and return true   
+                } else {
+                    this.leftDistenceSensorInvalidCount++; // ...increment the counter and return true
+                }
+
+                return true;
+            }
+            else {
+                this.leftDistenceSensorInvalidCount++;
+                if (this.leftDistenceSensorInvalidCount > ReefTreeDetectorConstants.kMaxInvalidCount) {
+                    this.leftDistenceSensorInvalidCount = 0;
+                    return false;
+                }
+                return true;
+            }
+
+        } else {
+            this.leftDistenceSensorInvalidCount = 0;
+            return true;
+        }
+    }
+
+    public boolean isReefTreeInFrontOfRight() {
+        if (ControlConstants.isScrolling) {
+
+            if (this.reefTreeDetectorInputs.validReadingRight) { // If the reading is valid...
+                
+                if (isReefTreeScean(this.reefTreeDetectorInputs.distanceSensorReadingMilametersRight) && this.reefTreeDetectorInputs.validReadingRight) { // ..check if we're in front of the reef tree...
+                    this.rightDistenceSensorInvalidCount = 0; // ...reset counter and return true   
+                } else {
+                    this.rightDistenceSensorInvalidCount++; // ...increment the counter and return true
+                }
+
+                return true;
+            }
+            else {
+                this.rightDistenceSensorInvalidCount++;
+                if (this.rightDistenceSensorInvalidCount > ReefTreeDetectorConstants.kMaxInvalidCount) {
+                    this.rightDistenceSensorInvalidCount = 0;
+                    return false;
+                }
+                return true;
+            }
+
+        } else {
+            this.rightDistenceSensorInvalidCount = 0;
+            return true;
+        }
+    }
  
 
   

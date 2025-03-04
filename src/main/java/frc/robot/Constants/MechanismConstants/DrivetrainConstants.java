@@ -104,7 +104,7 @@ public final class DrivetrainConstants {
         public static final double[] kElevatorThresholdVelocityCaps = {
             2.5,
             1.3,
-            1 
+            1
         };
         public static final double[] kElevatorThresholdRotationCaps = {
             15,

@@ -102,15 +102,22 @@ public class FieldOrientedDriveCommand extends Command {
 
             double translationXSpeed;
             double translationYSpeed;
+            
             if (normalizeTranslationMaximum) {
                 double normalizedSpeed = Math.sqrt(Math.pow(translationX, 2) + Math.pow(translationY, 2));
-                double translationFactor = MathUtil.clamp(normalizedSpeed, -translationMax, translationMax) / normalizedSpeed;
-                translationXSpeed = translationX * translationFactor;
-                translationYSpeed = translationY * translationFactor;
-            } else {
+                if(normalizedSpeed != 0) {
+                    double translationFactor = MathUtil.clamp(normalizedSpeed, -translationMax, translationMax) / normalizedSpeed;
+                    translationXSpeed = translationX * translationFactor;
+                    translationYSpeed = translationY * translationFactor;
+                } else {
+                    translationXSpeed = MathUtil.clamp(translationX, -translationMax, translationMax);
+                    translationYSpeed = MathUtil.clamp(translationY, -translationMax, translationMax);
+                }
+               
+            } else { 
                 translationXSpeed = MathUtil.clamp(translationX, -translationMax, translationMax);
                 translationYSpeed = MathUtil.clamp(translationY, -translationMax, translationMax);
-            }
+           } 
             double rotationSpeed = MathUtil.clamp(rotation, -rotationMax, rotationMax);
 
 

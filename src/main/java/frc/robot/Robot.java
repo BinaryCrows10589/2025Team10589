@@ -100,6 +100,7 @@ public class Robot extends LoggedRobot {
             // autonomous chooser on the dashboard.
             robotContainer = new RobotContainer();
             checkDriverStationUpdate();
+            LEDManager.setSolidColor(new int[] {255, 255, 255});
         }
 
     /**
