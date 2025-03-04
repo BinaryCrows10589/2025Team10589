@@ -1,5 +1,9 @@
 package frc.robot.Constants.GenericConstants;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
+
 // Do not create an instants of a constant class
 
 public final class ControlConstants {
@@ -32,4 +36,7 @@ public final class ControlConstants {
     public static boolean kIsDriverControlled = true;
     public static boolean axisLockMode = false;
     public static boolean isScrolling = false;
+    public static AutonPoint robotStartPosition = new AutonPoint(new Pose2d());
+    public static Pose2d robotStartPositionTolorence = new Pose2d(.025, .025, Rotation2d.fromDegrees(2));
+
 }

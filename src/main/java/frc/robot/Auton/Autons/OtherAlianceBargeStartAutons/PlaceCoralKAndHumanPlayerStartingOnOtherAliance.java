@@ -25,7 +25,7 @@ public class PlaceCoralKAndHumanPlayerStartingOnOtherAliance {
         ElevatorCommandFactory elevatorCommandFactory, 
         OuttakeCommandFactory outtakeCommandFactory,
         HighLevelCommandsFactory highLevelCommandsFactory) {
-        driveSubsystem.setRobotPose(AutonPointManager.kOtherAllianceBargeStartPosition);
+        driveSubsystem.setRobotStartingPose(AutonPointManager.kOtherAllianceBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         autonCommands.add(PlaceCoralKStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));

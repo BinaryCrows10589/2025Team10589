@@ -25,7 +25,7 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         OuttakeCommandFactory outtakeCommandFactory,
         HighLevelCommandsFactory highLevelCommandsFactory
     ) {
-        driveSubsystem.setRobotPose(AutonPointManager.kOtherAllianceBargeStartPosition);
+        driveSubsystem.setRobotStartingPose(AutonPointManager.kOtherAllianceBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         

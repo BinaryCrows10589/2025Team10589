@@ -25,7 +25,7 @@ public class PlaceCoralAStartingCenterBarge {
         OuttakeCommandFactory outtakeCommandFactory,
         HighLevelCommandsFactory highLevelCommandsFactory
     ) {
-        driveSubsystem.setRobotPose(AutonPointManager.kCenterBargeStartPosition);
+        driveSubsystem.setRobotStartingPose(AutonPointManager.kCenterBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         

@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -20,8 +22,10 @@ import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
+import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.JoystickUtils.ButtonBoardInterface;
 import frc.robot.Utils.JoystickUtils.ControllerInterface;
+import frc.robot.Utils.LEDUtils.LEDManager;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -196,8 +200,25 @@ public class RobotContainer {
         
     }
 
-    public void updateLEDs() {
+    public void periodic() {
         ControlConstants.kHasCoral = this.robotCreator.getOuttakeCoralSensorsSubsystem().isCoralInEndOfOuttake(false);
+        if(DriverStation.isDisabled()) {
+            Pose2d robotPose = this.driveSubsystem.getRobotPose();
+            Pose2d startingPose = ControlConstants.robotStartPosition.getAutonPoint();
+            boolean translationXInTolorence = Tolerance.inTolorance(robotPose.getX(), startingPose.getX(),
+                ControlConstants.robotStartPositionTolorence.getX());
+            boolean translationYInTolorence = Tolerance.inTolorance(robotPose.getY(), startingPose.getY(),
+                ControlConstants.robotStartPositionTolorence.getY());
+            boolean rotationalInTolorence = Tolerance.inToloranceRotation(
+                robotPose.getRotation(), startingPose.getRotation(),
+                ControlConstants.robotStartPositionTolorence.getRotation().getRadians());
+            if(translationXInTolorence && translationYInTolorence && rotationalInTolorence) {
+                LEDManager.setSolidColor(new int[] {0, 255, 0});
+            } else {
+                LEDManager.setSolidColor(new int[] {255, 0, 0});
+            }
+        }
+        
     }
 
     public void onRobotEnable() {
