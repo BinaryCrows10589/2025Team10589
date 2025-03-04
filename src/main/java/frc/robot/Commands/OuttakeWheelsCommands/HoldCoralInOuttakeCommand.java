@@ -54,4 +54,5 @@ public class HoldCoralInOuttakeCommand extends Command {
         return this.outtakeCoralSensorsSubsystem.isCoralInEndOfOuttake(false) || hardCutOffTimer.hasTimePassed();
     }
     
+    
 }
