@@ -37,9 +37,9 @@ public class SequentialGroupCommand extends Command {
         if (this.commands[currentRunningIndex].isFinished() || maxCommandTimePassed()) {
 
             // BOYNE: Possible fix? I don't know to be honest
-            if (this.commands[currentRunningIndex].isScheduled()) {
-                this.commands[currentRunningIndex].cancel();
-            }
+            //if (this.commands[currentRunningIndex].isScheduled()) {
+            this.commands[currentRunningIndex].cancel();
+            //}
 
             currentRunningIndex++;
             if (currentRunningIndex >= this.commands.length) {
