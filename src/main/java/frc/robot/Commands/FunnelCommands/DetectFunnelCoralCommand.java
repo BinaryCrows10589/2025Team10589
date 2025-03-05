@@ -41,6 +41,7 @@ public class DetectFunnelCoralCommand extends Command {
         if(coralInStartOfOuttake && !isCoralInEndOfOuttake && !isSameCoral) {
             this.holdCoralInOuttakeCommand.schedule();
             this.isSameCoral = true;
+            
         }
         if(this.holdCoralInOuttakeCommand.isFinished() && this.isSameCoral) {
             this.isSameCoral = false;

@@ -45,7 +45,7 @@ public class OuttakeCoralSensorsSubsystem extends SubsystemBase {
 
     public boolean isCoralInEndOfOuttake(boolean defualtValue) {
         double reading = 0; 
-        /*if(this.outtakeCoralSensorsInputs.endValidReading) {
+        if(this.outtakeCoralSensorsInputs.endValidReading) {
             reading = this.outtakeCoralSensorsInputs.endDistanceSensorReadingMilameters;
             this.lastEndReading = reading;
         } else {
@@ -56,9 +56,6 @@ public class OuttakeCoralSensorsSubsystem extends SubsystemBase {
         if(!this.outtakeCoralSensorsInputs.startValidReading) {
             coralDetected = defualtValue;
         }
-            */
-        boolean coralDetected = isCoralDetected(this.outtakeCoralSensorsInputs.endDistanceSensorReadingMilameters) && (
-        defualtValue ? !this.outtakeCoralSensorsInputs.endValidReading : this.outtakeCoralSensorsInputs.endValidReading);
         Logger.recordOutput("Outtake/OuttakeCoralSensors/IsCoralInEnd", coralDetected);
         return coralDetected;
     }
