@@ -3,7 +3,6 @@ package frc.robot.Commands.IntakeCommands;
 import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Commands.ElevatorCommands.ElevatorToPositionCommand;
 import frc.robot.Commands.OuttakeWheelsCommands.HoldCoralInOuttakeCommand;
 import frc.robot.Commands.TransitCommands.RunTransitToOuttakeCommand;

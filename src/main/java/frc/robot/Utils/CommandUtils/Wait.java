@@ -13,11 +13,15 @@ public class Wait {
         this.waitTime = waitTime;
     }
 
+    private long getAccurateSystemTime() {
+        return System.currentTimeMillis();
+    }
+
     /**
      *  This must be called to start the timmer
      */
     public void startTimer() {
-        this.endTime = Timer.getFPGATimestamp() + waitTime;
+        this.endTime = getAccurateSystemTime() + (waitTime * 1000);
         this.timerEnabled = true;
     }
 
@@ -26,7 +30,7 @@ public class Wait {
      * @return Boolean: Whether or not the desired wait time has passed. 
      */
     public boolean hasTimePassed() {
-        return Timer.getFPGATimestamp() > this.endTime && this.timerEnabled;
+        return getAccurateSystemTime() > this.endTime && this.timerEnabled;
     }
 
     public void disableTimer() {
