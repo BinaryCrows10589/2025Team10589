@@ -93,8 +93,8 @@ public class OuttakeCoralSensorsSubsystem extends SubsystemBase {
         if(!this.outtakeCoralSensorsInputs.startValidReading) {
             coralDetected = defualtValue;
         }
-            */
-        boolean coralDetected = isCoralDetected(this.outtakeCoralSensorsInputs.endDistanceSensorReadingMilameters) && (
+            
+        coralDetected = isCoralDetected(this.outtakeCoralSensorsInputs.endDistanceSensorReadingMilameters) && (
         defualtValue ? !this.isEndValid : this.isEndValid);
         Logger.recordOutput("Outtake/OuttakeCoralSensors/IsCoralInEnd", coralDetected);
         return coralDetected;

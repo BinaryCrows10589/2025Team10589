@@ -5,9 +5,12 @@ import static edu.wpi.first.units.Units.Rotation;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
@@ -31,7 +34,6 @@ public class PlaceCoralKStartingOnOtherAliance {
         HighLevelCommandsFactory highLevelCommandsFactory
     ) {
         driveSubsystem.setRobotStartingPose(AutonPointManager.kOtherAllianceBargeStartPosition);
-        
         ArrayList<Command> autonCommands = new ArrayList<>();
         SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new CustomWaitCommand(.75),
             elevatorCommandFactory.createElevatorToL4Command());
@@ -51,7 +53,7 @@ public class PlaceCoralKStartingOnOtherAliance {
         
         autonCommands.add(elevate);
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
-        autonCommands.add(new CustomWaitCommand(.5));
+        autonCommands.add(new CustomWaitCommand(.5, "BeforeDown"));
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;

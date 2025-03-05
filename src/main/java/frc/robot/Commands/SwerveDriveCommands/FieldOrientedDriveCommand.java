@@ -83,20 +83,17 @@ public class FieldOrientedDriveCommand extends Command {
 
             double position = m_elevatorSubsystem.getCurrentElevatorPosition();
             
-            if (elevatorCheckFrameCount++ >= SwerveDriveConstants.kframesPerCheck) {
-                elevatorCheckFrameCount = 0;
 
-                translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
-                rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
-                normalizeTranslationMaximum = false;
+            translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
+            rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
+            normalizeTranslationMaximum = false;
 
-                for (int level = SwerveDriveConstants.kElevatorThresholds.length-1; level >= 0; level--) {
-                    if (position > SwerveDriveConstants.kElevatorThresholds[level]) {
-                        translationMax = SwerveDriveConstants.kElevatorThresholdVelocityCaps[level];
-                        normalizeTranslationMaximum = true;
-                        rotationMax = SwerveDriveConstants.kElevatorThresholdRotationCaps[level];
-                        break;
-                    }
+            for (int level = SwerveDriveConstants.kElevatorThresholds.length-1; level >= 0; level--) {
+                if (position > SwerveDriveConstants.kElevatorThresholds[level]) {
+                    translationMax = SwerveDriveConstants.kElevatorThresholdVelocityCaps[level];
+                    normalizeTranslationMaximum = true;
+                    rotationMax = SwerveDriveConstants.kElevatorThresholdRotationCaps[level];
+                    break;
                 }
             }
 

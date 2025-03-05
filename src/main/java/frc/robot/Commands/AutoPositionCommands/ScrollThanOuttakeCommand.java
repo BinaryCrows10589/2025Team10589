@@ -12,6 +12,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIO;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
 import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsSubsystem;
+import frc.robot.Utils.CommandUtils.CustomWaitCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 import frc.robot.Utils.CommandUtils.Wait;
 
@@ -20,16 +21,16 @@ public class ScrollThanOuttakeCommand extends Command {
     private ScrollWithReefTreeDetectorCommand scrollWithReefTreeDetectorCommand;
     private OuttakeCommandFactory outtakeCommandFactory;
     private OuttakeCoralCommand outtakeWheelsCommand;
-    private WaitCommand timeBeforeOuttake;
-    private SequentialCommandGroup waitThenOuttake;
+    private CustomWaitCommand timeBeforeOuttake;
+    private SequentialGroupCommand waitThenOuttake;
 
     public ScrollThanOuttakeCommand(ScrollWithReefTreeDetectorCommand scrollWithReefTreeDetectorCommand, double timeBeforeOutput,
      OuttakeCommandFactory outtakeCommandFactory) {
         this.scrollWithReefTreeDetectorCommand = scrollWithReefTreeDetectorCommand;
         this.outtakeCommandFactory = outtakeCommandFactory;
         this.outtakeWheelsCommand = this.outtakeCommandFactory.createOuttakeCoralCommand();
-        this.timeBeforeOuttake = new WaitCommand(timeBeforeOutput);
-        this.waitThenOuttake = new SequentialCommandGroup(this.timeBeforeOuttake, this.outtakeWheelsCommand);
+        this.timeBeforeOuttake = new CustomWaitCommand(timeBeforeOutput);
+        this.waitThenOuttake = new SequentialGroupCommand(this.timeBeforeOuttake, this.outtakeWheelsCommand);
 
     }
     
@@ -51,6 +52,7 @@ public class ScrollThanOuttakeCommand extends Command {
         this.scrollWithReefTreeDetectorCommand.cancel();
     }
 
+    
     @Override
     public boolean isFinished() {
         Logger.recordOutput("Scroll/ScrollFinished", this.scrollWithReefTreeDetectorCommand.isFinished());

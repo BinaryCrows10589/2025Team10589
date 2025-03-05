@@ -32,7 +32,7 @@ public class PlaceCoralKAndIAndHStartingOnOtherAliance {
         autonCommands.add(PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralH",
         AutonPointManager.kHumanPlayerToCoralH,
-        5,
+        1.7,
         new double[] {2, 0, 0},
         new double[] {6, 0, 0},
         new double[] {6, 0, 0},

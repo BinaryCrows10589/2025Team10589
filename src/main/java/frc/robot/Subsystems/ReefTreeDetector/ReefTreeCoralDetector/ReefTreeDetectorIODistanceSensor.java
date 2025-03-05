@@ -16,8 +16,8 @@ public class ReefTreeDetectorIODistanceSensor implements ReefTreeDetectorIO{
     public ReefTreeDetectorIODistanceSensor() {
         this.reefTreeDetectorLeft = new TimeOfFlight(ReefTreeDetectorConstants.kReefTreeDetectorLeftCANID);
         this.reefTreeDetectorRight = new TimeOfFlight(ReefTreeDetectorConstants.kReefTreeDetectorRightCANID);
-        this.reefTreeDetectorLeft.setRangingMode(TimeOfFlight.RangingMode.Short, 24);
-        this.reefTreeDetectorRight.setRangingMode(TimeOfFlight.RangingMode.Short, 24);
+        this.reefTreeDetectorLeft.setRangingMode(TimeOfFlight.RangingMode.Short, 50);
+        this.reefTreeDetectorRight.setRangingMode(TimeOfFlight.RangingMode.Short, 50);
 
     }
 

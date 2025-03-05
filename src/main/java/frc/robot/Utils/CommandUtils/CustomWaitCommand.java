@@ -1,5 +1,7 @@
 package frc.robot.Utils.CommandUtils;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -7,6 +9,7 @@ public class CustomWaitCommand extends Command{
     
     private double endTime = -1;
     private double waitTime = 0;
+    private String logID = "";
 
     /**
      * Use this over the WPILib wait command when you need to a wait command to use in a Command Group as there does not work consistently.
@@ -17,24 +20,33 @@ public class CustomWaitCommand extends Command{
         this.waitTime = waitTime;
     }
 
+
+    public CustomWaitCommand(double waitTime, String logID) {
+        this.waitTime = waitTime;
+        Logger.recordOutput(logID + "/WaitCommand", 1);
+    }
+
     @Override
     public void initialize() {
-        System.out.println("WaitCommand");
-        this.endTime = Timer.getFPGATimestamp() + waitTime;
+        this.endTime = System.currentTimeMillis() + (waitTime * 1000);//Timer.getFPGATimestamp() + waitTime;
+        Logger.recordOutput(logID + "/WaitCommand", 2);
+
     }
 
     @Override
     public void execute() {
+        Logger.recordOutput(logID + "/WaitCommand", 3);
     }
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Wiat Command finished");
+        Logger.recordOutput(logID + "/WaitCommand", 5);
     }
 
     @Override
     public boolean isFinished() {
-        return isScheduled() && Timer.getFPGATimestamp() > this.endTime;
+        Logger.recordOutput(logID + "/WaitCommand", 4);
+        return isScheduled() &&  System.currentTimeMillis() > this.endTime;
     }
 }
 
