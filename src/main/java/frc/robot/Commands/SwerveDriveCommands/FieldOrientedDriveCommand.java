@@ -88,6 +88,7 @@ public class FieldOrientedDriveCommand extends Command {
             rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
             normalizeTranslationMaximum = false;
 
+            // Determine if we need to be applying a speed limiter to our swerve drive due to the elevator's position
             for (int level = SwerveDriveConstants.kElevatorThresholds.length-1; level >= 0; level--) {
                 if (position > SwerveDriveConstants.kElevatorThresholds[level]) {
                     translationMax = SwerveDriveConstants.kElevatorThresholdVelocityCaps[level];
@@ -116,6 +117,11 @@ public class FieldOrientedDriveCommand extends Command {
                 translationYSpeed = MathUtil.clamp(translationY, -translationMax, translationMax);
            } 
             double rotationSpeed = MathUtil.clamp(rotation, -rotationMax, rotationMax);
+
+            
+            Logger.recordOutput("SwerveDrive/Inputs/ClampedXSpeedMPS", translationXSpeed);
+            Logger.recordOutput("SwerveDrive/Inputs/ClampedYSpeedMPS", translationYSpeed);
+            Logger.recordOutput("SwerveDrive/Inputs/ClampedRotSpeedMPS", rotationSpeed);
 
 
             if(ControlConstants.axisLockMode) {
