@@ -41,6 +41,20 @@ public class LEDManager {
         candle.setLEDs(rgb[0], rgb[1], rgb[2]);
     }
 
+    public static void setAxisIndicators(double percentErrorX, double percentErrorY, double percentErrorRot) {
+        int amountX = (int) Math.ceil(percentErrorX * LEDConstants.kLEDsPerAxisIndicator);
+        int amountY = (int) Math.ceil(percentErrorY * LEDConstants.kLEDsPerAxisIndicator);
+        int amountRot = (int) Math.ceil(percentErrorRot * LEDConstants.kLEDsPerAxisIndicator);
+        // Set blank ones first
+        candle.setLEDs(0, 0, 0, 0, 0, LEDConstants.kLEDsPerAxisIndicator*3);
+
+        // Set three axes up
+        candle.setLEDs(255, 0, 0, 0, LEDConstants.kLEDsPerAxisIndicator*0, amountX);
+        candle.setLEDs(0, 255, 0, 0, LEDConstants.kLEDsPerAxisIndicator*1, amountY);
+        candle.setLEDs(0, 0, 255, 0, LEDConstants.kLEDsPerAxisIndicator*2, amountRot);
+        
+    }
+
     public static void test() {
         candle.setLEDs(255, 255, 255);
     }
