@@ -11,6 +11,7 @@ import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
 
+import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.LEDConstants;
 
 public class LEDManager {
@@ -41,17 +42,27 @@ public class LEDManager {
         candle.setLEDs(rgb[0], rgb[1], rgb[2]);
     }
 
-    public static void setAxisIndicators(double percentErrorX, double percentErrorY, double percentErrorRot) {
+    private static int[] getAxisIndicatorLEDColor(boolean inTolerance, double percentError) {
+        return inTolerance ? LEDConstants.kLEDColorCorrect : ((percentError) > 0 ? LEDConstants.kLEDColorHigh : LEDConstants.kLEDColorLow);
+    }
+    
+    public static void setAxisIndicators(double percentErrorX, double percentErrorY, double percentErrorRot,
+                                         boolean inToleranceX, boolean inToleranceY, boolean inToleranceRot) {
         int amountX = (int) Math.ceil(percentErrorX * LEDConstants.kLEDsPerAxisIndicator);
         int amountY = (int) Math.ceil(percentErrorY * LEDConstants.kLEDsPerAxisIndicator);
         int amountRot = (int) Math.ceil(percentErrorRot * LEDConstants.kLEDsPerAxisIndicator);
+
+        int[] colorX = getAxisIndicatorLEDColor(inToleranceX, percentErrorX);
+        int[] colorY = getAxisIndicatorLEDColor(inToleranceY, percentErrorY);
+        int[] colorRot = getAxisIndicatorLEDColor(inToleranceRot, percentErrorRot);
+
         // Set blank ones first
         candle.setLEDs(0, 0, 0, 0, 0, LEDConstants.kLEDsPerAxisIndicator*3);
 
         // Set three axes up
-        candle.setLEDs(255, 0, 0, 0, LEDConstants.kLEDsPerAxisIndicator*0, amountX);
-        candle.setLEDs(0, 255, 0, 0, LEDConstants.kLEDsPerAxisIndicator*1, amountY);
-        candle.setLEDs(0, 0, 255, 0, LEDConstants.kLEDsPerAxisIndicator*2, amountRot);
+        candle.setLEDs(colorX[0], colorX[1], colorX[2], 0, LEDConstants.kLEDsPerAxisIndicator*0, amountX);
+        candle.setLEDs(colorY[0], colorY[1], colorY[2], 0, LEDConstants.kLEDsPerAxisIndicator*1, amountY);
+        candle.setLEDs(colorRot[0], colorRot[1], colorRot[2], 0, LEDConstants.kLEDsPerAxisIndicator*2, amountRot);
         
         Logger.recordOutput("LED/AxisIndicatorRed", amountX);
         Logger.recordOutput("LED/AxisIndicatorGreen", amountY);
