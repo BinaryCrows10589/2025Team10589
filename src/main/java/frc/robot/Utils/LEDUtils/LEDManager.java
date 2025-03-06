@@ -48,16 +48,17 @@ public class LEDManager {
     
     public static void setAxisIndicators(double percentErrorX, double percentErrorY, double percentErrorRot,
                                          boolean inToleranceX, boolean inToleranceY, boolean inToleranceRot) {
-        int amountX = (int) Math.ceil(percentErrorX * LEDConstants.kLEDsPerAxisIndicator);
-        int amountY = (int) Math.ceil(percentErrorY * LEDConstants.kLEDsPerAxisIndicator);
-        int amountRot = (int) Math.ceil(percentErrorRot * LEDConstants.kLEDsPerAxisIndicator);
+
+        int amountX = (int) Math.round(percentErrorX * LEDConstants.kLEDsPerAxisIndicator);
+        int amountY = (int) Math.round(percentErrorY * LEDConstants.kLEDsPerAxisIndicator);
+        int amountRot = (int) Math.round(percentErrorRot * LEDConstants.kLEDsPerAxisIndicator);
 
         int[] colorX = getAxisIndicatorLEDColor(inToleranceX, percentErrorX);
         int[] colorY = getAxisIndicatorLEDColor(inToleranceY, percentErrorY);
         int[] colorRot = getAxisIndicatorLEDColor(inToleranceRot, percentErrorRot);
 
         // Set blank ones first
-        candle.setLEDs(0, 0, 0, 0, 0, LEDConstants.kLEDsPerAxisIndicator*3);
+        setSolidColor(new int[] {0, 0, 0});
 
         // Set three axes up
         candle.setLEDs(colorX[0], colorX[1], colorX[2], 0, LEDConstants.kLEDsPerAxisIndicator*0, amountX);
