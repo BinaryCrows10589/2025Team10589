@@ -209,7 +209,7 @@ public class RobotContainer {
 
     public void periodic() {
         ControlConstants.kHasCoral = this.robotCreator.getOuttakeCoralSensorsSubsystem().isCoralInEndOfOuttake(false);
-        if(DriverStation.isDisabled()) {
+        /*if(DriverStation.isDisabled()) {
             Pose2d robotPose = this.driveSubsystem.getRobotPose();
             Pose2d startingPose = ControlConstants.robotStartPosition.getAutonPoint();
             boolean translationXInTolorence = Tolerance.inTolorance(robotPose.getX(), startingPose.getX(),
@@ -224,7 +224,7 @@ public class RobotContainer {
             } else {
                 LEDManager.setSolidColor(new int[] {255, 0, 0});
             }
-        }
+        }*/
         
     }
 
