@@ -262,10 +262,13 @@ public class DriveSubsystem extends SubsystemBase{
 
     public static void setDriverControlleMode() {
         ControlConstants.kIsDriverControlled = true;
+        Logger.recordOutput("SwerveDrive/DriverControlMode", ControlConstants.kIsDriverControlled);
+
     }
 
     public static void disableDriverControlleMode() {
         ControlConstants.kIsDriverControlled = false;
+        Logger.recordOutput("SwerveDrive/DriverControlMode", ControlConstants.kIsDriverControlled);
     }
 
     private void configurePathPlannerAutoBuilder() {
