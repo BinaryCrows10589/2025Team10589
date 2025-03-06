@@ -14,6 +14,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
+import frc.robot.Utils.CommandUtils.CustomWaitCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
 public class PlaceCoralBAndDStartingOnOwnAliance {
@@ -44,7 +45,7 @@ public class PlaceCoralBAndDStartingOnOwnAliance {
             driveSubsystem));
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
-        autonCommands.add(new WaitCommand(.55));
+        autonCommands.add(new CustomWaitCommand(.55));
 
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);

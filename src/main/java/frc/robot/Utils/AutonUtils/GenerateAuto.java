@@ -17,7 +17,7 @@ public class GenerateAuto {
             commands[i] = autoCommands.get(i);
         }
         
-        return new SequentialGroupCommand(100, commands);
+        return new SequentialGroupCommand(5, commands);
     }
 
     /**

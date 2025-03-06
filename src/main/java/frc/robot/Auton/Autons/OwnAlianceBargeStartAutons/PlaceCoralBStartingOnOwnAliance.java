@@ -16,6 +16,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
+import frc.robot.Utils.CommandUtils.CustomWaitCommand;
 import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
@@ -32,7 +33,7 @@ public class PlaceCoralBStartingOnOwnAliance {
         ArrayList<Command> autonCommands = new ArrayList<>();
         
         
-        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new WaitCommand(.75),
+        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new CustomWaitCommand(.75),
             elevatorCommandFactory.createElevatorToL4Command());
         ParallelGroupCommand elevate = new ParallelGroupCommand(sequentialGroupCommand,
             new WPILibFollowTrajectoryFromPointsCommand("OwnAllianceBargeStartPositionToPlaceOnCoralB",
@@ -50,7 +51,7 @@ public class PlaceCoralBStartingOnOwnAliance {
 
         autonCommands.add(elevate);
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.35));
-        autonCommands.add(new WaitCommand(.5));
+        autonCommands.add(new CustomWaitCommand(.5));
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
         return auton;
