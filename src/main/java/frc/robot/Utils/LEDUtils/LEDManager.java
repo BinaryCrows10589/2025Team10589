@@ -53,6 +53,9 @@ public class LEDManager {
         candle.setLEDs(0, 255, 0, 0, LEDConstants.kLEDsPerAxisIndicator*1, amountY);
         candle.setLEDs(0, 0, 255, 0, LEDConstants.kLEDsPerAxisIndicator*2, amountRot);
         
+        Logger.recordOutput("LED/AxisIndicatorRed", amountX);
+        Logger.recordOutput("LED/AxisIndicatorGreen", amountY);
+        Logger.recordOutput("LED/AxisIndicatorBlue", amountRot);
     }
 
     public static void test() {

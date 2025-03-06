@@ -107,6 +107,8 @@ public class RobotContainer {
         this.onRobotEnable();
     }
 
+    
+
     /**
      * Used to configure button binding
      */
@@ -189,6 +191,10 @@ public class RobotContainer {
        // this.driveSubsystem.setRobotPose(new AutonPoint(5.5, 5.5, 50));
       // this.placeCommand;//
         return this.autonManager.getSelectedAuton();
+    }
+
+    public Pose2d getRobotPosition() {
+        return driveSubsystem.getRobotPose();
     }
 
     public void updateAlliance() {

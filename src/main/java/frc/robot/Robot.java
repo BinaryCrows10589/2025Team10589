@@ -13,14 +13,17 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
+import frc.robot.Utils.GeneralUtils.PercentError;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesChangableValue;
 import frc.robot.Utils.LEDUtils.LEDManager;
 
@@ -135,7 +138,16 @@ public class Robot extends LoggedRobot {
     }
 
     @Override
-    public void disabledPeriodic() {}
+    public void disabledPeriodic() {
+        // Indicators to help us line up with the target starting position
+        Pose2d actualPosition = robotContainer.getRobotPosition();
+        Pose2d desiredPosition = ControlConstants.robotStartPosition.getAutonPoint();
+
+        LEDManager.setAxisIndicators(
+            PercentError.getPercentError(actualPosition.getX(), desiredPosition.getX()),
+            PercentError.getPercentError(actualPosition.getY(), desiredPosition.getY()),
+            PercentError.getPercentError(actualPosition.getRotation().getRadians(), desiredPosition.getRotation().getRadians()));
+    }
 
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
