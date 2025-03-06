@@ -260,6 +260,14 @@ public class DriveSubsystem extends SubsystemBase{
         ControlConstants.axisLockMode = true;
     }
 
+    public static void setDriverControlleMode() {
+        ControlConstants.kIsDriverControlled = true;
+    }
+
+    public static void disableDriverControlleMode() {
+        ControlConstants.kIsDriverControlled = false;
+    }
+
     private void configurePathPlannerAutoBuilder() {
         /*utoBuilder.configureHolonomic(
             this::getRobotPose, // Robot pose supplier
