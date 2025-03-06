@@ -24,6 +24,7 @@ import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Utils.GeneralUtils.PercentError;
+import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesChangableValue;
 import frc.robot.Utils.LEDUtils.LEDManager;
 
@@ -143,10 +144,16 @@ public class Robot extends LoggedRobot {
         Pose2d actualPosition = robotContainer.getRobotPosition();
         Pose2d desiredPosition = ControlConstants.robotStartPosition.getAutonPoint();
 
+        boolean[] tolerances = Tolerance.inTolerancePose2d(desiredPosition, actualPosition, ControlConstants.robotStartPositionTolorence);
+        
+
         LEDManager.setAxisIndicators(
             PercentError.getPercentError(actualPosition.getX(), desiredPosition.getX()),
             PercentError.getPercentError(actualPosition.getY(), desiredPosition.getY()),
-            PercentError.getPercentError(actualPosition.getRotation().getRadians(), desiredPosition.getRotation().getRadians()));
+            PercentError.getPercentError(actualPosition.getRotation().getRadians(), desiredPosition.getRotation().getRadians()),
+            tolerances[0],
+            tolerances[1],
+            tolerances[2]);
     }
 
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
