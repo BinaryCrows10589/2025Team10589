@@ -9,7 +9,7 @@ public class GroundIntakeConstants {
         public static final int kPivotMotorCANID = 18;
         public static final int kPivotEncoderCANID = 19;
 
-        public static final double kRotationOffset = .1;
+        public static final double kRotationOffset = .215;
         public static final double kForwardSoftLimit = .9;
         public static final double kReverseSoftLimit = .05;
         public static final double kMaxVoltage = 2;
