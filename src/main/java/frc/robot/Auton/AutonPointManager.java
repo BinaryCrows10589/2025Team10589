@@ -16,18 +16,18 @@ public class AutonPointManager {
     // Deloration of Points
 
     // Points For Own Alliance
-    public static final AutonPoint kPlaceOnCoralB = new AutonPoint(5.05, 5.1472, 57.5, 180, false);
-    public static final AutonPoint kLeaveFromPlaceOnCoralB = new AutonPoint(5.270, 5.1772, 60, 135, false);
-    public static final AutonPoint kLeaveFromPlaceOnCoralBConstrant = new AutonPoint(5.2, 5.3772, 60, 120, false);
-    public static final AutonPoint kIntakeFromOwnAllianceHumanPlayer = new AutonPoint(1.12, 6.75, 120, 180, false);
-    public static final AutonPoint kLeaveFromOwnAllianceHumanPlayer = new AutonPoint(1.2, 6.7, 100, -30, false);
-    public static final AutonPoint kPlaceOnCoralD = new AutonPoint(3.78, 4.77, 120, 310, false);
-    public static final AutonPoint kLeaveFromPlaceOnCoralD = new AutonPoint(3.95, 5.25, 120, 130, false);
-    public static final AutonPoint kPlaceOnCoralE = new AutonPoint(3.60, 4.44, 125, 310, false);
+    public static final AutonPoint kPlaceOnCoralB = new AutonPoint(5.05, 5.202, 57.5, 180, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralB = new AutonPoint(5.270, 5.182, 60, 135, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralBConstrant = new AutonPoint(5.2, 5.352, 60, 120, false);
+    public static final AutonPoint kIntakeFromOwnAllianceHumanPlayer = new AutonPoint(1.22, 6.8, 126, 180, false);
+    public static final AutonPoint kLeaveFromOwnAllianceHumanPlayer = new AutonPoint(1.2, 6.832, 120, -30, false);
+    public static final AutonPoint kPlaceOnCoralD = new AutonPoint(3.8, 4.98, 120, 310, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralD = new AutonPoint(3.85, 4.982, 120, 130, false);
+    public static final AutonPoint kPlaceOnCoralE = new AutonPoint(3.9, 4.5, 123.5, 310, false);
 
     // Points For Center Position
     public static final AutonPoint kPlaceOnCoralL = new AutonPoint(5.82, 3.85, 0, 180, false);
-    public static final AutonPoint kPlaceOnCoralA = new AutonPoint(5.82, 4.20, 0, 180, false);
+    public static final AutonPoint kPlaceOnCoralA = new AutonPoint(5.82, 4.20,0, 180, false);
     // Points For Other Alliance 3.0318
     public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.05, 2.85, -62.5, 180, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralK = new AutonPoint(5.27, 2.87, -60, -135, false);

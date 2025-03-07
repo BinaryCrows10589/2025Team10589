@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
+import frc.robot.Commands.ElevatorCommands.LiftAfterTimeWhenCoralIsInCommand;
 import frc.robot.Constants.GenericConstants.AutonConstants.WPILibAutonConstants;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
@@ -15,6 +16,7 @@ import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
 import frc.robot.Utils.CommandUtils.CustomWaitCommand;
+import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
 public class PlaceCoralBAndDAndEStartingOnOwnAliance {
@@ -30,8 +32,9 @@ public class PlaceCoralBAndDAndEStartingOnOwnAliance {
         ArrayList<Command> autonCommands = new ArrayList<>();
         
         autonCommands.add(PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
-        
-        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralE",
+            //
+        ParallelGroupCommand elevateWhileDriving = new ParallelGroupCommand(
+            new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralE",
             AutonPointManager.kHumanPlayerToCoralE,
             1.7,
             new double[] {2, 0, 0},
@@ -42,9 +45,14 @@ public class PlaceCoralBAndDAndEStartingOnOwnAliance {
             WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
             WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
             WPILibAutonConstants.kPositionTolorence,
-        driveSubsystem));
+            driveSubsystem),
+            new LiftAfterTimeWhenCoralIsInCommand(elevatorCommandFactory.createElevatorToL4Command(), 1.3)
+        );
+        //autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
+        autonCommands.add(elevateWhileDriving);
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
+        autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         autonCommands.add(new CustomWaitCommand(.5));
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 

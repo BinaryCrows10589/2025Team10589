@@ -50,6 +50,7 @@ public class PlaceCoralKStartingOnOtherAliance {
             driveSubsystem));
         
         autonCommands.add(elevate);
+        autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         //autonCommands.add(new CustomWaitCommand(.5, "BeforeDown"));
