@@ -48,7 +48,7 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         //autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(2, autonCommands);
         return auton;
     } 
 

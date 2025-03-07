@@ -65,7 +65,7 @@ public class LEDManager {
         Logger.recordOutput("LED/AxisIndicatorYColor", colorY);
         Logger.recordOutput("LED/AxisIndicatorRotColor", colorRot);
 
-        
+
     }
 
     public static void test() {

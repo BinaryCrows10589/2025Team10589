@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
@@ -209,6 +211,7 @@ public class RobotContainer {
 
     public void periodic() {
         ControlConstants.kHasCoral = this.robotCreator.getOuttakeCoralSensorsSubsystem().isCoralInEndOfOuttake(false);
+        Logger.recordOutput("HasCoral/HasCoral", ControlConstants.kHasCoral);
         /*if(DriverStation.isDisabled()) {
             Pose2d robotPose = this.driveSubsystem.getRobotPose();
             Pose2d startingPose = ControlConstants.robotStartPosition.getAutonPoint();

@@ -53,7 +53,7 @@ public class PlaceCoralBStartingOnOwnAliance {
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.35));
         autonCommands.add(new CustomWaitCommand(.5));
 
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(3, autonCommands);
         return auton;
         
         

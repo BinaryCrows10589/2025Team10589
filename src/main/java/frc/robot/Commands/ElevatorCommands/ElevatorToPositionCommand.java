@@ -37,7 +37,6 @@ public class ElevatorToPositionCommand extends Command {
             } else {
                 LEDManager.setSolidColor(ControlConstants.kElevatorInBasement);
             }
-            LEDManager.setSolidColor(ControlConstants.kElevatorInBasement);
         } else if(this.desiredElevatorPosition == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.L2) || 
             this.desiredElevatorPosition == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.REEF_INTAKE_ALGAE_LOW)) {
             LEDManager.setSolidColor(ControlConstants.kElevatorAtL2);

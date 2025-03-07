@@ -32,7 +32,7 @@ public class SwerveDriveTranslationProfiler extends Command{
     public void end(boolean interrupted) {
         if(this.finishedBasedOnSpeed) {
             Logger.recordOutput("SwerveDrive/SpeedProfile/TranslationAccelerationMPS",
-                (this.maxTranslationMPS/(Timer.getFPGATimestamp() - this.startTime)));  
+              (this.maxTranslationMPS/(Timer.getFPGATimestamp() - this.startTime)));  
         }
         
         this.driveSubsystem.stop();

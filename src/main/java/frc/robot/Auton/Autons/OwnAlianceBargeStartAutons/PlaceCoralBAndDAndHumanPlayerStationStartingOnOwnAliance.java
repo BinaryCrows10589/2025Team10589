@@ -55,7 +55,7 @@ public class PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance {
         autonCommands.add(elevatorDownWhileDrive);
         autonCommands.add(new CustomWaitCommand(.35));
         
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(3, autonCommands);
         return auton;
     } 
 

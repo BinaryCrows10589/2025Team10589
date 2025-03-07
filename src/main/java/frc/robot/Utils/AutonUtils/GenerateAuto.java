@@ -11,13 +11,13 @@ public class GenerateAuto {
      * @param autoCommands ArrayList<Command>: The arraylist of the commands to be placed in the sequental group command. 
      * @return SequentialGroupCommand: The command group that makes up the auton or auton segment. 
      */
-    public static SequentialGroupCommand generateAuto(ArrayList<Command> autoCommands) {
+    public static SequentialGroupCommand generateAuto(double waitTime, ArrayList<Command> autoCommands) {
         Command[] commands = new Command[autoCommands.size()];
         for(int i = 0; i < autoCommands.size(); i++) {
             commands[i] = autoCommands.get(i);
         }
         
-        return new SequentialGroupCommand(5, commands);
+        return new SequentialGroupCommand(waitTime, commands);
     }
 
     /**
