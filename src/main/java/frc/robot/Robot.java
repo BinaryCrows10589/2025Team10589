@@ -146,11 +146,14 @@ public class Robot extends LoggedRobot {
 
         boolean[] tolerances = Tolerance.inTolerancePose2d(desiredPosition, actualPosition, ControlConstants.robotStartPositionTolorence);
         
+        Logger.recordOutput("LED/ActualRotationRad", actualPosition.getRotation().getRadians());
+        Logger.recordOutput("LED/DesiredRotationRad", desiredPosition.getRotation().getRadians());
 
         LEDManager.setAxisIndicators(
             PercentError.getPercentError(actualPosition.getX(), desiredPosition.getX()),
             PercentError.getPercentError(actualPosition.getY(), desiredPosition.getY()),
-            PercentError.getPercentError(actualPosition.getRotation().getRadians(), desiredPosition.getRotation().getRadians()),
+            PercentError.getPercentError(actualPosition.getRotation(), desiredPosition.getRotation()),
+
             tolerances[0],
             tolerances[1],
             tolerances[2]);

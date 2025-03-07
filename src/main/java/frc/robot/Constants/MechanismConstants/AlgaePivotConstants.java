@@ -9,7 +9,7 @@ public class AlgaePivotConstants {
     public static final double kPivotIPIDValue = 0;
     public static final double kPivotDPIDValue = 0;
     public static final double kPivotFPIDValue = 0;;
-    public static final double kPivotEncoderOffset = .086;
+    public static final double kPivotEncoderOffset = .08;
     public static final double kForwardSoftLimit = .477; // .67 .
     public static final double kReverseSoftLimit = .03; //.198
     public static final double kGroundIntakePositionRotations = .47; 
