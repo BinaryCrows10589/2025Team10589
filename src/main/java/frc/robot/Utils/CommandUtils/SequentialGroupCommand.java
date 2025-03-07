@@ -2,6 +2,7 @@ package frc.robot.Utils.CommandUtils;
 
 import edu.wpi.first.epilogue.CustomLoggerFor;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
 
 public class SequentialGroupCommand extends Command {
     private Command[] commands;
@@ -34,7 +35,7 @@ public class SequentialGroupCommand extends Command {
             this.commands[currentRunningIndex].schedule();
         }
 
-        if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand) && !this.waitCommand.isScheduled()) {
+        if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand || this.commands[currentRunningIndex] instanceof WPILibFollowTrajectoryFromPointsCommand || this.commands[currentRunningIndex] instanceof ParallelGroupCommand) && !this.waitCommand.isScheduled()) {
             this.waitCommand.schedule();
         }
         

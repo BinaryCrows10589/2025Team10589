@@ -38,7 +38,7 @@ public class PlaceCoralKStartingOnOtherAliance {
         ParallelGroupCommand elevate = new ParallelGroupCommand(sequentialGroupCommand,
             new WPILibFollowTrajectoryFromPointsCommand("OtherAllianceBargeStartPositionToPlaceOnCoralK",
             AutonPointManager.kOtherAllianceBargeStartPositionToPlaceOnCoralK,
-            1.3,
+            1.32,
             new double[] {1.3, 0, 0},
             new double[] {1.3, 0, 0},
             new double[] {4, 0, 0},
@@ -51,9 +51,10 @@ public class PlaceCoralKStartingOnOtherAliance {
         
         autonCommands.add(elevate);
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
-        autonCommands.add(new CustomWaitCommand(.5, "BeforeDown"));
+        autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
+        //autonCommands.add(new CustomWaitCommand(.5, "BeforeDown"));
 
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(1.35, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(1.3, autonCommands);
         return auton;
     } 
 

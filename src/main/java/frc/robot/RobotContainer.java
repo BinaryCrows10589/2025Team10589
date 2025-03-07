@@ -42,7 +42,7 @@ public class RobotContainer {
     // Controller Decloration and Instantiation
     private final ControllerInterface driverController = new ControllerInterface(ControlConstants.kDriverControllerPort);
     private final ButtonBoardInterface buttonBoard = new ButtonBoardInterface(ControlConstants.kButtonBoardAutoPositioningPort, ControlConstants.kButtonBoardNormalPort);
-    private final ControllerInterface buttonBoardAlt = new ControllerInterface(ControlConstants.kButtonBoardAltPort);
+    //private final ControllerInterface buttonBoardAlt = new ControllerInterface(ControlConstants.kButtonBoardAltPort);
     // Declare all Subsystems and Command Factories
     private final DriveSubsystem driveSubsystem;
     private final DriveCommandFactory driveCommandFactory;
@@ -165,7 +165,7 @@ public class RobotContainer {
 
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberDownManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown); // We have no climber command factory yet.
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberUpManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);
-
+        /*      
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);
         
@@ -183,7 +183,7 @@ public class RobotContainer {
         this.buttonBoardAlt.bindToButton(this.elevatorCommandFactory.createElevatorToL2Command(), XboxController.Button.kLeftBumper.value); 
         this.buttonBoardAlt.bindToLeftTriggure(this.elevatorCommandFactory.createElevatorToL3Command());  
         this.buttonBoardAlt.bindToRightTriggure(this.elevatorCommandFactory.createElevatorToL4Command());  
-        
+        */
     }
 
     /**
