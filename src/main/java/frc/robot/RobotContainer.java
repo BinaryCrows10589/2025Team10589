@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AlgaeCommands.AlgaePivotToPositionCommand;
+import frc.robot.Commands.OuttakeWheelsCommands.OuttakeCoralCommandSlow;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
 import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
 import frc.robot.Constants.GenericConstants.ButtonBoardButtonConstants;
@@ -162,6 +163,7 @@ public class RobotContainer {
         
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorUpCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorUp);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorDown);
+        this.buttonBoard.bindButton(new OuttakeCoralCommandSlow(this.robotCreator.getOuttakeWheelsSubsystem(), this.robotCreator.getOuttakeCoralSensorsSubsystem()), 12);
 
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberDownManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown); // We have no climber command factory yet.
         //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberUpManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);
