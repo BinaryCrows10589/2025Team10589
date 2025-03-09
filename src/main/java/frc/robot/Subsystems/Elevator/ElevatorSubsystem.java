@@ -124,9 +124,9 @@ public class ElevatorSubsystem extends SubsystemBase {
             case GROUND_INTAKE_ALGAE:
                 return 0;
             case REEF_INTAKE_ALGAE_LOW:
-                return .31;//.33;//.349;
+                return .315;//.33;//.349;
             case REEF_INTAKE_ALGAE_HIGH:
-                return .48;//.51; //.52
+                return .52;//.51; //.52
                 
             case SCORE_ALGAE_PROCESSOR:
                 return 0;
