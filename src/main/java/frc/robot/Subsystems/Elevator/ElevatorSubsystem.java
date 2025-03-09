@@ -118,7 +118,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             case L3:
                 return .56;//.55;//.56;
             case L4:
-                return .842;//.8325;//.8375;//.854;//.864;
+                return .835;//.842;//.8325;//.8375;//.854;//.864;
             case FUNNEL:
                 return 0;
             case GROUND_INTAKE_ALGAE:
