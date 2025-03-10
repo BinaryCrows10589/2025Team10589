@@ -55,7 +55,7 @@ public class PlaceCoralKStartingOnOtherAliance {
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         autonCommands.add(new CustomWaitCommand(.2, "BeforeDown"));
 
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(1.3, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(1.3, 2.1, autonCommands);
         return auton;
     } 
 

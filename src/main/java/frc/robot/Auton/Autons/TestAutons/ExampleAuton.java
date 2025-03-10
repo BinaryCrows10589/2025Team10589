@@ -27,7 +27,7 @@ public class ExampleAuton{
         //autonCommands.add(new WPILibTrajectoryCommandCreator("ExampleAuton", autonPointManager.kExampleAutonPointArray, driveSubsystem));
        
 
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(5, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(5, 5, autonCommands);
         return auton;
     } 
 }

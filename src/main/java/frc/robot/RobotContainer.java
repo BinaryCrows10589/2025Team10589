@@ -197,7 +197,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {   
        // this.driveSubsystem.setRobotPose(new AutonPoint(5.5, 5.5, 50));
       // this.placeCommand;//
-        return new ParallelCommandGroup(this.elevatorCommandFactory.createElevatorToL2Command(), this.outtakeCommandFactory.createOuttakeCoralCommand());//this.autonManager.getSelectedAuton();
+        return this.autonManager.getSelectedAuton();
     }
 
     public Pose2d getRobotPosition() {
