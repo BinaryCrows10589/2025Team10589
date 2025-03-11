@@ -45,7 +45,7 @@ public class PlaceCoralKAndHumanPlayerStartingOnOtherAliance {
         ParallelGroupCommand elevatorDownWhileDrive = new ParallelGroupCommand(sequentialGroupCommand,
          elevatorCommandFactory.createElevatorToBasementCommand());
         autonCommands.add(elevatorDownWhileDrive);
-        autonCommands.add(new CustomWaitCommand(.95));
+        autonCommands.add(new CustomWaitCommand(1.45));
         
         SequentialGroupCommand auton = GenerateAuto.generateAuto(3, autonCommands);
         return auton;

@@ -6,7 +6,7 @@ public class OuttakeConstants {
     
     public static final double kRightWheelOuttake = 9;
     public static final double kRightWheelOuttakeL4 = 9;
-    public static final double kRightWheelOuttakeL3 = 5;
+    public static final double kRightWheelOuttakeL3 = 3.2;
     public static final double kRightWheelOuttakeL2 = 3;
 
 
