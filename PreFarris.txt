@@ -1,0 +1,17 @@
+Pre Farris Task List:
+
+    1. Rebuild Algae with light pieces, and place belts inside
+    2. Replace Bottom Plate of Outtake(At a Point in time)
+    3. Deep Climb Testing
+    4. Elevator Sprockets and Rope
+    5. Replace Turn Motors with Minions
+    6. Replace Outtake Motor with Minion
+    7. Replace Pivot Motor with Minion
+    8. Replace Funnel(Wait Untill After Deep Climb)
+
+
+Teleop:
+    1. Climber Coral
+    2. Lock Driving During Scrolling
+Auton:
+    1. Fix 3 Coral

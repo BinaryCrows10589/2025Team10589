@@ -9,7 +9,7 @@ public class AutonPointManager {
 
     // Robot start positions
     public static final AutonPoint kOwnAllianceBargeStartPosition =  new AutonPoint(7.15, 5.247, 60, 180, false);
-    public static final AutonPoint kCenterBargeStartPosition =  new AutonPoint(7.135, 4.0386, 0, 180, false);
+    public static final AutonPoint kCenterBargeStartPosition =  new AutonPoint(7.135, 4.0386, 30, 180, false);
     public static final AutonPoint kOtherAllianceBargeStartPosition = new AutonPoint(7.15, 2.830, 300, 180, false);
 
 

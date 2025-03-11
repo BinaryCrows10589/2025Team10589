@@ -7,15 +7,11 @@ package frc.robot;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
-import frc.robot.Commands.AlgaeCommands.AlgaePivotToPositionCommand;
 import frc.robot.Commands.OuttakeWheelsCommands.OuttakeCoralCommandSlow;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
 import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
@@ -27,10 +23,8 @@ import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
-import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.JoystickUtils.ButtonBoardInterface;
 import frc.robot.Utils.JoystickUtils.ControllerInterface;
-import frc.robot.Utils.LEDUtils.LEDManager;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
