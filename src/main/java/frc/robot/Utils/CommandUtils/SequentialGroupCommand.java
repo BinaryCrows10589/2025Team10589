@@ -8,14 +8,18 @@ public class SequentialGroupCommand extends Command {
     private Command[] commands;
     private int currentRunningIndex = -1;
     private CustomWaitCommand waitCommand;
+    private double waitTime;
+    private double trajectoryWaitTime;
 
     public SequentialGroupCommand(Command... commands) {
         this.commands = commands;
         this.waitCommand = new CustomWaitCommand(100000);
     }
 
-    public SequentialGroupCommand(double waitTime, Command... commands) {
+    public SequentialGroupCommand(double waitTime, double trajectoryWaitTime, Command... commands) {
         this.commands = commands;
+        this.waitTime = waitTime;
+        this.trajectoryWaitTime = trajectoryWaitTime;
         this.waitCommand = new CustomWaitCommand(waitTime);
     }
    
@@ -35,9 +39,24 @@ public class SequentialGroupCommand extends Command {
             this.commands[currentRunningIndex].schedule();
         }
 
-        if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand || this.commands[currentRunningIndex] instanceof WPILibFollowTrajectoryFromPointsCommand || this.commands[currentRunningIndex] instanceof ParallelGroupCommand) && !this.waitCommand.isScheduled()) {
-            this.waitCommand.schedule();
+        // TODO: Test NEW
+        if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand && !this.waitCommand.isScheduled())) {
+            if(this.commands[currentRunningIndex] instanceof WPILibFollowTrajectoryFromPointsCommand || 
+                this.commands[currentRunningIndex] instanceof ParallelGroupCommand) {
+                    this.waitCommand = new CustomWaitCommand(trajectoryWaitTime);
+                    this.waitCommand.schedule();
+            } else {
+                this.waitCommand = new CustomWaitCommand(waitTime);
+            }
         }
+
+        // OLD
+        /* 
+        if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand ||
+         this.commands[currentRunningIndex] instanceof WPILibFollowTrajectoryFromPointsCommand ||
+         this.commands[currentRunningIndex] instanceof ParallelGroupCommand) && !this.waitCommand.isScheduled()) {
+            this.waitCommand.schedule();
+        }*/
         
         if (this.commands[currentRunningIndex].isFinished() || this.waitCommand.isFinished()) {
             if(this.waitCommand.isFinished()) {

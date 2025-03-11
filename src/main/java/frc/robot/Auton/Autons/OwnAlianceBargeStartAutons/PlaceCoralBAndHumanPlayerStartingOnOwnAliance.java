@@ -54,7 +54,7 @@ public class PlaceCoralBAndHumanPlayerStartingOnOwnAliance {
         autonCommands.add(new CustomWaitCommand(.35));
 
         
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(3, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 3.1, autonCommands);
         return auton;
     } 
 

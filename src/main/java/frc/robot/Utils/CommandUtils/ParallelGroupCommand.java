@@ -35,7 +35,9 @@ public class ParallelGroupCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-       
+        for(int i = 0; i < this.command.length; i++) {
+            this.command[i].cancel();
+       }
     }
 
     @Override
@@ -47,4 +49,5 @@ public class ParallelGroupCommand extends Command {
         }
         return true;
     }
+    
 }
