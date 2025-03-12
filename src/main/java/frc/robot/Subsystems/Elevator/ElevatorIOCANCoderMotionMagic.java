@@ -20,6 +20,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorPosition;
 import frc.robot.Utils.GeneralUtils.Tolerance;
@@ -194,6 +195,7 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
     @Override
     public void setDesiredPosition(double desiredPosition) {
         desiredElevatorPosition.Position = desiredPosition;
+        ControlConstants.desiredElevatorPosition = desiredPosition;
         this.positionError = (desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset) - this.elevatorMasterMotor.getPosition().getValueAsDouble();
         if (positionError < 0 || Tolerance.inTolorance(desiredElevatorPosition.Position + ElevatorConstants.kElevatorEncoderOffset, ElevatorConstants.kElevatorEncoderOffset, ElevatorConstants.kCatchTolorence)) {
             this.goingDown = true;

@@ -82,8 +82,8 @@ public class AutonManager {
         addAuton(placeCoralBAndDAndHumanPlayerStationStartingOnOwnAlianceAuton, PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         addAuton(placeCoralBAndDAndEStartingOnOwnAlianceAuton, PlaceCoralBAndDAndEStartingOnOwnAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
 
-        //addAuton(placeCoralAStartingCenterBarge, PlaceCoralAStartingCenterBarge.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
-        //addAuton(placeCoralLStartingCenterBarge, PlaceCoralLStartingCenterBarge.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        addAuton(placeCoralAStartingCenterBarge, PlaceCoralAStartingCenterBarge.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        addAuton(placeCoralLStartingCenterBarge, PlaceCoralLStartingCenterBarge.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
 
         addAuton(placeCoralKStartingOnOtherAlianceAuton, PlaceCoralKStartingOnOtherAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, this.highLevelCommandsFactory));
         addAuton(placeCoralKAndHumanPlayerStartingOnOtherAlianceAuton, PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, this.highLevelCommandsFactory));

@@ -49,25 +49,23 @@ public class LEDManager {
     public static void setAxisIndicators(double percentErrorX, double percentErrorY, double percentErrorRot,
                                          boolean inToleranceX, boolean inToleranceY, boolean inToleranceRot) {
 
-        int amountX = (int) Math.round(percentErrorX * LEDConstants.kLEDsPerAxisIndicator);
-        int amountY = (int) Math.round(percentErrorY * LEDConstants.kLEDsPerAxisIndicator);
-        int amountRot = (int) Math.round(percentErrorRot * LEDConstants.kLEDsPerAxisIndicator);
-
         int[] colorX = getAxisIndicatorLEDColor(inToleranceX, percentErrorX);
         int[] colorY = getAxisIndicatorLEDColor(inToleranceY, percentErrorY);
         int[] colorRot = getAxisIndicatorLEDColor(inToleranceRot, percentErrorRot);
 
         // Set blank ones first
-        setSolidColor(new int[] {0, 0, 0});
+        //setSolidColor(new int[] {0, 0, 0});
 
         // Set three axes up
-        candle.setLEDs(colorX[0], colorX[1], colorX[2], 0, LEDConstants.kLEDsPerAxisIndicator*0, amountX);
-        candle.setLEDs(colorY[0], colorY[1], colorY[2], 0, LEDConstants.kLEDsPerAxisIndicator*1, amountY);
-        candle.setLEDs(colorRot[0], colorRot[1], colorRot[2], 0, LEDConstants.kLEDsPerAxisIndicator*2, amountRot);
+        candle.setLEDs(colorX[0], colorX[1], colorX[2], 255, 28, 10);
+        candle.setLEDs(colorY[0], colorY[1], colorY[2], 0, 18, 10);
+        candle.setLEDs(colorRot[0], colorRot[1], colorRot[2], 0, 8, 10);
         
-        Logger.recordOutput("LED/AxisIndicatorRed", amountX);
-        Logger.recordOutput("LED/AxisIndicatorGreen", amountY);
-        Logger.recordOutput("LED/AxisIndicatorBlue", amountRot);
+        Logger.recordOutput("LED/AxisIndicatorXColor", colorX);
+        Logger.recordOutput("LED/AxisIndicatorYColor", colorY);
+        Logger.recordOutput("LED/AxisIndicatorRotColor", colorRot);
+
+
     }
 
     public static void test() {

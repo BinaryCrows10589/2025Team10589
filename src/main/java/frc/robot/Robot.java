@@ -14,12 +14,14 @@ import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Auton.AutonPointManager;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
@@ -104,7 +106,7 @@ public class Robot extends LoggedRobot {
             // autonomous chooser on the dashboard.
             robotContainer = new RobotContainer();
             checkDriverStationUpdate();
-            LEDManager.setSolidColor(new int[] {255, 255, 255});
+            LEDManager.setSolidColor(new int[] {255, 0, 255});
         }
 
     /**
@@ -140,19 +142,29 @@ public class Robot extends LoggedRobot {
         }
     }
 
+    public Pose2d getTargetedAutonPosition() {
+        Pose2d robotPosition = robotContainer.getRobotPosition();
+        boolean isStartingOnOtherBarge = Tolerance.inTolorance(robotPosition.getY(), AutonPointManager.kOtherAllianceBargeStartPosition.getAutonPoint().getY(), 1.0);
+        return isStartingOnOtherBarge  ? AutonPointManager.kOtherAllianceBargeStartPosition.getAutonPoint() : AutonPointManager.kOwnAllianceBargeStartPosition.getAutonPoint();
+    }
+
     @Override
     public void disabledPeriodic() {
         // Indicators to help us line up with the target starting position
         Pose2d actualPosition = robotContainer.getRobotPosition();
-        Pose2d desiredPosition = ControlConstants.robotStartPosition.getAutonPoint();
+        Pose2d desiredPosition = getTargetedAutonPosition();
+        Logger.recordOutput("LED/DesiredPosition", desiredPosition);
 
         boolean[] tolerances = Tolerance.inTolerancePose2d(desiredPosition, actualPosition, ControlConstants.robotStartPositionTolorence);
         
+        Logger.recordOutput("LED/ActualRotationRad", actualPosition.getRotation().getRadians());
+        Logger.recordOutput("LED/DesiredRotationRad", desiredPosition.getRotation().getRadians());
 
         LEDManager.setAxisIndicators(
             PercentError.getPercentError(actualPosition.getX(), desiredPosition.getX()),
             PercentError.getPercentError(actualPosition.getY(), desiredPosition.getY()),
-            PercentError.getPercentError(actualPosition.getRotation().getRadians(), desiredPosition.getRotation().getRadians()),
+            PercentError.getPercentError(actualPosition.getRotation(), desiredPosition.getRotation()),
+
             tolerances[0],
             tolerances[1],
             tolerances[2]);

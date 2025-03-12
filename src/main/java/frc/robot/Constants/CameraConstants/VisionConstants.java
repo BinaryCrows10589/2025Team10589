@@ -22,8 +22,8 @@ public final class VisionConstants {
 
 
     public static final AprilTagFieldLayout kAprilTagLayout = AprilTagFields.k2025ReefscapeAndyMark.loadAprilTagLayoutField();
-    public static final int[] kExcludedTagsBlue = {12, 13, 14, 15, 16, 18, 21};
-    public static final int[] kExcludedTagsRed = {1, 2, 3, 4, 5, 7, 10};
+    public static final int[] kExcludedTagsBlue = {};
+    public static final int[] kExcludedTagsRed = {};
     public static int[] kExcludedTags = kExcludedTagsBlue;
     public static OriginPosition originPosition = OriginPosition.kBlueAllianceWallRightSide;
     public static boolean updateVision = true; 

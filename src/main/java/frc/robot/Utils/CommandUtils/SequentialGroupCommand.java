@@ -1,20 +1,26 @@
 package frc.robot.Utils.CommandUtils;
 
+import edu.wpi.first.epilogue.CustomLoggerFor;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
 
 public class SequentialGroupCommand extends Command {
     private Command[] commands;
     private int currentRunningIndex = -1;
-
-    private Wait maxTimePerCommand = null;
+    private CustomWaitCommand waitCommand;
+    private double waitTime;
+    private double trajectoryWaitTime;
 
     public SequentialGroupCommand(Command... commands) {
         this.commands = commands;
+        this.waitCommand = new CustomWaitCommand(100000);
     }
 
-    public SequentialGroupCommand(int maxWaitTime, Command... commands) {
-        this(commands);
-        maxTimePerCommand = new Wait(maxWaitTime);
+    public SequentialGroupCommand(double waitTime, double trajectoryWaitTime, Command... commands) {
+        this.commands = commands;
+        this.waitTime = waitTime;
+        this.trajectoryWaitTime = trajectoryWaitTime;
+        this.waitCommand = new CustomWaitCommand(waitTime);
     }
    
 
@@ -27,37 +33,43 @@ public class SequentialGroupCommand extends Command {
         if (currentRunningIndex >= this.commands.length) {
                 return;
         }
-
+        
         if (currentRunningIndex == -1) {
             currentRunningIndex = 0;
             this.commands[currentRunningIndex].schedule();
-            resetMaxCommandTimer();
         }
+
+        // TODO: Test NEW
+        if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand && !this.waitCommand.isScheduled())) {
+            if(this.commands[currentRunningIndex] instanceof WPILibFollowTrajectoryFromPointsCommand || 
+                this.commands[currentRunningIndex] instanceof ParallelGroupCommand) {
+                    this.waitCommand = new CustomWaitCommand(trajectoryWaitTime);
+                    this.waitCommand.schedule();
+            } else {
+                this.waitCommand = new CustomWaitCommand(waitTime);
+            }
+        }
+
+        // OLD
+        /* 
+        if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand ||
+         this.commands[currentRunningIndex] instanceof WPILibFollowTrajectoryFromPointsCommand ||
+         this.commands[currentRunningIndex] instanceof ParallelGroupCommand) && !this.waitCommand.isScheduled()) {
+            this.waitCommand.schedule();
+        }*/
         
-        if (this.commands[currentRunningIndex].isFinished() || maxCommandTimePassed()) {
-
-            // BOYNE: Possible fix? I don't know to be honest
-            //if (this.commands[currentRunningIndex].isScheduled()) {
-            this.commands[currentRunningIndex].cancel();
-            //}
-
+        if (this.commands[currentRunningIndex].isFinished() || this.waitCommand.isFinished()) {
+            if(this.waitCommand.isFinished()) {
+                this.commands[currentRunningIndex].cancel();
+            }
+            this.waitCommand.cancel();
             currentRunningIndex++;
+            
             if (currentRunningIndex >= this.commands.length) {
                 return;
             }
-            
             this.commands[currentRunningIndex].schedule();
-            resetMaxCommandTimer();
         }
-
-        
-    }
-
-    private boolean maxCommandTimePassed() {
-        return maxTimePerCommand != null && maxTimePerCommand.hasTimePassed();
-    }
-    private void resetMaxCommandTimer() {
-        if (maxTimePerCommand != null) maxTimePerCommand.startTimer();
     }
 
     @Override

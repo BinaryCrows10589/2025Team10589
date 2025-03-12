@@ -29,7 +29,7 @@ public class PlaceCoralKAndHumanPlayerStartingOnOtherAliance {
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         autonCommands.add(PlaceCoralKStartingOnOtherAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
-        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new CustomWaitCommand(.4),
+        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new CustomWaitCommand(.1),
             new WPILibFollowTrajectoryFromPointsCommand("PlaceOnCoralKToHumanPlayer",
             AutonPointManager.kPlaceOnCoralKToHumanPlayer,
             3,
@@ -45,9 +45,9 @@ public class PlaceCoralKAndHumanPlayerStartingOnOtherAliance {
         ParallelGroupCommand elevatorDownWhileDrive = new ParallelGroupCommand(sequentialGroupCommand,
          elevatorCommandFactory.createElevatorToBasementCommand());
         autonCommands.add(elevatorDownWhileDrive);
-        autonCommands.add(new CustomWaitCommand(.35));
+        autonCommands.add(new CustomWaitCommand(1.45));
         
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 3.1, autonCommands);
         return auton;
     } 
 

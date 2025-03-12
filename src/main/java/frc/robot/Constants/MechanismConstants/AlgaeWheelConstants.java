@@ -9,7 +9,7 @@ public class AlgaeWheelConstants {
     public static final int kWheelSmartCurrentLimit = 20;
     public static final double kGroundIntakeVoltage = 8;
     public static final double kReefTreeIntakeVoltage = 12;
-    public static final double kOuttakeBargeVoltage = -6;
+    public static final double kOuttakeBargeVoltage = -4;
     public static final double kOuttakeProcessorVoltage = -6;
     public static final double kOuttakeDefaultVoltage = -6;
     public static final double kPullInTime = .25;

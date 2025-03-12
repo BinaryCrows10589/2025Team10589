@@ -32,7 +32,7 @@ public class SwerveDriveRotationProfiler extends Command{
     public void end(boolean interrupted) {
         if(this.finishedBasedOnSpeed) {
             Logger.recordOutput("SwerveDrive/SpeedProfile/RotationRadiansPerSecond",
-                (this.maxRotationRadsPerSecond/(Timer.getFPGATimestamp() - this.startTime)));
+               (this.maxRotationRadsPerSecond/(Timer.getFPGATimestamp() - this.startTime)));
         }
         
         this.driveSubsystem.stop();

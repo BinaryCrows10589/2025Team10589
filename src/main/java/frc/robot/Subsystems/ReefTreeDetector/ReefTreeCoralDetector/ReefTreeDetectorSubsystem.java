@@ -17,7 +17,7 @@ public class ReefTreeDetectorSubsystem extends SubsystemBase{
     private int leftDistenceSensorInvalidCount = 0;
     private int rightDistenceSensorInvalidCount = 0;
     private int leftDistenceSensorInRangeCount = 0;
-    private int rightDistenceSensorInRangeCount;
+    private int rightDistenceSensorInRangeCount = 0;
 
     public ReefTreeDetectorSubsystem(ReefTreeDetectorIO reefTreeDetectorIO) {
         this.reefTreeDetectorIO = reefTreeDetectorIO;
