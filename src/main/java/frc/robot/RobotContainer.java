@@ -83,6 +83,7 @@ public class RobotContainer {
         this.driveSubsystem.setDefaultCommand(this.fieldOrientedDriveCommand);
         this.lockSwerves = this.driveCommandFactory.createLockSwervesCommand();
         this.resetOdometry = this.driveCommandFactory.createResetOdometryCommand();
+        this.climberCommandFactory = new ClimberCommandFactory(this.robotCreator.getClimberSubsystem());
         
         
         /*this.groundIntakeCommandFactory = new GroundIntakeCommandFactory(this.robotCreator.getPivotSubsystem(),
@@ -96,7 +97,6 @@ public class RobotContainer {
 
         this.elevatorCommandFactory = new ElevatorCommandFactory(this.robotCreator.getElevatorSubsystem());
 
-        this.climberCommandFactory = new ClimberCommandFactory(this.robotCreator.getClimberSubsystem());
 
         this.outtakeCommandFactory = new OuttakeCommandFactory(this.robotCreator.getOuttakeWheelsSubsystem(),
             this.robotCreator.getOuttakeCoralSensorsSubsystem());
@@ -225,10 +225,9 @@ public class RobotContainer {
         
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorUpCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorUp);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorDown);
-        this.buttonBoard.bindButton(new OuttakeCoralCommandSlow(this.robotCreator.getOuttakeWheelsSubsystem(), this.robotCreator.getOuttakeCoralSensorsSubsystem()), 12);
-
-        //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberDownManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown); // We have no climber command factory yet.
-        //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberUpManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);
+        
+        this.buttonBoard.bindButton(this.climberCommandFactory.createpPivotClimberDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown);
+        this.buttonBoard.bindButton(this.climberCommandFactory.createPivotClimberUpCommnad(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);
         /*      
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);

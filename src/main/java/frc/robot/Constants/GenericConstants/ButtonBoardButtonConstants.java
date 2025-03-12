@@ -32,7 +32,6 @@ public class ButtonBoardButtonConstants {
         public static int reefIntakeLow = 7;
         public static int reefIntakeHigh = 6;
         public static int intakeLolypop = 14;
-
         
         public static int processorOuttakeAlgae = 16;
         public static int bargeOuttakeAlgae = 18;
@@ -42,8 +41,8 @@ public class ButtonBoardButtonConstants {
         public static int elevatorUp = 8;
         public static int elevatorDown = 9;
 
-        public static int climberDown = -1;
-        public static int climberUp = -1;
+        public static int climberDown = 13;
+        public static int climberUp = 12;
 
         public static int toggleAlgaeWheelPulse = -1; // ok eli
     }

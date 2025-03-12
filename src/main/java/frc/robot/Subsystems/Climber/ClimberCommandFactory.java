@@ -1,21 +1,21 @@
 package frc.robot.Subsystems.Climber;
 
-import frc.robot.Commands.ClimberCommands.MoveClimberManuallyCommand;
+import frc.robot.Commands.ClimberCommands.RunClimberAtVoltageCommand;
 import frc.robot.Constants.MechanismConstants.ClimberConstants;
-import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 
 public class ClimberCommandFactory {
-    private final ClimberSubsystem climberSubsystem;
-
+    
+    public ClimberSubsystem climberSubsystem;
 
     public ClimberCommandFactory(ClimberSubsystem climberSubsystem) {
         this.climberSubsystem = climberSubsystem;
     }
 
-    public MoveClimberManuallyCommand createMoveClimberUpManuallyCommand() {
-        return new MoveClimberManuallyCommand(ClimberConstants.kClimberUpSpeed, climberSubsystem);
+    public RunClimberAtVoltageCommand createpPivotClimberDownCommand() {
+        return new RunClimberAtVoltageCommand(this.climberSubsystem, ClimberConstants.kClimberDownVoltage);
     }
-    public MoveClimberManuallyCommand createMoveClimberDownManuallyCommand() {
-        return new MoveClimberManuallyCommand(ClimberConstants.kClimberDownSpeed, climberSubsystem);
+
+    public RunClimberAtVoltageCommand createPivotClimberUpCommnad() {
+        return new RunClimberAtVoltageCommand(this.climberSubsystem, ClimberConstants.kClimberUpVoltage);
     }
 }
