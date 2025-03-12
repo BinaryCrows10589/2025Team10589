@@ -24,6 +24,10 @@ public final class ControlConstants {
     public static final int[] kElevatorAtL3 = {255, 255, 255}; // Red
     public static final int[] kElevatorAtL4 = {255, 0, 0}; // Red
 
+    // Command logging for AdvantageScope. Advanced will be ignored if basic is not enabled.
+    public static final boolean basicCommandLogging = true;
+    public static final boolean advancedCommandLogging = true;
+
 
 
     //public static final int[] kCoralIntakingColor = {255, 0, 0}; // Red

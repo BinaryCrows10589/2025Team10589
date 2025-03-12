@@ -4,10 +4,18 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
@@ -58,9 +66,14 @@ public class RobotContainer {
     private final LockSwerves lockSwerves;
     private final Command resetOdometry;
 
+
+    private int basicCommandsRanCount = 0;
+    private ArrayList<Command> advancedCommands = new ArrayList<>();
+
     /** 
      * Initalized all Subsystem and Commands 
      */
+    @SuppressWarnings("unused")
     public RobotContainer() {
         // Creates all subsystems. Must be first call. 
         this.robotCreator = new RobotCreator();
@@ -104,7 +117,60 @@ public class RobotContainer {
 
         this.autonManager = new AutonManager(this.driveCommandFactory, this.driveSubsystem, this.elevatorCommandFactory, this.outtakeCommandFactory, this.highLevelCommandsFactory);
         configureBindings();
+        if (ControlConstants.basicCommandLogging && !ControlConstants.advancedCommandLogging) configureCommandSchedulerBindings();
+        else if (ControlConstants.basicCommandLogging && ControlConstants.advancedCommandLogging) configureAdvancedCommandSchedulerBindings();
         this.onRobotEnable();
+    }
+
+    private void logCommand(String commandName, int commandIndex, int commandStateCode, Optional<Command> interruptor) {
+        String commandState;
+        if (commandStateCode == 0) commandState = "Initialized";
+        else if (commandStateCode == 1) commandState = "Executing";
+        else if (commandStateCode == 2) commandState = "Finished";
+        else commandState = "Interrupted";
+
+        String key = "CommandList/" + commandIndex + "/";
+
+        Logger.recordOutput(key + "Name", commandName);
+        Logger.recordOutput(key + "State", commandState);
+        if (interruptor != null) {
+            Command interruptorOrNull = interruptor.orElse(null);
+            if (interruptorOrNull != null)
+                Logger.recordOutput(key + "Interruptor", interruptorOrNull.getName());
+        }
+    }
+
+    private void configureCommandSchedulerBindings() {
+        // On command initialize
+        CommandScheduler.getInstance().onCommandInitialize(
+                (Command command) -> logCommand(command.getName(), basicCommandsRanCount++, 0, null)
+        );
+    }
+
+    private void advancedCommandLogEvent(Command command, int commandStateCode, Optional<Command> interruptor) {
+        int commandIndex = advancedCommands.indexOf(command);
+        if (commandIndex == -1) commandIndex = advancedCommands.size();
+        logCommand(command.getName(), commandIndex, commandStateCode, interruptor);
+    }
+
+    private void configureAdvancedCommandSchedulerBindings() {
+        // On command initialize
+        CommandScheduler.getInstance().onCommandInitialize(
+                (Command command) -> advancedCommandLogEvent(command, 0, null)
+        );
+        CommandScheduler.getInstance().onCommandExecute(
+                (Command command) -> advancedCommandLogEvent(command, 1, null)
+        );
+        CommandScheduler.getInstance().onCommandFinish(
+                (Command command) -> advancedCommandLogEvent(command, 2, null)
+        );
+        CommandScheduler.getInstance().onCommandInterrupt(
+                new BiConsumer<Command, Optional<Command>>() {
+                    public void accept(Command command, Optional<Command> interruptor) {
+                        advancedCommandLogEvent(command, 3, interruptor);
+                    }
+                }
+        );
     }
 
     
@@ -209,6 +275,7 @@ public class RobotContainer {
 
     public void periodic() {
         ControlConstants.kHasCoral = this.robotCreator.getOuttakeCoralSensorsSubsystem().isCoralInEndOfOuttake(false);
+
         /*if(DriverStation.isDisabled()) {
             Pose2d robotPose = this.driveSubsystem.getRobotPose();
             Pose2d startingPose = ControlConstants.robotStartPosition.getAutonPoint();
@@ -227,6 +294,9 @@ public class RobotContainer {
         }*/
         
     }
+
+
+
 
     public void onRobotEnable() {
         this.robotCreator.getAlgaePivotSubsystem().setDesiredPivotRotation(AlgaePivotConstants.kDefultPivotPosition);
