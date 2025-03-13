@@ -2,6 +2,7 @@ package frc.robot.Subsystems.Climber;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -52,6 +53,7 @@ public class ClimberIOTalonFX implements ClimberIO{
 
         //this.climberMotor.optimizeBusUtilization();
         this.climberMotor.getConfigurator().apply(climberConfiguration);
+        this.climberMotor.getConfigurator().apply(holdPositionPIDConstants);
     }
 
     @Override
@@ -59,12 +61,17 @@ public class ClimberIOTalonFX implements ClimberIO{
         inputs.climberRPM = this.climberMotor.getVelocity().getValueAsDouble();
         inputs.climberMotorAppliedVolts = this.climberMotor.getMotorVoltage().getValueAsDouble();
         inputs.climberDesiredVoltage = this.desiredVoltage;
+
+        this.climberTunablePIDConstants.updatePIDValuesFromNetworkTables(climberMotor);
     }
 
     @Override
     public void setDesiredClimberMotorVoltage(double desiredVoltage) {
         this.desiredVoltage = desiredVoltage;
         this.climberMotor.setVoltage(desiredVoltage);
+        if(this.desiredVoltage == 0) {
+            this.climberMotor.setControl(new PositionVoltage(this.climberMotor.getPosition().getValueAsDouble()));
+        }
     }
 
 }
