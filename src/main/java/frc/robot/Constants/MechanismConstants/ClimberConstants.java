@@ -1,7 +1,7 @@
 package frc.robot.Constants.MechanismConstants;
 
 public class ClimberConstants {
-    public static final int kClimberMotorCANID = 35;
+    public static final int kClimberMotorCANID = 36;
     public static final int kClimberMaxVoltage = 2;
 
     public static final double kClimberPPIDValue = 0;

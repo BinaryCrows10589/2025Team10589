@@ -9,10 +9,6 @@ import org.littletonrobotics.junction.Logger;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
-import org.littletonrobotics.junction.Logger;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
-import frc.robot.Commands.OuttakeWheelsCommands.OuttakeCoralCommandSlow;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
 import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
 import frc.robot.Constants.GenericConstants.ButtonBoardButtonConstants;

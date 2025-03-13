@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.OuttakeWheelsCommands.OuttakeCoralCommand;
+import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.TransitConstants;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIO;
@@ -29,12 +30,12 @@ public class ScrollThanOuttakeCommand extends Command {
         this.timeBeforeOuttake = new WaitCommand(timeBeforeOutput);
         this.waitThenOuttake = new SequentialCommandGroup(
             this.timeBeforeOuttake, this.outtakeWheelsCommand);
-
     }
     
     @Override
     public void initialize() {
         this.scrollWithReefTreeDetectorCommand.schedule();
+        ControlConstants.kIsDriverControlled = false;
     }
 
     @Override
@@ -44,6 +45,8 @@ public class ScrollThanOuttakeCommand extends Command {
     public void end(boolean interrupted) {
         if(!interrupted) {
             this.waitThenOuttake.schedule();
+        } else {
+            ControlConstants.kIsDriverControlled = true;
         }
         this.scrollWithReefTreeDetectorCommand.cancel();
     }
