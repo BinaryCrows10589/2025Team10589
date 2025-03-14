@@ -14,7 +14,6 @@ public class RobotModeConstants {
      This allows for autons to be proberly ran multiple times with without power cycling
      or redeploying code be reconstructing the robot container when the code is disabled.
     */
-    //TODO: Fix this to make it work
     public static boolean kAutonDebugMode = false;
     public static final boolean kIsNotSim = currentMode != Mode.SIM;
     public static final double kLoopPeriod = .02; 

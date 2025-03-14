@@ -14,7 +14,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Subsystems.Elevator.ElevatorIO;
-import frc.robot.Subsystems.Elevator.ElevatorIO.ElevatorIOInputs;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
@@ -57,7 +56,6 @@ public class ElevatorIOCANCoderPositionalPID implements ElevatorIO {
         masterConfiguration.ClosedLoopGeneral.ContinuousWrap = false;
         //masterConfiguration.Feedback.FeedbackRotorOffset = elevatorEncoder.getAbsoluteEncoder().getPosition(); // Reset the builtin encoder to the REV encoder's value
 
-        //TODO: I don't think this requires more configuration, but we'll have to see
 
         Slot0Configs elevatorPositionalPIDConfigs = new Slot0Configs();
         elevatorPositionalPIDConfigs.kP = ElevatorConstants.kElevatorPPIDValue;

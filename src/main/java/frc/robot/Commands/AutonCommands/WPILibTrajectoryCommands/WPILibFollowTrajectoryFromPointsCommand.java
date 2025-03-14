@@ -2,17 +2,12 @@ package frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands;
 
 import java.util.ArrayList;
 
-import javax.tools.ToolProvider;
-
 import org.littletonrobotics.junction.Logger;
-
-import com.fasterxml.jackson.databind.util.RootNameLookup;
 
 import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
@@ -22,7 +17,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.AutonConstants.WPILibAutonConstants;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
-import frc.robot.Utils.AutonUtils.WPILIBTrajectoryConfig;
 import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
 import frc.robot.Utils.CommandUtils.Wait;
 import frc.robot.Utils.GeneralUtils.Tolerance;

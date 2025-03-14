@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
@@ -16,7 +14,6 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
-import frc.robot.Utils.CommandUtils.CustomWaitCommand;
 import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 

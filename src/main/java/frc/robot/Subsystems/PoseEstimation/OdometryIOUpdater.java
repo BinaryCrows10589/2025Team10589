@@ -34,8 +34,7 @@ public class OdometryIOUpdater implements OdometryIO{
         this.photonPoseEstimators = photonPoseEstimators;
         this.odometryUpdaterThread = new OdometryUpdaterThread(this.swerveDrivePoseEstimator, this.driveSubsystem,
         this.photonPoseEstimators, photonCameras);
-       //TODO: Add this back to reenable vision
-        this.odometryUpdaterThread.start(); //Comment back in to enable vision
+        this.odometryUpdaterThread.start(); 
     }
 
     @Override

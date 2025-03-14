@@ -1,17 +1,12 @@
 package frc.robot.Commands.IntakeCommands;
 
-import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.ElevatorCommands.ElevatorToPositionCommand;
 import frc.robot.Commands.OuttakeWheelsCommands.HoldCoralInOuttakeCommand;
 import frc.robot.Commands.TransitCommands.RunTransitToOuttakeCommand;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
-import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.GroundIntake.GroundIntakeCommandFactory;
-import frc.robot.Subsystems.GroundIntake.IntakeWheels.IntakeWheelsSubsystem;
-import frc.robot.Subsystems.GroundIntake.Pivot.PivotSubsystem;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
 import frc.robot.Subsystems.TransitTunnel.TransitCoralSensor.TransitCoralSensorSubsystem;
@@ -80,7 +75,7 @@ public class GroundIntakeCommand extends Command {
     @Override
     public void initialize() {
         elevatorAndTransitCommand = new SequentialGroupCommand(
-            this.elevatorToBasementCommand, //TODO: RE ADD
+            this.elevatorToBasementCommand, 
             this.runTransitToOuttakeCommand);        
         //LEDManager.setSolidColor(ControlConstants.kCoralIntakingColor);
 
@@ -110,9 +105,8 @@ public class GroundIntakeCommand extends Command {
             if (elevatorAndTransitCommand.isFinished()) { // True when coral is in the outtake
                 goToNextStage(GroundIntakeCommandStage.RESETTING);
             }
-        } // TODO: BOOKMARK. This code does not work because when the transit command ends it does not start the outtake motors holdCoralInOuttakeCommand (or it doesn't do anything, maybe voltage too low)
-    }     // Bonus: get distance sensor stuff working for the isValid. Maybe make whether to consider invalid values as true or false a parameter? but that's just my two cents
-
+        }
+    }     
     @Override
     public void end(boolean interrupted) {
         this.currentState = GroundIntakeCommandStage.INTAKING;

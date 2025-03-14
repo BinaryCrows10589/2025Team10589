@@ -4,7 +4,6 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.ControlConstants;
-import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.CommandUtils.Wait;
 
 public class LiftAfterTimeWhenCoralIsInCommand extends Command{

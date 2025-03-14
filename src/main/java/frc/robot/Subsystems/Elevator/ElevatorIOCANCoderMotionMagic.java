@@ -1,13 +1,10 @@
 package frc.robot.Subsystems.Elevator;
 
-import java.util.spi.ToolProvider;
-
 import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -18,7 +15,6 @@ import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.ElevatorConstants;
@@ -76,7 +72,6 @@ public class ElevatorIOCANCoderMotionMagic implements ElevatorIO {
         
         //masterConfiguration.Feedback.FeedbackRotorOffset = elevatorEncoder.getAbsoluteEncoder().getPosition(); // Reset the builtin encoder to the REV encoder's value
 
-        //TODO: I don't think this requires more configuration, but we'll have to see
 
         Slot0Configs elevatorPositionalPIDConfigs = new Slot0Configs();
         elevatorPositionalPIDConfigs.kP = ElevatorConstants.kElevatorPPIDValue;

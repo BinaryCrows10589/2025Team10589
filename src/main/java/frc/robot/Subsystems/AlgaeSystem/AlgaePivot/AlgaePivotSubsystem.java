@@ -4,7 +4,6 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MechanismConstants.AlgaePivotConstants;
-import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotIO.AlgaePivotIOInputs;
 import frc.robot.Utils.GeneralUtils.Tolerance;
 
 public class AlgaePivotSubsystem extends SubsystemBase {

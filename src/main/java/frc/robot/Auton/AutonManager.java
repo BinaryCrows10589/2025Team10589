@@ -22,7 +22,6 @@ import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndHuman
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDStartingOnOwnAliance;
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndHumanPlayerStartingOnOwnAliance;
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBStartingOnOwnAliance;
-import frc.robot.Auton.Autons.TestAutons.ExampleAuton;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;

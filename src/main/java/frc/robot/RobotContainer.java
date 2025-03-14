@@ -290,9 +290,6 @@ public class RobotContainer {
         
     }
 
-
-
-
     public void onRobotEnable() {
         this.robotCreator.getAlgaePivotSubsystem().setDesiredPivotRotation(AlgaePivotConstants.kDefultPivotPosition);
         this.robotCreator.getElevatorSubsystem().disableElevatorMotors();

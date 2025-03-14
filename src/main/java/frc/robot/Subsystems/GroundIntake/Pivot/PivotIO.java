@@ -2,8 +2,6 @@ package frc.robot.Subsystems.GroundIntake.Pivot;
 
 import org.littletonrobotics.junction.AutoLog;
 
-import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.PivotContants;
-
 public interface PivotIO {
 
     @AutoLog

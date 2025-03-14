@@ -2,12 +2,8 @@ package frc.robot.Commands.OuttakeWheelsCommands;
 
 import org.littletonrobotics.junction.Logger;
 
-import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.ControlConstants;
-import frc.robot.Constants.MechanismConstants.OuttakeConstants;
-import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIO;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
 import frc.robot.Subsystems.Outtake.OuttakeWheels.OuttakeWheelsSubsystem;
 import frc.robot.Utils.CommandUtils.Wait;

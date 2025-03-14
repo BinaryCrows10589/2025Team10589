@@ -1,6 +1,5 @@
 package frc.robot.Utils.CommandUtils;
 
-import edu.wpi.first.epilogue.CustomLoggerFor;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
 

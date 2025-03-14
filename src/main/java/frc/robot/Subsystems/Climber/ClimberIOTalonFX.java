@@ -8,8 +8,6 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import frc.robot.Constants.MechanismConstants.ClimberConstants;
-import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveModuleConstants;
-import frc.robot.Subsystems.Climber.ClimberIO.ClimberIOInputs;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class ClimberIOTalonFX implements ClimberIO{

@@ -4,7 +4,6 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.GenericConstants.ControlConstants;
 
 public class ButtonBoardInterface {
     private GenericHID buttonBoardAutoPositioning; // 12 button auto positioning
@@ -21,9 +20,7 @@ public class ButtonBoardInterface {
         this.autoPositioningButtonMap = new Command[buttonBoardAutoPositioningButtonCount];
         this.normalButtonMap = new Command[buttonBoardNormalButtonCount][2];
     }
-    /*
-     * TODO: Find which ports will be for these and list here
-     */
+ 
     public void bindAutoPositioningCommand(Command autoPositioningCommand, int buttonIndex) {
         this.autoPositioningButtonMap[buttonIndex] = autoPositioningCommand;
     }

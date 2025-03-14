@@ -33,7 +33,7 @@ public interface ElevatorIO {
     public default void updateInputs(ElevatorIOInputs inputs) {}
 
     /**
-     * Sets the goal position of the elevator //TODO: Units
+     * Sets the goal position of the elevator 
      * @param desiredPosition Double: The desired position of the elevator
      */
     public default void setDesiredPosition(double desiredPosition) {}

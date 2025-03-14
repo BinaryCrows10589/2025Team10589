@@ -2,7 +2,6 @@ package frc.robot.Commands.TransitCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.MechanismConstants.TransitConstants;
-import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIO;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
 import frc.robot.Subsystems.TransitTunnel.TransitWheels.TransitWheelsSubsystem;
 import frc.robot.Utils.CommandUtils.Wait;

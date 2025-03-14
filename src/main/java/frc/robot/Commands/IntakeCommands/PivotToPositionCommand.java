@@ -2,7 +2,6 @@ package frc.robot.Commands.IntakeCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotSubsystem;
-import frc.robot.Utils.CommandUtils.Wait;
 
 public class PivotToPositionCommand extends Command {
     private final PivotSubsystem pivotSubsystem;

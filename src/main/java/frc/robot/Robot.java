@@ -14,7 +14,6 @@ import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -47,6 +46,7 @@ public class Robot extends LoggedRobot {
          * This function is run when the robot is first started up and should be used for any
          * initialization code.
          */
+        @SuppressWarnings("resource")
         @Override
         public void robotInit() {
             //DriverStationSim.setAllianceStationId(AllianceStationID.Blue1);

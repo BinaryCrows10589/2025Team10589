@@ -1,12 +1,7 @@
 package frc.robot.Commands.ElevatorCommands;
 
-import java.util.function.Supplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
-import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorMode;
-import frc.robot.Utils.LEDUtils.LEDManager;
 
 public class MoveElevatorManuallyCommand extends Command {
 

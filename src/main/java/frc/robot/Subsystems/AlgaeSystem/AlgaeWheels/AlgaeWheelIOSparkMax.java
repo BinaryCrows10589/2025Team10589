@@ -11,7 +11,6 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.MechanismConstants.AlgaeWheelConstants;
-import frc.robot.Constants.MechanismConstants.AlgaeWheelConstants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class AlgaeWheelIOSparkMax implements AlgaeWheelIO {
