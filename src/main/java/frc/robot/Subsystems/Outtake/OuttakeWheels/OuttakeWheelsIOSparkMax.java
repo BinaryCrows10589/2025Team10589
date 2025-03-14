@@ -30,7 +30,7 @@ public class OuttakeWheelsIOSparkMax implements OuttakeWheelsIO {
 
         configureWheels();
         
-        Timer.delay(0.5);
+        Timer.delay(0.1);
     }
 
     @Override

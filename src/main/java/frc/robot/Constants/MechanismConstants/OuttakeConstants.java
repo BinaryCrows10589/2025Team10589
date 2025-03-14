@@ -16,7 +16,9 @@ public class OuttakeConstants {
     public static final int kLeftWheelMotorCANID = 28;
     public static final int kRightWheelMotorCANID = 29;
 
-    public static final int kWheelSmartCurrentLimit = 12; // TODO: MAKE THIS CORRECT OR DEATH OF MOTORS WILL ENSUE
+    public static final int kWheelSmartCurrentLimit = 12;
+    public static final double kMaxWheelVoltage = 12;
+
 
     public static final double kHoldCoralVoltage = 1;
 
@@ -28,4 +30,5 @@ public class OuttakeConstants {
     public static final int kOuttakeCoralSensorEndCANID = 31;
     public static final double kOuttakeCoralSensorMaxCoralDistanceMillimeters = 40;
     public static final double kRightWheelIntake = -4.0;
+
 }
