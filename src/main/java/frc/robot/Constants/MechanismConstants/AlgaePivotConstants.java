@@ -4,6 +4,7 @@ public class AlgaePivotConstants {
 
     public static final double kPivotAngleToleranceRotations = 0.05;
     public static final int kPivotMotorCANID = 32;
+    public static final int kPivotEncoderCANID = 38;
     public static final int kSmartCurrentLimit = 20;
     public static final double kPivotPPIDValue = 5;
     public static final double kPivotIPIDValue = 0;

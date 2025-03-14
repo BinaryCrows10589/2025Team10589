@@ -31,7 +31,7 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
 
         configurePivotMotor();
 
-        Timer.delay(0.5);
+        Timer.delay(0.1);
     }
 
     private void configurePivotMotor() {
