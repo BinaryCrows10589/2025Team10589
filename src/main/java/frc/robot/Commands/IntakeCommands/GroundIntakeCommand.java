@@ -36,7 +36,9 @@ public class GroundIntakeCommand extends Command {
     private final GroundIntakeCommandFactory groundIntakeCommandFactory;
     private final TransitWheelsCommandFactory transitWheelsCommandFactory;
     private final OuttakeCommandFactory outtakeCommandFactory;
+    @SuppressWarnings("unused")
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
+    @SuppressWarnings("unused")
     private final TransitCoralSensorSubsystem transitCoralSensorSubsystem;
     private final ElevatorCommandFactory elevatorCommandFactory;
     private final PivotToPositionCommand pivotUpCommand;

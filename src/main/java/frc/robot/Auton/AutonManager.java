@@ -114,6 +114,7 @@ public class AutonManager {
         autonomousCommands.put(autonName, autonomousCommand);
     }
 
+    @SuppressWarnings("unused")
     private void registerAllPathPlannerCommands() {
         NamedCommands.registerCommand("WaitCommand", new CustomWaitCommand(.2));
     }

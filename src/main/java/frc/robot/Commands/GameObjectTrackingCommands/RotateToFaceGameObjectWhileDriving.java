@@ -19,6 +19,7 @@ public class RotateToFaceGameObjectWhileDriving extends Command {
     private double goalRotation = 30000;
     private Wait hardCutOffTimer;
     private double velocityMPS;
+    @SuppressWarnings("unused")
     private double anlgeOffsetDegrees;
     private Pose2d startPosition;
 

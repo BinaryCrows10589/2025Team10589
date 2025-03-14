@@ -16,17 +16,21 @@ import frc.robot.Utils.LEDUtils.LEDManager;
 
 public class ScrollWithReefTreeDetectorCommand extends Command{
     private final double[] scrollVelocityVector;
+    @SuppressWarnings("unused")
     private final double[] lockRotationPIDConstants;
 
     private ProfiledPIDController lockRotationController;
     private final NetworkTablesTunablePIDConstants lockRotationPIDConstantTuner;
     
+    @SuppressWarnings("unused")
     private final Wait hardCutOffTimmer;
 
     private final DriveSubsystem driveSubsystem;
     private final LockSwervesAuton lockSwerves;
+    @SuppressWarnings("unused")
     private double initialRotation;
     private BooleanSupplier isSensorInRange;
+    @SuppressWarnings("unused")
     private BooleanSupplier isOtherSensorInRange;
 
     public ScrollWithReefTreeDetectorCommand(String pathname, double[] scrollVelocityVector, 

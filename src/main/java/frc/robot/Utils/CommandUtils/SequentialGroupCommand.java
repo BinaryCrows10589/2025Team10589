@@ -37,8 +37,6 @@ public class SequentialGroupCommand extends Command {
             currentRunningIndex = 0;
             this.commands[currentRunningIndex].schedule();
         }
-
-        // TODO: Test NEW
         if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand && !this.waitCommand.isScheduled())) {
             if(this.commands[currentRunningIndex] instanceof WPILibFollowTrajectoryFromPointsCommand || 
                 this.commands[currentRunningIndex] instanceof ParallelGroupCommand) {

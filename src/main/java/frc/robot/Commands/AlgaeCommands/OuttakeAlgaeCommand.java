@@ -17,10 +17,12 @@ public class OuttakeAlgaeCommand extends Command {
      */
 
     private final ElevatorToPositionCommand elevatorToPositionCommand;
+    @SuppressWarnings("unused")
     private final ElevatorToPositionCommand elevatorToBasementCommand;
     private final AlgaePivotToPositionCommand pivotCommand;
     private final AlgaePivotToPositionCommand defualtPivotPositionCommand;
 
+    @SuppressWarnings("unused")
     private final AlgaeWheelSubsystem algaeWheelSubsystem;
 
     public OuttakeAlgaeCommand(ElevatorToPositionCommand elevatorToPositionCommand,
