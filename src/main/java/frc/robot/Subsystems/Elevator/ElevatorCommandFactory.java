@@ -1,14 +1,9 @@
 package frc.robot.Subsystems.Elevator;
 
-import java.util.function.Supplier;
-
 import frc.robot.Commands.ElevatorCommands.ElevatorToPositionCommand;
 import frc.robot.Commands.ElevatorCommands.MoveElevatorManuallyCommand;
 import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorPosition;
-import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
-import frc.robot.Utils.JoystickUtils.ButtonBoardInterface;
-import frc.robot.Utils.JoystickUtils.ControllerInterface;
 
 public class ElevatorCommandFactory {
     // All Subsystems needed for every command

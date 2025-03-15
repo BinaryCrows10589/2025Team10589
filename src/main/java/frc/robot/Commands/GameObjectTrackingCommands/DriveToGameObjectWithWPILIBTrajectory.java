@@ -13,7 +13,6 @@ public class DriveToGameObjectWithWPILIBTrajectory extends Command {
     private DriveSubsystem driveSubsystem;
     private WPILibFollowTrajectoryFromPointsCommand driveToGameObjectCommand;
     private double maxTime;
-    // TODO: Wokrs on blue, field mirroring issue on red allience
     public DriveToGameObjectWithWPILIBTrajectory(double maxTime, DriveSubsystem driveSubsystem) {
         this.driveSubsystem = driveSubsystem;
         this.maxTime = maxTime;

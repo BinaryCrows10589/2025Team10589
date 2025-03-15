@@ -1,13 +1,10 @@
 package frc.robot.Subsystems.Elevator;
 
-import java.util.Base64;
 import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.MechanismConstants.ElevatorConstants;
-import frc.robot.Constants.MechanismConstants.GroundIntakeConstants.PivotContants;
 import frc.robot.Utils.GeneralUtils.Tolerance;
 
 public class ElevatorSubsystem extends SubsystemBase {

@@ -1,40 +1,36 @@
 package frc.robot.Commands.AutoPositionCommands;
 
-import java.security.CodeSource;
 import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
-import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
-
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.SwerveDriveCommands.LockSwervesAuton;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.AutoPositionConstants.AutonScrollConstants;
-import frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector.ReefTreeDetectorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
-import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
 import frc.robot.Utils.CommandUtils.Wait;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 import frc.robot.Utils.LEDUtils.LEDManager;
 
 public class ScrollWithReefTreeDetectorCommand extends Command{
     private final double[] scrollVelocityVector;
+    @SuppressWarnings("unused")
     private final double[] lockRotationPIDConstants;
 
     private ProfiledPIDController lockRotationController;
     private final NetworkTablesTunablePIDConstants lockRotationPIDConstantTuner;
     
+    @SuppressWarnings("unused")
     private final Wait hardCutOffTimmer;
 
     private final DriveSubsystem driveSubsystem;
     private final LockSwervesAuton lockSwerves;
+    @SuppressWarnings("unused")
     private double initialRotation;
     private BooleanSupplier isSensorInRange;
+    @SuppressWarnings("unused")
     private BooleanSupplier isOtherSensorInRange;
 
     public ScrollWithReefTreeDetectorCommand(String pathname, double[] scrollVelocityVector, 

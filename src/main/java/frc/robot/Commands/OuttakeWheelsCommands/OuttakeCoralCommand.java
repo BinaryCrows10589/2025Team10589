@@ -2,14 +2,11 @@ package frc.robot.Commands.OuttakeWheelsCommands;
 
 import org.littletonrobotics.junction.Logger;
 
-import com.ctre.phoenix6.controls.jni.ControlConfigJNI;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.OuttakeConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorPosition;
-import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsIO;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
 import frc.robot.Subsystems.Outtake.OuttakeWheels.OuttakeWheelsSubsystem;
 import frc.robot.Utils.CommandUtils.Wait;
@@ -58,6 +55,7 @@ public class OuttakeCoralCommand extends Command{
     public void end(boolean interrupted) {
         this.outtakeWheelsSubsystem.setWheelVoltages(0);
         this.hardCutOffTimer.disableTimer();
+        ControlConstants.kIsDriverControlled = true;
         LEDManager.setSolidColor(ControlConstants.kCoralOuttakedColor);
         
     }

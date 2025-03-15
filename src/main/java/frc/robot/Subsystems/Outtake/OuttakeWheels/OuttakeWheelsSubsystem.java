@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class OuttakeWheelsSubsystem extends SubsystemBase{
     
-    OuttakeWheelsIO outtakeWheelsIO;
-    OuttakeWheelsIOInputsAutoLogged outtakeWheelsInputs = new OuttakeWheelsIOInputsAutoLogged();
+    private OuttakeWheelsIO outtakeWheelsIO;
+    private OuttakeWheelsIOInputsAutoLogged outtakeWheelsInputs = new OuttakeWheelsIOInputsAutoLogged();
 
     public OuttakeWheelsSubsystem(OuttakeWheelsIO outtakeWheelsIO) {
         this.outtakeWheelsIO = outtakeWheelsIO;

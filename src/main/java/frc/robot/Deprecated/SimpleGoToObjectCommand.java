@@ -1,21 +1,14 @@
 package frc.robot.Deprecated;
 
-import java.util.function.Supplier;
-
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Commands.AutonCommands.PIDPositioningAutonCommands.PIDGoToPose;
 import frc.robot.Constants.CameraConstants.GameObjectTrackingConstants;
-import frc.robot.Constants.CameraConstants.VisionConstants;
 import frc.robot.Constants.GenericConstants.AutonConstants.PIDPositioningAutonConstants;
 import frc.robot.Subsystems.GameObjectTracking.GameObjectTracker;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
-import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
-import frc.robot.Utils.AutonUtils.AutonPointUtils.FudgeFactor;
 import frc.robot.Utils.CommandUtils.Wait;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
@@ -53,7 +46,7 @@ public class SimpleGoToObjectCommand extends Command {
             PIDPositioningAutonConstants.kPRotationPIDConstant,
             PIDPositioningAutonConstants.kIRotationPIDConstant,
             PIDPositioningAutonConstants.kDRotationPIDConstant,
-            PIDPositioningAutonConstants.kTranslationPIDControllerConstraints); //TODO: Make other constants?
+            PIDPositioningAutonConstants.kTranslationPIDControllerConstraints); 
 
         this.rotationPIDController.enableContinuousInput(-Math.PI, Math.PI);
 

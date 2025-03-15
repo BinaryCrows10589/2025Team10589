@@ -3,7 +3,6 @@ package frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector;
 import com.playingwithfusion.TimeOfFlight;
 
 import frc.robot.Constants.MechanismConstants.ReefTreeDetectorConstants;
-import frc.robot.Constants.MechanismConstants.TransitConstants.TransitCoralSensorConstants;
 
 /**
  * Provides methods for accessing the distance reported by our time-of-flight sensor.

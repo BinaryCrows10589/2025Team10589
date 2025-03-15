@@ -1,7 +1,5 @@
 package frc.robot.Subsystems.AlgaeSystem.AlgaeWheels;
 
-import java.util.function.Consumer;
-
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;

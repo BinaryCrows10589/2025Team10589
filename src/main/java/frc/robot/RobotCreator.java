@@ -8,6 +8,8 @@ import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotSubsystem;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelIO;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelIOSparkMax;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelSubsystem;
+import frc.robot.Subsystems.Climber.ClimberIO;
+import frc.robot.Subsystems.Climber.ClimberIOTalonFX;
 import frc.robot.Subsystems.Climber.ClimberSubsystem;
 import frc.robot.Subsystems.Elevator.ElevatorIO;
 import frc.robot.Subsystems.Elevator.ElevatorIOCANCoderMotionMagic;
@@ -51,7 +53,7 @@ public class RobotCreator {
     private final OuttakeWheelsSubsystem outtakeWheelsSubsystem;
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
 
-    //private ClimberSubsystem climberSubsystem;
+    private ClimberSubsystem climberSubsystem;
 
     private final AlgaeWheelSubsystem algaeWheelSubsystem;
     private final AlgaePivotSubsystem algaePivotSubsystem;
@@ -84,7 +86,7 @@ public class RobotCreator {
                 this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIOSparkMax());
                 this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIOSparkMax());
 
-                //this.climberSubsystem = new ClimberSubsystem(new ClimberIONeoREVThroughbore());
+                this.climberSubsystem = new ClimberSubsystem(new ClimberIOTalonFX());
 
                 break;
             case SIM:
@@ -103,12 +105,11 @@ public class RobotCreator {
                 this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderMotionMagic(), this.funnelCoralSensorSubsystem::isCoralInFunnel, this.outtakeCoralSensorsSubsystem::isCoralOutOfElevator);
 
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
-                
 
                 this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIOSparkMax());
                 this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIOSparkMax());
 
-                //this.climberSubsystem = new ClimberSubsystem(new ClimberIONeoREVThroughbore());
+                this.climberSubsystem = new ClimberSubsystem(new ClimberIOTalonFX());
 
 
                 break;
@@ -134,7 +135,7 @@ public class RobotCreator {
                 this.algaeWheelSubsystem = new AlgaeWheelSubsystem(new AlgaeWheelIO() {});
                 this.algaePivotSubsystem = new AlgaePivotSubsystem(new AlgaePivotIO() {});
 
-                //this.climberSubsystem = new ClimberSubsystem(new ClimberIONeoREVThroughbore());
+                this.climberSubsystem = new ClimberSubsystem(new ClimberIO() {});
 
 
                 break;
@@ -167,10 +168,6 @@ public class RobotCreator {
         return null;//this.transitCoralSensorSubsystem;
     }
 
-    public ClimberSubsystem getClimberSubsystem() {
-        return null;//this.climberSubsystem;
-    }
-
     public FunnelCoralSensorSubsystem getFunnelCoralSensorSubsystem() {
         return this.funnelCoralSensorSubsystem;
     }
@@ -197,6 +194,10 @@ public class RobotCreator {
 
     public AlgaePivotSubsystem getAlgaePivotSubsystem() {
         return this.algaePivotSubsystem;
+    }
+
+    public ClimberSubsystem getClimberSubsystem() {
+        return this.climberSubsystem;
     }
 
 }

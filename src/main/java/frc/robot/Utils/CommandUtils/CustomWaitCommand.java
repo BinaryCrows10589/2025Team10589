@@ -2,7 +2,6 @@ package frc.robot.Utils.CommandUtils;
 
 import org.littletonrobotics.junction.Logger;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class CustomWaitCommand extends Command{

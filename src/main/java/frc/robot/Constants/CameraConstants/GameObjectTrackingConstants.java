@@ -9,7 +9,7 @@ import frc.robot.Constants.GenericConstants.RobotModeConstants;
 
 public class GameObjectTrackingConstants {
     public static final Transform3d kExampleGameObjectCameraToRobotCenter =  new Transform3d(0, 0, 0, new Rotation3d());
-    public static final Translation2d kGoToObjectPositionTolerance = new Translation2d(1, 1); // TODO: Hone in on these
+    public static final Translation2d kGoToObjectPositionTolerance = new Translation2d(1, 1);
     public static final double kGameObjectHeight = Units.inchesToMeters(2);
     public static final String kObjectCameraName = "ObjectCamera";
 

@@ -13,6 +13,7 @@ import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.OdometryUtils.FudgedPoint;
 
 public class OdometryUpdaterThread extends Thread{
+    @SuppressWarnings("unused")
     private DriveSubsystem driveSubsystem;
     private SwerveDrivePoseEstimator swerveDrivePoseEstimator;
     private PhotonPoseEstimator[] photonPoseEstimators;

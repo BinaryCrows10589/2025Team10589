@@ -8,16 +8,11 @@ It only works with two commands as of right now.
 */
 public class ParallelGroupCommand extends Command {
     private Command[] command;
-    private CustomWaitCommand waitCommand;
-
-
     public ParallelGroupCommand(Command... command) {
         this.command = command;
-        this.waitCommand = new CustomWaitCommand(100000);
     }
     public ParallelGroupCommand(double waitTime, Command... command) {
         this.command = command;
-        this.waitCommand = new CustomWaitCommand(waitTime);
     }
 
     @Override

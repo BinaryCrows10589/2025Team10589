@@ -1,16 +1,11 @@
 package frc.robot.Commands.AlgaeCommands;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.ElevatorCommands.ElevatorToPositionCommand;
-import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.AlgaePivotConstants;
-import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotSubsystem;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelSubsystem;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
-import frc.robot.Utils.LEDUtils.LEDManager;
 
 public class IntakeAlgaeCommand extends Command {
 

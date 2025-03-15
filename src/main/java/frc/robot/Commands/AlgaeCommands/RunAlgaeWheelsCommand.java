@@ -2,7 +2,6 @@ package frc.robot.Commands.AlgaeCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelSubsystem;
-import frc.robot.Utils.CommandUtils.Wait;
 
 public class RunAlgaeWheelsCommand extends Command {
     private final AlgaeWheelSubsystem algaeWheelSubsystem;

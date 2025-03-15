@@ -10,7 +10,7 @@ import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
 public final class ControlConstants {
 
     public static final int kDriverControllerPort = 0;
-    public static final int kButtonBoardNormalPort = 1; // TODO: Change this?
+    public static final int kButtonBoardNormalPort = 1;
     public static final int kButtonBoardAutoPositioningPort = 2;
     public static final int kButtonBoardAltPort = 3;
     public static final double kDeadband = .07;
@@ -24,6 +24,10 @@ public final class ControlConstants {
     public static final int[] kElevatorAtL2 = {255, 255, 0}; // Red
     public static final int[] kElevatorAtL3 = {255, 255, 255}; // Red
     public static final int[] kElevatorAtL4 = {255, 0, 0}; // Red
+
+    // Command logging for AdvantageScope. Advanced will be ignored if basic is not enabled.
+    public static final boolean basicCommandLogging = true;
+    public static final boolean advancedCommandLogging = true;
 
 
 

@@ -1,6 +1,5 @@
 package frc.robot.Utils.CommandUtils;
 
-import edu.wpi.first.epilogue.CustomLoggerFor;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
 
@@ -38,8 +37,6 @@ public class SequentialGroupCommand extends Command {
             currentRunningIndex = 0;
             this.commands[currentRunningIndex].schedule();
         }
-
-        // TODO: Test NEW
         if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand && !this.waitCommand.isScheduled())) {
             if(this.commands[currentRunningIndex] instanceof WPILibFollowTrajectoryFromPointsCommand || 
                 this.commands[currentRunningIndex] instanceof ParallelGroupCommand) {

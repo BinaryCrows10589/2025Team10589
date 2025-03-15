@@ -156,7 +156,6 @@ public final class DrivetrainConstants {
         
         public static final int kDriveMotorMaxVoltageSparkMaxTalonFX = 13;
 
-        //TODO: This can definetly be lowered
         public static final int kTurnMotorMaxVoltageSparkMaxTalonFX = 2; 
 
         // Swerve Module Configuration Values

@@ -1,18 +1,10 @@
 package frc.robot.Subsystems.SwerveDrive.Gyro;
 
-import static edu.wpi.first.units.Units.Degrees;
-
-import static edu.wpi.first.units.Units.Degrees;
-
 import org.littletonrobotics.junction.Logger;
-import org.photonvision.estimation.RotTrlTransform3d;
-
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.units.AngleUnit;
-import edu.wpi.first.units.measure.Angle;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 

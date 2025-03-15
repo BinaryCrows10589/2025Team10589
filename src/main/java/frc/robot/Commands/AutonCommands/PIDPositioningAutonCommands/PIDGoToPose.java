@@ -4,7 +4,6 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.AutonConstants.PIDPositioningAutonConstants;
@@ -24,8 +23,6 @@ public class PIDGoToPose extends Command{
 
     private NetworkTablesTunablePIDConstants translationPIDTuner;
     private NetworkTablesTunablePIDConstants rotationPIDTuner;
-
-    private double startTime = 0;
 
     public PIDGoToPose(AutonPoint endPoint, DriveSubsystem driveSubsystem) {
         this.endPoint = endPoint;
@@ -124,7 +121,6 @@ public class PIDGoToPose extends Command{
         this.yTranslationPIDController.reset(this.driveSubsystem.getRobotPose().getY());
         this.rotationPIDController.reset(this.driveSubsystem.getRobotPose().getRotation().getDegrees());
 
-        this.startTime = Timer.getFPGATimestamp();
 
         LEDManager.setSolidColor(new int[] {255, 0, 0});
     }

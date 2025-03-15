@@ -1,15 +1,12 @@
 package frc.robot.Commands.SwerveDriveCommands;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.GenericConstants.ControlConstants;
-import frc.robot.Constants.MechanismConstants.DrivetrainConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
@@ -32,7 +29,6 @@ public class FieldOrientedDriveCommand extends Command {
     private double translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
     private boolean normalizeTranslationMaximum = false;
     private double rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
-    private int elevatorCheckFrameCount = 0;
     /**
      * Constructor
      * 

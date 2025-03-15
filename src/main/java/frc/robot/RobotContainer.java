@@ -6,16 +6,17 @@ package frc.robot;
 
 import org.littletonrobotics.junction.Logger;
 
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.function.BiConsumer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
-import frc.robot.Commands.AlgaeCommands.AlgaePivotToPositionCommand;
-import frc.robot.Commands.ElevatorCommands.ElevatorToPositionCommand;
-import frc.robot.Commands.OuttakeWheelsCommands.OuttakeCoralCommandSlow;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
 import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
 import frc.robot.Constants.GenericConstants.ButtonBoardButtonConstants;
@@ -34,7 +35,7 @@ import frc.robot.Utils.JoystickUtils.ControllerInterface;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually bPe handled in the {@link Robot}
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
@@ -63,9 +64,14 @@ public class RobotContainer {
     private final LockSwerves lockSwerves;
     private final Command resetOdometry;
 
+
+    private int basicCommandsRanCount = 0;
+    private ArrayList<Command> advancedCommands = new ArrayList<>();
+
     /** 
      * Initalized all Subsystem and Commands 
      */
+    @SuppressWarnings("unused")
     public RobotContainer() {
         // Creates all subsystems. Must be first call. 
         this.robotCreator = new RobotCreator();
@@ -76,6 +82,7 @@ public class RobotContainer {
         this.driveSubsystem.setDefaultCommand(this.fieldOrientedDriveCommand);
         this.lockSwerves = this.driveCommandFactory.createLockSwervesCommand();
         this.resetOdometry = this.driveCommandFactory.createResetOdometryCommand();
+        this.climberCommandFactory = new ClimberCommandFactory(this.robotCreator.getClimberSubsystem());
         
         
         /*this.groundIntakeCommandFactory = new GroundIntakeCommandFactory(this.robotCreator.getPivotSubsystem(),
@@ -89,7 +96,6 @@ public class RobotContainer {
 
         this.elevatorCommandFactory = new ElevatorCommandFactory(this.robotCreator.getElevatorSubsystem());
 
-        this.climberCommandFactory = new ClimberCommandFactory(this.robotCreator.getClimberSubsystem());
 
         this.outtakeCommandFactory = new OuttakeCommandFactory(this.robotCreator.getOuttakeWheelsSubsystem(),
             this.robotCreator.getOuttakeCoralSensorsSubsystem());
@@ -109,7 +115,60 @@ public class RobotContainer {
 
         this.autonManager = new AutonManager(this.driveCommandFactory, this.driveSubsystem, this.elevatorCommandFactory, this.outtakeCommandFactory, this.highLevelCommandsFactory);
         configureBindings();
+        if (ControlConstants.basicCommandLogging && !ControlConstants.advancedCommandLogging) configureCommandSchedulerBindings();
+        else if (ControlConstants.basicCommandLogging && ControlConstants.advancedCommandLogging) configureAdvancedCommandSchedulerBindings();
         this.onRobotEnable();
+    }
+
+    private void logCommand(String commandName, int commandIndex, int commandStateCode, Optional<Command> interruptor) {
+        String commandState;
+        if (commandStateCode == 0) commandState = "Initialized";
+        else if (commandStateCode == 1) commandState = "Executing";
+        else if (commandStateCode == 2) commandState = "Finished";
+        else commandState = "Interrupted";
+
+        String key = "CommandList/" + commandIndex + "/";
+
+        Logger.recordOutput(key + "Name", commandName);
+        Logger.recordOutput(key + "State", commandState);
+        if (interruptor != null) {
+            Command interruptorOrNull = interruptor.orElse(null);
+            if (interruptorOrNull != null)
+                Logger.recordOutput(key + "Interruptor", interruptorOrNull.getName());
+        }
+    }
+
+    private void configureCommandSchedulerBindings() {
+        // On command initialize
+        CommandScheduler.getInstance().onCommandInitialize(
+                (Command command) -> logCommand(command.getName(), basicCommandsRanCount++, 0, null)
+        );
+    }
+
+    private void advancedCommandLogEvent(Command command, int commandStateCode, Optional<Command> interruptor) {
+        int commandIndex = advancedCommands.indexOf(command);
+        if (commandIndex == -1) commandIndex = advancedCommands.size();
+        logCommand(command.getName(), commandIndex, commandStateCode, interruptor);
+    }
+
+    private void configureAdvancedCommandSchedulerBindings() {
+        // On command initialize
+        CommandScheduler.getInstance().onCommandInitialize(
+                (Command command) -> advancedCommandLogEvent(command, 0, null)
+        );
+        CommandScheduler.getInstance().onCommandExecute(
+                (Command command) -> advancedCommandLogEvent(command, 1, null)
+        );
+        CommandScheduler.getInstance().onCommandFinish(
+                (Command command) -> advancedCommandLogEvent(command, 2, null)
+        );
+        CommandScheduler.getInstance().onCommandInterrupt(
+                new BiConsumer<Command, Optional<Command>>() {
+                    public void accept(Command command, Optional<Command> interruptor) {
+                        advancedCommandLogEvent(command, 3, interruptor);
+                    }
+                }
+        );
     }
 
     
@@ -167,10 +226,9 @@ public class RobotContainer {
         
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorUpCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorUp);
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorDown);
-        this.buttonBoard.bindButton(new OuttakeCoralCommandSlow(this.robotCreator.getOuttakeWheelsSubsystem(), this.robotCreator.getOuttakeCoralSensorsSubsystem()), 12);
-
-        //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberDownManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown); // We have no climber command factory yet.
-        //this.buttonBoard.bindButton(this.climberCommandFactory.createMoveClimberUpManuallyCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);
+        
+        this.buttonBoard.bindButton(this.climberCommandFactory.createpPivotClimberDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown);
+        this.buttonBoard.bindButton(this.climberCommandFactory.createPivotClimberUpCommnad(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);
         /*      
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);
@@ -218,6 +276,7 @@ public class RobotContainer {
     public void periodic() {
         ControlConstants.kHasCoral = this.robotCreator.getOuttakeCoralSensorsSubsystem().isCoralInEndOfOuttake(false);
         Logger.recordOutput("HasCoral/HasCoral", ControlConstants.kHasCoral);
+
         /*if(DriverStation.isDisabled()) {
             Pose2d robotPose = this.driveSubsystem.getRobotPose();
             Pose2d startingPose = ControlConstants.robotStartPosition.getAutonPoint();
