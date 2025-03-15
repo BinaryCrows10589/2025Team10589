@@ -10,16 +10,22 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Auton.AutonManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
+import frc.robot.Commands.AlgaeCommands.AlgaePivotToPositionCommand;
+import frc.robot.Commands.ElevatorCommands.ElevatorToPositionCommand;
 import frc.robot.Commands.OuttakeWheelsCommands.OuttakeCoralCommandSlow;
 import frc.robot.Commands.SwerveDriveCommands.FieldOrientedDriveCommand;
 import frc.robot.Commands.SwerveDriveCommands.LockSwerves;
 import frc.robot.Constants.GenericConstants.ButtonBoardButtonConstants;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.AlgaePivotConstants;
+import frc.robot.Constants.MechanismConstants.ElevatorConstants;
 import frc.robot.Subsystems.Climber.ClimberCommandFactory;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
+import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.Subsystems.Elevator.ElevatorSubsystem.ElevatorPosition;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
@@ -121,6 +127,8 @@ public class RobotContainer {
         this.driverController.bindToRightTriggure(Commands.runOnce(this.driveSubsystem::setAxisLockModeTrue),
         Commands.runOnce(this.driveSubsystem::setAxisLockModeFalse));
         this.driverController.bindToButton(Commands.runOnce(DriveSubsystem::setDriverControlleMode), XboxController.Button.kX.value);
+        this.driverController.bindToButton(new ParallelCommandGroup(new ElevatorToPositionCommand(ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.ClimbPosition), ElevatorConstants.kInPositionTolorence, this.robotCreator.getElevatorSubsystem()),
+        new AlgaePivotToPositionCommand(this.robotCreator.getAlgaePivotSubsystem(), AlgaePivotConstants.kGroundIntakePositionRotations)), XboxController.Button.kA.value);
          
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l0);
         //this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToL1Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l1);
