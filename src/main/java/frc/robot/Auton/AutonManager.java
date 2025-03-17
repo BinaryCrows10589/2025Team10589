@@ -10,6 +10,8 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Auton.Autons.CenterBargeStartAutons.IntakeAlgaeCenter;
+import frc.robot.Auton.Autons.CenterBargeStartAutons.PlaceAlgaeNet;
 import frc.robot.Auton.Autons.CenterBargeStartAutons.PlaceCoralAStartingCenterBarge;
 import frc.robot.Auton.Autons.CenterBargeStartAutons.PlaceCoralLStartingCenterBarge;
 import frc.robot.Auton.Autons.OtherAlianceBargeStartAutons.PlaceCoralKAndHumanPlayerStartingOnOtherAliance;
@@ -39,6 +41,9 @@ public class AutonManager {
 
     private final String placeCoralAStartingCenterBarge = "CenterBargeStartPositionToPlaceOnCoralA";
     private final String placeCoralLStartingCenterBarge = "CenterBargeStartPositionToPlaceOnCoralL";
+
+    private final String intakeAlgaeCenter = "IntakeAlgaeCenter";
+    private final String intakeAndPlaceAlgaeCenter = "IntakeAndPlaceAlgaeCenter";
     
     private final String placeCoralKStartingOnOtherAlianceAuton = "PlaceCoralKStartingOnOtherAliance";
     private final String placeCoralKAndHumanPlayerStartingOnOtherAlianceAuton = "PlaceCoralKAndHumanPlayerStartingOnOtherAliance";
@@ -83,6 +88,9 @@ public class AutonManager {
 
         addAuton(placeCoralAStartingCenterBarge, PlaceCoralAStartingCenterBarge.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         addAuton(placeCoralLStartingCenterBarge, PlaceCoralLStartingCenterBarge.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        
+        addAuton(intakeAlgaeCenter, IntakeAlgaeCenter.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
+        addAuton(intakeAndPlaceAlgaeCenter, PlaceAlgaeNet.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
 
         addAuton(placeCoralKStartingOnOtherAlianceAuton, PlaceCoralKStartingOnOtherAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, this.highLevelCommandsFactory));
         addAuton(placeCoralKAndHumanPlayerStartingOnOtherAlianceAuton, PlaceCoralKAndHumanPlayerStartingOnOtherAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, this.highLevelCommandsFactory));

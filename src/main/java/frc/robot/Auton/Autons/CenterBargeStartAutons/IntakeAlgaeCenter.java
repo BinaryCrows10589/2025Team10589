@@ -50,8 +50,8 @@ public class IntakeAlgaeCenter {
             driveSubsystem),
             new SequentialGroupCommand(new CustomWaitCommand(.5),
             intakeForTime,
-            highLevelCommandsFactory.createAlgaePivotToL2IntakePosition())
-            );
+            highLevelCommandsFactory.createAlgaePivotToL2IntakePosition()
+            ));
         autonCommands.add(driveWhileIntaking);
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionBackUpFromIntakeCenterAlgae",
         AutonPointManager.kCenterBargeStartPositionBackUpFromIntakeCenterAlgae,

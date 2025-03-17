@@ -28,8 +28,8 @@ public class AutonPointManager {
 
     public static final AutonPoint kIntakeCenterAlgae = new AutonPoint(5.82, 4, 0, 180, false);
     public static final AutonPoint kLeaveFromIntakeCenterAlgae = new AutonPoint(5.82, 4, 0, 0, false);
-    public static final AutonPoint kBackUpFromAlgaeIntake = new AutonPoint(6, 4, 0, 180, false);
-    public static final AutonPoint kPlaceAlgaeNet = new AutonPoint(6, 6, 180, -90, false);
+    public static final AutonPoint kBackUpFromAlgaeIntake = new AutonPoint(6, 4.01, 0, 180, false);
+    public static final AutonPoint kPlaceAlgaeNet = new AutonPoint(7.3, 5.5, 180, 90, false);
     // Points For Other Alliance 3.0318
     public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.05, 2.85, -62.5, 180, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralK = new AutonPoint(5.27, 2.87, -60, -135, false);
