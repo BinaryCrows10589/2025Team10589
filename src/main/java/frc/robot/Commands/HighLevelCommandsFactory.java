@@ -120,6 +120,14 @@ public class HighLevelCommandsFactory {
         return new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kOuttakeProcessorVoltage);
     }
 
+    public AlgaePivotToPositionCommand createAlgaePivotToL2IntakePosition() {
+        return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations);
+    }
+
+    public AlgaePivotToPositionCommand createAlgaePivotToDefualtPosition() {
+        return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kDefultPivotPosition);
+    }
+
     public ScrollThanOuttakeCommand createPlaceCoralLeftCommand() {
         return new ScrollThanOuttakeCommand(new ScrollWithReefTreeDetectorCommand("TelopScrollLeft",
                 new double[] {-.1, 0.6, 0}, 
