@@ -203,7 +203,6 @@ public class RobotContainer {
         this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOutakeWheelsAlgaeProcessorCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.processorOuttakeAlgaeWheels);
         this.buttonBoard.bindButton(this.highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.bargeOuttakeAlgaeWheels);
 
-        
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeOne);
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeTwo);
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeThree);

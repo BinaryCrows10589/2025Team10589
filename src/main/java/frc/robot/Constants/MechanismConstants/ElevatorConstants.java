@@ -45,7 +45,7 @@ public class ElevatorConstants {
 
     public static final double kElevatorIntakeTolerance = 2;
 
-    public static final double kBasementShutoffTolerance = 0.02;
+    public static final double kBasementShutoffTolerance = 0.08;
 
     public static final double kInPositionTolorence = 0.02;
 
