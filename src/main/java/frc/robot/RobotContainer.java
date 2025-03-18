@@ -186,8 +186,6 @@ public class RobotContainer {
         this.driverController.bindToRightTriggure(Commands.runOnce(this.driveSubsystem::setAxisLockModeTrue),
         Commands.runOnce(this.driveSubsystem::setAxisLockModeFalse));
         this.driverController.bindToButton(Commands.runOnce(DriveSubsystem::setDriverControlleMode), XboxController.Button.kX.value);
-        this.driverController.bindToButton(new ParallelCommandGroup(new ElevatorToPositionCommand(ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.ClimbPosition), ElevatorConstants.kInPositionTolorence, this.robotCreator.getElevatorSubsystem()),
-        new AlgaePivotToPositionCommand(this.robotCreator.getAlgaePivotSubsystem(), AlgaePivotConstants.kGroundIntakePositionRotations)), XboxController.Button.kA.value);
          
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l0);
         //this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToL1Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l1);

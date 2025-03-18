@@ -6,8 +6,10 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 
 import frc.robot.Constants.MechanismConstants.ClimberConstants;
+import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class ClimberIOTalonFX implements ClimberIO{
@@ -17,11 +19,11 @@ public class ClimberIOTalonFX implements ClimberIO{
     private NetworkTablesTunablePIDConstants climberTunablePIDConstants;
 
     public ClimberIOTalonFX() {
-        configureClimberMotor();
+        //configureClimberMotor();
     }
 
     private void configureClimberMotor() {
-        this.climberMotor = new TalonFX(ClimberConstants.kClimberMotorCANID);
+        this.climberMotor = new TalonFX(ClimberConstants.kClimberMotorCANID, SwerveDriveConstants.kCANLoopName);
         TalonFXConfiguration climberConfiguration = new TalonFXConfiguration();
         climberConfiguration.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         climberConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
@@ -36,8 +38,8 @@ public class ClimberIOTalonFX implements ClimberIO{
         climberConfiguration.Voltage.PeakReverseVoltage = -ClimberConstants.kClimberMaxVoltage;
         climberConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ClimberConstants.kMaxForwardRotations;
         climberConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ClimberConstants.kMaxReverseRotations;
-        climberConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        climberConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        climberConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = false;
+        climberConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = false;
 
         Slot0Configs holdPositionPIDConstants = new Slot0Configs();
         holdPositionPIDConstants.kP = ClimberConstants.kClimberPPIDValue;
@@ -56,20 +58,20 @@ public class ClimberIOTalonFX implements ClimberIO{
 
     @Override
     public void updateInputs(ClimberIOInputs inputs) {
-        inputs.climberRPM = this.climberMotor.getVelocity().getValueAsDouble();
-        inputs.climberMotorAppliedVolts = this.climberMotor.getMotorVoltage().getValueAsDouble();
-        inputs.climberDesiredVoltage = this.desiredVoltage;
+        //inputs.climberRPM = this.climberMotor.getVelocity().getValueAsDouble();
+      //  inputs.climberMotorAppliedVolts = this.climberMotor.getMotorVoltage().getValueAsDouble();
+       // inputs.climberDesiredVoltage = this.desiredVoltage;
 
-        this.climberTunablePIDConstants.updatePIDValuesFromNetworkTables(climberMotor);
+       // this.climberTunablePIDConstants.updatePIDValuesFromNetworkTables(climberMotor);
     }
 
     @Override
     public void setDesiredClimberMotorVoltage(double desiredVoltage) {
-        this.desiredVoltage = desiredVoltage;
-        this.climberMotor.setVoltage(desiredVoltage);
-        if(this.desiredVoltage == 0) {
-            this.climberMotor.setControl(new PositionVoltage(this.climberMotor.getPosition().getValueAsDouble()));
-        }
+       // this.desiredVoltage = desiredVoltage;
+        //this.climberMotor.setVoltage(desiredVoltage);
+        //if(this.desiredVoltage == 0) {
+            //this.climberMotor.setControl(new PositionVoltage(this.climberMotor.getPosition().getValueAsDouble()));
+        //}
     }
 
 }

@@ -84,7 +84,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         if (this.isCoralInTransit) return;
         lastAssignedDesiredPosition = desiredPosition;
 
-        //elevatorIO.setDesiredPosition(resolveElevatorPosition(desiredPosition));
+        elevatorIO.setDesiredPosition(resolveElevatorPosition(desiredPosition));
     }
 
     public void incrementDesiredElevatorPosition(double increment) {

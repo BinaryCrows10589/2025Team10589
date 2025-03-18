@@ -63,7 +63,7 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
     @Override
     public void setDesiredPivotRotation(double desiredRotations) {
         desiredPivotRotations = desiredRotations;
-
+        // TODO: Reneable Algae Pivot
         pivotPIDController.setReference(desiredRotations + AlgaePivotConstants.kPivotEncoderOffset, ControlType.kPosition);
     }
 
