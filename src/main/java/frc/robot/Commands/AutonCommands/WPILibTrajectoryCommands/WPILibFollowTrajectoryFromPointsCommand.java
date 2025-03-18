@@ -95,7 +95,7 @@ public class WPILibFollowTrajectoryFromPointsCommand extends Command{
         setUpTrajectoryFromPoints(points, maxRotationalSpeed,
             maxTranslationalAcceleration);
             
-        Logger.recordOutput("Auton/" + pathName +"/WPILibTrajectory/Trajectory", trajectory);
+        Logger.recordOutput("Auton/" + pathName +"/WPILibTrajectory", trajectory);
 
         addRequirements(this.driveSubsystem);
     }
