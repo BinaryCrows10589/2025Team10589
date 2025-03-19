@@ -13,6 +13,7 @@ import frc.robot.Subsystems.Climber.ClimberIOTalonFX;
 import frc.robot.Subsystems.Climber.ClimberSubsystem;
 import frc.robot.Subsystems.Elevator.ElevatorIO;
 import frc.robot.Subsystems.Elevator.ElevatorIOCANCoderMotionMagic;
+import frc.robot.Subsystems.Elevator.ElevatorIOCANCoderMotionMagicPIDCatch;
 import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIO;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorIODistanceSensor;
@@ -79,7 +80,7 @@ public class RobotCreator {
                 this.reefTreeDetectorSubsystem = new ReefTreeDetectorSubsystem(new ReefTreeDetectorIODistanceSensor());
                 this.outtakeCoralSensorsSubsystem = new OuttakeCoralSensorsSubsystem(new OuttakeCoralSensorsIODistanceSensor());
 
-                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderMotionMagic(), this.funnelCoralSensorSubsystem::isCoralInFunnel, this.outtakeCoralSensorsSubsystem::isCoralOutOfElevator);
+                this.elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOCANCoderMotionMagicPIDCatch(), this.funnelCoralSensorSubsystem::isCoralInFunnel, this.outtakeCoralSensorsSubsystem::isCoralOutOfElevator);
 
                 this.outtakeWheelsSubsystem = new OuttakeWheelsSubsystem(new OuttakeWheelsIOSparkMax());
 

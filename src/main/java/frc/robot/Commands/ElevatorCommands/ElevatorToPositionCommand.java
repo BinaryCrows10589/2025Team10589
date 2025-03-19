@@ -17,6 +17,7 @@ public class ElevatorToPositionCommand extends Command {
     private final ElevatorSubsystem elevatorSubsystem;
     private final double desiredElevatorPosition;
     private final double elevatorToloranceRotations;
+    private double startTime = 0;
 
     public ElevatorToPositionCommand(double desiredElevatorPosition, double elevatorToloranceRotations, ElevatorSubsystem elevatorSubsystem) {
         this.elevatorSubsystem = elevatorSubsystem;
@@ -47,8 +48,8 @@ public class ElevatorToPositionCommand extends Command {
             LEDManager.setSolidColor(ControlConstants.kElevatorAtL4);
         }
         Logger.recordOutput("Elevator/InPosition", false);
-
-    }
+        this.startTime = System.currentTimeMillis();
+    }   
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
@@ -61,7 +62,8 @@ public class ElevatorToPositionCommand extends Command {
     public void end(boolean interrupted) {
         this.elevatorSubsystem.setDesiredElevatorPosition(desiredElevatorPosition);
         Logger.recordOutput("Elevator/InPosition", true);
-    }
+        Logger.recordOutput("Elevator/ElevatorTime", (System.currentTimeMillis() -  this.startTime)/1000);
+        }
 
     // Returns true when the command should end.
     @Override

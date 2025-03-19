@@ -7,7 +7,7 @@ public class ElevatorConstants {
     public static final int kElevatorSlaveMotorCANID = 25; // Right motor is slave
     public static final int kElevatorEncoderCANID = 26;
 
-    public static final double kElevatorGearRatio = 8.25;
+    public static final double kElevatorGearRatio = 6;
 
     public static final double kMaxVoltage = 12;
 
@@ -45,11 +45,10 @@ public class ElevatorConstants {
 
     public static final double kElevatorIntakeTolerance = 2;
 
-    public static final double kBasementShutoffTolerance = 0.08;
+    public static final double kBasementShutoffTolerance = 0.15;
 
     public static final double kInPositionTolorence = 0.02;
 
-    public static final double kCatchTolorence = 0.08;
-
+    public static final double kCatchTolorence = 0.1;
 
 }

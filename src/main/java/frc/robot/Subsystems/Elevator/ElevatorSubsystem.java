@@ -107,14 +107,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static double resolveElevatorPosition(ElevatorPosition desiredPosition) {
         switch (desiredPosition) {
             case BASEMENT:
-                return 0.0;
+                return 0.0; 
             case L1://.255
             ////.75
                 return .295;//.275;//.295;
             case L2:
                 return .38;//.36;//.380;
             case L3:
-                return .56;//.55;//.56;
+                return .57;//.6;//.55;//.56;
             case L4:
                 return .835;//.842;//.8325;//.8375;//.854;//.864;
             case FUNNEL:

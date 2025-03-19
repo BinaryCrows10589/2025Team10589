@@ -5,6 +5,7 @@ import org.littletonrobotics.junction.Logger;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.proto.Photon;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,7 +20,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase{
     private OdometryIOInputsAutoLogged odometryInputs = new OdometryIOInputsAutoLogged();
 
 
-    private PhotonCamera[] photonCameras = {new PhotonCamera("Unknown1"), new PhotonCamera("BRModuleCam")};
+    private PhotonCamera[] photonCameras = {new PhotonCamera("Unknown1"), new PhotonCamera("BRModuleCam"), new PhotonCamera("Unknown2")};
     private PhotonPoseEstimator[] photonPoseEstimators = new PhotonPoseEstimator[photonCameras.length];
 
     public PoseEstimatorSubsystem(DriveSubsystem driveSubsystem) {
@@ -60,7 +61,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase{
     private void configPhotonPoseEstimators() {
         this.photonPoseEstimators[0] = new PhotonPoseEstimator(VisionConstants.kAprilTagLayout, PoseStrategy.LOWEST_AMBIGUITY, VisionConstants.kBackLeftCameraToCenter);
         this.photonPoseEstimators[1] = new PhotonPoseEstimator(VisionConstants.kAprilTagLayout, PoseStrategy.LOWEST_AMBIGUITY, VisionConstants.kBackRightCameraToCenter);
-
+        this.photonPoseEstimators[2] = new PhotonPoseEstimator(VisionConstants.kAprilTagLayout, PoseStrategy.LOWEST_AMBIGUITY, VisionConstants.kHumanPlayerStationCameraToCenter);
     }
 
 }

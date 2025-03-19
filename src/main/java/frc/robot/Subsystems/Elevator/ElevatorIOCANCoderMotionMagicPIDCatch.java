@@ -184,15 +184,20 @@ public class ElevatorIOCANCoderMotionMagicPIDCatch implements ElevatorIO {
         } else if(positionError == 0) {
             this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
         } else if(Math.signum(positionError) == 1) {
-            if(positionError < .15) {
-                this.elevatorMasterMotor.setVoltage(1);
+            if(positionError < .25) {
+                this.elevatorMasterMotor.setVoltage(5); //5
             } else if(positionError < .3) {
-                this.elevatorMasterMotor.setVoltage(2);
+                this.elevatorMasterMotor.setVoltage(12); // 9
             } else {
-                this.elevatorMasterMotor.setVoltage(3.25);
+                this.elevatorMasterMotor.setVoltage(12); // 12
             }
         } else if(Math.signum(positionError) == -1) {
-            this.elevatorMasterMotor.setVoltage(-3.25);
+            if(desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {
+                this.elevatorMasterMotor.setVoltage(-4);
+            } else {
+                this.elevatorMasterMotor.setVoltage(-3.5);
+            }
+            //-3.25);
         }
     }
     
