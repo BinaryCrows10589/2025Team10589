@@ -144,8 +144,14 @@ public class Robot extends LoggedRobot {
 
     public Pose2d getTargetedAutonPosition() {
         Pose2d robotPosition = robotContainer.getRobotPosition();
-        boolean isStartingOnOtherBarge = Tolerance.inTolorance(robotPosition.getY(), AutonPointManager.kOtherAllianceBargeStartPosition.getAutonPoint().getY(), 1.0);
-        return isStartingOnOtherBarge  ? AutonPointManager.kOtherAllianceBargeStartPosition.getAutonPoint() : AutonPointManager.kOwnAllianceBargeStartPosition.getAutonPoint();
+        /*boolean isStartingOnOtherBarge = Tolerance.inTolorance(robotPosition.getY(), AutonPointManager.kOtherAllianceBargeStartPosition.getAutonPoint().getY(), 1.0);
+        return isStartingOnOtherBarge  ? AutonPointManager.kOtherAllianceBargeStartPosition.getAutonPoint() : AutonPointManager.kOwnAllianceBargeStartPosition.getAutonPoint();*/
+        if(Tolerance.inTolorance(robotPosition.getY(), AutonPointManager.kCenterBargeStartPosition.getAutonPoint().getY(), .55)) {
+            return AutonPointManager.kCenterBargeStartPosition.getAutonPoint();
+        } else if(Tolerance.inTolorance(robotPosition.getY(), AutonPointManager.kOwnAllianceBargeStartPosition.getAutonPoint().getY(), .55)) {
+            return AutonPointManager.kOwnAllianceBargeStartPosition.getAutonPoint();
+        }   
+        return AutonPointManager.kOtherAllianceBargeStartPosition.getAutonPoint();
     }
 
     @Override
