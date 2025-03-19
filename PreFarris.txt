@@ -3,9 +3,12 @@ Pre Farris Task List:
     1. Rebuild Algae with light pieces, and place belts inside-Done
     2. Replace Bottom Plate of Outtake(At a Point in time)-Done
     3. Deep Climb Testing-Done
-    4. Elevator Sprockets and Rope
+    4. Elevator Sprockets and Rope-Done
 
 
 Teleop:
 Auton:
-    1. Fix 3 Coral
+    1. Tune OtherAllineceStart 3 Coral
+    2. Tune Center auton Coral
+    3. Tune center auton Algae
+    4. Tune own AllineceStart 3 coral
