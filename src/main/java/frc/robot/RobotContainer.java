@@ -181,7 +181,7 @@ public class RobotContainer {
         Commands.runOnce(this.driveSubsystem::setSlowModeFalse));
         this.driverController.bindToRightTriggure(Commands.runOnce(this.driveSubsystem::setAxisLockModeTrue),
         Commands.runOnce(this.driveSubsystem::setAxisLockModeFalse));
-        this.driverController.bindToButton(Commands.runOnce(DriveSubsystem::setDriverControlleMode), XboxController.Button.kX.value);
+        this.driverController.bindToButton(Commands.runOnce(DriveSubsystem::enableDriverControlleMode), XboxController.Button.kX.value);
          
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l0);
         //this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToL1Command(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l1);
@@ -217,11 +217,11 @@ public class RobotContainer {
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralLeftCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeEleven);
         this.buttonBoard.bindAutoPositioningCommand(this.highLevelCommandsFactory.createPlaceCoralRightCommand(), ButtonBoardButtonConstants.ButtonBoardAutoPositioningButtons.reefTreeTwelve);
         
-        this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorUpCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorUp);
-        this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorDown);
+        //this.buttonBoard.bindButton(this.elevatorCommandFactory.createMoveElevatorUpCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorUp);
+        this.buttonBoard.bindButton(Commands.runOnce(DriveSubsystem::disableDriverControlleMode), Commands.runOnce(DriveSubsystem::enableDriverControlleMode), ButtonBoardButtonConstants.ButtonBoardNormalButtons.disableDriving);
         
-        this.buttonBoard.bindButton(this.climberCommandFactory.createpPivotClimberDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown);
-        this.buttonBoard.bindButton(this.climberCommandFactory.createPivotClimberUpCommnad(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);
+        //this.buttonBoard.bindButton(this.climberCommandFactory.createpPivotClimberDownCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberDown);
+        //this.buttonBoard.bindButton(this.climberCommandFactory.createPivotClimberUpCommnad(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.climberUp);
         /*      
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createOuttakeCoralCommand(), XboxController.Button.kA.value);
         this.buttonBoardAlt.bindToButton(this.outtakeCommandFactory.createHoldCoralInOuttakeCommand(), XboxController.Button.kB.value);
