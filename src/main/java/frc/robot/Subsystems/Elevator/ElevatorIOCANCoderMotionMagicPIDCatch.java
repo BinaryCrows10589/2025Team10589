@@ -187,7 +187,7 @@ public class ElevatorIOCANCoderMotionMagicPIDCatch implements ElevatorIO {
             if(positionError < .25) {
                 this.elevatorMasterMotor.setVoltage(5); //5
             } else if(positionError < .3) {
-                this.elevatorMasterMotor.setVoltage(12); // 9
+                this.elevatorMasterMotor.setVoltage(12); // 
             } else {
                 this.elevatorMasterMotor.setVoltage(12); // 12
             }
