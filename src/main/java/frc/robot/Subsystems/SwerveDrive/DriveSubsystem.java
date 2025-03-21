@@ -260,7 +260,7 @@ public class DriveSubsystem extends SubsystemBase{
         ControlConstants.axisLockMode = true;
     }
 
-    public static void setDriverControlleMode() {
+    public static void enableDriverControlleMode() {
         ControlConstants.kIsDriverControlled = true;
         Logger.recordOutput("SwerveDrive/DriverControlMode", ControlConstants.kIsDriverControlled);
 

@@ -39,7 +39,7 @@ public class ButtonBoardButtonConstants {
         public static int bargeOuttakeAlgaeWheels = 17;
 
         public static int elevatorUp = 8;
-        public static int elevatorDown = 9;
+        public static int disableDriving = 9;
 
         public static int climberDown = 13;
         public static int climberUp = 12;
