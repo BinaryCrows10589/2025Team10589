@@ -179,6 +179,33 @@ public class ElevatorIOCANCoderMotionMagicPIDCatch implements ElevatorIO {
     private void updateElevatorControl() {
         double positionError = this.positionError;
         positionError = Tolerance.inTolorance(this.positionError, 0, ElevatorConstants.kCatchTolorence) ? 0 : this.positionError;
+        if(Tolerance.inTolorance(this.positionError, 0, ElevatorConstants.kBasementShutoffTolerance) &&
+            desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {
+            this.elevatorMasterMotor.stopMotor();
+        } else if(positionError == 0) {
+            this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
+        } else if(Math.signum(positionError) == 1) {
+            if(positionError < .25) {
+                this.elevatorMasterMotor.setControl(new VoltageOut(5).withEnableFOC(true)); //5
+            } else if(positionError < .3) {
+                this.elevatorMasterMotor.setControl(new VoltageOut(12).withEnableFOC(true)); // 9
+            } else {
+                this.elevatorMasterMotor.setControl(new VoltageOut(12).withEnableFOC(true)); // 12
+            }
+        } else if(Math.signum(positionError) == -1) {
+            if(Math.abs(positionError) > .45) {
+                this.elevatorMasterMotor.setVoltage(-8);
+            } else {
+                this.elevatorMasterMotor.setVoltage(-2.);
+            }
+            
+           //-3.25);
+        }
+    }
+    /*
+    private void updateElevatorControl() {
+        double positionError = this.positionError;
+        positionError = Tolerance.inTolorance(this.positionError, 0, ElevatorConstants.kCatchTolorence) ? 0 : this.positionError;
         
         if(Tolerance.inTolorance(this.positionError, 0, ElevatorConstants.kBasementShutoffTolerance) &&
             desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {
@@ -187,7 +214,7 @@ public class ElevatorIOCANCoderMotionMagicPIDCatch implements ElevatorIO {
             this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
         } else if(Math.signum(positionError) == 1) {
             if(positionError < .15) {
-                this.elevatorMasterMotor.setControl(new VoltageOut(2.5).withEnableFOC(true));
+                this.elevatorMasterMotor.setControl(new VoltageOut(3.5).withEnableFOC(true));
             } else if(positionError < .25) {
                 this.elevatorMasterMotor.setControl(new VoltageOut(10).withEnableFOC(true)); //5
             } else if(positionError < .5) {
@@ -205,7 +232,7 @@ public class ElevatorIOCANCoderMotionMagicPIDCatch implements ElevatorIO {
             //-3.25); 
         }
     }
-    
+    */
     @Override
     public void incrementDesiredPosition(double increment) {
         desiredElevatorPosition.Position += increment;
