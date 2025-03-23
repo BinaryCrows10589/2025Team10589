@@ -9,12 +9,14 @@ public class SequentialGroupCommand extends Command {
     private CustomWaitCommand waitCommand;
     private double waitTime;
     private double trajectoryWaitTime;
+    public boolean hasTrajectory = false;
 
     public SequentialGroupCommand(Command... commands) {
         this.commands = commands;
         this.waitCommand = new CustomWaitCommand(100000);
     }
 
+    
     public SequentialGroupCommand(double waitTime, double trajectoryWaitTime, Command... commands) {
         this.commands = commands;
         this.waitTime = waitTime;
@@ -25,6 +27,11 @@ public class SequentialGroupCommand extends Command {
 
     @Override
     public void initialize() {
+        for(int i = 0; i < commands.length; i++) {
+            if(this.commands[i] instanceof WPILibFollowTrajectoryFromPointsCommand) {
+                hasTrajectory = true;
+            }
+        }
     }
 
     @Override
@@ -37,13 +44,15 @@ public class SequentialGroupCommand extends Command {
             currentRunningIndex = 0;
             this.commands[currentRunningIndex].schedule();
         }
-        if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand && !this.waitCommand.isScheduled())) {
+
+        if(!this.waitCommand.isScheduled()) {
             if(this.commands[currentRunningIndex] instanceof WPILibFollowTrajectoryFromPointsCommand || 
-                this.commands[currentRunningIndex] instanceof ParallelGroupCommand) {
+                this.commands[currentRunningIndex] instanceof ParallelGroupCommand || hasTrajectory) {
                     this.waitCommand = new CustomWaitCommand(trajectoryWaitTime);
                     this.waitCommand.schedule();
-            } else {
+            } else if(!(this.commands[currentRunningIndex] instanceof SequentialGroupCommand)) {
                 this.waitCommand = new CustomWaitCommand(waitTime);
+                this.waitCommand.schedule();
             }
         }
 

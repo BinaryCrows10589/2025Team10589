@@ -29,7 +29,7 @@ public class PlaceCoralKStartingOnOtherAliance {
     ) {
         driveSubsystem.setRobotStartingPose(AutonPointManager.kOtherAllianceBargeStartPosition);
         ArrayList<Command> autonCommands = new ArrayList<>();
-        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new CustomWaitCommand(.85),
+        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(10, 10, new CustomWaitCommand(.9),
             elevatorCommandFactory.createElevatorToL4Command());
         ParallelGroupCommand elevate = new ParallelGroupCommand(sequentialGroupCommand,
             new WPILibFollowTrajectoryFromPointsCommand("OtherAllianceBargeStartPositionToPlaceOnCoralK",
@@ -49,7 +49,7 @@ public class PlaceCoralKStartingOnOtherAliance {
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
-        autonCommands.add(new CustomWaitCommand(.4, "BeforeDown"));
+        autonCommands.add(new CustomWaitCommand(.45, "BeforeDown"));
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(1.3, 2.1, autonCommands);
         return auton;

@@ -11,6 +11,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
@@ -178,26 +179,30 @@ public class ElevatorIOCANCoderMotionMagicPIDCatch implements ElevatorIO {
     private void updateElevatorControl() {
         double positionError = this.positionError;
         positionError = Tolerance.inTolorance(this.positionError, 0, ElevatorConstants.kCatchTolorence) ? 0 : this.positionError;
+        
         if(Tolerance.inTolorance(this.positionError, 0, ElevatorConstants.kBasementShutoffTolerance) &&
             desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {
             this.elevatorMasterMotor.stopMotor();
         } else if(positionError == 0) {
             this.elevatorMasterMotor.setControl(getOffsetDesiredPosition());
         } else if(Math.signum(positionError) == 1) {
-            if(positionError < .25) {
-                this.elevatorMasterMotor.setVoltage(5); //5
-            } else if(positionError < .3) {
-                this.elevatorMasterMotor.setVoltage(12); // 
+            if(positionError < .15) {
+                this.elevatorMasterMotor.setControl(new VoltageOut(2.5).withEnableFOC(true));
+            } else if(positionError < .25) {
+                this.elevatorMasterMotor.setControl(new VoltageOut(10).withEnableFOC(true)); //5
+            } else if(positionError < .5) {
+                this.elevatorMasterMotor.setControl(new VoltageOut(12).withEnableFOC(true));
             } else {
-                this.elevatorMasterMotor.setVoltage(12); // 12
+                this.elevatorMasterMotor.setControl(new VoltageOut(12).withEnableFOC(true));
             }
         } else if(Math.signum(positionError) == -1) {
             if(desiredElevatorPosition.Position == ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BASEMENT)) {
-                this.elevatorMasterMotor.setVoltage(-4);
+                this.elevatorMasterMotor.setVoltage(-3);
             } else {
-                this.elevatorMasterMotor.setVoltage(-3.5);
+                this.elevatorMasterMotor.setVoltage(-2.9);
             }
-            //-3.25);
+            
+            //-3.25); 
         }
     }
     
