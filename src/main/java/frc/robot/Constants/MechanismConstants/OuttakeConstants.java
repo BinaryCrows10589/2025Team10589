@@ -5,9 +5,9 @@ public class OuttakeConstants {
     public static final double kLeftWheelOuttake = 12;
     
     public static final double kRightWheelOuttake = 9;
-    public static final double kRightWheelOuttakeL4 = 12;//9;
-    public static final double kRightWheelOuttakeL3 = 5;//3.2;
-    public static final double kRightWheelOuttakeL2 = 4;//3;
+    public static final double kRightWheelOuttakeL4 = 3;//9;
+    public static final double kRightWheelOuttakeL3 = 2.5;//3.2;
+    public static final double kRightWheelOuttakeL2 = 2.5;//3;
 
 
     public static final double kLeftWheelL1 = 0.0;
@@ -16,11 +16,11 @@ public class OuttakeConstants {
     public static final int kLeftWheelMotorCANID = 28;
     public static final int kRightWheelMotorCANID = 29;
 
-    public static final int kWheelSmartCurrentLimit = 12;
+    public static final int kWheelSmartCurrentLimit = 40;
     public static final double kMaxWheelVoltage = 12;
 
 
-    public static final double kHoldCoralVoltage = 1;
+    public static final double kHoldCoralVoltage = .5;
 
     public static final int kRightWheelPPIDValue = 0;
     public static final int kRightWheelIPIDValue = 0;

@@ -105,30 +105,31 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public static double resolveElevatorPosition(ElevatorPosition desiredPosition) {
+        //.014
         switch (desiredPosition) {
             case BASEMENT:
                 return 0.0; 
             case L1://.255
             ////.75
-                return .295;//.275;//.295;
+                return .281;//.275;//.295;
             case L2:
-                return .38;//.36;//.380;
+                return .366;//.36;//.380;
             case L3:
-                return .57;//.6;//.55;//.56;
+                return .556;//.6;//.55;//.56;
             case L4:
-                return .855;//.835;//.842;//.8325;//.8375;//.854;//.864;
+                return .8525;//.835;//.842;//.8325;//.8375;//.854;//.864;
             case FUNNEL:
                 return 0;
             case GROUND_INTAKE_ALGAE:
                 return 0;
             case REEF_INTAKE_ALGAE_LOW:
-                return .315;//.33;//.349;
+                return .301;//.33;//.349;
             case REEF_INTAKE_ALGAE_HIGH:
-                return .52;//.51; //.52
+                return .506;//.51; //.52
             case SCORE_ALGAE_PROCESSOR:
                 return 0;
             case SCORE_ALGAE_BARGE:
-                return 0.864;    
+                return 0.85;    
             case ClimbPosition:
                 return .25;
             default:

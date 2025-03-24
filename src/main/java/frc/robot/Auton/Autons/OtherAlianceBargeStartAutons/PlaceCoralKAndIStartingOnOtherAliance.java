@@ -36,7 +36,7 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
                 1.7,
                 new double[] {2, 0, 0},
                 new double[] {6, 0, 0},
-                new double[] {6, 0, 0},
+                new double[] {12, 0, 0},
                 WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
                 WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
                 WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
@@ -52,7 +52,7 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
         //autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(1.2, 5, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(1.2, 1.7, autonCommands);
         return auton;
     } 
 
