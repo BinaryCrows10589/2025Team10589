@@ -39,7 +39,7 @@ public final class VisionConstants {
      * less. This matrix is in the form [x, y, theta]ᵀ, with units in meters and
      * radians.
      */
-    public static final Vector<N3> kVisionPoseEstimateTrust = VecBuilder.fill(.4, .4, 0);
+    public static final Vector<N3> kVisionPoseEstimateTrust = VecBuilder.fill(.2, .2, 0);
     public static final FudgeFactor kFudgeFactor = new FudgeFactor(
     0, 0, 0,
     0, 0, 0);

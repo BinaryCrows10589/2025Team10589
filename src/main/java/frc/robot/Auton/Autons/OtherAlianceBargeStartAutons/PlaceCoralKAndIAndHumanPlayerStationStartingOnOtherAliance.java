@@ -51,7 +51,7 @@ public class PlaceCoralKAndIAndHumanPlayerStationStartingOnOtherAliance {
          elevatorCommandFactory.createElevatorToBasementCommand());
 
         autonCommands.add(elevatorDownWhileDrive);
-        autonCommands.add(new CustomWaitCommand(.4));
+        autonCommands.add(new CustomWaitCommand(.3));
         
         SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);
         return auton;

@@ -12,7 +12,7 @@ public final class AutonConstants {
         public static double kPTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : .5;
         public static double kITranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
         public static double kDTranslationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : 0;
-        public static final double kMaxTranslationalSpeedInMetersPerSecond = RobotModeConstants.kIsNotSim ? 3.2 : 4.129;//4.4 : 4.129;
+        public static final double kMaxTranslationalSpeedInMetersPerSecond = RobotModeConstants.kIsNotSim ? 3.6 : 4.129;//4.4 : 4.129;
         public static final double kMaxTranslationalAccelerationInMetersPerSecond = RobotModeConstants.kIsNotSim ? 3.5 : 5.129;//4.45 : 5.129;
 
         public static double kPRotationPIDConstant = RobotModeConstants.kIsNotSim ? 0 : .59;

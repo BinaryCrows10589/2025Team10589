@@ -28,7 +28,7 @@ public class ScrollThanOuttakeCommand extends Command {
     @Override
     public void initialize() {
         this.scrollWithReefTreeDetectorCommand.schedule();
-        ControlConstants.kIsDriverControlled = false;
+       // ControlConstants.kIsDriverControlled = false;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ScrollThanOuttakeCommand extends Command {
         if(!interrupted) {
             this.waitThenOuttake.schedule();
         } else {
-            ControlConstants.kIsDriverControlled = true;
+           // ControlConstants.kIsDriverControlled = true;
         }
         this.scrollWithReefTreeDetectorCommand.cancel();
     }
