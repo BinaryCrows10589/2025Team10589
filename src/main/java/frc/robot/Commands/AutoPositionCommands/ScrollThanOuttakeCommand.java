@@ -1,5 +1,6 @@
 package frc.robot.Commands.AutoPositionCommands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -37,7 +38,7 @@ public class ScrollThanOuttakeCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         if(!interrupted) {
-            this.waitThenOuttake.schedule();
+                this.waitThenOuttake.schedule();
         } else {
            // ControlConstants.kIsDriverControlled = true;
         }

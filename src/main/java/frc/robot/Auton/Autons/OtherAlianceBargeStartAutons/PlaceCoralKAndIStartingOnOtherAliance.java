@@ -50,6 +50,7 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
             new LiftAfterTimeWhenCoralIsInCommand(elevatorCommandFactory.createElevatorToL4Command(),
         0), new SequentialGroupCommand(1, 1.3, new CustomWaitCommand(.32),
             highLevelCommandsFactory.createPlaceCoralLeftCommand(.1))));
+        autonCommands.add(new CustomWaitCommand(.1));
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         //autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
