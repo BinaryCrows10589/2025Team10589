@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
@@ -14,6 +15,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
+import frc.robot.Utils.CommandUtils.CustomWaitCommand;
 import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
@@ -42,12 +44,12 @@ public class PlaceCoralKAndIStartingOnOtherAliance {
                 WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
                 WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
                 WPILibAutonConstants.kPositionTolorence,
-                driveSubsystem), new LiftAfterTimeWhenCoralIsInCommand(elevatorCommandFactory.createElevatorToL4Command(),
-                1.4)
-        );
+                driveSubsystem));
         autonCommands.add(elevateWhileDriving);
-        autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
+        autonCommands.add(new ParallelGroupCommand(
+            new LiftAfterTimeWhenCoralIsInCommand(elevatorCommandFactory.createElevatorToL4Command(),
+        0), new SequentialGroupCommand(1, 1.3, new CustomWaitCommand(.32),
+            highLevelCommandsFactory.createPlaceCoralLeftCommand(.1))));
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         //autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());

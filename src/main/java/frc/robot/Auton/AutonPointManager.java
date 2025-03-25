@@ -36,9 +36,9 @@ public class AutonPointManager {
     public static final AutonPoint kLeaveFromPlaceOnCoralKConstrant = new AutonPoint(5.2, 2.7, -60, -120, false);
     public static final AutonPoint kIntakeFromOtherAllianceHumanPlayer = new AutonPoint(1.2, 1.15, -115, -180, false);
     public static final AutonPoint kLeaveFromOtherAllianceHumanPlayer = new AutonPoint(1.2, 1.15, -115, 60, false);
-    public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.82, 2.89, -115, 50, false);
+    public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.84, 2.8725, -115, 50, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralI = new AutonPoint(3.85, 3.07, -120, -130, false);
-    public static final AutonPoint kPlaceOnCoralH = new AutonPoint(3.76, 2.8, -125, -310, false);
+    public static final AutonPoint kPlaceOnCoralH = new AutonPoint(3.76, 2.75, -125, -310, false);
     
     // Decloration of Path Points
 

@@ -43,15 +43,15 @@ public class PlaceCoralKAndIAndHStartingOnOtherAliance {
             WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
             WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
             WPILibAutonConstants.kPositionTolorence,
-            driveSubsystem),
-            new LiftAfterTimeWhenCoralIsInCommand(elevatorCommandFactory.createElevatorToL4Command(), 1.3)
+            driveSubsystem)
         );
         //autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
         autonCommands.add(elevateWhileDriving);
-        autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
+        autonCommands.add(new ParallelGroupCommand(
+            new LiftAfterTimeWhenCoralIsInCommand(elevatorCommandFactory.createElevatorToL4Command(),
+        0), new SequentialGroupCommand(1, 1.3, new CustomWaitCommand(.32),
+            highLevelCommandsFactory.createPlaceCoralRightCommand(.1))));
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
-        autonCommands.add(new CustomWaitCommand(.5));
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);
