@@ -20,5 +20,11 @@ public class Tolerance {
         };
     }
 
+    public static boolean inTolerancePose2dTotalPose(Pose2d currentValue, Pose2d desiredValue, Pose2d tolerance) {
+        return (inTolorance(currentValue.getX(), desiredValue.getX(), tolerance.getX()) &&
+            inTolorance(currentValue.getY(), desiredValue.getY(), tolerance.getY()) && 
+            inToloranceRotation(currentValue.getRotation(), desiredValue.getRotation(), tolerance.getRotation().getRadians()));
+        
+    }
     
 }

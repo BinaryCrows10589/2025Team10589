@@ -8,8 +8,10 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.CameraConstants.VisionConstants;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
+import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.OdometryUtils.FudgedPoint;
 
 public class OdometryUpdaterThread extends Thread{
@@ -68,7 +70,12 @@ public class OdometryUpdaterThread extends Thread{
     }
     
     private void updatedPoseEstimationWithVisionData(FudgedPoint estimatedVisionPose, double timestamp) {
-        this.swerveDrivePoseEstimator.addVisionMeasurement(estimatedVisionPose.getFudgedPoint(), timestamp);
+        if(!DriverStation.isEnabled() ||
+            Tolerance.inTolerancePose2dTotalPose(driveSubsystem.getRobotPose(),
+            estimatedVisionPose.getFudgedPoint(),
+            VisionConstants.kAcceptableVisionDelta)) {
+                this.swerveDrivePoseEstimator.addVisionMeasurement(estimatedVisionPose.getFudgedPoint(), timestamp);
+            }
+        }
     }
     
-}

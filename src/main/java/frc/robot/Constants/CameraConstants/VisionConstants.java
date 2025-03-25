@@ -1,10 +1,14 @@
 package frc.robot.Constants.CameraConstants;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N3;
@@ -45,4 +49,5 @@ public final class VisionConstants {
     0, 0, 0);
 
     public static final double kMaxAmbiguity = .02;
+    public static final Pose2d kAcceptableVisionDelta = new Pose2d(1, 1, Rotation2d.fromDegrees(10));
 }
