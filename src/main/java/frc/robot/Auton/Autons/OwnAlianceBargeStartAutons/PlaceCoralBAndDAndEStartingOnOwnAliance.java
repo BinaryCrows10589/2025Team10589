@@ -31,28 +31,28 @@ public class PlaceCoralBAndDAndEStartingOnOwnAliance {
         ArrayList<Command> autonCommands = new ArrayList<>();
         
         autonCommands.add(PlaceCoralBAndDAndHumanPlayerStationStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
-            //
+        
         ParallelGroupCommand elevateWhileDriving = new ParallelGroupCommand(
             new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralE",
             AutonPointManager.kHumanPlayerToCoralE,
             1.7,
             new double[] {2, 0, 0},
             new double[] {6, 0, 0},
-            new double[] {6, 0, 0},
+            new double[] {12, 0, 0},
             WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
             WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
             WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
             WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
             WPILibAutonConstants.kPositionTolorence,
-            driveSubsystem),
-            new LiftAfterTimeWhenCoralIsInCommand(elevatorCommandFactory.createElevatorToL4Command(), 1.3)
+            driveSubsystem)
         );
         //autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
         autonCommands.add(elevateWhileDriving);
-        autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
+        autonCommands.add(new ParallelGroupCommand(
+            new LiftAfterTimeWhenCoralIsInCommand(elevatorCommandFactory.createElevatorToL4Command(),
+        0), new SequentialGroupCommand(1, 1.3, new CustomWaitCommand(.32),
+            highLevelCommandsFactory.createPlaceCoralLeftCommand(.1))));
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
-        autonCommands.add(new CustomWaitCommand(.5));
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);

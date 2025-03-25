@@ -32,28 +32,32 @@ public class PlaceCoralBStartingOnOwnAliance {
         ArrayList<Command> autonCommands = new ArrayList<>();
         
         
-        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new CustomWaitCommand(.85),
-            elevatorCommandFactory.createElevatorToL4Command());
-        ParallelGroupCommand elevate = new ParallelGroupCommand(sequentialGroupCommand,
+        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(1, 1.32, new CustomWaitCommand(.32),
+        highLevelCommandsFactory.createPlaceCoralLeftCommand(.1));
+        ParallelGroupCommand elevate = new ParallelGroupCommand(
             new WPILibFollowTrajectoryFromPointsCommand("OwnAllianceBargeStartPositionToPlaceOnCoralB",
             AutonPointManager.kOwnAllianceBargeStartPositionToPlaceOnCoralB,
             1.32,
             new double[] {1.3, 0, 0},
             new double[] {1.3, 0, 0},
             new double[] {4, 0, 0},
-            WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
-            WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
+            4.4,
+            3.5,
             WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
             WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
             new Pose2d(.06, .06, Rotation2d.fromDegrees(5)),
             driveSubsystem));
 
-        autonCommands.add(elevate);
-        autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
-        autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
+            autonCommands.add(elevate);
+            ParallelGroupCommand scrollWhileLifting = new ParallelGroupCommand(elevatorCommandFactory.createElevatorToL4Command(), sequentialGroupCommand);
+            autonCommands.add(scrollWhileLifting);
+            //autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
+            //autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
+            
+            autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
+            autonCommands.add(new CustomWaitCommand(.25, "BeforeDown"));
 
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(1.3, 2.1, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(2.5, 2.1, autonCommands);
         return auton;
         
         

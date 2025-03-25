@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Auton.AutonPointManager;
+import frc.robot.Auton.Autons.OtherAlianceBargeStartAutons.PlaceCoralKAndHumanPlayerStartingOnOtherAliance;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
 import frc.robot.Commands.ElevatorCommands.LiftAfterTimeWhenCoralIsInCommand;
@@ -14,6 +15,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
+import frc.robot.Utils.CommandUtils.CustomWaitCommand;
 import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
@@ -30,30 +32,31 @@ public class PlaceCoralBAndDStartingOnOwnAliance {
         ArrayList<Command> autonCommands = new ArrayList<>();
         
         autonCommands.add(PlaceCoralBAndHumanPlayerStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
-        
+            
         ParallelGroupCommand elevateWhileDriving = new ParallelGroupCommand(
-            new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralD",
-            AutonPointManager.kHumanPlayerToCoralD,
+                new WPILibFollowTrajectoryFromPointsCommand("HumanPlayerToCoralD",
+                AutonPointManager.kHumanPlayerToCoralD,
                 1.7,
                 new double[] {2, 0, 0},
                 new double[] {6, 0, 0},
-                new double[] {6, 0, 0},
+                new double[] {12, 0, 0},
                 WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
                 WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
                 WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
                 WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
                 WPILibAutonConstants.kPositionTolorence,
-                driveSubsystem), new LiftAfterTimeWhenCoralIsInCommand(elevatorCommandFactory.createElevatorToL4Command(),
-                1.4)
-        );
+                driveSubsystem));
         autonCommands.add(elevateWhileDriving);
-        autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
-        autonCommands.add(highLevelCommandsFactory.createPlaceCoralRightCommand(.3));
+        autonCommands.add(new ParallelGroupCommand(
+            new LiftAfterTimeWhenCoralIsInCommand(elevatorCommandFactory.createElevatorToL4Command(),
+        0), new SequentialGroupCommand(1, 1.3, new CustomWaitCommand(.32),
+            highLevelCommandsFactory.createPlaceCoralRightCommand(.1))));
+        autonCommands.add(new CustomWaitCommand(.1));
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         //autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(1.2, 5, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(1.2, 1.7, autonCommands);
 
         return auton;
     } 

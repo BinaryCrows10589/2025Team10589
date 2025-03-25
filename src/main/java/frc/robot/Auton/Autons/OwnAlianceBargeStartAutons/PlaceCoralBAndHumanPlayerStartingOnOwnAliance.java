@@ -33,15 +33,15 @@ public class PlaceCoralBAndHumanPlayerStartingOnOwnAliance {
         
         autonCommands.add(PlaceCoralBStartingOnOwnAliance.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
 
-        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(new CustomWaitCommand(.1),
+        SequentialGroupCommand sequentialGroupCommand = new SequentialGroupCommand(.1, 3.1, new CustomWaitCommand(.03),
             new WPILibFollowTrajectoryFromPointsCommand("PlaceOnCoralBToHumanPlayer",
             AutonPointManager.kPlaceOnCoralBToHumanPlayer,
             3,
             new double[] {1.2, 0, 0},
             new double[] {1.2, 0, 0},
             new double[] {6, 0, 0},
-            WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
-            WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
+            4.4,
+           3.5,
             WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
             WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
             new Pose2d(.08, .08, Rotation2d.fromDegrees(5)),
@@ -49,10 +49,9 @@ public class PlaceCoralBAndHumanPlayerStartingOnOwnAliance {
         ParallelGroupCommand elevatorDownWhileDrive = new ParallelGroupCommand(sequentialGroupCommand,
          elevatorCommandFactory.createElevatorToBasementCommand());
         autonCommands.add(elevatorDownWhileDrive);
-        autonCommands.add(new CustomWaitCommand(.35));
+        autonCommands.add(new CustomWaitCommand(.25));
 
-        
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 3.1, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 3, autonCommands);
         return auton;
     } 
 

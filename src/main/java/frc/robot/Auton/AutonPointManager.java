@@ -5,7 +5,7 @@ import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
 public class AutonPointManager {
 
     // Robot start positions
-    public static final AutonPoint kOwnAllianceBargeStartPosition =  new AutonPoint(7.15, 5.247, 60, 180, false);
+    public static final AutonPoint kOwnAllianceBargeStartPosition =  new AutonPoint(7.15, 5.2218, 60, 180, false);
     public static final AutonPoint kCenterBargeStartPosition =  new AutonPoint(7.135, 4.0386, 30, 180, false);
     public static final AutonPoint kOtherAllianceBargeStartPosition = new AutonPoint(7.15, 2.830, 300, 180, false);
 
@@ -13,14 +13,14 @@ public class AutonPointManager {
     // Deloration of Points
 
     // Points For Own Alliance
-    public static final AutonPoint kPlaceOnCoralB = new AutonPoint(5.09, 5.17, 57.5, 180, false);
-    public static final AutonPoint kLeaveFromPlaceOnCoralB = new AutonPoint(5.270, 5.182, 60, 135, false);
-    public static final AutonPoint kLeaveFromPlaceOnCoralBConstrant = new AutonPoint(5.2, 5.352, 60, 120, false);
-    public static final AutonPoint kIntakeFromOwnAllianceHumanPlayer = new AutonPoint(1.22, 6.8, 126, 180, false);
-    public static final AutonPoint kLeaveFromOwnAllianceHumanPlayer = new AutonPoint(1.2, 6.832, 120, -30, false);
-    public static final AutonPoint kPlaceOnCoralD = new AutonPoint(3.8, 4.94, 120, 310, false);
-    public static final AutonPoint kLeaveFromPlaceOnCoralD = new AutonPoint(3.85, 4.982, 120, 130, false);
-    public static final AutonPoint kPlaceOnCoralE = new AutonPoint(3.9, 4.5, 123.5, 310, false);
+    public static final AutonPoint kPlaceOnCoralB = new AutonPoint(5.27, 5.05, 59, 180, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralB = new AutonPoint(5.270, 5.1818, 60, 135, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralBConstrant = new AutonPoint(5.2, 5.3518, 60, 120, false);
+    public static final AutonPoint kIntakeFromOwnAllianceHumanPlayer = new AutonPoint(1.25, 6.9018, 100, 180, false);
+    public static final AutonPoint kLeaveFromOwnAllianceHumanPlayer = new AutonPoint(1.25, 6.9018, 100, -60, false);
+    public static final AutonPoint kPlaceOnCoralD = new AutonPoint(3.84, 5.09, 125, 50, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralD = new AutonPoint(3.85, 4.9818, 120, 130, false);
+    public static final AutonPoint kPlaceOnCoralE = new AutonPoint(3.76, 5.3018, 115, 310, false);
 
     // Points For Center Position
     public static final AutonPoint kPlaceOnCoralL = new AutonPoint(5.82, 3.85, 0, 180, false);
