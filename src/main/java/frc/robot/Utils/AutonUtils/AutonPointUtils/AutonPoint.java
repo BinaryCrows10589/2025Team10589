@@ -19,7 +19,7 @@ public class AutonPoint {
      * @param fudgeFactor
      */
     public AutonPoint(double xPointMeters, double yPointMeters, double rotationAngleDegrees, FudgeFactor fudgeFactor) {
-        this(xPointMeters, yPointMeters, rotationAngleDegrees, fudgeFactor, 0);
+        this(xPointMeters, yPointMeters, rotationAngleDegrees, 0, fudgeFactor);
     }
 
     /**
@@ -27,10 +27,11 @@ public class AutonPoint {
      * @param xPointMeters The x coordnet in meters
      * @param yPointMeters The y coordnet in meters
      * @param rotationAngleDegrees The rotation angle in degrees
-     * @param fudgeFactor
      * @param attackAngleDegrees the rotation that the robot will have as it enters into this point during an autonomous period
+     *      * @param fudgeFactor
+
      */
-    public AutonPoint(double xPointMeters, double yPointMeters, double rotationAngleDegrees, FudgeFactor fudgeFactor, double attackAngleDegrees) {
+    public AutonPoint(double xPointMeters, double yPointMeters, double rotationAngleDegrees, double attackAngleDegrees,  FudgeFactor fudgeFactor) {
         this.autonPoint = new Pose2d(xPointMeters, yPointMeters, Rotation2d.fromDegrees(rotationAngleDegrees));
         this.fudgeFactor = fudgeFactor;
         this.attackAngleDegrees = attackAngleDegrees;
@@ -122,6 +123,23 @@ public class AutonPoint {
         //this.allowMirroring = allowMirroring;
         this.attackAngleDegrees = attackAngleDegrees;
     }
+
+    /**
+     * Create a point to represent a coordinate in autonomous or for vision systems.
+     * @param xPointMeters The x coordnet in meters
+     * @param yPointMeters The y coordnet in meters
+     * @param rotationAngleDegrees The rotation angle in degrees
+     * @param attackAngleDegrees the rotation that the robot will have as it enters into this point during an autonomous period
+     * @param allowMirroring Should the point be able to mirror
+     */
+    public AutonPoint(double xPointMeters, double yPointMeters, double rotationAngleDegrees, double attackAngleDegrees, boolean allowMirroring, FudgeFactor fudgeFactor) {
+        this.autonPoint = new Pose2d(xPointMeters, yPointMeters, Rotation2d.fromDegrees(rotationAngleDegrees));
+        this.autonPoint.getRotation().getDegrees();
+        this.fudgeFactor = fudgeFactor;
+        //this.allowMirroring = allowMirroring;
+        this.attackAngleDegrees = attackAngleDegrees;
+    }
+
 
     /**
      * Gets the auton point, auto mirrored depending on alliance.

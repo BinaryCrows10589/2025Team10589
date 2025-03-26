@@ -39,11 +39,11 @@ public class IntakeAlgaeCenter {
             new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionToIntakeCenterAlgae",
             AutonPointManager.kCenterBargeStartPositionToIntakeCenterAlgae,
             5,
-            new double[] {.15, 0, 0},
-            new double[] {.15, 0, 0},
-            new double[] {.6, 0, 0},
-            WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
-            WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
+            new double[] {6, 0, 0},
+            new double[] {2, 0, 0},
+            new double[] {12, 0, 0},
+            2,
+            2,
             WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
             WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
             WPILibAutonConstants.kPositionTolorence,
@@ -56,17 +56,17 @@ public class IntakeAlgaeCenter {
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionBackUpFromIntakeCenterAlgae",
         AutonPointManager.kCenterBargeStartPositionBackUpFromIntakeCenterAlgae,
         5,
-        new double[] {.15, 0, 0},
-        new double[] {.15, 0, 0},
-        new double[] {.6, 0, 0},
+        new double[] {6, 0, 0},
+        new double[] {2, 0, 0},
+        new double[] {12, 0, 0},
         WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
         WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
         WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
         WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
-        autonCommands.add(highLevelCommandsFactory.createAlgaePivotToDefualtPosition());
-        autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
+        //autonCommands.add(highLevelCommandsFactory.createAlgaePivotToDefualtPosition());
+        //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);
         return auton;
