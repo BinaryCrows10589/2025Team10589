@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
@@ -30,11 +33,11 @@ public class IntakeAlgaeCenter {
         
         ArrayList<Command> autonCommands = new ArrayList<>();
 
-        ParallelRaceGroupCommand intakeForTime = new ParallelRaceGroupCommand(
-            highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command(),
-            new CustomWaitCommand(4)
-            );
-        
+        ParallelDeadlineGroup intakeForTime =  new ParallelDeadlineGroup(new WaitCommand(4),
+          highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command());
+   
+        autonCommands.add(intakeForTime);
+        /*
         ParallelGroupCommand driveWhileIntaking = new ParallelGroupCommand(
             new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionToIntakeCenterAlgae",
             AutonPointManager.kCenterBargeStartPositionToIntakeCenterAlgae,
@@ -49,10 +52,12 @@ public class IntakeAlgaeCenter {
             WPILibAutonConstants.kPositionTolorence,
             driveSubsystem),
             new SequentialGroupCommand(new CustomWaitCommand(.5),
-            intakeForTime,
-            highLevelCommandsFactory.createAlgaePivotToL2IntakePosition()
+                intakeForTime,
+                highLevelCommandsFactory.createAlgaePivotToL2IntakePosition()
             ));
         autonCommands.add(driveWhileIntaking);
+         */
+        /* 
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionBackUpFromIntakeCenterAlgae",
         AutonPointManager.kCenterBargeStartPositionBackUpFromIntakeCenterAlgae,
         5,
@@ -65,9 +70,9 @@ public class IntakeAlgaeCenter {
         WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
-        //autonCommands.add(highLevelCommandsFactory.createAlgaePivotToDefualtPosition());
-        //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
-
+        autonCommands.add(highLevelCommandsFactory.createAlgaePivotToDefualtPosition());
+        autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
+*/
         SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);
         return auton;
     } 
