@@ -1,8 +1,10 @@
 package frc.robot.Auton.Autons.CenterBargeStartAutons;
 
 import java.util.ArrayList;
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -17,9 +19,12 @@ import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
 import frc.robot.Utils.CommandUtils.CustomWaitCommand;
+import frc.robot.Utils.CommandUtils.EndCommandAfterWait;
+import frc.robot.Utils.CommandUtils.EndCommandUponCondition;
 import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.ParallelRaceGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
+import frc.robot.Utils.CommandUtils.Wait;
 
 public class IntakeAlgaeCenter {
     public static Command getAuton(
@@ -32,12 +37,12 @@ public class IntakeAlgaeCenter {
         driveSubsystem.setRobotStartingPose(AutonPointManager.kCenterBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
+        
 
-        ParallelDeadlineGroup intakeForTime =  new ParallelDeadlineGroup(new WaitCommand(4),
-          highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command());
+        EndCommandAfterWait intakeForTime =  new EndCommandAfterWait(highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command(), 4);
    
         autonCommands.add(intakeForTime);
-        /*
+        
         ParallelGroupCommand driveWhileIntaking = new ParallelGroupCommand(
             new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionToIntakeCenterAlgae",
             AutonPointManager.kCenterBargeStartPositionToIntakeCenterAlgae,
@@ -56,7 +61,7 @@ public class IntakeAlgaeCenter {
                 highLevelCommandsFactory.createAlgaePivotToL2IntakePosition()
             ));
         autonCommands.add(driveWhileIntaking);
-         */
+         
         /* 
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionBackUpFromIntakeCenterAlgae",
         AutonPointManager.kCenterBargeStartPositionBackUpFromIntakeCenterAlgae,

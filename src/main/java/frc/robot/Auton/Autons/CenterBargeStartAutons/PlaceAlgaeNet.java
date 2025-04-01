@@ -48,9 +48,18 @@ public class PlaceAlgaeNet {
             WPILibAutonConstants.kPositionTolorence,
             driveSubsystem));
         
-        autonCommands.add(new ParallelRaceGroupCommand(highLevelCommandsFactory.createOuttakeAlgaeOnBargeCommand(),
-            new SequentialGroupCommand(new CustomWaitCommand(1.3),
-             new ParallelRaceGroupCommand(new CustomWaitCommand(.5), highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand()))));
+        autonCommands.add(
+            new ParallelRaceGroupCommand(
+                highLevelCommandsFactory.createOuttakeAlgaeOnBargeCommand(),
+                new SequentialGroupCommand(
+                    new CustomWaitCommand(1.3),
+                    new ParallelRaceGroupCommand(
+                        new CustomWaitCommand(.5), 
+                        highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand()
+                        )
+                    )
+                )
+            );
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);

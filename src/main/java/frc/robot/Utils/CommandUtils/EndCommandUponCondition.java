@@ -6,12 +6,13 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /*
-A simple command that will run another command when a supplier returns true.
+A simple command that will stop another command when a supplier returns true.
 */
 public class EndCommandUponCondition extends Command {
 
     private Command command;
     private Supplier<Boolean> conditionalSupplier;
+    private boolean hasInitialized = false;
 
     public EndCommandUponCondition(Command command, Supplier<Boolean> conditionalSupplier) {
         this.command = command;
@@ -21,6 +22,7 @@ public class EndCommandUponCondition extends Command {
     @Override
     public void initialize() {
         this.command.schedule();
+        hasInitialized = true;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class EndCommandUponCondition extends Command {
 
     @Override
     public boolean isFinished() {
+        if (!hasInitialized) return false;
         return !this.command.isScheduled();
     }
 }
