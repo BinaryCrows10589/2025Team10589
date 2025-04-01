@@ -50,6 +50,12 @@ public class ElevatorCommandFactory {
         elevatorSubsystem);
     }
 
+    public ElevatorToPositionCommand createElevatorToBlueSecondCommand() {
+        return new ElevatorToPositionCommand(ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.BlueHeight),
+        ElevatorConstants.kElevatorScorePositionTolorence,
+        elevatorSubsystem);
+    }
+
     public ElevatorToPositionCommand createElevatorToBargeScoreCommand() {
         return new ElevatorToPositionCommand(ElevatorSubsystem.resolveElevatorPosition(ElevatorPosition.SCORE_ALGAE_BARGE),
         ElevatorConstants.kElevatorScoreBargePositionTolorence,

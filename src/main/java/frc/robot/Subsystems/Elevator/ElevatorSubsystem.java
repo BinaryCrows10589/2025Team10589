@@ -27,6 +27,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         L2,
         L3,
         L4,
+        BlueHeight,
         FUNNEL,
         GROUND_INTAKE_ALGAE,
         SCORE_ALGAE_PROCESSOR,
@@ -132,6 +133,8 @@ public class ElevatorSubsystem extends SubsystemBase {
                 return 0.85;    
             case ClimbPosition:
                 return .25;
+            case BlueHeight:
+                return .854;
             default:
                 return 0;
         }
