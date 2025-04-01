@@ -15,6 +15,7 @@ import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
 import frc.robot.Utils.CommandUtils.CustomWaitCommand;
+import frc.robot.Utils.CommandUtils.EndCommandAfterWait;
 import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.ParallelRaceGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
@@ -53,9 +54,9 @@ public class PlaceAlgaeNet {
                 highLevelCommandsFactory.createOuttakeAlgaeOnBargeCommand(),
                 new SequentialGroupCommand(
                     new CustomWaitCommand(1.3),
-                    new ParallelRaceGroupCommand(
-                        new CustomWaitCommand(.5), 
-                        highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand()
+                    new EndCommandAfterWait(
+                        highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(),
+                        .5
                         )
                     )
                 )
