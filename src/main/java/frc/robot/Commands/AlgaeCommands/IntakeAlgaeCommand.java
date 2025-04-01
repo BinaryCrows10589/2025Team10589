@@ -49,7 +49,6 @@ public class IntakeAlgaeCommand extends Command {
 
     @Override
     public void execute() {
-
     }
 
     @Override

@@ -67,7 +67,9 @@ public class HighLevelCommandsFactory {
     }
 
     public IntakeAlgaeCommand createIntakeAlgaeFromReefL2Command() {
-        return new IntakeAlgaeCommand(elevatorCommandFactory.createElevatorToReefIntakeAlgaeLowCommand(), new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations),
+        return new IntakeAlgaeCommand(
+            elevatorCommandFactory.createElevatorToReefIntakeAlgaeLowCommand(), 
+            new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations),
             new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kReefTreeIntakeVoltage),
             this.elevatorCommandFactory, this.algaePivotSubsystem, this.algaeWheelSubsystem);
     }

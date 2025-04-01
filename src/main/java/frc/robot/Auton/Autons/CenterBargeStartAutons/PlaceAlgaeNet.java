@@ -15,6 +15,7 @@ import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
 import frc.robot.Utils.CommandUtils.CustomWaitCommand;
+import frc.robot.Utils.CommandUtils.EndCommandAfterWait;
 import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
 import frc.robot.Utils.CommandUtils.ParallelRaceGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
@@ -48,10 +49,19 @@ public class PlaceAlgaeNet {
             WPILibAutonConstants.kPositionTolorence,
             driveSubsystem));
         
-        autonCommands.add(new ParallelRaceGroupCommand(highLevelCommandsFactory.createOuttakeAlgaeOnBargeCommand(),
-            new SequentialGroupCommand(new CustomWaitCommand(1.3),
-             new ParallelRaceGroupCommand(new CustomWaitCommand(.5), highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand()))));
-        autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
+        autonCommands.add(
+            new ParallelRaceGroupCommand(
+                highLevelCommandsFactory.createOuttakeAlgaeOnBargeCommand(),
+                new SequentialGroupCommand(
+                    new CustomWaitCommand(1.3),
+                    new EndCommandAfterWait(
+                        highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(),
+                        .5
+                        )
+                    )
+                )
+            );
+       // autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);
         return auton;

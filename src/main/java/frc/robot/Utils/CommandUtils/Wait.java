@@ -3,7 +3,7 @@ package frc.robot.Utils.CommandUtils;
 public class Wait {
     private double endTime = Double.MAX_VALUE;
     private double waitTime = 0;
-    private boolean timerEnabled = true;
+    private boolean timerEnabled = false;
     /**
      *  Use this when you need a wait that is not in a group command. It is much more efficent that the CustomWaitCommand
      * @param waitTime Double: The length of the wait in seconds
@@ -29,7 +29,11 @@ public class Wait {
      * @return Boolean: Whether or not the desired wait time has passed. 
      */
     public boolean hasTimePassed() {
-        return getAccurateSystemTime() > this.endTime && this.timerEnabled;
+        return (getAccurateSystemTime() > this.endTime) && this.timerEnabled;
+    }
+
+    public boolean isEnabled() {
+        return this.timerEnabled;
     }
 
     public void disableTimer() {

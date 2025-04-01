@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
@@ -17,8 +14,8 @@ import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
 import frc.robot.Utils.CommandUtils.CustomWaitCommand;
+import frc.robot.Utils.CommandUtils.EndCommandAfterWait;
 import frc.robot.Utils.CommandUtils.ParallelGroupCommand;
-import frc.robot.Utils.CommandUtils.ParallelRaceGroupCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
 public class IntakeAlgaeCenter {
@@ -32,12 +29,24 @@ public class IntakeAlgaeCenter {
         driveSubsystem.setRobotStartingPose(AutonPointManager.kCenterBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
+        
+        autonCommands.add(PlaceCoralLStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
 
-        ParallelDeadlineGroup intakeForTime =  new ParallelDeadlineGroup(new WaitCommand(4),
-          highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command());
-   
-        autonCommands.add(intakeForTime);
-        /*
+        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("PlaceCoralLToBackUpBeforeIntakeAlgae",
+        AutonPointManager.kPlaceCoralLToBackUpBeforeIntakeAlgae,
+        5,
+        new double[] {6, 0, 0},
+        new double[] {2, 0, 0},
+        new double[] {12, 0, 0},
+        2,
+        2,
+        WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
+        WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
+        WPILibAutonConstants.kPositionTolorence,
+        driveSubsystem));
+
+        EndCommandAfterWait intakeForTime =  new EndCommandAfterWait(highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command(), 4);
+           
         ParallelGroupCommand driveWhileIntaking = new ParallelGroupCommand(
             new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionToIntakeCenterAlgae",
             AutonPointManager.kCenterBargeStartPositionToIntakeCenterAlgae,
@@ -52,11 +61,11 @@ public class IntakeAlgaeCenter {
             WPILibAutonConstants.kPositionTolorence,
             driveSubsystem),
             new SequentialGroupCommand(new CustomWaitCommand(.5),
-                intakeForTime,
-                highLevelCommandsFactory.createAlgaePivotToL2IntakePosition()
+                intakeForTime
+                //highLevelCommandsFactory.createAlgaePivotToL2IntakePosition()
             ));
         autonCommands.add(driveWhileIntaking);
-         */
+         
         /* 
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionBackUpFromIntakeCenterAlgae",
         AutonPointManager.kCenterBargeStartPositionBackUpFromIntakeCenterAlgae,
