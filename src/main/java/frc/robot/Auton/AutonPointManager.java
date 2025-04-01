@@ -25,8 +25,12 @@ public class AutonPointManager {
 
     // Points For Center Position
     public static final AutonPoint kPlaceOnCoralL = new AutonPoint(5.82, 3.85, 0, 180, false);
+    public static final AutonPoint kLeaveFromPlaceOnCoralL = new AutonPoint(5.82, 3.85, 0, 0, false);
+
     public static final AutonPoint kPlaceOnCoralA = new AutonPoint(5.82, 4.20,0, 180, false);
 
+    public static final AutonPoint kBackUpBeforeAlgaeIntake = new AutonPoint(7, 4, 0, 0, false);
+    public static final AutonPoint kLeaveFromBackUpBeforeAlgaeIntake = new AutonPoint(7, 4, 0, 180, false);
     public static final AutonPoint kIntakeCenterAlgae = new AutonPoint(5.82, 4, 0, 180, false);
     public static final AutonPoint kLeaveFromIntakeCenterAlgae = new AutonPoint(5.82, 4, 0, 0, false);
     public static final AutonPoint kBackUpFromAlgaeIntake = new AutonPoint(6.5, 4.01, 0, 180, false);
@@ -55,7 +59,8 @@ public class AutonPointManager {
     // Path Points for Center Position
     public static final AutonPoint[] kCenterBargeStartPositionToPlaceOnCoralA = {kCenterBargeStartPosition, kPlaceOnCoralA};
     public static final AutonPoint[] kCenterBargeStartPositionToPlaceOnCoralL = {kCenterBargeStartPosition, kPlaceOnCoralL};
-    public static final AutonPoint[] kCenterBargeStartPositionToIntakeCenterAlgae = {kCenterBargeStartPosition, kIntakeCenterAlgae};
+    public static final AutonPoint[] kPlaceCoralLToBackUpBeforeIntakeAlgae = {kLeaveFromPlaceOnCoralL, kBackUpBeforeAlgaeIntake};
+    public static final AutonPoint[] kCenterBargeStartPositionToIntakeCenterAlgae = {kLeaveFromBackUpBeforeAlgaeIntake, kIntakeCenterAlgae};
     public static final AutonPoint[] kCenterBargeStartPositionBackUpFromIntakeCenterAlgae = {kLeaveFromIntakeCenterAlgae, kBackUpFromAlgaeIntake};
     public static final AutonPoint[] kCenterBargeStartPositionPlaceAlgaePosition = {kBackUpFromAlgaeIntake, kPlaceAlgaeNet};
 

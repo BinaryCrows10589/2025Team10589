@@ -61,7 +61,7 @@ public class PlaceAlgaeNet {
                     )
                 )
             );
-        autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
+       // autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);
         return auton;
