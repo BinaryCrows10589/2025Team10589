@@ -126,6 +126,10 @@ public class HighLevelCommandsFactory {
         return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations);
     }
 
+    public AlgaePivotToPositionCommand createAlgaePivotToBargeOuttakePosition() {
+        return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeBargePositionRotations);
+    }
+
     public AlgaePivotToPositionCommand createAlgaePivotToDefualtPosition() {
         return new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kDefultPivotPosition);
     }

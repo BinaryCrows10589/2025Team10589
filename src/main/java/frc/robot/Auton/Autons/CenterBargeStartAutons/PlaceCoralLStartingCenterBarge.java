@@ -29,10 +29,10 @@ public class PlaceCoralLStartingCenterBarge {
         
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionToPlaceOnCoralL",
         AutonPointManager.kCenterBargeStartPositionToPlaceOnCoralL,
-        5,
-        new double[] {.15, 0, 0},
-        new double[] {.15, 0, 0},
-        new double[] {.6, 0, 0},
+        1.5,
+        new double[] {6, 0, 0},
+        new double[] {3, 0, 0},
+        new double[] {6, 0, 0},
         WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
         WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
         WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
@@ -40,10 +40,11 @@ public class PlaceCoralLStartingCenterBarge {
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
+        autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
         autonCommands.add(outtakeCommandFactory.createOuttakeCoralCommand());
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(1.6,1.6, autonCommands);
         return auton;
     } 
 

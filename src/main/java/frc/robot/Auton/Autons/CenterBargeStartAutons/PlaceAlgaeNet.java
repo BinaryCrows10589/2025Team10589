@@ -49,21 +49,25 @@ public class PlaceAlgaeNet {
             WPILibAutonConstants.kPositionTolorence,
             driveSubsystem));
         
-        autonCommands.add(
-            new ParallelRaceGroupCommand(
-                highLevelCommandsFactory.createOuttakeAlgaeOnBargeCommand(),
-                new SequentialGroupCommand(
-                    new CustomWaitCommand(1.3),
-                    new EndCommandAfterWait(
-                        highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(),
-                        .5
-                        )
-                    )
-                )
-            );
-       // autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
+        autonCommands.add(new EndCommandAfterWait(highLevelCommandsFactory.createOuttakeAlgaeOnBargeCommand(), 1));
+        autonCommands.add(highLevelCommandsFactory.createAlgaePivotToBargeOuttakePosition());
+        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionPlaceAlgaePositionSlowDriveIn",
+            AutonPointManager.kCenterBargeStartPositionPlaceSlowDriveInAlgaePosition,
+            3,
+            new double[] {6, 0, 0},
+            new double[] {6, 0, 0},
+            new double[] {6, 0, 0},
+            .75,
+            .5,
+            WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
+            WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
+            WPILibAutonConstants.kPositionTolorence,
+            driveSubsystem));
+        autonCommands.add(new EndCommandAfterWait(highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(),2));
+        autonCommands.add(highLevelCommandsFactory.createAlgaePivotToDefualtPosition());
+        //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(20, 20, autonCommands);
         return auton;
     } 
 

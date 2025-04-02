@@ -45,12 +45,12 @@ public class IntakeAlgaeCenter {
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
 
-        EndCommandAfterWait intakeForTime =  new EndCommandAfterWait(highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command(), 4);
+        EndCommandAfterWait intakeForTime = new EndCommandAfterWait(highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command(), 4);
            
         ParallelGroupCommand driveWhileIntaking = new ParallelGroupCommand(
             new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionToIntakeCenterAlgae",
             AutonPointManager.kCenterBargeStartPositionToIntakeCenterAlgae,
-            5,
+            1.5,
             new double[] {6, 0, 0},
             new double[] {2, 0, 0},
             new double[] {12, 0, 0},
@@ -61,15 +61,15 @@ public class IntakeAlgaeCenter {
             WPILibAutonConstants.kPositionTolorence,
             driveSubsystem),
             new SequentialGroupCommand(new CustomWaitCommand(.5),
-                intakeForTime
-                //highLevelCommandsFactory.createAlgaePivotToL2IntakePosition()
+                intakeForTime,
+                highLevelCommandsFactory.createAlgaePivotToL2IntakePosition()
             ));
         autonCommands.add(driveWhileIntaking);
          
-        /* 
+        
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionBackUpFromIntakeCenterAlgae",
         AutonPointManager.kCenterBargeStartPositionBackUpFromIntakeCenterAlgae,
-        5,
+        1.5,
         new double[] {6, 0, 0},
         new double[] {2, 0, 0},
         new double[] {12, 0, 0},
@@ -79,10 +79,12 @@ public class IntakeAlgaeCenter {
         WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));
+        
+
         autonCommands.add(highLevelCommandsFactory.createAlgaePivotToDefualtPosition());
         autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
-*/
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(3, 5, autonCommands);
+
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(5, 2, autonCommands);
         return auton;
     } 
 

@@ -7,7 +7,7 @@ public class AutonPointManager {
 
     // Robot start positions
     public static final AutonPoint kOwnAllianceBargeStartPosition =  new AutonPoint(7.15, 5.2218, 60, 180, false);
-    public static final AutonPoint kCenterBargeStartPosition =  new AutonPoint(7.135, 4.0386, 30, 180, false);
+    public static final AutonPoint kCenterBargeStartPosition =  new AutonPoint(7.15, 4.0386, 0, 180, false);
     public static final AutonPoint kOtherAllianceBargeStartPosition = new AutonPoint(7.15, 2.830, 300, 180, false);
 
 
@@ -24,17 +24,19 @@ public class AutonPointManager {
     public static final AutonPoint kPlaceOnCoralE = new AutonPoint(3.76, 5.3018, 115, 310, false);
 
     // Points For Center Position
-    public static final AutonPoint kPlaceOnCoralL = new AutonPoint(5.82, 3.85, 0, 180, false);
+    public static final AutonPoint kPlaceOnCoralL = new AutonPoint(5.8, 4.06, 0, 180, false);
     public static final AutonPoint kLeaveFromPlaceOnCoralL = new AutonPoint(5.82, 3.85, 0, 0, false);
 
-    public static final AutonPoint kPlaceOnCoralA = new AutonPoint(5.82, 4.20,0, 180, false);
+    public static final AutonPoint kPlaceOnCoralA = new AutonPoint(5.8, 4.20,0, 180, false);
 
-    public static final AutonPoint kBackUpBeforeAlgaeIntake = new AutonPoint(7, 4, 0, 0, false);
-    public static final AutonPoint kLeaveFromBackUpBeforeAlgaeIntake = new AutonPoint(7, 4, 0, 180, false);
-    public static final AutonPoint kIntakeCenterAlgae = new AutonPoint(5.82, 4, 0, 180, false);
-    public static final AutonPoint kLeaveFromIntakeCenterAlgae = new AutonPoint(5.82, 4, 0, 0, false);
-    public static final AutonPoint kBackUpFromAlgaeIntake = new AutonPoint(6.5, 4.01, 0, 180, false);
-    public static final AutonPoint kPlaceAlgaeNet = new AutonPoint(7.3, 5.5, 180, 90, false);
+    public static final AutonPoint kBackUpBeforeAlgaeIntake = new AutonPoint(6.5, 4.06, 0, 0, false);
+    public static final AutonPoint kLeaveFromBackUpBeforeAlgaeIntake = new AutonPoint(7, 4.06, 0, 180, false);
+    public static final AutonPoint kIntakeCenterAlgae = new AutonPoint(5.82, 4.06, 0, 180, false);
+    public static final AutonPoint kLeaveFromIntakeCenterAlgae = new AutonPoint(5.82, 4.06, 0, 0, false);
+    public static final AutonPoint kBackUpFromAlgaeIntake = new AutonPoint(6.5, 4.061, 0, 180, false);
+    public static final AutonPoint kPlaceAlgaeNetStopPoint = new AutonPoint(7.75, 5.5, 180, 90, false);
+    public static final AutonPoint kPlaceAlgaeNet = new AutonPoint(8, 5.5, 180, 0, false);
+
     // Points For Other Alliance 3.0318
     public static final AutonPoint kPlaceOnCoralK = new AutonPoint(5.04, 2.88, -61.0, 180, false, new FudgeFactor(0, 0, 0, .03, .045, 0));
     public static final AutonPoint kLeaveFromPlaceOnCoralK = new AutonPoint(5.27, 2.87, -60, -135, false, new FudgeFactor(0, 0, 0, 0, 0, 0));
@@ -62,7 +64,9 @@ public class AutonPointManager {
     public static final AutonPoint[] kPlaceCoralLToBackUpBeforeIntakeAlgae = {kLeaveFromPlaceOnCoralL, kBackUpBeforeAlgaeIntake};
     public static final AutonPoint[] kCenterBargeStartPositionToIntakeCenterAlgae = {kLeaveFromBackUpBeforeAlgaeIntake, kIntakeCenterAlgae};
     public static final AutonPoint[] kCenterBargeStartPositionBackUpFromIntakeCenterAlgae = {kLeaveFromIntakeCenterAlgae, kBackUpFromAlgaeIntake};
-    public static final AutonPoint[] kCenterBargeStartPositionPlaceAlgaePosition = {kBackUpFromAlgaeIntake, kPlaceAlgaeNet};
+    public static final AutonPoint[] kCenterBargeStartPositionPlaceAlgaePosition = {kBackUpFromAlgaeIntake, kPlaceAlgaeNetStopPoint};
+    public static final AutonPoint[] kCenterBargeStartPositionPlaceSlowDriveInAlgaePosition = {kPlaceAlgaeNetStopPoint, kPlaceAlgaeNet};
+    
 
     // Path Points for Other Alliance
     public static final AutonPoint[] kOtherAllianceBargeStartPositionToPlaceOnCoralK = {kOtherAllianceBargeStartPosition, kPlaceOnCoralK};
