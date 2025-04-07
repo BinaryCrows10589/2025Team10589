@@ -32,7 +32,7 @@ public class IntakeAlgaeCenter {
         
         autonCommands.add(PlaceCoralLStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
 
-        autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("PlaceCoralLToBackUpBeforeIntakeAlgae",
+        /*autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("PlaceCoralLToBackUpBeforeIntakeAlgae",
         AutonPointManager.kPlaceCoralLToBackUpBeforeIntakeAlgae,
         5,
         new double[] {6, 0, 0},
@@ -43,7 +43,7 @@ public class IntakeAlgaeCenter {
         WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
         WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
         WPILibAutonConstants.kPositionTolorence,
-        driveSubsystem));
+        driveSubsystem));*/
 
         EndCommandAfterWait intakeForTime = new EndCommandAfterWait(highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command(), 4);
            
