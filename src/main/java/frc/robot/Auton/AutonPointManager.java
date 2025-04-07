@@ -46,7 +46,7 @@ public class AutonPointManager {
     public static final AutonPoint kPlaceOnCoralI = new AutonPoint(3.84, 2.8725, -115, 50, false, new FudgeFactor(0, 0, 0, 0, 0, 0));
     public static final AutonPoint kLeaveFromPlaceOnCoralI = new AutonPoint(3.85, 3.07, -120, -130, false, new FudgeFactor(0, 0, 0, 0, 0, 0));
     public static final AutonPoint kPlaceOnCoralH = new AutonPoint(3.76, 2.75, -125, -310, false, new FudgeFactor(0, 0, -3, 0.05, .15, -3));
-    
+    //-200
     // Decloration of Path Points
 
 

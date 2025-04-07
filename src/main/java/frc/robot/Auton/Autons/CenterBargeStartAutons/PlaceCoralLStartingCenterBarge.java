@@ -13,6 +13,7 @@ import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveCommandFactory;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 import frc.robot.Utils.AutonUtils.GenerateAuto;
+import frc.robot.Utils.CommandUtils.CustomWaitCommand;
 import frc.robot.Utils.CommandUtils.SequentialGroupCommand;
 
 public class PlaceCoralLStartingCenterBarge {
@@ -26,7 +27,7 @@ public class PlaceCoralLStartingCenterBarge {
         driveSubsystem.setRobotStartingPose(AutonPointManager.kCenterBargeStartPosition);
         
         ArrayList<Command> autonCommands = new ArrayList<>();
-        
+        autonCommands.add(new CustomWaitCommand(6));
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionToPlaceOnCoralL",
         AutonPointManager.kCenterBargeStartPositionToPlaceOnCoralL,
         1.5,
