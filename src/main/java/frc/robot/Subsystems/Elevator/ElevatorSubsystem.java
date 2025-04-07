@@ -34,7 +34,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         SCORE_ALGAE_BARGE,
         REEF_INTAKE_ALGAE_LOW,
         REEF_INTAKE_ALGAE_HIGH,
-        ClimbPosition
+        ClimbPosition, 
+        L1BACKFEED
     }
 
     public static enum ElevatorMode {
@@ -135,6 +136,8 @@ public class ElevatorSubsystem extends SubsystemBase {
                 return .25;
             case BlueHeight:
                 return .854;
+            case L1BACKFEED:
+                return .281;
             default:
                 return 0;
         }
