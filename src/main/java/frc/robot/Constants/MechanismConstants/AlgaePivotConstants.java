@@ -1,5 +1,7 @@
 package frc.robot.Constants.MechanismConstants;
 
+import edu.wpi.first.units.measure.Voltage;
+
 public class AlgaePivotConstants {
 
     public static final double kPivotAngleToleranceRotations = 0.05;
@@ -19,4 +21,6 @@ public class AlgaePivotConstants {
     public static final double kOuttakeProcessorPositionRotations = .367 * 2/3;
     public static final double kOuttakeBargePositionRotations = .2425 * 2/3;
     public static final double kDefultPivotPosition = 0.0;
+    public static final double kAlgaePiovtGroundVoltage = 1.0;
+    public static final double kAlgaePiovtHoldGroundVoltage = .5;;
 }

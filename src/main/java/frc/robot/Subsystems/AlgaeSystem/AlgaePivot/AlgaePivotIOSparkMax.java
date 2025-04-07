@@ -12,6 +12,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.MechanismConstants.AlgaePivotConstants;
+import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesTunablePIDConstants;
 
 public class AlgaePivotIOSparkMax implements AlgaePivotIO {
@@ -63,8 +64,11 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
     @Override
     public void setDesiredPivotRotation(double desiredRotations) {
         desiredPivotRotations = desiredRotations;
-        // TODO: Reneable Algae Pivot
-        pivotPIDController.setReference(desiredRotations + AlgaePivotConstants.kPivotEncoderOffset, ControlType.kPosition);
+        if(desiredRotations == AlgaePivotConstants.kGroundIntakePositionRotations) {
+            pivotMotor.setVoltage(AlgaePivotConstants.kAlgaePiovtGroundVoltage);
+        } else {
+            pivotPIDController.setReference(desiredRotations + AlgaePivotConstants.kPivotEncoderOffset, ControlType.kPosition);
+        }
     }
 
     @Override
@@ -78,6 +82,10 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
         pivotIOInputs.pivotRPM = pivotMotor.getAbsoluteEncoder().getVelocity();
         
         updatePIDValuesFromNetworkTables();
+        if(desiredPivotRotations == AlgaePivotConstants.kGroundIntakePositionRotations && 
+            pivotIOInputs.rawPivotAngleRotations >= (desiredPivotRotations + AlgaePivotConstants.kPivotEncoderOffset)) {
+            this.pivotMotor.setVoltage(AlgaePivotConstants.kAlgaePiovtHoldGroundVoltage);
+        }
     }
 
     private void updatePIDValuesFromNetworkTables() {
