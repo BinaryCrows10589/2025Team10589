@@ -1,5 +1,6 @@
 package frc.robot.Subsystems.Outtake;
 
+import frc.robot.Commands.OuttakeWheelsCommands.BackfeedCoralCommand;
 import frc.robot.Commands.OuttakeWheelsCommands.HoldCoralInOuttakeCommand;
 import frc.robot.Commands.OuttakeWheelsCommands.IntakeCoralCommand;
 import frc.robot.Commands.OuttakeWheelsCommands.OuttakeCoralCommand;
@@ -30,6 +31,10 @@ public class OuttakeCommandFactory {
 
     public OuttakeCoralCommand createOuttakeCoralCommand() {
         return new OuttakeCoralCommand(outtakeWheelsSubsystem, outtakeCoralSensorsSubsystem);
+    }
+
+    public BackfeedCoralCommand createBackfeedCoralCommand() {
+        return new BackfeedCoralCommand(outtakeWheelsSubsystem);
     }
     
     public IntakeCoralCommand createIntakeCoralCommand() {

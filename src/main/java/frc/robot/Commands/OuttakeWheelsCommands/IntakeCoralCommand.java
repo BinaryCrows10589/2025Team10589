@@ -16,6 +16,11 @@ public class IntakeCoralCommand extends Command{
             this.outtakeCoralSensorsSubsystem = outtakeCoralSensorsSubsystem;
             addRequirements(this.outtakeWheelsSubsystem, this.outtakeCoralSensorsSubsystem);
     }
+    public IntakeCoralCommand(OuttakeWheelsSubsystem outtakeWheelsSubsystem) {
+            this.outtakeWheelsSubsystem = outtakeWheelsSubsystem;
+            this.outtakeCoralSensorsSubsystem = null;
+            addRequirements(this.outtakeWheelsSubsystem, this.outtakeCoralSensorsSubsystem);
+    }
 
 
     @Override

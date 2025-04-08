@@ -7,6 +7,7 @@ import frc.robot.Commands.AlgaeCommands.OuttakeAlgaeCommand;
 import frc.robot.Commands.AlgaeCommands.RunAlgaeWheelsCommand;
 import frc.robot.Commands.AutoPositionCommands.ScrollThanOuttakeCommand;
 import frc.robot.Commands.AutoPositionCommands.ScrollWithReefTreeDetectorCommand;
+import frc.robot.Commands.ElevatorCommands.PrepareL1BackfeedCommand;
 import frc.robot.Commands.FunnelCommands.DetectFunnelCoralCommand;
 import frc.robot.Commands.IntakeCommands.GroundIntakeCommand;
 import frc.robot.Constants.GenericConstants.AutoPositionConstants;
@@ -15,10 +16,12 @@ import frc.robot.Constants.MechanismConstants.AlgaeWheelConstants;
 import frc.robot.Subsystems.AlgaeSystem.AlgaePivot.AlgaePivotSubsystem;
 import frc.robot.Subsystems.AlgaeSystem.AlgaeWheels.AlgaeWheelSubsystem;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
+import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.Subsystems.Funnel.FunnelCoralSensor.FunnelCoralSensorSubsystem;
 import frc.robot.Subsystems.GroundIntake.Pivot.PivotSubsystem;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCoralSensors.OuttakeCoralSensorsSubsystem;
+import frc.robot.Subsystems.Outtake.OuttakeWheels.OuttakeWheelsSubsystem;
 import frc.robot.Subsystems.ReefTreeDetector.ReefTreeCoralDetector.ReefTreeDetectorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.DriveSubsystem;
 
@@ -28,6 +31,8 @@ public class HighLevelCommandsFactory {
     //private final TransitWheelsCommandFactory transitWheelsCommandFactory;
     private final OuttakeCommandFactory outtakeCommandFactory;
     private final OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem;
+    private final OuttakeWheelsSubsystem outtakeWheelsSubsystem;
+    private final ElevatorSubsystem elevatorSubsystem;
     private final ElevatorCommandFactory elevatorCommandFactory;
     private final AlgaePivotSubsystem algaePivotSubsystem;
     private final AlgaeWheelSubsystem algaeWheelSubsystem;
@@ -41,7 +46,9 @@ public class HighLevelCommandsFactory {
         OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem,
         //TransitCoralSensorSubsystem transitCoralSensorSubsystem,
         FunnelCoralSensorSubsystem funnelCoralSensorSubsystem,
+        OuttakeWheelsSubsystem outtakeWheelsSubsystem,
         ElevatorCommandFactory elevatorCommandFactory,
+        ElevatorSubsystem elevatorSubsystem,
         PivotSubsystem pivotSubsystem,
         AlgaeWheelSubsystem algaeWheelSubsystem,
         AlgaePivotSubsystem algaePivotSubsystem,
@@ -57,6 +64,8 @@ public class HighLevelCommandsFactory {
         this.algaePivotSubsystem = algaePivotSubsystem;
         this.reefTreeDetectorSubsystem = reefTreeDetectorSubsystem;
         this.driveSubsystem = driveSubsystem;
+        this.outtakeWheelsSubsystem = outtakeWheelsSubsystem;
+        this.elevatorSubsystem = elevatorSubsystem;
     }
     
     public GroundIntakeCommand createGroundIntakeCommand() {
@@ -114,6 +123,11 @@ public class HighLevelCommandsFactory {
             new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kOuttakeProcessorPositionRotations), 
             this.elevatorCommandFactory,
             this.algaePivotSubsystem, this.algaeWheelSubsystem);
+    }
+
+    public PrepareL1BackfeedCommand createPrepareL1BackfeedCommand() {
+        return new PrepareL1BackfeedCommand(
+            this.elevatorSubsystem, this.outtakeWheelsSubsystem, this.outtakeCoralSensorsSubsystem);
     }
 
     public RunAlgaeWheelsCommand createAlgaeWheelsIntakeGroundCommand() {
