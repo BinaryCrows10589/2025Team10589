@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Auton.AutonPointManager;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
+import frc.robot.Commands.SwerveDriveCommands.DriveForwardCommand;
 import frc.robot.Constants.GenericConstants.AutonConstants.WPILibAutonConstants;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
@@ -30,8 +32,6 @@ public class IntakeAlgaeCenter {
         
         ArrayList<Command> autonCommands = new ArrayList<>();
         
-        autonCommands.add(PlaceCoralLStartingCenterBarge.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
-
         /*autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("PlaceCoralLToBackUpBeforeIntakeAlgae",
         AutonPointManager.kPlaceCoralLToBackUpBeforeIntakeAlgae,
         5,
@@ -45,46 +45,45 @@ public class IntakeAlgaeCenter {
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));*/
 
-        EndCommandAfterWait intakeForTime = new EndCommandAfterWait(highLevelCommandsFactory.createIntakeAlgaeFromReefL2Command(), 4);
+        EndCommandAfterWait intakeForTime = new EndCommandAfterWait(highLevelCommandsFactory.createIntakeAlgaeFromReefL2CommandAuto(), 1.3);
            
         ParallelGroupCommand driveWhileIntaking = new ParallelGroupCommand(
             new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionToIntakeCenterAlgae",
             AutonPointManager.kCenterBargeStartPositionToIntakeCenterAlgae,
-            1.5,
+            1.3,
             new double[] {6, 0, 0},
             new double[] {2, 0, 0},
             new double[] {12, 0, 0},
-            2,
-            2,
+            3,
+            3,
             WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
             WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
             WPILibAutonConstants.kPositionTolorence,
             driveSubsystem),
-            new SequentialGroupCommand(new CustomWaitCommand(.5),
-                intakeForTime,
-                highLevelCommandsFactory.createAlgaePivotToL2IntakePosition()
-            ));
+            intakeForTime
+            );
         autonCommands.add(driveWhileIntaking);
          
-        
+        autonCommands.add(new EndCommandAfterWait(new DriveForwardCommand(driveSubsystem, 1, 0, 0), 1));
+        autonCommands.add(new ParallelCommandGroup(highLevelCommandsFactory.createAlgaePivotToDefualtPosition(),
+            elevatorCommandFactory.createElevatorToBasementCommand()));
+      
+        /* 
         autonCommands.add(new WPILibFollowTrajectoryFromPointsCommand("CenterBargeStartPositionBackUpFromIntakeCenterAlgae",
         AutonPointManager.kCenterBargeStartPositionBackUpFromIntakeCenterAlgae,
-        1.5,
-        new double[] {6, 0, 0},
+        5,
+        new double[] {3, 0, 0},
         new double[] {2, 0, 0},
         new double[] {12, 0, 0},
-        WPILibAutonConstants.kMaxTranslationalSpeedInMetersPerSecond,
-        WPILibAutonConstants.kMaxTranslationalAccelerationInMetersPerSecond,
+        1.2,
+        1,
         WPILibAutonConstants.kMaxRotationalSpeedInRadsPerSecond,
         WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
         WPILibAutonConstants.kPositionTolorence,
-        driveSubsystem));
+        driveSubsystem));*/
         
 
-        autonCommands.add(highLevelCommandsFactory.createAlgaePivotToDefualtPosition());
-        autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
-
-        SequentialGroupCommand auton = GenerateAuto.generateAuto(5, 2, autonCommands);
+        SequentialGroupCommand auton = GenerateAuto.generateAuto(15, 15, autonCommands);
         return auton;
     } 
 

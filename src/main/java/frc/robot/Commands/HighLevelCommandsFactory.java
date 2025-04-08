@@ -2,6 +2,7 @@ package frc.robot.Commands;
 
 import frc.robot.Commands.AlgaeCommands.AlgaePivotToPositionCommand;
 import frc.robot.Commands.AlgaeCommands.IntakeAlgaeCommand;
+import frc.robot.Commands.AlgaeCommands.IntakeAlgaeCommandLeavePivot;
 import frc.robot.Commands.AlgaeCommands.OuttakeAlgaeCommand;
 import frc.robot.Commands.AlgaeCommands.RunAlgaeWheelsCommand;
 import frc.robot.Commands.AutoPositionCommands.ScrollThanOuttakeCommand;
@@ -73,6 +74,15 @@ public class HighLevelCommandsFactory {
             new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kReefTreeIntakeVoltage),
             this.elevatorCommandFactory, this.algaePivotSubsystem, this.algaeWheelSubsystem);
     }
+
+    public IntakeAlgaeCommandLeavePivot createIntakeAlgaeFromReefL2CommandAuto() {
+        return new IntakeAlgaeCommandLeavePivot(
+            elevatorCommandFactory.createElevatorToReefIntakeAlgaeLowCommand(), 
+            new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations),
+            new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kReefTreeIntakeVoltage),
+            this.elevatorCommandFactory, this.algaePivotSubsystem, this.algaeWheelSubsystem);
+    }
+    
     public IntakeAlgaeCommand createIntakeAlgaeFromReefL3Command() {
         return new IntakeAlgaeCommand(elevatorCommandFactory.createElevatorToReefIntakeAlgaeHighCommand(), new AlgaePivotToPositionCommand(algaePivotSubsystem, AlgaePivotConstants.kReefTreeIntakePositionRotations),
             new RunAlgaeWheelsCommand(algaeWheelSubsystem, AlgaeWheelConstants.kReefTreeIntakeVoltage),

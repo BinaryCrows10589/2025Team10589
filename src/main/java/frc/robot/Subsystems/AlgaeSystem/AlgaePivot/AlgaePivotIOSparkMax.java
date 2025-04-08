@@ -64,11 +64,11 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
     @Override
     public void setDesiredPivotRotation(double desiredRotations) {
         desiredPivotRotations = desiredRotations;
-        if(desiredRotations == AlgaePivotConstants.kGroundIntakePositionRotations) {
-            pivotMotor.setVoltage(AlgaePivotConstants.kAlgaePiovtGroundVoltage);
-        } else {
-            pivotPIDController.setReference(desiredRotations + AlgaePivotConstants.kPivotEncoderOffset, ControlType.kPosition);
-        }
+        //if(desiredRotations == AlgaePivotConstants.kGroundIntakePositionRotations) {
+        //    pivotMotor.setVoltage(AlgaePivotConstants.kAlgaePiovtGroundVoltage);
+        //} else {
+        pivotPIDController.setReference(desiredRotations + AlgaePivotConstants.kPivotEncoderOffset, ControlType.kPosition);
+       // }
     }
 
     @Override
@@ -84,7 +84,7 @@ public class AlgaePivotIOSparkMax implements AlgaePivotIO {
         updatePIDValuesFromNetworkTables();
         if(desiredPivotRotations == AlgaePivotConstants.kGroundIntakePositionRotations && 
             pivotIOInputs.rawPivotAngleRotations >= (desiredPivotRotations + AlgaePivotConstants.kPivotEncoderOffset)) {
-            this.pivotMotor.setVoltage(AlgaePivotConstants.kAlgaePiovtHoldGroundVoltage);
+            //this.pivotMotor.setVoltage(AlgaePivotConstants.kAlgaePiovtHoldGroundVoltage);
         }
     }
 
