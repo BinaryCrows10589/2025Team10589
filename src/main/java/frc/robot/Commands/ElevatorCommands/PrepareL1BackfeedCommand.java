@@ -15,7 +15,6 @@ public class PrepareL1BackfeedCommand extends Command {
 
     private ElevatorToPositionCommand elevatorToL1Command;
     private OuttakeCoralCommand deeplyIndexCoralCommand;
-    private boolean hasBegunLiftingElevator = false;
 
     public PrepareL1BackfeedCommand(ElevatorSubsystem elevatorSubsystem, OuttakeWheelsSubsystem outtakeWheelsSubsystem, OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem) {
         elevatorToL1Command = new ElevatorToPositionCommand(
@@ -34,15 +33,12 @@ public class PrepareL1BackfeedCommand extends Command {
     @Override
     public void initialize() {
         deeplyIndexCoralCommand.schedule();
-        hasBegunLiftingElevator = false;
+        elevatorToL1Command.schedule();
     }
 
     @Override
     public void execute() {
-        if (!deeplyIndexCoralCommand.isScheduled() && !elevatorToL1Command.isScheduled() && !hasBegunLiftingElevator) {
-            elevatorToL1Command.schedule();
-            hasBegunLiftingElevator = true;
-        }
+        
     }
 
     @Override
@@ -53,6 +49,6 @@ public class PrepareL1BackfeedCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        return hasBegunLiftingElevator && !elevatorToL1Command.isScheduled();
+        return false;
     }
 }
