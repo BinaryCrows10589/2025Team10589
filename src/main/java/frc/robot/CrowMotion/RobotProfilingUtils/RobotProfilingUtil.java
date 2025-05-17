@@ -8,7 +8,7 @@ import frc.robot.Utils.SwerveDriveUtils.DesiredMetersPerSecondToVoltage;
 public class RobotProfilingUtil {
     
     
-    public class ProfileMaxPossibleTranslationalVelocityMPS {
+    public class ProfileMaxPossibleTranslationalVelocityMPSMaxPossibleAverageSwerveModuleMPS {
         /*
         * 0. Before running this profiler, ensure that your wheel circumference is configured 
             accuretly otherwise the profile will not be accurette. Furthermore, your CrowMotionConfig
@@ -34,7 +34,7 @@ public class RobotProfilingUtil {
         private static double lastVelocity = 0;
         private static boolean finished = false;
         private static double startTime = 0;
-        public static void profileMaxPossibleTranslationalVelocityMPS(double limitedAcceleration) {
+        public static void profileMaxPossibleTranslationalVelocityMPSAndMaxPossibleAverageSwerveModuleMPS(double limitedAcceleration) {
             if(startTime == 0) {
                 startTime = System.currentTimeMillis();
             }
@@ -76,7 +76,7 @@ public class RobotProfilingUtil {
         }
 
         public static void profileMaxPossibleTranslationalVelocityMPS() {
-            profileMaxPossibleTranslationalVelocityMPS(-1);
+            profileMaxPossibleTranslationalVelocityMPSAndMaxPossibleAverageSwerveModuleMPS(-1);
         }
     }
     
