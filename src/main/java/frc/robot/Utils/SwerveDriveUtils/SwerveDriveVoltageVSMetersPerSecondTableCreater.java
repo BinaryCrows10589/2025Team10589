@@ -1,6 +1,12 @@
 package frc.robot.Utils.SwerveDriveUtils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.function.Consumer;
+
+import org.littletonrobotics.junction.Logger;
 
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Utils.CommandUtils.Wait;
@@ -47,7 +53,27 @@ public class SwerveDriveVoltageVSMetersPerSecondTableCreater {
         for(int i = 0; i < voltageVSMetersPerSecondTable[0].length; i++) {
             table +=  ":" + (voltageVSMetersPerSecondTable[1][i] + ", " + voltageVSMetersPerSecondTable[0][i]);
         }
-        System.out.println(table);
-        //Logger.recordOutput(moduleName + " VoltageVSMPSTable: ", voltageVSMetersPerSecondTable[0][0]);
+
+        String logMessage = table.substring(13);
+        String directoryName = "logs";
+        String fileName = "log.csv";
+
+        // Ensure the directory exists
+        File directory = new File(directoryName);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        // Define the file path
+        File logFile = new File(directory, fileName);
+
+        // Write to the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile))) {
+            writer.write(logMessage);
+            System.out.println("Log written to: " + logFile.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Logger.recordOutput(moduleName + " VoltageVSMPSTable: ", table);
     }
 }

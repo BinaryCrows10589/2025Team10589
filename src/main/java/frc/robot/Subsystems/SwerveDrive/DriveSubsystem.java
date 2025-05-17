@@ -8,9 +8,12 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
+import frc.robot.CrowMotion.CrowMotionConfig;
+import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
 import frc.robot.Subsystems.PoseEstimation.PoseEstimatorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIO;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOInputsAutoLogged;
@@ -59,7 +62,7 @@ public class DriveSubsystem extends SubsystemBase{
             PathPlannerAutonConstants.kRotationPIDConstants.kI,
             PathPlannerAutonConstants.kRotationPIDConstants.kD, 0);
         */
-        configurePathPlannerAutoBuilder();
+        configureCrowMotion();
     }
 
     public void drive(double desiredXVelocity, double desiredYVelocity, double desiredRotationalVelocity) {
@@ -224,20 +227,20 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     public void setRobotPose(AutonPoint newRobotPose) {
-        setRobotPose(newRobotPose.getAutonPoint());
+       // setRobotPose(newRobotPose.getAutonPoint());
     }
 
     public void setRobotStartingPose(AutonPoint newRobotPose) {
-        ControlConstants.robotStartPosition = newRobotPose;
-        setRobotPose(newRobotPose.getAutonPoint());
+        //ControlConstants.robotStartPosition = newRobotPose;
+        //setRobotPose(newRobotPose.getAutonPoint());
     }
 
     private void setRobotPose(Pose2d newRobotPose) {
-        this.poseEstimatorSubsystem.setRobotPose(newRobotPose);
+        //this.poseEstimatorSubsystem.setRobotPose(newRobotPose);
     }
 
     public void resetRobotPose() {
-        this.poseEstimatorSubsystem.resetRobotPose();
+        //this.poseEstimatorSubsystem.resetRobotPose();
     }
 
     public PoseEstimatorSubsystem getPoseEstimatorSubsystem() {
@@ -271,7 +274,33 @@ public class DriveSubsystem extends SubsystemBase{
         Logger.recordOutput("SwerveDrive/DriverControlMode", ControlConstants.kIsDriverControlled);
     }
 
-    private void configurePathPlannerAutoBuilder() {
+    private double[] getRobotPositionCrowMotion() {
+        return new double[] {getRobotPose().getX(), getRobotPose().getY(), getRobotPose().getRotation().getDegrees()};
+    }
+
+    private double[] getRobotVelocitiesCrowMotion() {
+        return new double[] {getChassisSpeeds().vxMetersPerSecond, getChassisSpeeds().vyMetersPerSecond,
+             Units.radiansToDegrees(getChassisSpeeds().omegaRadiansPerSecond)};
+    }
+
+    private void driveCrowMotion(double[] velocity) {
+        this.drive(velocity[0], velocity[1], velocity[2]);
+    }
+
+    private double getAverageSwerveModuleVelocity() {
+        return (this.frontLeftSwerveModule.getModuleState().speedMetersPerSecond +
+            this.frontRightSwerveModule.getModuleState().speedMetersPerSecond +
+            this.backLeftSwerveModule.getModuleState().speedMetersPerSecond +
+            this.backRightSwerveModule.getModuleState().speedMetersPerSecond) / 4;
+    }
+    private void configureCrowMotion() {
+        CrowMotionConfig.init(new RobotProfile(4.231, 720, 4.231, ()-> 0.0),
+         this::getRobotPositionCrowMotion,
+         this::getRobotVelocitiesCrowMotion,
+         this::getAverageSwerveModuleVelocity,
+         this::driveCrowMotion,
+         ()->false,
+        4.4, 4.4, 3.5);
         /*utoBuilder.configureHolonomic(
             this::getRobotPose, // Robot pose supplier
             this::setRobotPose, // Method to reset odometry (will be called if your auto has a starting pose)

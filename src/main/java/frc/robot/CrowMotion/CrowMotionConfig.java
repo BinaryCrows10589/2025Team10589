@@ -3,6 +3,8 @@ package frc.robot.CrowMotion;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
+
 /**
  * Global configuration for CrowMotion.
  * Stores robot physical characteristics and live-state suppliers for use in trajectory planning.
@@ -10,10 +12,11 @@ import java.util.function.Supplier;
 public class CrowMotionConfig {
 
 
-    //private static RobotProfile robotProfile;
+    private static RobotProfile robotProfile;
 
     private static Supplier<double[]> getRobotPositionMetersAndDegrees;
     private static Supplier<double[]> getRobotVelocityMPSandDPS;
+    private static Supplier<Double> getAverageSwerveModuleVelocityMPS;
     private static Consumer<double[]> setRobotVelocityMPSANDDPS;
 
     private static Supplier<Boolean> defualtShouldMirror;
@@ -27,6 +30,7 @@ public class CrowMotionConfig {
      * @param robotProfile Robot physical configuration profile. Reference the RobotProfile file for help creating the profile. 
      * @param _getRobotPositionMetersAndDegrees Supplier for [x, y, rot] position
      * @param _getRobotVelocityMPSAndDPS Supplier for [x, y, rot] velocity
+     * @param _getAverageSwerveModuleVelocityMPS Supplier for average swerve module veclocity
      * @param _setRobotVelocityMPSANDDPS Consumer for setting [x, y, rot] velocity
      * @param _defaultShouldMirror Supplier to determine if path should be mirrored
      * @param _defualtMaxDesiredTranslationalVelocity Maximum translational velocity to target
@@ -34,18 +38,20 @@ public class CrowMotionConfig {
      * @param _defualtEndTranslationalVelocityForStoppingTrajectories Desired end velocity for stop paths
      */
     public static void init(
-        //RobotProfile robotProfile,
+        RobotProfile _robotProfile,
         Supplier<double[]> _getRobotPositionMetersAndDegrees,
         Supplier<double[]> _getRobotVelocityMPSAndDPS,
+        Supplier<Double> _getAverageSwerveModuleVelocityMPS,
         Consumer<double[]> _setRobotVelocityMPSANDDPS,
         Supplier<Boolean> _defaultShouldMirror,
         double _defualtMaxDesiredTranslationalVelocity,
         double _defualtMaxDesiredRotationalVelocity,
         double _defualtEndTranslationalVelocityForStoppingTrajectories
     ) {
-        //robotProfile = robotProfile;
+        robotProfile = _robotProfile;
         getRobotPositionMetersAndDegrees = _getRobotPositionMetersAndDegrees;
         getRobotVelocityMPSandDPS = _getRobotVelocityMPSAndDPS;
+        getAverageSwerveModuleVelocityMPS = _getAverageSwerveModuleVelocityMPS;
         setRobotVelocityMPSANDDPS = _setRobotVelocityMPSANDDPS;
         defualtShouldMirror = _defaultShouldMirror;
         defualtMaxDesiredTranslationalVelocity = _defualtMaxDesiredTranslationalVelocity;
@@ -53,11 +59,10 @@ public class CrowMotionConfig {
         defualtEndTranslationalVelocityForStoppingTrajectories = _defualtEndTranslationalVelocityForStoppingTrajectories;
     }
 
-
-    /*/** @return Robot profile used for the physics simulations 
+    /** @return Robot profile used for the physics simulations */
     public static RobotProfile getRobotProfile() {
         return robotProfile;
-    }*/
+    }
 
     /** @return Robot position [x meters, y meters, rotation degrees]. */
     public static double[] getRobotPositionMetersAndDegrees() {
@@ -67,6 +72,11 @@ public class CrowMotionConfig {
     /** @return Robot velocity [x m/s, y m/s, rotation deg/s]. */
     public static double[] getRobotVelocityMPSandDPS() {
         return getRobotVelocityMPSandDPS.get();
+    }
+
+    /** @return Average Velocitiy of Swerve modules in MPS*/
+    public static double getAverageSwerveModuleVelocityMPS() {
+        return getAverageSwerveModuleVelocityMPS.get();
     }
 
     /**

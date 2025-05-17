@@ -75,7 +75,7 @@ public class RobotContainer {
         this.driveSubsystem = this.robotCreator.getDriveSubsystem();
         this.driveCommandFactory = new DriveCommandFactory(this.driveSubsystem, this.robotCreator.getElevatorSubsystem(), this.driverController);   
         this.fieldOrientedDriveCommand = this.driveCommandFactory.createFieldOrientedDriveCommand();
-        this.driveSubsystem.setDefaultCommand(this.fieldOrientedDriveCommand);
+        //this.driveSubsystem.setDefaultCommand(this.fieldOrientedDriveCommand);
         this.lockSwerves = this.driveCommandFactory.createLockSwervesCommand();
         this.resetOdometry = this.driveCommandFactory.createResetOdometryCommand();
         this.climberCommandFactory = new ClimberCommandFactory(this.robotCreator.getClimberSubsystem());
@@ -258,6 +258,10 @@ public class RobotContainer {
 
     public Pose2d getRobotPosition() {
         return driveSubsystem.getRobotPose();
+    }
+
+    public DriveSubsystem driveSubsystem() {
+        return driveSubsystem;
     }
 
     public void updateAlliance() {

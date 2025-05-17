@@ -25,6 +25,7 @@ import frc.robot.Constants.CameraConstants.VisionConstants;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
+import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfilingUtil;
 import frc.robot.Utils.GeneralUtils.PercentError;
 import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesChangableValue;
@@ -127,9 +128,7 @@ public class Robot extends LoggedRobot {
         CommandScheduler.getInstance().run();
         this.robotContainer.updateButtonBoardInputs();
         checkDriverStationUpdate();
-        this.robotContainer.periodic();
-
-        
+        this.robotContainer.periodic();        
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
@@ -208,7 +207,8 @@ public class Robot extends LoggedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        
+        //this.robotContainer.driveSubsystem().drive(4, 0 ,0);
+        RobotProfilingUtil.ProfileMaxPossibleTranslationalVelocityMPS.profileMaxPossibleTranslationalVelocityMPS();
     }
 
     @Override

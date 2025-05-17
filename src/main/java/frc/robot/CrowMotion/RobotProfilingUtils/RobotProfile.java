@@ -1,0 +1,76 @@
+package frc.robot.CrowMotion.RobotProfilingUtils;
+
+import java.util.function.Supplier;
+
+/**
+ * Represents a physical profile for the robot, defining its motion capabilities and dynamics. 
+ * Used for the trajectory symulation
+ */
+public class RobotProfile {
+
+    /** The maximum achievable translational velocity in meters per second (m/s). */
+    private final double maxPossibleTranslationalVelocityMPS;
+
+    /** The maximum achievable rotational velocity in degrees per second (deg/s). */
+    private final double maxPossibleRotationalVelocityDPS;
+
+    /** The maximum speed of all swerve modules averaged in meters per second (m/s). */
+    private final double maxPossibleAverageSwerveModuleMPS;
+
+    /**
+     * A function mapping velocity to acceleration. 
+     */
+    private final Supplier<Double> accelerationVSVelocityFunction;
+
+    /**
+     * WARNING!!! These values MUST be accurrete to the true physical limits of the robot.
+     * Use the profiling methods in the RobotProfiling utill file.
+     * Instructions for how to complete each of the profiles are described within the RobotProfilingUtil
+     * Constructs a new RobotProfile with the specified physical parameters.
+     *
+     * @param maxPossibleTranslationalVelocityMPS Maximum translational speed in m/s
+     * @param maxPossibleRotationalVelocityDPS Maximum rotational speed in degrees per second
+     * @param maxPossibleAverageSwerveModuleMPS Max average swerve module velocity in m/s
+     * @param accelerationVSVelocityFunction Function that returns acceleration given current velocity
+     */
+    public RobotProfile(
+        double maxPossibleTranslationalVelocityMPS,
+        double maxPossibleRotationalVelocityDPS,
+        double maxPossibleAverageSwerveModuleMPS,
+        Supplier<Double> accelerationVSVelocityFunction
+    ) {
+        this.maxPossibleTranslationalVelocityMPS = maxPossibleTranslationalVelocityMPS;
+        this.maxPossibleRotationalVelocityDPS = maxPossibleRotationalVelocityDPS;
+        this.maxPossibleAverageSwerveModuleMPS = maxPossibleAverageSwerveModuleMPS;
+        this.accelerationVSVelocityFunction = accelerationVSVelocityFunction;
+    }
+
+    /**
+     * @return The robot's maximum translational velocity in m/s.
+     */
+    public double getMaxPossibleTranslationalVelocityMPS() {
+        return this.maxPossibleTranslationalVelocityMPS;
+    }
+
+    /**
+     * @return The robot's maximum rotational velocity in degrees per second.
+     */
+    public double getMaxPossibleRotationalVelocityDPS() {
+        return this.maxPossibleRotationalVelocityDPS;
+    }
+
+    /**
+     * @return The robot's maximum average swerve module speed in m/s.
+     */
+    public double maxPossibleAverageSwerveModuleMPS() {
+        return this.maxPossibleAverageSwerveModuleMPS;
+    }
+
+    /**
+     * @return The current acceleration value based on the velocity-to-acceleration function.
+     */
+    public double getAccelerationVSVelocityFunction() {
+        return this.accelerationVSVelocityFunction.get();
+    }
+
+}

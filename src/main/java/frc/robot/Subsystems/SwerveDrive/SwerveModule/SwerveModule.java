@@ -6,9 +6,11 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveModuleConstants;
 import frc.robot.Utils.SwerveDriveUtils.DesiredMetersPerSecondToVoltage;
+import frc.robot.Utils.SwerveDriveUtils.SwerveDriveVoltageVSMetersPerSecondTableCreater;
 //import frc.robot.Utils.SwerveDriveUtils.SwerveDriveVoltageVSMetersPerSecondTableCreater;
 import frc.robot.Utils.SwerveDriveUtils.SwerveModuleAngleOptimizer;
 
@@ -44,11 +46,11 @@ public class SwerveModule {
      */
     public void periodic() {
         updateInputs();
-        //if(DriverStation.isEnabled()) {
-        //    voltageTableCreator.createVoltageVSMetersPerSecondTable(swerveModuleName,
-        //    13, .1, 2, getDriveMotorSpeedInMetersPerSecond(),
-        //    this.swerveModuleIO::setDesiredModuleDriveVoltage);
-        //}
+        /*if(DriverStation.isEnabled()) {
+            voltageTableCreator.createVoltageVSMetersPerSecondTable(swerveModuleName,
+            13, .1, 2, getDriveMotorSpeedInMetersPerSecond(),
+            this.swerveModuleIO::setDesiredModuleDriveVoltage);
+        }*/
         
         Logger.processInputs(SwerveModuleConstants.kSwerveModuleOutputLoggerBase + swerveModuleName, swerveModuleInputs);
     }

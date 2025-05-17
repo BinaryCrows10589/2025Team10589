@@ -16,7 +16,7 @@ public final class DrivetrainConstants {
      */
     public static final class SwerveDriveConstants {
         // Driver Interaction constants
-        public static final double kMaxSpeedMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.3 : 4.3;
+        public static final double kMaxSpeedMetersPerSecond = RobotModeConstants.kIsNotSim ? 4.3 : 4.317;
         public static final double kMaxRotationAnglePerSecond = RobotModeConstants.kIsNotSim ? 11.4 : 11.4;
 
         public static final double kTranslationMaxRateOfChangePerSecond = RobotModeConstants.kIsNotSim ? 8 : 8;

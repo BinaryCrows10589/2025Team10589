@@ -16,9 +16,9 @@ import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTable
 
 public class SwerveModuleIOSim implements SwerveModuleIO{
     private static final double LOOP_PERIOD_SECS = 0.02;
-
-    LinearSystem<N2, N1, N2> driveMotorLinearSystem = edu.wpi.first.math.system.plant.LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), .025/SwerveModuleConstants.kDriveGearRatio, 1);
-    LinearSystem<N2, N1, N2> turnMotorLinearSystem = edu.wpi.first.math.system.plant.LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), 0.004/SwerveModuleConstants.kTurningGearRatio, 1);
+    
+    LinearSystem<N2, N1, N2> driveMotorLinearSystem = edu.wpi.first.math.system.plant.LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), 0.00148, 1);
+    LinearSystem<N2, N1, N2> turnMotorLinearSystem = edu.wpi.first.math.system.plant.LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), 0.00148, 1);
 
     private DCMotorSim driveMotor = new DCMotorSim(driveMotorLinearSystem, DCMotor.getKrakenX60(1));
     private DCMotorSim turnMotor = new DCMotorSim(turnMotorLinearSystem, DCMotor.getKrakenX60(1));
@@ -117,7 +117,7 @@ public class SwerveModuleIOSim implements SwerveModuleIO{
         inputs.turnMotorAppliedVolts = turnVolts;
         inputs.turnMotorCurrentAmps = new double[] {this.turnMotor.getCurrentDrawAmps()};
         
-        this.driveMotor.setInputVoltage(this.driveVolts);
+        //this.driveMotor.setInputVoltage(driveVolts);
         this.turnMotor.setInputVoltage(turnVolts);
     }
 
@@ -132,7 +132,7 @@ public class SwerveModuleIOSim implements SwerveModuleIO{
     @Override
     public void setDesiredModuleDriveVoltage(double desiredVoltage) {
         this.driveVolts = desiredVoltage;
-        //this.driveMotor.setInputVoltage(desiredVoltage);
+        this.driveMotor.setInputVoltage(desiredVoltage);
     }
 
 
