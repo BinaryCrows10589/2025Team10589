@@ -16,12 +16,12 @@ public class RobotProfile {
 
     /** The maximum speed of all swerve modules averaged in meters per second (m/s). */
     private final double maxPossibleAverageSwerveModuleMPS;
-
+    
     /**
      * A function mapping velocity to acceleration. 
      */
-    private final Supplier<Double> accelerationVSVelocityFunction;
-
+    private final Supplier<Double> velocityVSAccelerationFunction;
+    
     /**
      * WARNING!!! These values MUST be accurrete to the true physical limits of the robot.
      * Use the profiling methods in the RobotProfiling utill file.
@@ -31,18 +31,18 @@ public class RobotProfile {
      * @param maxPossibleTranslationalVelocityMPS Maximum translational speed in m/s
      * @param maxPossibleRotationalVelocityDPS Maximum rotational speed in degrees per second
      * @param maxPossibleAverageSwerveModuleMPS Max average swerve module velocity in m/s
-     * @param accelerationVSVelocityFunction Function that returns acceleration given current velocity
+     * @param velocityVSAccelerationFunction Function that returns acceleration given current velocity
      */
     public RobotProfile(
         double maxPossibleTranslationalVelocityMPS,
         double maxPossibleRotationalVelocityDPS,
         double maxPossibleAverageSwerveModuleMPS,
-        Supplier<Double> accelerationVSVelocityFunction
+        Supplier<Double> velocityVSAccelerationFunction
     ) {
         this.maxPossibleTranslationalVelocityMPS = maxPossibleTranslationalVelocityMPS;
         this.maxPossibleRotationalVelocityDPS = maxPossibleRotationalVelocityDPS;
         this.maxPossibleAverageSwerveModuleMPS = maxPossibleAverageSwerveModuleMPS;
-        this.accelerationVSVelocityFunction = accelerationVSVelocityFunction;
+        this.velocityVSAccelerationFunction = velocityVSAccelerationFunction;
     }
 
     /**
@@ -69,8 +69,8 @@ public class RobotProfile {
     /**
      * @return The current acceleration value based on the velocity-to-acceleration function.
      */
-    public double getAccelerationVSVelocityFunction() {
-        return this.accelerationVSVelocityFunction.get();
+    public double getVelocityVSAccelerationFunction() {
+        return this.velocityVSAccelerationFunction.get();
     }
 
 }

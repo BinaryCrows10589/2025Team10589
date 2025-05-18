@@ -10,7 +10,7 @@ public class CMRotation {
     private double angleDegrees;
     private RotationDirrection rotationDirrection;
     private double completeRotationPercent;
-
+    //TODO: Fix rotation as mirroing must happen in runtime not in compile time
     /**
      * Constructs a CMRotation with optional field mirroring applied.
      *

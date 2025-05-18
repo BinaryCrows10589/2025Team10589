@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import java.awt.geom.GeneralPath;
 import java.util.Optional;
 
 import org.littletonrobotics.junction.LogFileUtil;
@@ -25,6 +26,9 @@ import frc.robot.Constants.CameraConstants.VisionConstants;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
+import frc.robot.CrowMotion.CMAutonPoint;
+import frc.robot.CrowMotion.Library.CMPathGenerator;
+import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
 import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfilingUtil;
 import frc.robot.Utils.GeneralUtils.PercentError;
 import frc.robot.Utils.GeneralUtils.Tolerance;
@@ -202,13 +206,15 @@ public class Robot extends LoggedRobot {
         if (autonomousCommand != null) {
         autonomousCommand.cancel();
         }
+        CMPathGenerator.generateCMPath(4.4, new CMAutonPoint[] {new CMAutonPoint(1, 1), new CMAutonPoint(5, 8)}, null, null);
     }
 
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        //this.robotContainer.driveSubsystem().drive(4, 0 ,0);
-        //RobotProfilingUtil.ProfileMaxPossibleTranslationalVelocityMPSMaxPossibleAverageSwerveModuleMPS.profileMaxPossibleTranslationalVelocityMPS();
+        //this.robotContainer.driveSubsystem().drive(4.311, 0 ,0);
+        //RobotProfilingUtil.ProfileMaxPossibleRotationalVelocityDPS.profileMaxPossibleRotationalVelocityDPS();
+        //RobotProfilingUtil.ProfileMaxPossibleTranslationalVelocityMPSMaxPossibleAverageSwerveModuleMPS.profileMaxPossibleTranslationalVelocityMPSAndMaxPossibleAverageSwerveModuleMPS();
     }
 
     @Override

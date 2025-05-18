@@ -32,6 +32,10 @@ public class PathPoint {
         this(translationalPoint, desiredRotation, null);
     }
 
+    public void setEvent(CMEvent event) {
+        this.event = event;
+    }
+
     /**
      * Gets the translational point.
      *
@@ -42,7 +46,7 @@ public class PathPoint {
     }
 
     /**
-     * Gets the desired rotation.
+     * Gets the desired rotation. TODO: Normile this to 180 -180
      *
      * @return The desired rotation angle at this point
      */

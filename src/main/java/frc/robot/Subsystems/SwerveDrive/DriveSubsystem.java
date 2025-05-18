@@ -284,7 +284,7 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     private void driveCrowMotion(double[] velocity) {
-        this.drive(velocity[0], velocity[1], velocity[2]);
+        this.drive(velocity[0], velocity[1], Units.degreesToRadians(velocity[2]));
     }
 
     private double getAverageSwerveModuleVelocity() {
@@ -294,13 +294,13 @@ public class DriveSubsystem extends SubsystemBase{
             this.backRightSwerveModule.getModuleState().speedMetersPerSecond) / 4;
     }
     private void configureCrowMotion() {
-        CrowMotionConfig.init(new RobotProfile(4.231, 720, 4.231, ()-> 0.0),
+        CrowMotionConfig.init(new RobotProfile(4.311, 578, 4.311, ()-> 0.0),
          this::getRobotPositionCrowMotion,
          this::getRobotVelocitiesCrowMotion,
          this::getAverageSwerveModuleVelocity,
          this::driveCrowMotion,
          ()->false,
-        4.4, 4.4, 3.5);
+        4.311, 4.311, 3.5);
         /*utoBuilder.configureHolonomic(
             this::getRobotPose, // Robot pose supplier
             this::setRobotPose, // Method to reset odometry (will be called if your auto has a starting pose)

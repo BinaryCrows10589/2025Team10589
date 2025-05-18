@@ -1,5 +1,8 @@
 package frc.robot.Utils.SwerveDriveUtils;
 
+import org.littletonrobotics.junction.Logger;
+
+import edu.wpi.first.math.MathUtil;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
 
 /*
@@ -20,7 +23,7 @@ public class DesiredMetersPerSecondToVoltage {
     //public static final double voltageAtMaxSpeed = 12.12027;
 
     public static double metersPerSecondToVoltageRegression(double mps) {
-        return RobotModeConstants.kIsNotSim ? Math.abs(2.61031 * mps + minSpeedMPS - correctionFactor) : Math.abs(2.6874 * mps + minSpeedMPSSim - .223) ;
+        return RobotModeConstants.kIsNotSim ? Math.abs(2.61031 * mps + minSpeedMPS - correctionFactor) : Math.abs((2.6874) * mps + minSpeedMPSSim - .1) ;
     }
     public static double metersPerSecondToVoltage(double desiredMetersPerSecond) {
 
@@ -31,5 +34,13 @@ public class DesiredMetersPerSecondToVoltage {
             voltageAtMaxSpeed : // ..return voltage at maximum speed */
             metersPerSecondToVoltageRegression(Math.abs(desiredMetersPerSecond)) // Return the result of our regression line
         );
+    }
+ 
+    public static double metersPerSecondToVoltageFeedback(double desiredMetersPerSecond, double currentMetersPerSecond) {
+        double error = Math.abs(desiredMetersPerSecond / currentMetersPerSecond);
+        double correctionCoefficent = desiredMetersPerSecond - currentMetersPerSecond;
+        return (desiredMetersPerSecond == 0) ? 0 : Math.signum(desiredMetersPerSecond) * 
+            MathUtil.clamp(metersPerSecondToVoltageRegression(Math.abs(desiredMetersPerSecond)) *
+            (error + Math.signum(desiredMetersPerSecond) * correctionCoefficent), -13, 13);
     }
 }

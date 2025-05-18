@@ -7,14 +7,11 @@ b. Add events to the pathPoint that is using the Bezier curve point that is clos
 c. Assign each pathPoint a desired rotation value by assuming a linear rotation rate between the last rotation point and the next rotation point. For example if three points exists and the inital rotation is 0 the end is 90 and the direction is positive, set the first point as 0 degrees, the second point as 45 and the third point as 90. If it is the first rotation use the robots current rotation as the first rotation value.
 Step 4. Return an array of PathPoints[]
 
-
-RobotProfile should encapsulate the max thoaretical velocity of the swerve modules as well as a statistical modal for the modules acceleration vs velocity. ON GROUND
-Should also helper methods that run the profile for both and then create the velocity and acceleration
-
 CrowMotionTrajectory trajectory = new CrowMotionTrajectory(RobotProfile robotProfile, double maxDesiredTranslationalVelocity, double maxDeisredTranlationalAccleration, AutonPoints[] autonPoints, optional Rotations[] rotations, optional events)
 Use wheels speeds to desaturate velocities
 Public methods, runTrejectoryFrame, isFinished
 
+AutonPoint implimentation
 
 
 PathPoint
@@ -27,3 +24,8 @@ eventFunction should be a void function that takes zero arguments\
 Rotations.addRotation(angleDegrees, desiredRotatoinPercent, direction)
 direction is positive or negative, make sure to apply field mirroring to direction if needed
 CrowMotionConfig-global config for all trejectories takes in robotProfile, robot position supplier, swerve velocity suppliers, swerve module module states. Apply as defulat in constructor if no arguments passed in
+
+
+On Pause-
+RobotProfile should encapsulate the max thoaretical velocity of the swerve modules as well as a statistical modal for the modules acceleration vs velocity. ON GROUND
+Should also helper methods that run the profile for both and then create the velocity and acceleration
