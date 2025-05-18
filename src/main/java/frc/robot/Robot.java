@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-import java.awt.geom.GeneralPath;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
@@ -26,13 +26,7 @@ import frc.robot.Constants.CameraConstants.VisionConstants;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
-import frc.robot.CrowMotion.CMAutonPoint;
-import frc.robot.CrowMotion.CMEvent;
-import frc.robot.CrowMotion.CMRotation;
-import frc.robot.CrowMotion.CMRotation.RotationDirrection;
-import frc.robot.CrowMotion.Library.CMPathGenerator;
-import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
-import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfilingUtil;
+import frc.robot.CrowMotion.Library.CMPathPoint;
 import frc.robot.Utils.GeneralUtils.PercentError;
 import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesChangableValue;
@@ -50,7 +44,6 @@ public class Robot extends LoggedRobot {
     private RobotContainer robotContainer;
 
     private NetworkTablesChangableValue autonDebugMode = new NetworkTablesChangableValue("RobotMode/AutonDebugMode", RobotModeConstants.kAutonDebugMode);
-
         /**
          * This function is run when the robot is first started up and should be used for any
          * initialization code.
@@ -209,14 +202,13 @@ public class Robot extends LoggedRobot {
         if (autonomousCommand != null) {
         autonomousCommand.cancel();
         }
-        CMPathGenerator.generateCMPath(4.4, new CMAutonPoint[] {new CMAutonPoint(1, 1), new CMAutonPoint(3, 5), new CMAutonPoint(5, 3), new CMAutonPoint(6, 4)},
-        new CMRotation[] {new CMRotation(20, RotationDirrection.NEGITIVE, .5)
-        , new CMRotation(30, RotationDirrection.NEGITIVE, .9)}, new CMEvent[] {});
+        
     }
 
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+        
         //this.robotContainer.driveSubsystem().drive(4.311, 0 ,0);
         //RobotProfilingUtil.ProfileMaxPossibleRotationalVelocityDPS.profileMaxPossibleRotationalVelocityDPS();
         //RobotProfilingUtil.ProfileMaxPossibleTranslationalVelocityMPSMaxPossibleAverageSwerveModuleMPS.profileMaxPossibleTranslationalVelocityMPSAndMaxPossibleAverageSwerveModuleMPS();

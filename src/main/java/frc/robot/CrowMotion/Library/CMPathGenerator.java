@@ -1,5 +1,6 @@
 package frc.robot.CrowMotion.Library;
 
+import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.CrowMotion.CMAutonPoint;
 import frc.robot.CrowMotion.CMEvent;
 import frc.robot.CrowMotion.CMRotation;
@@ -9,12 +10,39 @@ import java.awt.geom.Point2D;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.CompletableFuture;
+
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj.Notifier;
 
 public class CMPathGenerator {
-    private static PathPoint[] createCMPath(double maxVelocity, CMAutonPoint[] controlPoints, CMRotation[] rotations, CMEvent[] events) {
+    public static CompletableFuture<CMPathPoint[]> generateCMPathAsync(double maxVelocity,
+        CMAutonPoint[] controlPoints, CMRotation[] rotations, CMEvent[] events) {
+        CompletableFuture<CMPathPoint[]> future = new CompletableFuture<>();
+        
+        Notifier[] holder = new Notifier[1]; // to close from outside the Notifier thread
+        RobotModeConstants.startPathGenTime = System.currentTimeMillis();
+        holder[0] = new Notifier(() -> {
+            try {
+                CMPathPoint[] result = createCMPath(maxVelocity, controlPoints, rotations, events);
+                future.complete(result);
+            } catch (Exception e) {
+
+            } finally {
+                // Close Notifier safely from a new thread to avoid closing from itself
+                new Thread(() -> {
+                    holder[0].close();
+                }).start();
+            }
+        });
+
+        holder[0].startSingle(0);
+        
+        return future;
+    }
+
+    private static CMPathPoint[] createCMPath(double maxVelocity, CMAutonPoint[] controlPoints, CMRotation[] rotations, CMEvent[] events) {
             Point2D.Double[] translationData;
             double assumedFrameTime = .015;
             if(maxVelocity < 4.4) {
@@ -53,11 +81,11 @@ public class CMPathGenerator {
             }
           
 
-            PathPoint[] path = new PathPoint[translationData.length];
+            CMPathPoint[] path = new CMPathPoint[translationData.length];
             double lastRotation = currentRotation;
             int currentRotationCheckPoint = 0;
             for(int i = 0; i < translationData.length; i++) {
-                path[i] = new PathPoint(translationData[i], lastRotation, null);
+                path[i] = new CMPathPoint(translationData[i], lastRotation, null);
                 if(Math.abs(lastRotation - detlaPerPoint[currentRotationCheckPoint][1]) < .0000001) {
                     if(detlaPerPoint.length-1 <= currentRotationCheckPoint) {
                         detlaPerPoint[0][0] = 0;
@@ -72,6 +100,7 @@ public class CMPathGenerator {
                 int triggerIndex = (int)(events[i].getEventTriggerPercent() * translationData.length);
                 path[triggerIndex].setEvent(events[i]);
             }
+            writePointsToCSV(path, "logs/log.csv");
         return path;
     }
 
@@ -142,10 +171,10 @@ public class CMPathGenerator {
     }
     
 
-    public static void writePointsToCSV(PathPoint[] points, String filename) {
+    public static void writePointsToCSV(CMPathPoint[] points, String filename) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
             writer.println("x,y");
-            for (PathPoint point : points) {
+            for (CMPathPoint point : points) {
                 writer.printf("%.4f,%.4f%n", point.getTranslationalPoint().getX(), point.getTranslationalPoint().getY());
             }
         } catch (IOException e) {

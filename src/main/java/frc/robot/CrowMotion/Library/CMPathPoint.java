@@ -3,7 +3,7 @@ package frc.robot.CrowMotion.Library;
 import java.awt.geom.Point2D;
 
 import frc.robot.CrowMotion.CMEvent; 
-public class PathPoint {
+public class CMPathPoint {
 
     private Point2D translationalPoint;
     private double desiredRotation;
@@ -16,7 +16,7 @@ public class PathPoint {
      * @param desiredRotation The desired rotation angle at this point
      * @param event The event to triggure at this point
      */
-    public PathPoint(Point2D translationalPoint, double desiredRotation, CMEvent event) {
+    public CMPathPoint(Point2D translationalPoint, double desiredRotation, CMEvent event) {
         this.translationalPoint = translationalPoint;
         this.desiredRotation = wrapAngle(desiredRotation);
         this.event = event;
@@ -32,7 +32,7 @@ remainder += 360`
      * @param translationalPoint The x and y coordnets of the path at this point
      * @param desiredRotation The desired rotation angle at this point
      */
-    public PathPoint(Point2D translationalPoint, double desiredRotation) {
+    public CMPathPoint(Point2D translationalPoint, double desiredRotation) {
         this(translationalPoint, desiredRotation, null);
     }
 

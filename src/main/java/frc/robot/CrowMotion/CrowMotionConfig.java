@@ -3,6 +3,7 @@ package frc.robot.CrowMotion;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
 
 /**
@@ -57,6 +58,8 @@ public class CrowMotionConfig {
         defualtMaxDesiredTranslationalVelocity = _defualtMaxDesiredTranslationalVelocity;
         defualtMaxDesiredRotationalVelocity = _defualtMaxDesiredRotationalVelocity;
         defualtEndTranslationalVelocityForStoppingTrajectories = _defualtEndTranslationalVelocityForStoppingTrajectories;
+        // Sets notifier thread priority for path generation
+        Notifier.setHALThreadPriority(true, 50);
     }
 
     /** @return Robot profile used for the physics simulations */

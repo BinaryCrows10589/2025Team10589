@@ -10,6 +10,7 @@ public class RobotModeConstants {
                  (isInSimulation ? Mode.SIM : Mode.REAL);
     public static boolean isBlueAlliance = true;
     public static boolean hasAllianceChanged = false;
+    public static double startPathGenTime = 0;
     /* Must be set to false before in code before full drive practice and before comp.
      This allows for autons to be proberly ran multiple times with without power cycling
      or redeploying code be reconstructing the robot container when the code is disabled.
