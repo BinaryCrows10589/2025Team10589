@@ -9,7 +9,6 @@ public class CMAutonPoint {
         this.x = x;
         this.y = y;
     }
-    //TODO: Add field mirroring 
     public double getX() {
         return this.x;
     }

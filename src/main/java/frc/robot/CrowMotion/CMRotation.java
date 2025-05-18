@@ -10,6 +10,7 @@ public class CMRotation {
     private double angleDegrees;
     private RotationDirrection rotationDirrection;
     private double completeRotationPercent;
+    private boolean shouldMirror = false;
     //TODO: Fix rotation as mirroing must happen in runtime not in compile time
     /**
      * Constructs a CMRotation with optional field mirroring applied.
@@ -20,14 +21,10 @@ public class CMRotation {
      * @param shouldMirror Wether the direction and angle should be mirrored (e.g., for alliance side switching)
      */
     public CMRotation(double angleDegrees, RotationDirrection rotationDirrection, double completeRotationPercent, boolean shouldMirror) {
-        if(shouldMirror) {
-            this.angleDegrees *= -1;
-            this.rotationDirrection = rotationDirrection == RotationDirrection.POSITIVE ? RotationDirrection.NEGITIVE : RotationDirrection.POSITIVE;
-        } else {
-            this.angleDegrees = angleDegrees;
-            this.rotationDirrection = rotationDirrection;
-        }
+        this.angleDegrees = (angleDegrees + 180) % 360 - 180;
+        this.rotationDirrection = rotationDirrection;
         this.completeRotationPercent = completeRotationPercent;
+        this.shouldMirror = shouldMirror;
     }
 
     /**
@@ -47,7 +44,7 @@ public class CMRotation {
      * @return the angle in degrees
      */
     public double angleDegrees() {
-        return this.angleDegrees;
+        return shouldMirror ? this.angleDegrees * -1 : this.angleDegrees;
     }
 
     /**
@@ -56,7 +53,8 @@ public class CMRotation {
      * @return the rotation direction as a RotationDirrection enum
      */
     public RotationDirrection getRotationDirrection() {
-        return this.rotationDirrection;
+        return shouldMirror ? (rotationDirrection == RotationDirrection.POSITIVE ? RotationDirrection.NEGITIVE : RotationDirrection.POSITIVE)
+        : rotationDirrection;
     }
 
     /**

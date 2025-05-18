@@ -27,6 +27,9 @@ import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.CrowMotion.CMAutonPoint;
+import frc.robot.CrowMotion.CMEvent;
+import frc.robot.CrowMotion.CMRotation;
+import frc.robot.CrowMotion.CMRotation.RotationDirrection;
 import frc.robot.CrowMotion.Library.CMPathGenerator;
 import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
 import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfilingUtil;
@@ -206,7 +209,9 @@ public class Robot extends LoggedRobot {
         if (autonomousCommand != null) {
         autonomousCommand.cancel();
         }
-        CMPathGenerator.generateCMPath(4.4, new CMAutonPoint[] {new CMAutonPoint(1, 1), new CMAutonPoint(5, 8)}, null, null);
+        CMPathGenerator.generateCMPath(4.4, new CMAutonPoint[] {new CMAutonPoint(1, 1), new CMAutonPoint(3, 5), new CMAutonPoint(5, 3), new CMAutonPoint(6, 4)},
+        new CMRotation[] {new CMRotation(20, RotationDirrection.NEGITIVE, .5)
+        , new CMRotation(30, RotationDirrection.NEGITIVE, .9)}, new CMEvent[] {});
     }
 
     /** This function is called periodically during operator control. */

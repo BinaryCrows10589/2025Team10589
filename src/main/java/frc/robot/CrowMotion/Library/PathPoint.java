@@ -18,11 +18,15 @@ public class PathPoint {
      */
     public PathPoint(Point2D translationalPoint, double desiredRotation, CMEvent event) {
         this.translationalPoint = translationalPoint;
-        this.desiredRotation = desiredRotation;
+        this.desiredRotation = wrapAngle(desiredRotation);
         this.event = event;
     }
 
-    /**
+    /**remainder = angle % 360
+`if remainder > 180:
+remainder -= 360
+elif remainder <= -180:
+remainder += 360`
      * Constructs an instance with the specified translational point, rotation, and event.
      *
      * @param translationalPoint The x and y coordnets of the path at this point
@@ -61,6 +65,11 @@ public class PathPoint {
      */
     public CMEvent getEvent() {
         return event;
+    }
+
+    public static double wrapAngle(double angle) {
+        angle = ((angle + 180) % 360 + 360) % 360;
+        return angle - 180;
     }
      
 }
