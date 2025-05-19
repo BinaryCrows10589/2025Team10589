@@ -29,3 +29,4 @@ CrowMotionConfig-global config for all trejectories takes in robotProfile, robot
 On Pause-
 RobotProfile should encapsulate the max thoaretical velocity of the swerve modules as well as a statistical modal for the modules acceleration vs velocity. ON GROUND
 Should also helper methods that run the profile for both and then create the velocity and acceleration
+

@@ -11,6 +11,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GenericConstants.ControlConstants;
+import frc.robot.Constants.GenericConstants.FieldConstants;
+import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.CrowMotion.CrowMotionConfig;
 import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
@@ -299,7 +301,10 @@ public class DriveSubsystem extends SubsystemBase{
          this::getRobotVelocitiesCrowMotion,
          this::getAverageSwerveModuleVelocity,
          this::driveCrowMotion,
+         RobotModeConstants.isBlueAlliance,
          ()->false,
+         FieldConstants.kFieldWidthMeters,
+         FieldConstants.kFieldLengthMeters,
         4.311, 4.311, 3.5);
         /*utoBuilder.configureHolonomic(
             this::getRobotPose, // Robot pose supplier

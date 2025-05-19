@@ -20,10 +20,14 @@ public class CrowMotionConfig {
     private static Supplier<Double> getAverageSwerveModuleVelocityMPS;
     private static Consumer<double[]> setRobotVelocityMPSANDDPS;
 
+    private static boolean isBlueAlliance;
     private static Supplier<Boolean> defualtShouldMirror;
+    private static double fieldWidthMeters;
+    private static double fieldLengthMeters;
     private static double defualtMaxDesiredTranslationalVelocity;
     private static double defualtMaxDesiredRotationalVelocity;
     private static double defualtEndTranslationalVelocityForStoppingTrajectories;
+    
 
     /**
      * Initializes the global CrowMotion configuration.
@@ -33,7 +37,10 @@ public class CrowMotionConfig {
      * @param _getRobotVelocityMPSAndDPS Supplier for [x, y, rot] velocity
      * @param _getAverageSwerveModuleVelocityMPS Supplier for average swerve module veclocity
      * @param _setRobotVelocityMPSANDDPS Consumer for setting [x, y, rot] velocity
+     * @param _isBlueAlliance If the current allience is blue
      * @param _defaultShouldMirror Supplier to determine if path should be mirrored
+     * @param _fieldWidthMeters The field width in meters
+     * @param _fieldLengthMeters The field length in meters
      * @param _defualtMaxDesiredTranslationalVelocity Maximum translational velocity to target
      * @param _defualtMaxDesiredRotationalVelocity Maximum rotational velocity to target
      * @param _defualtEndTranslationalVelocityForStoppingTrajectories Desired end velocity for stop paths
@@ -44,7 +51,10 @@ public class CrowMotionConfig {
         Supplier<double[]> _getRobotVelocityMPSAndDPS,
         Supplier<Double> _getAverageSwerveModuleVelocityMPS,
         Consumer<double[]> _setRobotVelocityMPSANDDPS,
+        boolean _isBlueAlliance,
         Supplier<Boolean> _defaultShouldMirror,
+        double _fieldWidthMeters,
+        double _fieldLengthMeters,
         double _defualtMaxDesiredTranslationalVelocity,
         double _defualtMaxDesiredRotationalVelocity,
         double _defualtEndTranslationalVelocityForStoppingTrajectories
@@ -54,7 +64,10 @@ public class CrowMotionConfig {
         getRobotVelocityMPSandDPS = _getRobotVelocityMPSAndDPS;
         getAverageSwerveModuleVelocityMPS = _getAverageSwerveModuleVelocityMPS;
         setRobotVelocityMPSANDDPS = _setRobotVelocityMPSANDDPS;
+        isBlueAlliance = _isBlueAlliance;
         defualtShouldMirror = _defaultShouldMirror;
+        fieldWidthMeters = _fieldWidthMeters;
+        fieldLengthMeters = _fieldLengthMeters;
         defualtMaxDesiredTranslationalVelocity = _defualtMaxDesiredTranslationalVelocity;
         defualtMaxDesiredRotationalVelocity = _defualtMaxDesiredRotationalVelocity;
         defualtEndTranslationalVelocityForStoppingTrajectories = _defualtEndTranslationalVelocityForStoppingTrajectories;
@@ -90,9 +103,24 @@ public class CrowMotionConfig {
         setRobotVelocityMPSANDDPS.accept(new double[] {xVelocityMPS, yVelocityMPS, rotationalVelocityDPS});
     }
 
+    /** @return If the current allience is the blue alliance */
+    public static boolean isBlueAlliance() {
+        return isBlueAlliance;
+    }
+
     /** @return Whether the path should be mirrored. */
     public static boolean getShouldMirror() {
         return defualtShouldMirror.get();
+    }
+
+    /** @return The field width in meters */
+    public static double getFieldWidth() {
+        return fieldWidthMeters;
+    }
+
+    /** @return The field length in meters */
+    public static double getFieldLength() {
+        return fieldLengthMeters;
     }
 
     /** @return Maximum translational velocity to target. */

@@ -5,6 +5,7 @@
 package frc.robot;
 
 import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -31,6 +32,7 @@ import frc.robot.CrowMotion.CMAutonPoint;
 import frc.robot.CrowMotion.CMEvent;
 import frc.robot.CrowMotion.CMRotation;
 import frc.robot.CrowMotion.CMRotation.RotationDirrection;
+import frc.robot.CrowMotion.Library.CMPathGenResult;
 import frc.robot.CrowMotion.Library.CMPathGenerator;
 import frc.robot.CrowMotion.Library.CMPathPoint;
 import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
@@ -52,8 +54,10 @@ public class Robot extends LoggedRobot {
     private RobotContainer robotContainer;
 
     private NetworkTablesChangableValue autonDebugMode = new NetworkTablesChangableValue("RobotMode/AutonDebugMode", RobotModeConstants.kAutonDebugMode);
-    private CompletableFuture<CMPathPoint[]> CMPath;
-    private boolean isDone = false;
+    private ArrayList<CompletableFuture<CMPathGenResult>> CMPaths = new ArrayList<CompletableFuture<CMPathGenResult>>();
+    private boolean isDone1 = false;
+    private boolean isDone2 = false;
+    private boolean isDone3 = false;
         /**
          * This function is run when the robot is first started up and should be used for any
          * initialization code.
@@ -212,22 +216,99 @@ public class Robot extends LoggedRobot {
         if (autonomousCommand != null) {
         autonomousCommand.cancel();
         }
-        this.CMPath = CMPathGenerator.generateCMPathAsync(4.4, new CMAutonPoint[] {new CMAutonPoint(1, 1), new CMAutonPoint(13, 5), new CMAutonPoint(5, 3), new CMAutonPoint(6, 4)},
-        new CMRotation[] {new CMRotation(20, RotationDirrection.NEGITIVE, 1)}, new CMEvent[] {
-            new CMEvent("TestEvent0", ()->{Logger.recordOutput("CrowMotion/EventCalled0", true);},
-            0),
-            new CMEvent("TestEvent1", ()->{Logger.recordOutput("CrowMotion/EventCalled1", true);},
-            1)});
+        
+        this.CMPaths.add(
+        CMPathGenerator.generateCMPathAsync(
+                "TestBezier",
+                4.4,
+                new CMAutonPoint[] {
+                    new CMAutonPoint(1, 1),
+                    new CMAutonPoint(5, 2),
+                    new CMAutonPoint(7, 3.5),
+                    new CMAutonPoint(6.5, 4.5),
+                    new CMAutonPoint(6, 4)
+                },
+                new CMRotation[] {
+                    new CMRotation(20, RotationDirrection.NEGITIVE, 1)
+                },
+                new CMEvent[] {
+                    new CMEvent("TestEvent0", () -> {
+                        Logger.recordOutput("CrowMotion/EventCalled0", true);
+                    }, 0),
+                    new CMEvent("TestEvent1", () -> {
+                        Logger.recordOutput("CrowMotion/EventCalled1", true);
+                    }, 1)
+                }
+            )
+        );
+            
+        this.CMPaths.add(
+        CMPathGenerator.generateCMPathAsync(
+                "TestLinearFromBot",
+                4.4,
+                new CMAutonPoint[] {
+                    new CMAutonPoint(5, 2),
+                },
+                new CMRotation[] {
+                    new CMRotation(20, RotationDirrection.NEGITIVE, 1)
+                },
+                new CMEvent[] {
+                    new CMEvent("TestEvent0", () -> {
+                        Logger.recordOutput("CrowMotion/EventCalled0", true);
+                    }, 0),
+                    new CMEvent("TestEvent1", () -> {
+                        Logger.recordOutput("CrowMotion/EventCalled1", true);
+                    }, 1)
+                }
+            )
+        );
+         
+        this.CMPaths.add(
+        CMPathGenerator.generateCMPathAsync(
+                "TestLinear",
+                4.4,
+                new CMAutonPoint[] {
+                    new CMAutonPoint(2, 2),
+                    new CMAutonPoint(10, 5),
+                },
+                new CMRotation[] {
+                    new CMRotation(20, RotationDirrection.NEGITIVE, 1)
+                },
+                new CMEvent[] {
+                    new CMEvent("TestEvent0", () -> {
+                        Logger.recordOutput("CrowMotion/EventCalled0", true);
+                    }, 0),
+                    new CMEvent("TestEvent1", () -> {
+                        Logger.recordOutput("CrowMotion/EventCalled1", true);
+                    }, 1)
+                }
+            )
+        );
+        
     }
 
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        Logger.recordOutput("CrowMotion/Async", CMPath.isDone());
-        if(CMPath.isDone() && isDone) {
-            isDone = true;
-            Logger.recordOutput("CrowMotion/PathGenTime", (System.currentTimeMillis() - RobotModeConstants.startPathGenTime)/1000);
+        if(this.CMPaths.get(0).isDone() && !isDone1) {
+            this.isDone1 = true;
+            Logger.recordOutput("CrowMotion/PathGenTimeBezier", (System.currentTimeMillis() - RobotModeConstants.startPathGenTime)/1000);
+            Logger.recordOutput("CrowMotion/TestBezier", this.CMPaths.get(0).getNow(new CMPathGenResult(null, null)).loggingPoints);
         }
+
+        if(this.CMPaths.get(1).isDone() && !isDone2) {
+            this.isDone2 = true;
+            Logger.recordOutput("CrowMotion/PathGenTimeLinearFromBot", (System.currentTimeMillis() - RobotModeConstants.startPathGenTime)/1000);
+            Logger.recordOutput("CrowMotion/TestLinearFromBot", this.CMPaths.get(1).getNow(new CMPathGenResult(null, null)).loggingPoints);
+        }
+
+
+        if(this.CMPaths.get(2).isDone() && !isDone3) {
+            this.isDone3 = true;
+            Logger.recordOutput("CrowMotion/PathGenTimeLinear", (System.currentTimeMillis() - RobotModeConstants.startPathGenTime)/1000);
+            Logger.recordOutput("CrowMotion/TestLinear", this.CMPaths.get(2).getNow(new CMPathGenResult(null, null)).loggingPoints);
+        }
+        
         //this.robotContainer.driveSubsystem().drive(4.311, 0 ,0);
         //RobotProfilingUtil.ProfileMaxPossibleRotationalVelocityDPS.profileMaxPossibleRotationalVelocityDPS();
         //RobotProfilingUtil.ProfileMaxPossibleTranslationalVelocityMPSMaxPossibleAverageSwerveModuleMPS.profileMaxPossibleTranslationalVelocityMPSAndMaxPossibleAverageSwerveModuleMPS();

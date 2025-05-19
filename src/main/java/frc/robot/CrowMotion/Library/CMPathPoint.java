@@ -33,11 +33,7 @@ public class CMPathPoint {
         return translations;
     }
 
-    /**remainder = angle % 360
-`if remainder > 180:
-remainder -= 360
-elif remainder <= -180:
-remainder += 360`
+    /**
      * Constructs an instance with the specified translational point, rotation, and event.
      *
      * @param translationalPoint The x and y coordnets of the path at this point
@@ -61,7 +57,7 @@ remainder += 360`
     }
 
     /**
-     * Gets the desired rotation. TODO: Normile this to 180 -180
+     * Gets the desired rotation. 
      *
      * @return The desired rotation angle at this point
      */
