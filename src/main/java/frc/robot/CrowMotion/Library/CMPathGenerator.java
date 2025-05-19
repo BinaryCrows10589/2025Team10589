@@ -1,11 +1,5 @@
 package frc.robot.CrowMotion.Library;
 
-import frc.robot.Constants.GenericConstants.RobotModeConstants;
-import frc.robot.CrowMotion.CMAutonPoint;
-import frc.robot.CrowMotion.CMEvent;
-import frc.robot.CrowMotion.CMRotation;
-import frc.robot.CrowMotion.CrowMotionConfig;
-import frc.robot.CrowMotion.CMRotation.RotationDirrection;
 import java.awt.geom.Point2D;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,6 +9,12 @@ import java.util.concurrent.CompletableFuture;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj.Notifier;
+import frc.robot.Constants.GenericConstants.RobotModeConstants;
+import frc.robot.CrowMotion.CMAutonPoint;
+import frc.robot.CrowMotion.CMEvent;
+import frc.robot.CrowMotion.CMRotation;
+import frc.robot.CrowMotion.CMRotation.RotationDirrection;
+import frc.robot.CrowMotion.CrowMotionConfig;
 
 public class CMPathGenerator {
     public static CompletableFuture<CMPathPoint[]> generateCMPathAsync(double maxVelocity,
@@ -28,7 +28,6 @@ public class CMPathGenerator {
                 CMPathPoint[] result = createCMPath(maxVelocity, controlPoints, rotations, events);
                 future.complete(result);
             } catch (Exception e) {
-
             } finally {
                 // Close Notifier safely from a new thread to avoid closing from itself
                 new Thread(() -> {
@@ -95,12 +94,15 @@ public class CMPathGenerator {
                 }
                 lastRotation += detlaPerPoint[currentRotationCheckPoint][0];
             }
-            
+             
             for(int i = 0; i < events.length; i++) {
-                int triggerIndex = (int)(events[i].getEventTriggerPercent() * translationData.length);
+                int triggerIndex = (int)(events[i].getEventTriggerPercent() * (translationData.length-1));
                 path[triggerIndex].setEvent(events[i]);
             }
+            /*
+            Logger.recordOutput("CrowMotion/PathName", CMPathPoint.point2dToTranslation2D(path));
             writePointsToCSV(path, "logs/log.csv");
+            */
         return path;
     }
 
@@ -163,19 +165,17 @@ public class CMPathGenerator {
                 }
                 len--;
             }
-    
             curvePoints[pointIdx] = new Point2D.Double(tempX[0], tempY[0]);
         }
     
         return curvePoints;
-    }
-    
+    }    
 
     public static void writePointsToCSV(CMPathPoint[] points, String filename) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
-            writer.println("x,y");
+            writer.println("x,y,rot");
             for (CMPathPoint point : points) {
-                writer.printf("%.4f,%.4f%n", point.getTranslationalPoint().getX(), point.getTranslationalPoint().getY());
+                writer.printf("%.4f,%.4f,%.4f\n", point.getTranslationalPoint().getX(), point.getTranslationalPoint().getY(), point.getDesiredRotation());
             }
         } catch (IOException e) {
             e.printStackTrace();

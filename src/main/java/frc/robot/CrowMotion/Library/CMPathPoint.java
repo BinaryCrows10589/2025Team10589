@@ -1,11 +1,13 @@
 package frc.robot.CrowMotion.Library;
 
+import java.awt.Point;
 import java.awt.geom.Point2D;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.CrowMotion.CMEvent; 
 public class CMPathPoint {
 
-    private Point2D translationalPoint;
+    private Point2D.Double translationalPoint;
     private double desiredRotation;
     private CMEvent event;
 
@@ -16,10 +18,19 @@ public class CMPathPoint {
      * @param desiredRotation The desired rotation angle at this point
      * @param event The event to triggure at this point
      */
-    public CMPathPoint(Point2D translationalPoint, double desiredRotation, CMEvent event) {
+    public CMPathPoint(Point2D.Double translationalPoint, double desiredRotation, CMEvent event) {
         this.translationalPoint = translationalPoint;
         this.desiredRotation = wrapAngle(desiredRotation);
         this.event = event;
+    }
+
+    public static Translation2d[] point2dToTranslation2D(CMPathPoint[] points) {
+        Translation2d[] translations = new Translation2d[points.length];
+        for(int i = 0; i < points.length; i++) {
+            Point2D.Double point = points[i].getTranslationalPoint();
+            translations[i] = new Translation2d(point.x, point.y);
+        }
+        return translations;
     }
 
     /**remainder = angle % 360
@@ -32,7 +43,7 @@ remainder += 360`
      * @param translationalPoint The x and y coordnets of the path at this point
      * @param desiredRotation The desired rotation angle at this point
      */
-    public CMPathPoint(Point2D translationalPoint, double desiredRotation) {
+    public CMPathPoint(Point2D.Double translationalPoint, double desiredRotation) {
         this(translationalPoint, desiredRotation, null);
     }
 
@@ -45,7 +56,7 @@ remainder += 360`
      *
      * @return The x and y coordnets of the path at this point
      */
-    public Point2D getTranslationalPoint() {
+    public Point2D.Double getTranslationalPoint() {
         return translationalPoint;
     }
 

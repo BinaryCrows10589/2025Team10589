@@ -7,10 +7,10 @@ b. Add events to the pathPoint that is using the Bezier curve point that is clos
 c. Assign each pathPoint a desired rotation value by assuming a linear rotation rate between the last rotation point and the next rotation point. For example if three points exists and the inital rotation is 0 the end is 90 and the direction is positive, set the first point as 0 degrees, the second point as 45 and the third point as 90. If it is the first rotation use the robots current rotation as the first rotation value.
 Step 4. Return an array of PathPoints[]
 
+
 CrowMotionTrajectory trajectory = new CrowMotionTrajectory(RobotProfile robotProfile, double maxDesiredTranslationalVelocity, double maxDeisredTranlationalAccleration, AutonPoints[] autonPoints, optional Rotations[] rotations, optional events)
 Use wheels speeds to desaturate velocities
 Public methods, runTrejectoryFrame, isFinished
-
 AutonPoint implimentation
 
 
