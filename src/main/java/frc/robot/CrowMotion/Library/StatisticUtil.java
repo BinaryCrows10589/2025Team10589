@@ -52,9 +52,7 @@ public class StatisticUtil {
                 if (point.length != 2) continue;
                 writer.write(point[0] + "," + point[1] + "\n");
             }
-            System.out.println("Data saved to " + "logs/log.csv");
         } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
         }
         return String.format("%.4fx+%.4f", m, b);
     }

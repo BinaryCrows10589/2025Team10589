@@ -1,3 +1,15 @@
+
+
+
+CrowMotionTrajectory trajectory = new CrowMotionTrajectory(RobotProfile robotProfile, double maxDesiredTranslationalVelocity, double maxDeisredTranlationalAccleration, AutonPoints[] autonPoints, optional Rotations[] rotations, optional events)
+Use wheels speeds to desaturate velocities
+Public methods, runTrejectoryFrame, isFinished
+
+PathPoint
+1. Includes translational data
+2. Includes events
+3. Desired rotations
+
 CrowMotionPath path = new CrowMotionPath(double maxVelocity, Event[] events, AutonPoint[] controlPoints, Rotations[] rotations)
 Step 1: Solve for density using maxVelocity and an assumed frame time of .15s. Use 2x the calculated theoretical calculated density for safety.
 Step 2: Check the number of control points, if it is more than 2 solve for cubic Bezier curve at desired density otherwise solve for linear Bezier curve at desired density.
@@ -7,23 +19,12 @@ b. Add events to the pathPoint that is using the Bezier curve point that is clos
 c. Assign each pathPoint a desired rotation value by assuming a linear rotation rate between the last rotation point and the next rotation point. For example if three points exists and the inital rotation is 0 the end is 90 and the direction is positive, set the first point as 0 degrees, the second point as 45 and the third point as 90. If it is the first rotation use the robots current rotation as the first rotation value.
 Step 4. Return an array of PathPoints[]
 
-
-CrowMotionTrajectory trajectory = new CrowMotionTrajectory(RobotProfile robotProfile, double maxDesiredTranslationalVelocity, double maxDeisredTranlationalAccleration, AutonPoints[] autonPoints, optional Rotations[] rotations, optional events)
-Use wheels speeds to desaturate velocities
-Public methods, runTrejectoryFrame, isFinished
-AutonPoint implimentation
-
-
-PathPoint
-1. Includes translational data
-2. Includes events
-3. Desired rotations
-
 Events.addEvent("EventName", eventFunction, eventTriggurePercent)
 eventFunction should be a void function that takes zero arguments\
 Rotations.addRotation(angleDegrees, desiredRotatoinPercent, direction)
 direction is positive or negative, make sure to apply field mirroring to direction if needed
 CrowMotionConfig-global config for all trejectories takes in robotProfile, robot position supplier, swerve velocity suppliers, swerve module module states. Apply as defulat in constructor if no arguments passed in
+AutonPoint implimentation
 
 
 On Pause-

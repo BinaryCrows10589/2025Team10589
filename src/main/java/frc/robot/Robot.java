@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -34,9 +33,6 @@ import frc.robot.CrowMotion.CMRotation;
 import frc.robot.CrowMotion.CMRotation.RotationDirrection;
 import frc.robot.CrowMotion.Library.CMPathGenResult;
 import frc.robot.CrowMotion.Library.CMPathGenerator;
-import frc.robot.CrowMotion.Library.CMPathPoint;
-import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
-import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfilingUtil;
 import frc.robot.Utils.GeneralUtils.PercentError;
 import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesChangableValue;
@@ -46,7 +42,7 @@ import frc.robot.Utils.LEDUtils.LEDManager;
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
  * the package after creating this project, you must also update the build.gradle file in the
- * project. Test
+ * project.
  */
 public class Robot extends LoggedRobot {
     private Command autonomousCommand;
@@ -228,6 +224,7 @@ public class Robot extends LoggedRobot {
                     new CMAutonPoint(6.5, 4.5),
                     new CMAutonPoint(6, 4)
                 },
+                this.robotContainer.getRobotPosition().getRotation().getDegrees(),
                 new CMRotation[] {
                     new CMRotation(20, RotationDirrection.NEGITIVE, 1)
                 },
@@ -249,6 +246,7 @@ public class Robot extends LoggedRobot {
                 new CMAutonPoint[] {
                     new CMAutonPoint(5, 2),
                 },
+                this.robotContainer.getRobotPosition().getRotation().getDegrees(),
                 new CMRotation[] {
                     new CMRotation(20, RotationDirrection.NEGITIVE, 1)
                 },
@@ -271,6 +269,7 @@ public class Robot extends LoggedRobot {
                     new CMAutonPoint(2, 2),
                     new CMAutonPoint(10, 5),
                 },
+                this.robotContainer.getRobotPosition().getRotation().getDegrees(),
                 new CMRotation[] {
                     new CMRotation(20, RotationDirrection.NEGITIVE, 1)
                 },

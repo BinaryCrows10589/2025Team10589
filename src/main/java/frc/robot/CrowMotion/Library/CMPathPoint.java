@@ -1,6 +1,5 @@
 package frc.robot.CrowMotion.Library;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 
 import edu.wpi.first.math.geometry.Translation2d;

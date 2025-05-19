@@ -20,14 +20,14 @@ import frc.robot.CrowMotion.CrowMotionConfig;
 
 public class CMPathGenerator {
     public static CompletableFuture<CMPathGenResult> generateCMPathAsync(String pathTime, double maxVelocity,
-        CMAutonPoint[] controlPoints, CMRotation[] rotations, CMEvent[] events) {
+        CMAutonPoint[] controlPoints, double initialRotation, CMRotation[] rotations, CMEvent[] events) {
         CompletableFuture<CMPathGenResult> future = new CompletableFuture<>();
         
         Notifier[] holder = new Notifier[1]; // to close from outside the Notifier thread
         RobotModeConstants.startPathGenTime = System.currentTimeMillis();
         holder[0] = new Notifier(() -> {
             try {
-                CMPathGenResult result = createCMPath(pathTime, maxVelocity, controlPoints, rotations, events);
+                CMPathGenResult result = createCMPath(pathTime, maxVelocity, controlPoints, initialRotation, rotations, events);
                 future.complete(result);
             } catch (Exception e) {
                 future.completeExceptionally(e);
@@ -44,7 +44,7 @@ public class CMPathGenerator {
         return future;
     }
 
-    private static CMPathGenResult createCMPath(String pathName, double maxVelocity, CMAutonPoint[] controlPoints, CMRotation[] rotations, CMEvent[] events) {
+    private static CMPathGenResult createCMPath(String pathName, double maxVelocity, CMAutonPoint[] controlPoints, double initialRotation, CMRotation[] rotations, CMEvent[] events) {
             Point2D.Double[] translationData;
             double assumedFrameTime = .015;
             if(maxVelocity < 4.4) {
@@ -62,7 +62,7 @@ public class CMPathGenerator {
                 translationData = generateBezierPointArray(controlPoints, pointsPerMeter); 
             }
 
-            double currentRotation = robotPosition[2];
+            double currentRotation = initialRotation;
             int usedPoints = 0;
             double[][] detlaPerPoint = new double[rotations.length][2];
             for(int i = 0; i < rotations.length; i++) {
