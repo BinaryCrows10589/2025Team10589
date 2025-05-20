@@ -12,14 +12,14 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
-import frc.robot.CrowMotion.CMAutonPoint;
-import frc.robot.CrowMotion.CMEvent;
-import frc.robot.CrowMotion.CMRotation;
-import frc.robot.CrowMotion.CMRotation.RotationDirrection;
-import frc.robot.CrowMotion.CrowMotionConfig;
+import frc.robot.CrowMotion.UserSide.CMAutonPoint;
+import frc.robot.CrowMotion.UserSide.CMConfig;
+import frc.robot.CrowMotion.UserSide.CMEvent;
+import frc.robot.CrowMotion.UserSide.CMRotation;
+import frc.robot.CrowMotion.UserSide.CMRotation.RotationDirrection;
 
 public class CMPathGenerator {
-    public static CompletableFuture<CMPathGenResult> generateCMPathAsync(String pathTime, double maxVelocity,
+    public static CompletableFuture<CMPathGenResult> generateCMPathAsync(String pathTime,
         CMAutonPoint[] controlPoints, double initialRotation, CMRotation[] rotations, CMEvent[] events) {
         CompletableFuture<CMPathGenResult> future = new CompletableFuture<>();
         
@@ -27,7 +27,7 @@ public class CMPathGenerator {
         RobotModeConstants.startPathGenTime = System.currentTimeMillis();
         holder[0] = new Notifier(() -> {
             try {
-                CMPathGenResult result = createCMPath(pathTime, maxVelocity, controlPoints, initialRotation, rotations, events);
+                CMPathGenResult result = createCMPath(pathTime, controlPoints, initialRotation, rotations, events);
                 future.complete(result);
             } catch (Exception e) {
                 future.completeExceptionally(e);
@@ -44,14 +44,17 @@ public class CMPathGenerator {
         return future;
     }
 
-    private static CMPathGenResult createCMPath(String pathName, double maxVelocity, CMAutonPoint[] controlPoints, double initialRotation, CMRotation[] rotations, CMEvent[] events) {
+    private static CMPathGenResult createCMPath(String pathName, CMAutonPoint[] controlPoints,
+        double initialRotation, CMRotation[] rotations, CMEvent[] events) {
             Point2D.Double[] translationData;
             double assumedFrameTime = .015;
+            double maxVelocity = CMConfig.getRobotProfile().getMaxPossibleTranslationalVelocityMPS();
             if(maxVelocity < 4.4) {
                 maxVelocity = 4.4;
             }
+
             double pointsPerMeter = (1 / (maxVelocity * assumedFrameTime)) * 2;
-            double[] robotPosition = CrowMotionConfig.getRobotPositionMetersAndDegrees();
+            double[] robotPosition = CMConfig.getRobotPositionMetersAndDegrees();
 
             if(controlPoints.length == 1) {
                 controlPoints = new CMAutonPoint[] {new CMAutonPoint(robotPosition[0], robotPosition[1]), controlPoints[0]};
@@ -68,18 +71,18 @@ public class CMPathGenerator {
             for(int i = 0; i < rotations.length; i++) {
                 int pointsForRotation = (int)(rotations[i].getCompleteRotationPercent() * translationData.length) - usedPoints;
                 usedPoints += pointsForRotation;
-                double startPoint =  i == 0 ? currentRotation : rotations[i-1].angleDegrees();
+                double startPoint =  i == 0 ? currentRotation : rotations[i-1].getAngleDegrees();
                 double deltaForRotation = 0;
                 if(rotations[i].getRotationDirrection() == RotationDirrection.POSITIVE) {
-                    deltaForRotation = (360 - (startPoint - rotations[i].angleDegrees())) % 360;
+                    deltaForRotation = (360 - (startPoint - rotations[i].getAngleDegrees())) % 360;
                 } else {
-                    deltaForRotation = -(360 + (startPoint - rotations[i].angleDegrees())) % 360;
+                    deltaForRotation = -(360 + (startPoint - rotations[i].getAngleDegrees())) % 360;
                 }
                 if(i == 0) {
                     pointsForRotation -= 1;
                 }
                 detlaPerPoint[i][0] = deltaForRotation / (double)(pointsForRotation);
-                detlaPerPoint[i][1] = rotations[i].angleDegrees();
+                detlaPerPoint[i][1] = rotations[i].getAngleDegrees();
             }
           
 

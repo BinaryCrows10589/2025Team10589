@@ -13,9 +13,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
+import frc.robot.Constants.MechanismConstants.DrivetrainConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
-import frc.robot.CrowMotion.CrowMotionConfig;
-import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
+import frc.robot.CrowMotion.UserSide.CMConfig;
+import frc.robot.CrowMotion.UserSide.RobotProfilingUtils.CMRobotProfile;
 import frc.robot.Subsystems.PoseEstimation.PoseEstimatorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIO;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOInputsAutoLogged;
@@ -296,11 +297,13 @@ public class DriveSubsystem extends SubsystemBase{
             this.backRightSwerveModule.getModuleState().speedMetersPerSecond) / 4;
     }
     private void configureCrowMotion() {
-        CrowMotionConfig.init(new RobotProfile(4.311, 578, 4.311, ()-> 0.0),
+        CMConfig.init(new CMRobotProfile(4.311, 578, 4.311, ()-> 0.0),
          this::getRobotPositionCrowMotion,
          this::getRobotVelocitiesCrowMotion,
          this::getAverageSwerveModuleVelocity,
          this::driveCrowMotion,
+         SwerveDriveConstants.kDistanceBetweenCentersOfRightAndLeftWheels,
+         SwerveDriveConstants.kDistanceBetweenCentersOfFrontAndBackWheels,
          RobotModeConstants.isBlueAlliance,
          ()->false,
          FieldConstants.kFieldWidthMeters,

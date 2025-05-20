@@ -3,7 +3,7 @@ package frc.robot.CrowMotion.Library;
 import java.awt.geom.Point2D;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import frc.robot.CrowMotion.CMEvent; 
+import frc.robot.CrowMotion.UserSide.CMEvent; 
 public class CMPathPoint {
 
     private Point2D.Double translationalPoint;

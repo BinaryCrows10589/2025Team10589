@@ -1,4 +1,4 @@
-package frc.robot.CrowMotion.RobotProfilingUtils;
+package frc.robot.CrowMotion.UserSide.RobotProfilingUtils;
 
 import java.util.ArrayList;
 
@@ -6,11 +6,11 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.units.measure.Velocity;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.CrowMotion.CrowMotionConfig;
 import frc.robot.CrowMotion.Library.StatisticUtil;
+import frc.robot.CrowMotion.UserSide.CMConfig;
 import frc.robot.Utils.SwerveDriveUtils.DesiredMetersPerSecondToVoltage;
 
-public class RobotProfilingUtil {
+public class CMRobotProfilingUtil {
     
     
     public class ProfileMaxPossibleTranslationalVelocityMPSMaxPossibleAverageSwerveModuleMPS {
@@ -47,8 +47,8 @@ public class RobotProfilingUtil {
             if(lastStartTime == 0) {
                 lastStartTime = System.currentTimeMillis();
             }
-            double currentVelocity = Math.sqrt(Math.pow(CrowMotionConfig.getRobotVelocityMPSandDPS()[0], 2) + 
-                Math.pow(CrowMotionConfig.getRobotVelocityMPSandDPS()[1], 2));
+            double currentVelocity = Math.sqrt(Math.pow(CMConfig.getRobotVelocityMPSandDPS()[0], 2) + 
+                Math.pow(CMConfig.getRobotVelocityMPSandDPS()[1], 2));
             frameTime = (System.currentTimeMillis() - lastStartTime) / 1000.0;
             lastStartTime = System.currentTimeMillis();
             if(limitedAcceleration == -1 && !finished) {
@@ -66,7 +66,7 @@ public class RobotProfilingUtil {
                     }
                 }
             }
-            CrowMotionConfig.setRobotVelocityMPSandDPS(desiredVelocity, 0, 0);
+            CMConfig.setRobotVelocityMPSandDPS(desiredVelocity, 0, 0);
             
             boolean inTolorence = Math.abs(currentVelocity - lastVelocity) < .005;
             lastVelocity = currentVelocity;
@@ -79,7 +79,7 @@ public class RobotProfilingUtil {
 
             if(framesAtCurrentVelocity >= 13 && !finished) {
                 SmartDashboard.putNumber("CrowMotion/RobotProfile/MaxPossibleTranslationalVelocityMPS", currentVelocity);
-                SmartDashboard.putNumber("CrowMotion/RobotProfile/MaxPossibleAverageSwerveModuleMPS", Math.abs(CrowMotionConfig.getAverageSwerveModuleVelocityMPS()));
+                SmartDashboard.putNumber("CrowMotion/RobotProfile/MaxPossibleAverageSwerveModuleMPS", Math.abs(CMConfig.getAverageSwerveModuleVelocityMPS()));
                 finished = true;
             }
         }
@@ -124,7 +124,7 @@ public class RobotProfilingUtil {
             if(lastStartTime == 0) {
                 lastStartTime = System.currentTimeMillis();
             }
-            double currentVelocity = CrowMotionConfig.getRobotVelocityMPSandDPS()[2];
+            double currentVelocity = CMConfig.getRobotVelocityMPSandDPS()[2];
             frameTime = (System.currentTimeMillis() - lastStartTime) / 1000.0;
             lastStartTime = System.currentTimeMillis();
             if(limitedAcceleration == -1 && !finished) {
@@ -142,7 +142,7 @@ public class RobotProfilingUtil {
                     }
                 }
             }
-            CrowMotionConfig.setRobotVelocityMPSandDPS(0, 0, desiredVelocity);
+            CMConfig.setRobotVelocityMPSandDPS(0, 0, desiredVelocity);
             boolean inTolorence = Math.abs(currentVelocity - lastVelocity) < 1;
             lastVelocity = currentVelocity;
             

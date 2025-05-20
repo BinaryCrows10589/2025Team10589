@@ -1,24 +1,26 @@
-package frc.robot.CrowMotion;
+package frc.robot.CrowMotion.UserSide;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Notifier;
-import frc.robot.CrowMotion.RobotProfilingUtils.RobotProfile;
+import frc.robot.CrowMotion.UserSide.RobotProfilingUtils.CMRobotProfile;
 
 /**
  * Global configuration for CrowMotion.
  * Stores robot physical characteristics and live-state suppliers for use in trajectory planning.
  */
-public class CrowMotionConfig {
+public class CMConfig {
 
 
-    private static RobotProfile robotProfile;
+    private static CMRobotProfile robotProfile;
 
     private static Supplier<double[]> getRobotPositionMetersAndDegrees;
     private static Supplier<double[]> getRobotVelocityMPSandDPS;
     private static Supplier<Double> getAverageSwerveModuleVelocityMPS;
     private static Consumer<double[]> setRobotVelocityMPSANDDPS;
+    private static double wheelCircumference;
 
     private static boolean isBlueAlliance;
     private static Supplier<Boolean> defualtShouldMirror;
@@ -37,6 +39,8 @@ public class CrowMotionConfig {
      * @param _getRobotVelocityMPSAndDPS Supplier for [x, y, rot] velocity
      * @param _getAverageSwerveModuleVelocityMPS Supplier for average swerve module veclocity
      * @param _setRobotVelocityMPSANDDPS Consumer for setting [x, y, rot] velocity
+     * @param distanceBetweenCentersOfRightAndLeftWheels The distence(meters) between the center of the right and left wheels of your swerve drive
+     * @param distanceBetweenCentersOfFrontAndBackWheels The distence(meters) between the center of the front and back wheels of your swerve drive
      * @param _isBlueAlliance If the current allience is blue
      * @param _defaultShouldMirror Supplier to determine if path should be mirrored
      * @param _fieldWidthMeters The field width in meters
@@ -46,11 +50,13 @@ public class CrowMotionConfig {
      * @param _defualtEndTranslationalVelocityForStoppingTrajectories Desired end velocity for stop paths
      */
     public static void init(
-        RobotProfile _robotProfile,
+        CMRobotProfile _robotProfile,
         Supplier<double[]> _getRobotPositionMetersAndDegrees,
         Supplier<double[]> _getRobotVelocityMPSAndDPS,
         Supplier<Double> _getAverageSwerveModuleVelocityMPS,
         Consumer<double[]> _setRobotVelocityMPSANDDPS,
+        double _distanceBetweenCentersOfRightAndLeftWheels,
+        double _distanceBetweenCentersOfFrontAndBackWheels,
         boolean _isBlueAlliance,
         Supplier<Boolean> _defaultShouldMirror,
         double _fieldWidthMeters,
@@ -64,6 +70,7 @@ public class CrowMotionConfig {
         getRobotVelocityMPSandDPS = _getRobotVelocityMPSAndDPS;
         getAverageSwerveModuleVelocityMPS = _getAverageSwerveModuleVelocityMPS;
         setRobotVelocityMPSANDDPS = _setRobotVelocityMPSANDDPS;
+        wheelCircumference = calculateWheelCircumference(_distanceBetweenCentersOfRightAndLeftWheels, _distanceBetweenCentersOfFrontAndBackWheels);
         isBlueAlliance = _isBlueAlliance;
         defualtShouldMirror = _defaultShouldMirror;
         fieldWidthMeters = _fieldWidthMeters;
@@ -75,8 +82,16 @@ public class CrowMotionConfig {
         Notifier.setHALThreadPriority(true, 50);
     }
 
+    private static double calculateWheelCircumference(double distanceBetweenCentersOfRightAndLeftWheels, double distanceBetweenCentersOfFrontAndBackWheels) {
+        double majorAxis = Math.max(distanceBetweenCentersOfRightAndLeftWheels, distanceBetweenCentersOfFrontAndBackWheels);
+        double minorAxis = Math.min(distanceBetweenCentersOfRightAndLeftWheels, distanceBetweenCentersOfFrontAndBackWheels);
+        double h = Math.pow(((majorAxis - minorAxis) / (majorAxis + minorAxis)), 2);
+        
+        return (Math.PI * (majorAxis + minorAxis)) * (1 + ((3 * h) / (10 + Math.sqrt(4 - (3 * h)))));
+    }
+
     /** @return Robot profile used for the physics simulations */
-    public static RobotProfile getRobotProfile() {
+    public static CMRobotProfile getRobotProfile() {
         return robotProfile;
     }
 
@@ -101,6 +116,11 @@ public class CrowMotionConfig {
      */
     public static void setRobotVelocityMPSandDPS(double xVelocityMPS, double yVelocityMPS, double rotationalVelocityDPS) {
         setRobotVelocityMPSANDDPS.accept(new double[] {xVelocityMPS, yVelocityMPS, rotationalVelocityDPS});
+    }
+
+    /** @return The wheel circumference in meters */
+    public static double getWheelCircumference() {
+        return wheelCircumference;
     }
 
     /** @return If the current allience is the blue alliance */

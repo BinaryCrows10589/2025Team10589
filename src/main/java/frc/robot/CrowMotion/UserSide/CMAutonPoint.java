@@ -1,4 +1,4 @@
-package frc.robot.CrowMotion;
+package frc.robot.CrowMotion.UserSide;
 
 /**
  * Represents an autonomous point for CrowMotion pathing, with optional mirroring 
@@ -48,7 +48,7 @@ public class CMAutonPoint {
      * @param redYFudge     the y offset for red alliance in meters
      */
     public CMAutonPoint(double x, double y, double blueXFudge, double blueYFudge, double redXFudge, double redYFudge) {
-        this(x, y, blueXFudge, blueYFudge, redXFudge, redYFudge, CrowMotionConfig.getShouldMirror());
+        this(x, y, blueXFudge, blueYFudge, redXFudge, redYFudge, CMConfig.getShouldMirror());
     }
 
     /**
@@ -59,7 +59,7 @@ public class CMAutonPoint {
      * @param y the base y-coordinate in meters
      */
     public CMAutonPoint(double x, double y) {
-        this(x, y, 0, 0, 0, 0, CrowMotionConfig.getShouldMirror());
+        this(x, y, 0, 0, 0, 0, CMConfig.getShouldMirror());
     }
 
     /**
@@ -68,7 +68,7 @@ public class CMAutonPoint {
      * @return the adjusted x-coordinate in meters
      */
     public double getX() {
-        return this.x + (CrowMotionConfig.isBlueAlliance() ? blueXFudge : redXFudge);
+        return this.x + (CMConfig.isBlueAlliance() ? blueXFudge : redXFudge);
     }
 
     /**
@@ -77,8 +77,8 @@ public class CMAutonPoint {
      * @return the adjusted y-coordinate in meters
      */
     public double getY() {
-        return (this.shouldMirror ? (CrowMotionConfig.getFieldWidth() - this.y) : this.y) + 
-            (CrowMotionConfig.isBlueAlliance() ? blueYFudge : redYFudge);
+        return (this.shouldMirror ? (CMConfig.getFieldWidth() - this.y) : this.y) + 
+            (CMConfig.isBlueAlliance() ? blueYFudge : redYFudge);
     }
 
     @Override

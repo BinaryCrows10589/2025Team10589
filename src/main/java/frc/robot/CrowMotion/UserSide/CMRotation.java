@@ -1,4 +1,4 @@
-package frc.robot.CrowMotion;
+package frc.robot.CrowMotion.UserSide;
 
 public class CMRotation {
     
@@ -35,7 +35,7 @@ public class CMRotation {
      * @param completeRotationPercent The percent of the path by which rotation should be completed (0.0 to 1.0)
      */
     public CMRotation(double angleDegrees, RotationDirrection rotationDirrection, double completeRotationPercent) {
-        this(angleDegrees, rotationDirrection, completeRotationPercent, CrowMotionConfig.getShouldMirror());
+        this(angleDegrees, rotationDirrection, completeRotationPercent, CMConfig.getShouldMirror());
     }
 
     /**
@@ -43,7 +43,7 @@ public class CMRotation {
      *
      * @return the angle in degrees
      */
-    public double angleDegrees() {
+    public double getAngleDegrees() {
         return shouldMirror ? this.angleDegrees * -1 : this.angleDegrees;
     }
 

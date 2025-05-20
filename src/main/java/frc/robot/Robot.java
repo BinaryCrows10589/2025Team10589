@@ -27,12 +27,12 @@ import frc.robot.Constants.CameraConstants.VisionConstants;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.GenericConstants.FieldConstants;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
-import frc.robot.CrowMotion.CMAutonPoint;
-import frc.robot.CrowMotion.CMEvent;
-import frc.robot.CrowMotion.CMRotation;
-import frc.robot.CrowMotion.CMRotation.RotationDirrection;
 import frc.robot.CrowMotion.Library.CMPathGenResult;
 import frc.robot.CrowMotion.Library.CMPathGenerator;
+import frc.robot.CrowMotion.UserSide.CMAutonPoint;
+import frc.robot.CrowMotion.UserSide.CMEvent;
+import frc.robot.CrowMotion.UserSide.CMRotation;
+import frc.robot.CrowMotion.UserSide.CMRotation.RotationDirrection;
 import frc.robot.Utils.GeneralUtils.PercentError;
 import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesChangableValue;
@@ -216,7 +216,6 @@ public class Robot extends LoggedRobot {
         this.CMPaths.add(
         CMPathGenerator.generateCMPathAsync(
                 "TestBezier",
-                4.4,
                 new CMAutonPoint[] {
                     new CMAutonPoint(1, 1),
                     new CMAutonPoint(5, 2),
@@ -242,7 +241,6 @@ public class Robot extends LoggedRobot {
         this.CMPaths.add(
         CMPathGenerator.generateCMPathAsync(
                 "TestLinearFromBot",
-                4.4,
                 new CMAutonPoint[] {
                     new CMAutonPoint(5, 2),
                 },
@@ -264,7 +262,6 @@ public class Robot extends LoggedRobot {
         this.CMPaths.add(
         CMPathGenerator.generateCMPathAsync(
                 "TestLinear",
-                4.4,
                 new CMAutonPoint[] {
                     new CMAutonPoint(2, 2),
                     new CMAutonPoint(10, 5),

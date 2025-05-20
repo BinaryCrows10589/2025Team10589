@@ -1,4 +1,4 @@
-package frc.robot.CrowMotion.RobotProfilingUtils;
+package frc.robot.CrowMotion.UserSide.RobotProfilingUtils;
 
 import java.util.function.Supplier;
 
@@ -6,7 +6,7 @@ import java.util.function.Supplier;
  * Represents a physical profile for the robot, defining its motion capabilities and dynamics. 
  * Used for the trajectory symulation
  */
-public class RobotProfile {
+public class CMRobotProfile {
 
     /** The maximum achievable translational velocity in meters per second (m/s). */
     private final double maxPossibleTranslationalVelocityMPS;
@@ -33,7 +33,7 @@ public class RobotProfile {
      * @param maxPossibleAverageSwerveModuleMPS Max average swerve module velocity in m/s
      * @param velocityVSAccelerationFunction Function that returns acceleration given current velocity
      */
-    public RobotProfile(
+    public CMRobotProfile(
         double maxPossibleTranslationalVelocityMPS,
         double maxPossibleRotationalVelocityDPS,
         double maxPossibleAverageSwerveModuleMPS,
@@ -62,7 +62,7 @@ public class RobotProfile {
     /**
      * @return The robot's maximum average swerve module speed in m/s.
      */
-    public double maxPossibleAverageSwerveModuleMPS() {
+    public double getMaxPossibleAverageSwerveModuleMPS() {
         return this.maxPossibleAverageSwerveModuleMPS;
     }
 

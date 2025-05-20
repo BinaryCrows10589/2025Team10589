@@ -1,4 +1,4 @@
-package frc.robot.CrowMotion;
+package frc.robot.CrowMotion.UserSide;
 
 public class CMEvent {
 
