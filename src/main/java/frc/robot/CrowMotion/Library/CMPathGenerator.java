@@ -48,12 +48,8 @@ public class CMPathGenerator {
         double initialRotation, CMRotation[] rotations, CMEvent[] events) {
             Point2D.Double[] translationData;
             double assumedFrameTime = .015;
-            double maxVelocity = CMConfig.getRobotProfile().getMaxPossibleTranslationalVelocityMPS();
-            if(maxVelocity < 4.4) {
-                maxVelocity = 4.4;
-            }
-
-            double pointsPerMeter = (1 / (maxVelocity * assumedFrameTime)) * 2;
+            
+            double pointsPerMeter = (1 / (4.4 * assumedFrameTime)) * 2;
             double[] robotPosition = CMConfig.getRobotPositionMetersAndDegrees();
 
             if(controlPoints.length == 1) {

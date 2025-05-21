@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -32,7 +34,9 @@ import frc.robot.CrowMotion.Library.CMPathGenerator;
 import frc.robot.CrowMotion.UserSide.CMAutonPoint;
 import frc.robot.CrowMotion.UserSide.CMEvent;
 import frc.robot.CrowMotion.UserSide.CMRotation;
+import frc.robot.CrowMotion.UserSide.CMTrajectory;
 import frc.robot.CrowMotion.UserSide.CMRotation.RotationDirrection;
+import frc.robot.CrowMotion.UserSide.CMTrajectory.TrajectoryPriority;
 import frc.robot.Utils.GeneralUtils.PercentError;
 import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesChangableValue;
@@ -54,6 +58,7 @@ public class Robot extends LoggedRobot {
     private boolean isDone1 = false;
     private boolean isDone2 = false;
     private boolean isDone3 = false;
+    private CMTrajectory trajectory;
         /**
          * This function is run when the robot is first started up and should be used for any
          * initialization code.
@@ -281,11 +286,19 @@ public class Robot extends LoggedRobot {
             )
         );
         
-    }
-
+        trajectory = new CMTrajectory("TestTraj", new CMAutonPoint[] {
+            new CMAutonPoint(2, 2),
+            new CMAutonPoint(10, 5),
+        }, 0, new CMRotation[] {new CMRotation(50, RotationDirrection.POSITIVE, .8)},
+         new CMEvent[] {}, 3.5, 3.5, 180, TrajectoryPriority.SPLIT_PROPORTIONALLY, 1.5, true, new double[] {.03, .03, 3}, 20)
+;    }
+    
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+        if(!trajectory.isCompleted()) {
+            trajectory.runTrejectoryFrame();
+        }
         if(this.CMPaths.get(0).isDone() && !isDone1) {
             this.isDone1 = true;
             Logger.recordOutput("CrowMotion/PathGenTimeBezier", (System.currentTimeMillis() - RobotModeConstants.startPathGenTime)/1000);
