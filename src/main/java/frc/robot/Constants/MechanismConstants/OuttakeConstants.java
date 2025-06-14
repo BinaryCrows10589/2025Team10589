@@ -31,8 +31,8 @@ public class OuttakeConstants {
     public static final double kOuttakeCoralSensorMaxCoralDistanceMillimeters = 40;
     public static final double kRightWheelIntake = -12.0;
 
-    public static final double kDeeplyIndexCoralTime = 0.6;
+    public static final double kDeeplyIndexCoralTime = 0.2;
 
-    public static final double kBackfeedCoral = -8.0;
+    public static final double kBackfeedCoral = -5.75;
 
 }

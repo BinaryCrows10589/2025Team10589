@@ -71,7 +71,7 @@ public class PlaceAlgaeNet {
             driveSubsystem));
         autonCommands.add(new EndCommandAfterWait(highLevelCommandsFactory.createOutakeWheelsAlgaeBargeCommand(), .25));
         autonCommands.add(highLevelCommandsFactory.createAlgaePivotToDefualtPosition());
-        autonCommands.add(new EndCommandAfterWait(new DriveForwardCommand(driveSubsystem, -.75, 0, 0), 3.5));
+        autonCommands.add(new EndCommandAfterWait(new DriveForwardCommand(driveSubsystem, -.75, 0, 0), 3));
         //autonCommands.add(elevatorCommandFactory.createElevatorToBasementCommand());
 
         SequentialGroupCommand auton = GenerateAuto.generateAuto(5, 15, autonCommands);

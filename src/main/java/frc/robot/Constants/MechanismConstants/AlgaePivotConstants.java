@@ -15,12 +15,13 @@ public class AlgaePivotConstants {
     public static final double kPivotEncoderOffset = .190;
     public static final double kForwardSoftLimit = .477* 2/3; // .67 .
     public static final double kReverseSoftLimit = .03 * 2/3; //.198
-    public static final double kGroundIntakePositionRotations = .475 * 2/3;
+    public static final double kGroundIntakePositionRotations = .49 * 2/3;
     public static final double kLollypopIntakePositionRotations = .375 * 2/3; 
     public static final double kReefTreeIntakePositionRotations = .47 * 2/3; 
     public static final double kOuttakeProcessorPositionRotations = .367 * 2/3;
     public static final double kOuttakeBargePositionRotations = .2425 * 2/3;
     public static final double kDefultPivotPosition = 0.0;
-    public static final double kAlgaePiovtGroundVoltage = 1.0;
-    public static final double kAlgaePiovtHoldGroundVoltage = .5;;
+    public static final double kAlgaePiovtGroundVoltage = 8.0;
+    public static final double kAlgaePiovtHoldGroundVoltage = .8;
+    public static final double kAlgaeGroundTolorence = .1;
 }

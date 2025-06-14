@@ -32,7 +32,7 @@ public class PlaceCoralLStartingCenterBargeAfterGrabbingAlgae {
         autonCommands.add(IntakeAlgaeCenter.getAuton(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
 
         autonCommands.add(new EndCommandAfterWait(new DriveForwardCommand(driveSubsystem, -2, 0, 0), .6));
-
+        autonCommands.add(new CustomWaitCommand(.75));
 
         autonCommands.add(elevatorCommandFactory.createElevatorToL4Command());
         autonCommands.add(highLevelCommandsFactory.createPlaceCoralLeftCommand(.3));
