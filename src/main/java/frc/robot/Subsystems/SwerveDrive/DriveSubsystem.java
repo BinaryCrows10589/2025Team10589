@@ -1,6 +1,11 @@
 package frc.robot.Subsystems.SwerveDrive;
 
+import java.util.List;
+
 import org.littletonrobotics.junction.Logger;
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
+import org.photonvision.targeting.PhotonPipelineResult;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -8,7 +13,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.CameraConstants.GameObjectTrackingConstants;
 import frc.robot.Constants.GenericConstants.ControlConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.Subsystems.PoseEstimation.PoseEstimatorSubsystem;
@@ -33,6 +40,45 @@ public class DriveSubsystem extends SubsystemBase{
     private ChassisSpeeds desiredChassisSpeeds;
 
     private PoseEstimatorSubsystem poseEstimatorSubsystem;
+
+    private static PhotonCamera gameObjectTrackingCamera = new PhotonCamera(GameObjectTrackingConstants.kObjectCameraName);
+
+    public boolean inTrackingMode = false;
+    public boolean hasTarget = false;
+    public double[] gameObjectPosition = new double[] {0, 0, 0, 0};
+    
+    public void updateTargetDistanceAndHeading() {
+        List<PhotonPipelineResult> cameraResults = gameObjectTrackingCamera.getAllUnreadResults();
+        PhotonPipelineResult cameraResult;
+
+        if (cameraResults.size() > 0) {
+            cameraResult = cameraResults.get(cameraResults.size()-1);
+        } else {
+            return;
+        }
+        
+        if(cameraResult.hasTargets()) {
+            hasTarget = true;
+            double gameObjectDistanceMeters = PhotonUtils.calculateDistanceToTargetMeters(
+                GameObjectTrackingConstants.kExampleGameObjectCameraToRobotCenter.getY(),
+                GameObjectTrackingConstants.kGameObjectHeight, 
+                GameObjectTrackingConstants.kExampleGameObjectCameraToRobotCenter.getRotation().getY(), // Pitch
+                Units.degreesToRadians(cameraResult.getBestTarget().getPitch()));
+            
+            /* Can't figure out whare the 0.5842 is from, 
+               it may be the distence from the center camera to the center of the robot in the y axis
+            */
+            double xDistanceToGameObjectMeters = gameObjectDistanceMeters * Math.sin(Units.degreesToRadians(cameraResult.getBestTarget().getYaw()));
+            double yDistanceToGameObjectMeters = gameObjectDistanceMeters * Math.cos(Units.degreesToRadians(cameraResult.getBestTarget().getYaw())) + 0.5842; 
+            double headingToAddToFaceGameObject = (Math.atan(xDistanceToGameObjectMeters / yDistanceToGameObjectMeters));
+            Logger.recordOutput("ObjectTracking/HeadingToAddToFaceTarget", Units.radiansToDegrees(headingToAddToFaceGameObject));
+            Logger.recordOutput("ObjectTracking/TargetDistanceMeters", gameObjectDistanceMeters);
+            this.gameObjectPosition = new double[] {gameObjectDistanceMeters, headingToAddToFaceGameObject, xDistanceToGameObjectMeters, yDistanceToGameObjectMeters};
+            return;
+        } else {
+            hasTarget = false;
+        }
+    }
 
     //private NetworkTablesTunablePIDConstants pathPlannerTranslationPIDValueTuner;
     //private NetworkTablesTunablePIDConstants pathPlannerRotationPIDValueTuner;

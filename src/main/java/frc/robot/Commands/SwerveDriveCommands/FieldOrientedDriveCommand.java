@@ -62,15 +62,38 @@ public class FieldOrientedDriveCommand extends Command {
     @Override
     public void execute() {
         if(ControlConstants.kIsDriverControlled) {
-            double translationX = ControlConstants.slowModeActive ? 
-            this.translationXSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond * ControlConstants.kTranslationXSlowModeMultipler :
-            this.translationXSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond;
-            double translationY = ControlConstants.slowModeActive ? 
-            this.translationYSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond * ControlConstants.kTranslationYSlowModeMultipler : 
-            this.translationYSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond; 
-            double rotation = ControlConstants.slowModeActive ? 
-            this.rotationSupplier.getAsDouble() * SwerveDriveConstants.kMaxRotationAnglePerSecond * ControlConstants.kRotationSlowModeMultipler : 
-            this.rotationSupplier.getAsDouble() * SwerveDriveConstants.kMaxRotationAnglePerSecond;
+            double translationX;
+            double translationY;
+            double rotation;
+            if (m_driveSubsystem.inTrackingMode && m_driveSubsystem.hasTarget) {
+                double[] gameObjectPositionRelative = m_driveSubsystem.gameObjectPosition;
+                double totalDistanceToObject = gameObjectPositionRelative[0];
+                double headingToAdd = gameObjectPositionRelative[1];
+                double distanceToObjectX = gameObjectPositionRelative[2];
+                double distanceToObjectY = gameObjectPositionRelative[3];
+                translationX = distanceToObjectX;
+                translationY = distanceToObjectY;
+                rotation = headingToAdd;
+                normalizeTranslationMaximum = true;
+
+                translationMax = 1;
+                rotationMax = 2;
+            } else {
+                translationX = ControlConstants.slowModeActive ? 
+                this.translationXSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond * ControlConstants.kTranslationXSlowModeMultipler :
+                this.translationXSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond;
+                translationY = ControlConstants.slowModeActive ? 
+                this.translationYSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond * ControlConstants.kTranslationYSlowModeMultipler : 
+                this.translationYSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond; 
+                rotation = ControlConstants.slowModeActive ? 
+                this.rotationSupplier.getAsDouble() * SwerveDriveConstants.kMaxRotationAnglePerSecond * ControlConstants.kRotationSlowModeMultipler : 
+                this.rotationSupplier.getAsDouble() * SwerveDriveConstants.kMaxRotationAnglePerSecond;
+                normalizeTranslationMaximum = false;
+
+                
+                translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
+                rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
+            }
 
 
             Logger.recordOutput("SwerveDrive/Inputs/InputedXSpeedMPS", translationX);
@@ -80,9 +103,7 @@ public class FieldOrientedDriveCommand extends Command {
             double position = m_elevatorSubsystem.getCurrentElevatorPosition();
             
 
-            translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
-            rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
-            normalizeTranslationMaximum = false;
+            
 
             // Determine if we need to be applying a speed limiter to our swerve drive due to the elevator's position
             for (int level = SwerveDriveConstants.kElevatorThresholds.length-1; level >= 0; level--) {

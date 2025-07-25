@@ -9,7 +9,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.CameraConstants.GameObjectTrackingConstants;
 
-public class GameObjectTracker  {
+public class GameObjectTracker {
     private static PhotonCamera exampleCamera = new PhotonCamera(GameObjectTrackingConstants.kObjectCameraName);
     
     /**

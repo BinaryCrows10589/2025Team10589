@@ -184,6 +184,8 @@ public class RobotContainer {
         this.driverController.bindToRightTriggure(Commands.runOnce(this.driveSubsystem::setAxisLockModeTrue),
         Commands.runOnce(this.driveSubsystem::setAxisLockModeFalse));
         this.driverController.bindToButton(Commands.runOnce(DriveSubsystem::enableDriverControlleMode), XboxController.Button.kX.value);
+
+        this.buttonBoard.bindButton(Commands.runOnce(() -> {driveSubsystem.inTrackingMode = true;}), Commands.runOnce(() -> {driveSubsystem.inTrackingMode = false;}), ButtonBoardButtonConstants.ButtonBoardNormalButtons.elevatorUp);
          
         this.buttonBoard.bindButton(this.elevatorCommandFactory.createElevatorToBasementCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l0);
         this.buttonBoard.bindButton(this.highLevelCommandsFactory.createPrepareL1BackfeedCommand(), ButtonBoardButtonConstants.ButtonBoardNormalButtons.l1);
