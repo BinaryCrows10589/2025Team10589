@@ -48,7 +48,8 @@ public class SwerveDriveSetupUtils {
         elevatorSubsystem,
         () -> -driverController.getLeftY(),
         () -> -driverController.getLeftX(),
-        () -> -driverController.getRightX());
+        () -> -driverController.getRightX(),
+        () -> driverController.getRightTriggureValue());
         
         driveSubsystem.setDefaultCommand(fieldOrientedDriveCommand);
     }

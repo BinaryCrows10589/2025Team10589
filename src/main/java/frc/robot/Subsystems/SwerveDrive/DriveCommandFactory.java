@@ -29,7 +29,8 @@ public class DriveCommandFactory {
         this.elevatorSubsystem,
         () -> -this.driverController.getLeftY(),
         () -> -this.driverController.getLeftX(),
-        () -> -this.driverController.getRightX());
+        () -> -this.driverController.getRightX(),
+        () -> this.driverController.getRightTriggureValue());
     }
 
     public LockSwerves createLockSwervesCommand() {

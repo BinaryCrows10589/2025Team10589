@@ -26,6 +26,7 @@ public class FieldOrientedDriveCommand extends Command {
     private final DoubleSupplier translationXSupplier;
     private final DoubleSupplier translationYSupplier;
     private final DoubleSupplier rotationSupplier;
+    private final DoubleSupplier throttleSupplier;
     private double translationMax = SwerveDriveConstants.kMaxSpeedMetersPerSecond;
     private boolean normalizeTranslationMaximum = false;
     private double rotationMax = SwerveDriveConstants.kMaxRotationAnglePerSecond;
@@ -44,13 +45,14 @@ public class FieldOrientedDriveCommand extends Command {
     public FieldOrientedDriveCommand(
         DriveSubsystem m_driveSubsystem, ElevatorSubsystem m_elevatorSubsystem,
         DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier, 
-        DoubleSupplier rotationSupplier) {
+        DoubleSupplier rotationSupplier, DoubleSupplier throttleSupplier) {
 
         this.m_driveSubsystem = m_driveSubsystem;
         this.m_elevatorSubsystem = m_elevatorSubsystem;
         this.translationXSupplier = translationXSupplier;
         this.translationYSupplier = translationYSupplier;
         this.rotationSupplier = rotationSupplier;
+        this.throttleSupplier = throttleSupplier;
 
         addRequirements(m_driveSubsystem);
     }
@@ -63,11 +65,11 @@ public class FieldOrientedDriveCommand extends Command {
     public void execute() {
         if(ControlConstants.kIsDriverControlled) {
             double translationX = ControlConstants.slowModeActive ? 
-            this.translationXSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond * ControlConstants.kTranslationXSlowModeMultipler :
-            this.translationXSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond;
+            this.throttleSupplier.getAsDouble() * this.translationXSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond * ControlConstants.kTranslationXSlowModeMultipler :
+            this.throttleSupplier.getAsDouble() * this.translationXSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond;
             double translationY = ControlConstants.slowModeActive ? 
-            this.translationYSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond * ControlConstants.kTranslationYSlowModeMultipler : 
-            this.translationYSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond; 
+            this.throttleSupplier.getAsDouble() * this.translationYSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond * ControlConstants.kTranslationYSlowModeMultipler : 
+            this.throttleSupplier.getAsDouble() * this.translationYSupplier.getAsDouble() * SwerveDriveConstants.kMaxSpeedMetersPerSecond; 
             double rotation = ControlConstants.slowModeActive ? 
             this.rotationSupplier.getAsDouble() * SwerveDriveConstants.kMaxRotationAnglePerSecond * ControlConstants.kRotationSlowModeMultipler : 
             this.rotationSupplier.getAsDouble() * SwerveDriveConstants.kMaxRotationAnglePerSecond;

@@ -231,8 +231,8 @@ public class ControllerInterface {
      * Returns The Right Triggure's value
      * @return Boolean: The Right Triggure's value
      */
-    public boolean getRightTriggureValue() {
-        return this.controller.getRightTriggerAxis() != 0;
+    public double getRightTriggureValue() {
+        return this.controller.getRightTriggerAxis();
     }
     
 
