@@ -15,7 +15,6 @@ public class PrepareL1BackfeedCommand extends Command {
 
     private ElevatorToPositionCommand elevatorToL1Command;
     private OuttakeCoralCommand deeplyIndexCoralCommand;
-    private boolean hasBegunLiftingElevator = false;
 
     public PrepareL1BackfeedCommand(ElevatorSubsystem elevatorSubsystem, OuttakeWheelsSubsystem outtakeWheelsSubsystem, OuttakeCoralSensorsSubsystem outtakeCoralSensorsSubsystem) {
         elevatorToL1Command = new ElevatorToPositionCommand(
@@ -39,6 +38,7 @@ public class PrepareL1BackfeedCommand extends Command {
 
     @Override
     public void execute() {
+        
     }
 
     @Override

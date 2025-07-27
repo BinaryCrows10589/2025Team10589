@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Auton.AutonPointManager;
+import frc.robot.Commands.DisableVisionCommand;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Commands.AutonCommands.WPILibTrajectoryCommands.WPILibFollowTrajectoryFromPointsCommand;
 import frc.robot.Commands.SwerveDriveCommands.DriveForwardCommand;
@@ -44,7 +45,7 @@ public class IntakeAlgaeCenter {
         WPILibAutonConstants.kMaxRotationalAccelerationInRadsPerSecond,
         WPILibAutonConstants.kPositionTolorence,
         driveSubsystem));*/
-
+        autonCommands.add(new DisableVisionCommand());
         EndCommandAfterWait intakeForTime = new EndCommandAfterWait(highLevelCommandsFactory.createIntakeAlgaeFromReefL2CommandAuto(), 1.3);
            
         ParallelGroupCommand driveWhileIntaking = new ParallelGroupCommand(
