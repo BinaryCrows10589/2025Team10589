@@ -19,15 +19,18 @@ import frc.robot.CrowMotion.UserSide.CMRotation;
 import frc.robot.CrowMotion.UserSide.CMRotation.RotationDirrection;
 
 public class CMPathGenerator {
-    public static CompletableFuture<CMPathGenResult> generateCMPathAsync(String pathTime,
-        CMAutonPoint[] controlPoints, double initialRotation, CMRotation[] rotations, CMEvent[] events) {
-        CompletableFuture<CMPathGenResult> future = new CompletableFuture<>();
-        
+
+    public static CompletableFuture<CMPathPoint[]> generateCMPathAsync(String pathTime,
+            CMAutonPoint[] controlPoints, double initialRotation, CMRotation[] rotations, CMEvent[] events,
+            double pointsPerMeter) {
+        CompletableFuture<CMPathPoint[]> future = new CompletableFuture<>();
+
         Notifier[] holder = new Notifier[1]; // to close from outside the Notifier thread
         RobotModeConstants.startPathGenTime = System.currentTimeMillis();
         holder[0] = new Notifier(() -> {
             try {
-                CMPathGenResult result = createCMPath(pathTime, controlPoints, initialRotation, rotations, events);
+                CMPathPoint[] result = createCMPath(pathTime, controlPoints, initialRotation, rotations, events,
+                        pointsPerMeter);
                 future.complete(result);
             } catch (Exception e) {
                 future.completeExceptionally(e);
@@ -40,98 +43,90 @@ public class CMPathGenerator {
         });
 
         holder[0].startSingle(0);
-        
+
         return future;
     }
 
-    private static CMPathGenResult createCMPath(String pathName, CMAutonPoint[] controlPoints,
-        double initialRotation, CMRotation[] rotations, CMEvent[] events) {
-            Point2D.Double[] translationData;
-            double assumedFrameTime = .015;
-            
-            double pointsPerMeter = (1 / (4.4 * assumedFrameTime)) * 2;
-            double[] robotPosition = CMConfig.getRobotPositionMetersAndDegrees();
+    private static CMPathPoint[] createCMPath(String pathName, CMAutonPoint[] controlPoints,
+            double initialRotation, CMRotation[] rotations, CMEvent[] events, double pointsPerMeter) {
+        Point2D.Double[] translationData;
+        double[] robotPosition = CMConfig.getRobotPositionMetersAndDegrees();
 
-            if(controlPoints.length == 1) {
-                controlPoints = new CMAutonPoint[] {new CMAutonPoint(robotPosition[0], robotPosition[1]), controlPoints[0]};
-            }
-            if(controlPoints.length <= 2) {
-                translationData = generateLinearPointArray(controlPoints, pointsPerMeter);
+        if (controlPoints.length == 1) {
+            controlPoints = new CMAutonPoint[] { new CMAutonPoint(robotPosition[0], robotPosition[1]),
+                    controlPoints[0] };
+        }
+        if (controlPoints.length <= 2) {
+            translationData = generateLinearPointArray(controlPoints, pointsPerMeter);
+        } else {
+            translationData = generateBezierPointArray(controlPoints, pointsPerMeter);
+        }
+
+        double currentRotation = initialRotation;
+        int usedPoints = 0;
+        double[][] detlaPerPoint = new double[rotations.length][2];
+        for (int i = 0; i < rotations.length; i++) {
+            int pointsForRotation = (int) (rotations[i].getCompleteRotationPercent() * translationData.length)
+                    - usedPoints;
+            usedPoints += pointsForRotation;
+            double startPoint = i == 0 ? currentRotation : rotations[i - 1].getAngleDegrees();
+            double deltaForRotation = 0;
+            if (rotations[i].getRotationDirrection() == RotationDirrection.POSITIVE) {
+                deltaForRotation = (360 - (startPoint - rotations[i].getAngleDegrees())) % 360;
             } else {
-                translationData = generateBezierPointArray(controlPoints, pointsPerMeter); 
+                deltaForRotation = -(360 + (startPoint - rotations[i].getAngleDegrees())) % 360;
             }
+            if (i == 0) {
+                pointsForRotation -= 1;
+            }
+            detlaPerPoint[i][0] = deltaForRotation / (double) (pointsForRotation);
+            detlaPerPoint[i][1] = rotations[i].getAngleDegrees();
+        }
 
-            double currentRotation = initialRotation;
-            int usedPoints = 0;
-            double[][] detlaPerPoint = new double[rotations.length][2];
-            for(int i = 0; i < rotations.length; i++) {
-                int pointsForRotation = (int)(rotations[i].getCompleteRotationPercent() * translationData.length) - usedPoints;
-                usedPoints += pointsForRotation;
-                double startPoint =  i == 0 ? currentRotation : rotations[i-1].getAngleDegrees();
-                double deltaForRotation = 0;
-                if(rotations[i].getRotationDirrection() == RotationDirrection.POSITIVE) {
-                    deltaForRotation = (360 - (startPoint - rotations[i].getAngleDegrees())) % 360;
+        CMPathPoint[] path = new CMPathPoint[translationData.length];
+        ArrayList<Translation2d> translationsForLogging = new ArrayList<Translation2d>();
+        double lastRotation = currentRotation;
+        int currentRotationCheckPoint = 0;
+        for (int i = 0; i < translationData.length; i++) {
+            path[i] = new CMPathPoint(translationData[i], lastRotation, null);
+            if (Math.abs(lastRotation - detlaPerPoint[currentRotationCheckPoint][1]) < .0000001) {
+                if (detlaPerPoint.length - 1 <= currentRotationCheckPoint) {
+                    detlaPerPoint[0][0] = 0;
                 } else {
-                    deltaForRotation = -(360 + (startPoint - rotations[i].getAngleDegrees())) % 360;
+                    currentRotationCheckPoint++;
                 }
-                if(i == 0) {
-                    pointsForRotation -= 1;
-                }
-                detlaPerPoint[i][0] = deltaForRotation / (double)(pointsForRotation);
-                detlaPerPoint[i][1] = rotations[i].getAngleDegrees();
             }
-          
+            lastRotation += detlaPerPoint[currentRotationCheckPoint][0];
+            if (i % 10 == 0) {
+                translationsForLogging.add(new Translation2d(translationData[i].x, translationData[i].y));
+            }
+        }
 
-            CMPathPoint[] path = new CMPathPoint[translationData.length];
-            ArrayList<Translation2d> translationsForLogging = new ArrayList<Translation2d>();
-            double lastRotation = currentRotation;
-            int currentRotationCheckPoint = 0;
-            for(int i = 0; i < translationData.length; i++) {
-                path[i] = new CMPathPoint(translationData[i], lastRotation, null);
-                if(Math.abs(lastRotation - detlaPerPoint[currentRotationCheckPoint][1]) < .0000001) {
-                    if(detlaPerPoint.length-1 <= currentRotationCheckPoint) {
-                        detlaPerPoint[0][0] = 0;
-                    } else {
-                        currentRotationCheckPoint++;
-                    }
-                }
-                lastRotation += detlaPerPoint[currentRotationCheckPoint][0];
-                if(i % 10 == 0) {
-                    translationsForLogging.add(new Translation2d(translationData[i].x, translationData[i].y));
-                }
-            }
-             
-            for(int i = 0; i < events.length; i++) {
-                int triggerIndex = (int)(events[i].getEventTriggerPercent() * (translationData.length-1));
-                path[triggerIndex].setEvent(events[i]);
-            }
-            
-            Translation2d[] modifedTranslation2d = new Translation2d[translationsForLogging.size()];
-            for(int i = 0; i < translationsForLogging.size(); i++) {
-                modifedTranslation2d[i] = translationsForLogging.get(i);
-            }
-            Logger.recordOutput("CrowMotion/" + pathName, modifedTranslation2d);
-            
-        return new CMPathGenResult(path, modifedTranslation2d);
+        for (int i = 0; i < events.length; i++) {
+            int triggerIndex = (int) (events[i].getEventTriggerPercent() * (translationData.length - 1));
+            path[triggerIndex].setEvent(events[i]);
+        }
+
+        return path;
     }
 
     private static Point2D.Double[] generateLinearPointArray(CMAutonPoint[] controlPoints, double pointsPerMeter) {
         double xDelta = controlPoints[1].getX() - controlPoints[0].getX();
         double yDelta = controlPoints[1].getY() - controlPoints[0].getY();
-        
+
         double distance = Math.sqrt(xDelta * xDelta + yDelta * yDelta);
-        
+
         int numberOfPoints = (int) (distance * pointsPerMeter) + 1;
         Logger.recordOutput("CrowMotion/NumberOfPoints", numberOfPoints);
         Point2D.Double[] points = new Point2D.Double[numberOfPoints];
-        
+
         for (int i = 0; i < numberOfPoints; i++) {
             double t = (double) i / (numberOfPoints - 1);
             double x = controlPoints[0].getX() + t * xDelta;
             double y = controlPoints[0].getY() + t * yDelta;
             points[i] = new Point2D.Double(x, y);
         }
-        
+
         return points;
     }
 
@@ -141,31 +136,31 @@ public class CMPathGenerator {
             double dx = controlPoints[i + 1].getX() - controlPoints[i].getX();
             double dy = controlPoints[i + 1].getY() - controlPoints[i].getY();
             estimatedLength += Math.sqrt(dx * dx + dy * dy);
-        }    
-        int numberOfPoints = (int)(estimatedLength * pointsPerMeter * 1.3) + 1;
+        }
+        int numberOfPoints = (int) (estimatedLength * pointsPerMeter * 1.3) + 1;
 
         int degree = controlPoints.length;
         double tStep = 1.0 / (numberOfPoints - 1);
-    
+
         Point2D.Double[] curvePoints = new Point2D.Double[numberOfPoints];
-    
+
         double[] x = new double[degree];
         double[] y = new double[degree];
-    
+
         for (int i = 0; i < degree; i++) {
             x[i] = controlPoints[i].getX();
             y[i] = controlPoints[i].getY();
         }
-    
+
         double[] tempX = new double[degree];
         double[] tempY = new double[degree];
-    
+
         for (int pointIdx = 0; pointIdx < numberOfPoints; pointIdx++) {
             double t = pointIdx * tStep;
-    
+
             System.arraycopy(x, 0, tempX, 0, degree);
             System.arraycopy(y, 0, tempY, 0, degree);
-    
+
             int len = degree;
             while (len > 1) {
                 for (int i = 0; i < len - 1; i++) {
@@ -176,17 +171,17 @@ public class CMPathGenerator {
             }
             curvePoints[pointIdx] = new Point2D.Double(tempX[0], tempY[0]);
         }
-    
+
         return curvePoints;
-    }    
+    }
 
     public static void writePointsToCSV(CMPathPoint[] points, String filename) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename, true))) {
             for (CMPathPoint point : points) {
                 writer.printf("%.4f,%.4f,%.4f\n",
-                    point.getTranslationalPoint().getX(),
-                    point.getTranslationalPoint().getY(),
-                    point.getDesiredRotation());
+                        point.getTranslationalPoint().getX(),
+                        point.getTranslationalPoint().getY(),
+                        point.getDesiredRotation());
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package frc.robot.CrowMotion.Library;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.IntFunction;
 
 public class StatisticUtil {
     public static String calculateRegressionLineFormula(ArrayList<double[]> dataTable) {

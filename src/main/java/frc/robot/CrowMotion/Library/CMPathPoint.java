@@ -3,7 +3,8 @@ package frc.robot.CrowMotion.Library;
 import java.awt.geom.Point2D;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import frc.robot.CrowMotion.UserSide.CMEvent; 
+import frc.robot.CrowMotion.UserSide.CMEvent;
+
 public class CMPathPoint {
 
     private Point2D.Double translationalPoint;
@@ -11,11 +12,12 @@ public class CMPathPoint {
     private CMEvent event;
 
     /**
-     * Constructs an instance with the specified translational point, rotation, and event.
+     * Constructs an instance with the specified translational point, rotation, and
+     * event.
      *
      * @param translationalPoint The x and y coordnets of the path at this point
-     * @param desiredRotation The desired rotation angle at this point
-     * @param event The event to triggure at this point
+     * @param desiredRotation    The desired rotation angle at this point
+     * @param event              The event to triggure at this point
      */
     public CMPathPoint(Point2D.Double translationalPoint, double desiredRotation, CMEvent event) {
         this.translationalPoint = translationalPoint;
@@ -25,7 +27,7 @@ public class CMPathPoint {
 
     public static Translation2d[] point2dToTranslation2D(CMPathPoint[] points) {
         Translation2d[] translations = new Translation2d[points.length];
-        for(int i = 0; i < points.length; i++) {
+        for (int i = 0; i < points.length; i++) {
             Point2D.Double point = points[i].getTranslationalPoint();
             translations[i] = new Translation2d(point.x, point.y);
         }
@@ -33,10 +35,11 @@ public class CMPathPoint {
     }
 
     /**
-     * Constructs an instance with the specified translational point, rotation, and event.
+     * Constructs an instance with the specified translational point, rotation, and
+     * event.
      *
      * @param translationalPoint The x and y coordnets of the path at this point
-     * @param desiredRotation The desired rotation angle at this point
+     * @param desiredRotation    The desired rotation angle at this point
      */
     public CMPathPoint(Point2D.Double translationalPoint, double desiredRotation) {
         this(translationalPoint, desiredRotation, null);
@@ -56,7 +59,7 @@ public class CMPathPoint {
     }
 
     /**
-     * Gets the desired rotation. 
+     * Gets the desired rotation.
      *
      * @return The desired rotation angle at this point
      */
@@ -77,5 +80,5 @@ public class CMPathPoint {
         angle = ((angle + 180) % 360 + 360) % 360;
         return angle - 180;
     }
-     
+
 }

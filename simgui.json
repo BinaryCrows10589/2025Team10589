@@ -1,8 +1,10 @@
 {
   "NTProvider": {
     "types": {
+      "/AdvantageKit/RealOutputs/PhotonAlerts": "Alerts",
       "/FMSInfo": "FMSInfo",
-      "/SmartDashboard/AutonChooser": "String Chooser"
+      "/SmartDashboard/AutonChooser": "String Chooser",
+      "/SmartDashboard/PhotonAlerts": "Alerts"
     }
   },
   "NetworkTables Info": {

@@ -63,11 +63,11 @@ public class SwerveModule {
         SwerveModuleState optimizedState = SwerveModuleAngleOptimizer.optimize(desiredState, getModuleState().angle); 
         Logger.recordOutput(SwerveModuleConstants.kSwerveModuleOutputLoggerBase + swerveModuleName + "DesiredMetersPerSecond", optimizedState.speedMetersPerSecond);
         
-        /* Better system we made at the fair does not work well with sim. Need to try with actual swerve mods latter
-         *  double driveVoltage = optimizedState.speedMetersPerSecond == 0 ? 0 : 
+        // Better system we made at the fair does not work well with sim. Need to try with actual swerve mods latter
+           double driveVoltage = optimizedState.speedMetersPerSecond == 0 ? 0 : 
             MathUtil.clamp((((optimizedState.speedMetersPerSecond/SwerveDriveConstants.kMaxSpeedMetersPerSecond) * 13)
             + (SwerveDriveConstants.kDriveFeedForward * Math.signum(optimizedState.speedMetersPerSecond))), -13, 13);
-         */
+         
          
         //double desiredRPM = optimizedState.speedMetersPerSecond / SwerveModuleConstants.kDriveConversionVelocityFactor;
         //this.swerveModuleIO.setDesiredModuleVelocityRPM(desiredRPM);
