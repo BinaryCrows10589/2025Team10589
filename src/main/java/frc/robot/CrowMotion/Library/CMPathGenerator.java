@@ -87,8 +87,17 @@ public class CMPathGenerator {
         ArrayList<Translation2d> translationsForLogging = new ArrayList<Translation2d>();
         double lastRotation = currentRotation;
         int currentRotationCheckPoint = 0;
+        Point2D.Double translationLast = null;
+        double currentDistenceFromStart = 0.0;
         for (int i = 0; i < translationData.length; i++) {
-            path[i] = new CMPathPoint(translationData[i], lastRotation, null);
+            Point2D.Double translation = translationData[i];
+            double distenceFromLast = 0;
+            if(translationLast != null) {
+                distenceFromLast = translation.distance(translationLast);
+            }
+            currentDistenceFromStart += distenceFromLast;
+            translationLast = translation;
+            path[i] = new CMPathPoint(translation, lastRotation, currentDistenceFromStart);
             if (Math.abs(lastRotation - detlaPerPoint[currentRotationCheckPoint][1]) < .0000001) {
                 if (detlaPerPoint.length - 1 <= currentRotationCheckPoint) {
                     detlaPerPoint[0][0] = 0;
@@ -98,7 +107,7 @@ public class CMPathGenerator {
             }
             lastRotation += detlaPerPoint[currentRotationCheckPoint][0];
             if (i % 10 == 0) {
-                translationsForLogging.add(new Translation2d(translationData[i].x, translationData[i].y));
+                translationsForLogging.add(new Translation2d(translation.x, translation.y));
             }
         }
 

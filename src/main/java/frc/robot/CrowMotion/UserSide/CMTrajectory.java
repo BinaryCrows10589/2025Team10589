@@ -14,11 +14,13 @@ public class CMTrajectory {
     private String pathName;
     private double maxDesiredTranslationalVelocity;
     private double desiredTranslationalAcceleration;
+    private double desiredTranslationalDecceleration;
     private double maxDesiredRotationalVelocity;
     private TrajectoryPriority trajectoryPriority;
     private double endVelocity;
     private boolean shouldStopAtEnd;
     private double[] positionTolorence;
+    private double lookAHeadMult;
     private double maxTime;
     private CompletableFuture<CMPathPoint[]> futurePath;
 
@@ -32,109 +34,121 @@ public class CMTrajectory {
 
     private int currentMinPointIndex = 1;
     private Point2D.Double lastMinPoint = null;
+    private Point2D.Double currentMinPoint = null;
     private Point2D.Double nextMinPoint = null;
+    private CMPathPoint currentMinPointPathPoint = null;
+    private CMPathPoint endPoint = null;
+
+    private boolean decelerating = false;
+    private double lastDistenceFromEnd = 0;
 
     private double estimatedTravelDistence = -1;
     private double[] lastRobotPosition;
     private double maxError;
-
-    public static enum TrajectoryPriority {
-        PREFER_ROTATION,
-        PREFER_TRANSLATION,
-        SPLIT_PROPORTIONALLY
-    }
-
-    public CMTrajectory(String pathName, CMAutonPoint[] controlPoints, double initialRotation,
-            CMRotation[] rotations, CMEvent[] events,
-            double pointsPerMeter,
-            double maxDesiredTranslationalVelocity,
-            double desiredTranslationalAcceleration,
-            double maxDesiredRotationalVelocity,
-            TrajectoryPriority trajectoryPriority,
-            double endVelocity,
-            double[] positionTolorence, double maxTime) {
-        this.pathName = pathName;
-        this.maxDesiredTranslationalVelocity = maxDesiredTranslationalVelocity;
-        this.desiredTranslationalAcceleration = desiredTranslationalAcceleration;
-        this.maxDesiredRotationalVelocity = maxDesiredRotationalVelocity;
-        this.trajectoryPriority = trajectoryPriority;
-        this.endVelocity = endVelocity;
-        this.shouldStopAtEnd = endVelocity == 0;
-        this.positionTolorence = positionTolorence;
-        this.maxTime = maxTime;
-
-        assert controlPoints.length >= 1 : "For" + pathName + "CrowMotion paths need at least one control point";
-        this.futurePath = CMPathGenerator.generateCMPathAsync("TestBezier",
-                controlPoints, initialRotation, rotations, events, pointsPerMeter);
-        CMAutonPoint lastPoint = controlPoints[controlPoints.length - 1];
-        double endRotation = rotations.length == 0 ? initialRotation
-                : rotations[rotations.length - 1].getAngleDegrees();
-        this.endRobotState = new double[] { lastPoint.getX(), lastPoint.getY(), endRotation };
-    }
-    // I want to clamp the vector to have a max change per frame, that is equal to the max accelration, but insteed of magnatude also takes into acount rotations. It shoud rotate the vector over just flipping dir 
-    /* .5 calcualte error coreciton useing(only if not desaturated)
-            "double travelDistence = calculateMagnitude(lastRobotPosition[0] - robotPosition[0], lastRobotPosition[1] - robotPosition[1]);
-                        double rotationTravel = Math.abs(lastRobotPosition[2] - robotPosition[2]);
-                s        translationErrorRatio = (this.estimatedTravelDistenceMeters / travelDistence) * lastTranslationErrorRatio;;
-                        rotationErrorRatio = (this.estimatedRotationDegrees / rotationTravel) * lastRotationErrorRatio;;"
-     * 
-     * 1. Calculalte travel distence for this frame bassed on acceleration and current velocity
-     * 2. Find the two closest path points to that distence that are infront of the robot
-     *       and lienarly interpolate between them to estiamte the goal point
-     * 3. When doing 2 also approximate the desired rotation by the end of this frame
-     * 4. Desaturate the translation and rotaiton velocity in acordence with the path priority given
-     * 5. Calculate translational vector
-     * 6. Apply velocities
-     */
-    public void runTrejectoryFrame() {
-        long currentTime = System.currentTimeMillis();
-    
-        if (frameStartTime != -1) {
-            double frameTime = (currentTime - frameStartTime) / 1000.0; // Convert to seconds
-            averageFrameTime = (averageFrameTime * 0.9) + (frameTime * 0.1); // EWMA smoothing
-            Logger.recordOutput("CrowMotion/Debug/FrameTime", averageFrameTime);
+    private double maxFrameTime;
+        
+        public static enum TrajectoryPriority {
+            PREFER_ROTATION,
+            PREFER_TRANSLATION,
+            SPLIT_PROPORTIONALLY
         }
-        frameStartTime = currentTime;
-
-        double[] robotPosition = CMConfig.getRobotPositionMetersAndDegrees();
-        this.isComplete = shouldEnd(robotPosition);
-        Logger.recordOutput("CrowMotion/" + pathName + "IsComplete", isComplete);
-        if (this.isComplete) {
-            this.endTime = -1;
-            if (this.shouldStopAtEnd) {
-                CMConfig.setRobotVelocityMPSandDPS(0, 0, 0);
+    
+        public CMTrajectory(String pathName, CMAutonPoint[] controlPoints, double initialRotation,
+                CMRotation[] rotations, CMEvent[] events,
+                double pointsPerMeter,
+                double maxDesiredTranslationalVelocity,
+                double desiredTranslationalAcceleration,
+                double desiredTranslationalDecceleration,
+                double maxDesiredRotationalVelocity,
+                TrajectoryPriority trajectoryPriority,
+                double endVelocity,
+                boolean shouldStopAtEnd,
+                double[] positionTolorence,
+                double lookAHeadMult,
+                double maxTime) {
+            this.pathName = pathName;
+            this.maxDesiredTranslationalVelocity = maxDesiredTranslationalVelocity;
+            this.desiredTranslationalAcceleration = desiredTranslationalAcceleration;
+            this.desiredTranslationalDecceleration = desiredTranslationalDecceleration;
+            this.maxDesiredRotationalVelocity = maxDesiredRotationalVelocity;
+            this.trajectoryPriority = trajectoryPriority;
+            this.endVelocity = endVelocity;
+            this.shouldStopAtEnd = shouldStopAtEnd;
+            this.positionTolorence = positionTolorence;
+            this.lookAHeadMult = lookAHeadMult;
+            this.maxTime = maxTime;
+    
+            assert controlPoints.length >= 1 : "For" + pathName + "CrowMotion paths need at least one control point";
+            this.futurePath = CMPathGenerator.generateCMPathAsync("TestBezier",
+                    controlPoints, initialRotation, rotations, events, pointsPerMeter);
+            CMAutonPoint lastPoint = controlPoints[controlPoints.length - 1];
+            double endRotation = rotations.length == 0 ? initialRotation
+                    : rotations[rotations.length - 1].getAngleDegrees();
+            this.endRobotState = new double[] { lastPoint.getX(), lastPoint.getY(), endRotation };
+        }
+        // I want to clamp the vector to have a max change per frame, that is equal to the max accelration, but insteed of magnatude also takes into acount rotations. It shoud rotate the vector over just flipping dir 
+        /* 3. When doing 2 also approximate the desired rotation by the end of this frame
+         * 4. Desaturate the translation and rotaiton velocity in acordence with the path priority given
+         * 5. Calculate translational vector
+         * 6. Apply velocities
+         */
+        public void runTrejectoryFrame() {
+            long currentTime = System.currentTimeMillis();
+        
+            if (frameStartTime != -1) {
+                double frameTime = (currentTime - frameStartTime) / 1000.0; // Convert to seconds
+                if(frameTime > maxFrameTime) {
+                    maxFrameTime = frameTime;
+                    Logger.recordOutput("CrowMotion/Debug/MaxFrameTime", maxFrameTime);
+                }
+                averageFrameTime = (averageFrameTime * 0.9) + (frameTime * 0.1); // EWMA smoothing
+                Logger.recordOutput("CrowMotion/Debug/FrameTime", averageFrameTime);
             }
-        } else {
-            loadPath();
-            if (this.path != null) {
-                if(this.lastRobotPosition != null) {
-                    double realTravelDistence = calculateMagnitude(robotPosition[0] - lastRobotPosition[0], robotPosition[1] - lastRobotPosition[1]);
-                    double error = (estimatedTravelDistence - realTravelDistence)/realTravelDistence;
-                    if(Math.abs(error) > maxError) {
-                        maxError = Math.abs(error);
+            frameStartTime = currentTime;
+    
+            double[] robotPosition = CMConfig.getRobotPositionMetersAndDegrees();
+            this.isComplete = shouldEnd(robotPosition);
+            Logger.recordOutput("CrowMotion/" + pathName + "IsComplete", isComplete);
+            if (this.isComplete) {
+                this.endTime = -1;
+                if (this.shouldStopAtEnd) {
+                    CMConfig.setRobotVelocityMPSandDPS(0, 0, 0);
+                }
+            } else {
+                loadPath();
+                if (this.path != null) {
+                    if(this.lastRobotPosition != null) {
+                        double realTravelDistence = calculateMagnitude(robotPosition[0] - lastRobotPosition[0], robotPosition[1] - lastRobotPosition[1]);
+                        double error = (estimatedTravelDistence - realTravelDistence)/realTravelDistence;
+                        if(Math.abs(error) > maxError) {
+                            maxError = Math.abs(error);
+                        }
+                        Logger.recordOutput("CrowMotion/Debug/TravelDistencePercentError", error);
+                        Logger.recordOutput("CrowMotion/Debug/TravelDistencePercentMaxError", maxError);
                     }
-                    Logger.recordOutput("CrowMotion/Debug/TravelDistencePercentError", error);
-                    Logger.recordOutput("CrowMotion/Debug/TravelDistencePercentMaxError", maxError);
-
-                }
-                // Trejectory logic
-                double[] currentVelocityComponents = CMConfig.getRobotVelocityMPSandDPS();
-                double currentVelocityMag = calculateMagnitude(currentVelocityComponents[0],
-                    currentVelocityComponents[1]);
-                double desiredVelocityMag = Math.min(currentVelocityMag + desiredTranslationalAcceleration * averageFrameTime, maxDesiredTranslationalVelocity);
-                double travelDistence = ((desiredVelocityMag + currentVelocityMag) / 2) * averageFrameTime;
-                this.estimatedTravelDistence = travelDistence;
-                this.lastRobotPosition = robotPosition;
-                if(lastMinPoint == null || nextMinPoint == null) {
-                    lastMinPoint = path[0].getTranslationalPoint();
-                    nextMinPoint = path[1].getTranslationalPoint();
-                }
-
-                double disToNext = calculateMagnitude(nextMinPoint.x - robotPosition[0], nextMinPoint.y - robotPosition[1]);
+                    if(lastMinPoint == null || nextMinPoint == null) {
+                        lastMinPoint = path[0].getTranslationalPoint();
+                        currentMinPointPathPoint = path[1];
+                        currentMinPoint = path[1].getTranslationalPoint();
+                        nextMinPoint = path[2].getTranslationalPoint();
+                        endPoint = path[path.length-1];
+                    }
+                    // Trejectory logic
+                    double[] currentVelocityComponents = CMConfig.getRobotVelocityMPSandDPS();
+                    double currentVelocityMag = calculateMagnitude(currentVelocityComponents[0],
+                        currentVelocityComponents[1]);
+                    double desiredVelocityMag = calculateDesiredVelocity(currentVelocityMag, robotPosition);
+                    
+                    double travelDistence = ((desiredVelocityMag + currentVelocityMag) / 2) * averageFrameTime;
+                    this.estimatedTravelDistence = travelDistence;
+                    this.lastRobotPosition = robotPosition;
+                    double disToNext = calculateMagnitude(nextMinPoint.x - robotPosition[0], nextMinPoint.y - robotPosition[1]);
                 double disToLast = calculateMagnitude(lastMinPoint.x - robotPosition[0], lastMinPoint.y - robotPosition[1]);
                 while(disToNext - disToLast < .2 && this.currentMinPointIndex < path.length-2) {
                     this.currentMinPointIndex++;
                     lastMinPoint = path[this.currentMinPointIndex-1].getTranslationalPoint();
+                    currentMinPointPathPoint = path[this.currentMinPointIndex];
+                    currentMinPoint = currentMinPointPathPoint.getTranslationalPoint();
                     nextMinPoint = path[this.currentMinPointIndex+1].getTranslationalPoint();
                     disToNext = calculateMagnitude(nextMinPoint.x - robotPosition[0], nextMinPoint.y - robotPosition[1]);
                     disToLast = calculateMagnitude(lastMinPoint.x - robotPosition[0], lastMinPoint.y - robotPosition[1]);
@@ -146,14 +160,14 @@ public class CMTrajectory {
                     goalPointRangeEndPose = path[i].getTranslationalPoint();
                     disToGoalPointEndRange = calculateMagnitude(goalPointRangeEndPose.x - robotPosition[0],
                         goalPointRangeEndPose.y - robotPosition[1]);
-                    if(travelDistence * 10 < disToGoalPointEndRange) {
+                    if(travelDistence * lookAHeadMult < disToGoalPointEndRange) {
                         goalPointIndex = i+1;
                         break;
                     }
                 }
                 if(goalPointIndex == -1) {
                     goalPointIndex = path.length-1;
-                    goalPointRangeEndPose = path[goalPointIndex].getTranslationalPoint();
+                    goalPointRangeEndPose = endPoint.getTranslationalPoint();
                     // Figgure out what to do with velocity in this case. Either slow down to make it or clamp down to end velocity
                     // Maybe do somthing where if stop at end of path is true that modify velocity acordingly if not 
                 }
@@ -174,7 +188,6 @@ public class CMTrajectory {
                 CMConfig.setRobotVelocityMPSandDPS(velocityComponents[0], velocityComponents[1], 0);
             }
         }
-
     }
 
     public boolean isCompleted() {
@@ -186,7 +199,7 @@ public class CMTrajectory {
         boolean inYTolorence = Math.abs(robotPosition[1] - this.endRobotState[1]) < this.positionTolorence[1];
         boolean inRotationTolorence = Math.abs(robotPosition[2] - this.endRobotState[2]) < this.positionTolorence[2];
         boolean hasTimeElasped = endTime != -1 && System.currentTimeMillis() >= endTime;
-        return inXTolorence && inYTolorence && inRotationTolorence && hasTimeElasped;
+        return inXTolorence && inYTolorence && inRotationTolorence || hasTimeElasped;
     }
 
     private boolean inTolorenceOfPoint(double x1, double y1, double x2, double y2, double tolorence) {
@@ -203,6 +216,32 @@ public class CMTrajectory {
         double dx = (translationalVelocityMagnitude * deltaX) / length;
         double dy = (translationalVelocityMagnitude * deltaY) / length;
         return new double[] { dx, dy };
+    }
+
+    private double calculateDesiredVelocity(double currentVelocityMag,
+        double[] robotPosition) {
+        
+        double velocityChange = this.desiredTranslationalAcceleration;
+        double distenceFromRobotToMinPoint = calculateMagnitude(robotPosition[0] - this.currentMinPoint.x,
+            robotPosition[1] - this.currentMinPoint.y);
+        double distenceToStartDecelerating = (currentVelocityMag * currentVelocityMag - this.endVelocity * this.endVelocity)
+            / (2 * this.desiredTranslationalDecceleration);
+        double distenceToEnd = (endPoint.getDistenceFromStart() - currentMinPointPathPoint.getDistenceFromStart()) +
+            distenceFromRobotToMinPoint;
+        decelerating = distenceToEnd > lastDistenceFromEnd && decelerating;
+        if(distenceToStartDecelerating >= distenceToEnd || decelerating) {
+            velocityChange = -this.desiredTranslationalDecceleration;
+            decelerating = true;
+        }
+
+        Logger.recordOutput("CrowMotion/Debug/DistenceToEnd", distenceToEnd);
+        Logger.recordOutput("CrowMotion/Debug/DistenceToStartDecelerating", distenceToStartDecelerating);
+        //this.currentMinPointIndex
+        double desiredVelocity = currentVelocityMag + velocityChange * this.averageFrameTime;
+        if(decelerating && desiredVelocity < this.endVelocity) {
+            desiredVelocity = this.endVelocity;
+        }
+        return Math.min(desiredVelocity, this.maxDesiredTranslationalVelocity);
     }
 
     private double calculateMagnitude(double x, double y) {

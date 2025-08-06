@@ -10,6 +10,7 @@ public class CMPathPoint {
     private Point2D.Double translationalPoint;
     private double desiredRotation;
     private CMEvent event;
+    private double distenceFromStart;
 
     /**
      * Constructs an instance with the specified translational point, rotation, and
@@ -19,10 +20,11 @@ public class CMPathPoint {
      * @param desiredRotation    The desired rotation angle at this point
      * @param event              The event to triggure at this point
      */
-    public CMPathPoint(Point2D.Double translationalPoint, double desiredRotation, CMEvent event) {
+    public CMPathPoint(Point2D.Double translationalPoint, double desiredRotation, CMEvent event, double distenceFromStart) {
         this.translationalPoint = translationalPoint;
         this.desiredRotation = wrapAngle(desiredRotation);
         this.event = event;
+        this.distenceFromStart = distenceFromStart;
     }
 
     public static Translation2d[] point2dToTranslation2D(CMPathPoint[] points) {
@@ -35,14 +37,14 @@ public class CMPathPoint {
     }
 
     /**
-     * Constructs an instance with the specified translational point, rotation, and
-     * event.
+     * Constructs an instance with the specified translational point, rotation
      *
      * @param translationalPoint The x and y coordnets of the path at this point
-     * @param desiredRotation    The desired rotation angle at this point
+     * @param desiredRotation The desired rotation angle at this point
+     * @param distenceFromStart The distence that this point is from the start of the path
      */
-    public CMPathPoint(Point2D.Double translationalPoint, double desiredRotation) {
-        this(translationalPoint, desiredRotation, null);
+    public CMPathPoint(Point2D.Double translationalPoint, double desiredRotation, double distenceFromStart) {
+        this(translationalPoint, desiredRotation, null, distenceFromStart);
     }
 
     public void setEvent(CMEvent event) {
@@ -79,6 +81,10 @@ public class CMPathPoint {
     public static double wrapAngle(double angle) {
         angle = ((angle + 180) % 360 + 360) % 360;
         return angle - 180;
+    }
+
+    public double getDistenceFromStart() {
+        return this.distenceFromStart;
     }
 
 }
