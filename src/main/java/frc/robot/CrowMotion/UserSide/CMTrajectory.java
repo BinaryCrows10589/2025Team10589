@@ -34,8 +34,9 @@ public class CMTrajectory {
 
     private int currentMinPointIndex = 1;
     private Point2D.Double lastMinPoint = null;
-    private Point2D.Double currentMinPoint = null;
     private Point2D.Double nextMinPoint = null;
+
+    private Point2D.Double currentMinPoint = null;
     private CMPathPoint currentMinPointPathPoint = null;
     private CMPathPoint endPoint = null;
 
@@ -79,6 +80,8 @@ public class CMTrajectory {
             this.maxTime = maxTime;
     
             assert controlPoints.length >= 1 : "For" + pathName + "CrowMotion paths need at least one control point";
+            assert endVelocity > maxDesiredTranslationalVelocity : "For" + pathName + "CrowMotion End Velocities must be = or less then max translational velocity";
+
             this.futurePath = CMPathGenerator.generateCMPathAsync("TestBezier",
                     controlPoints, initialRotation, rotations, events, pointsPerMeter);
             CMAutonPoint lastPoint = controlPoints[controlPoints.length - 1];
@@ -126,8 +129,11 @@ public class CMTrajectory {
                         Logger.recordOutput("CrowMotion/Debug/TravelDistencePercentError", error);
                         Logger.recordOutput("CrowMotion/Debug/TravelDistencePercentMaxError", maxError);
                     }
+                    
                     if(lastMinPoint == null || nextMinPoint == null) {
                         lastMinPoint = path[0].getTranslationalPoint();
+                        nextMinPoint = path[1].getTranslationalPoint();
+
                         currentMinPointPathPoint = path[1];
                         currentMinPoint = path[1].getTranslationalPoint();
                         nextMinPoint = path[2].getTranslationalPoint();
@@ -143,7 +149,7 @@ public class CMTrajectory {
                     this.estimatedTravelDistence = travelDistence;
                     this.lastRobotPosition = robotPosition;
                     double disToNext = calculateMagnitude(nextMinPoint.x - robotPosition[0], nextMinPoint.y - robotPosition[1]);
-                double disToLast = calculateMagnitude(lastMinPoint.x - robotPosition[0], lastMinPoint.y - robotPosition[1]);
+                    double disToLast = calculateMagnitude(lastMinPoint.x - robotPosition[0], lastMinPoint.y - robotPosition[1]);
                 while(disToNext - disToLast < .2 && this.currentMinPointIndex < path.length-2) {
                     this.currentMinPointIndex++;
                     lastMinPoint = path[this.currentMinPointIndex-1].getTranslationalPoint();
@@ -153,6 +159,7 @@ public class CMTrajectory {
                     disToNext = calculateMagnitude(nextMinPoint.x - robotPosition[0], nextMinPoint.y - robotPosition[1]);
                     disToLast = calculateMagnitude(lastMinPoint.x - robotPosition[0], lastMinPoint.y - robotPosition[1]);
                 }
+
                 int goalPointIndex = -1;
                 Point2D.Double goalPointRangeEndPose = new Point2D.Double();
                 double disToGoalPointEndRange = 0;
@@ -165,6 +172,7 @@ public class CMTrajectory {
                         break;
                     }
                 }
+                
                 if(goalPointIndex == -1) {
                     goalPointIndex = path.length-1;
                     goalPointRangeEndPose = endPoint.getTranslationalPoint();
@@ -199,7 +207,7 @@ public class CMTrajectory {
         boolean inYTolorence = Math.abs(robotPosition[1] - this.endRobotState[1]) < this.positionTolorence[1];
         boolean inRotationTolorence = Math.abs(robotPosition[2] - this.endRobotState[2]) < this.positionTolorence[2];
         boolean hasTimeElasped = endTime != -1 && System.currentTimeMillis() >= endTime;
-        return inXTolorence && inYTolorence && inRotationTolorence || hasTimeElasped;
+        return inXTolorence && inYTolorence;// && inRotationTolorence || hasTimeElasped;
     }
 
     private boolean inTolorenceOfPoint(double x1, double y1, double x2, double y2, double tolorence) {
@@ -229,8 +237,8 @@ public class CMTrajectory {
         double distenceToEnd = (endPoint.getDistenceFromStart() - currentMinPointPathPoint.getDistenceFromStart()) +
             distenceFromRobotToMinPoint;
         decelerating = distenceToEnd > lastDistenceFromEnd && decelerating;
-        if(distenceToStartDecelerating >= distenceToEnd || decelerating) {
-            velocityChange = -this.desiredTranslationalDecceleration;
+        if(distenceToStartDecelerating>= distenceToEnd || decelerating) {
+            velocityChange = - this.desiredTranslationalDecceleration * 3;// Figure out a way to math out/feedback out 3
             decelerating = true;
         }
 

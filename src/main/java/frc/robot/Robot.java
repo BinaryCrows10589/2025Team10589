@@ -127,20 +127,6 @@ public class Robot extends LoggedRobot {
         robotContainer = new RobotContainer();
         checkDriverStationUpdate();
         LEDManager.setSolidColor(new int[] { 255, 0, 255 });
-
-        trajectory = new CMTrajectory("TestTraj", new CMAutonPoint[] {
-            new CMAutonPoint(FieldConstants.kFieldLengthMeters, FieldConstants.kFieldWidthMeters),
-            new CMAutonPoint(2, 1),
-            new CMAutonPoint(3, 3),
-            new CMAutonPoint(5, 4),
-            new CMAutonPoint(1, 2)
-        }, 0, new CMRotation[] { new CMRotation(50, RotationDirrection.POSITIVE, .8) },
-                new CMEvent[] {},
-                3, 4.4, 3.5, 3, 3.5,
-                TrajectoryPriority.SPLIT_PROPORTIONALLY,
-                1, true, 
-                new double[] { .03, .03, 3 }, 2, 20);
-        robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d()));
     }
 
     /**
@@ -315,7 +301,18 @@ public class Robot extends LoggedRobot {
          * }));
          */
         
-        
+        trajectory = new CMTrajectory("TestTraj", new CMAutonPoint[] {
+            new CMAutonPoint(FieldConstants.kFieldLengthMeters, FieldConstants.kFieldWidthMeters),
+            new CMAutonPoint(6, 7),
+            new CMAutonPoint(2, 1),
+            
+        }, 0, new CMRotation[] { new CMRotation(50, RotationDirrection.POSITIVE, .8) },
+                new CMEvent[] {},
+                3, 4.4, 3.5, 3, 3.5,
+                TrajectoryPriority.SPLIT_PROPORTIONALLY,
+                .25, true, 
+                new double[] { .03, .03, 3 }, 10, 20);
+        robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d()));
         
     }
 
