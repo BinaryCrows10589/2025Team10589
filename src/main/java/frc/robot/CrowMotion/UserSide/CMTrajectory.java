@@ -230,10 +230,7 @@ public class CMTrajectory {
                     double distenceToStartDecelerating = (currentVelocityMag * currentVelocityMag - this.endVelocity * this.endVelocity)
                         / (2 * this.desiredTranslationalDecceleration);
                     shouldDecelerate = distenceToEnd  < distenceToStartDecelerating;
-                } else {
-                    //shouldDecelerate = distenceToEnd > initialDistenceToEnd;
                 }
-                
                 double desiredVelocity = 0;
                 if(shouldDecelerate) {
                     if(firstDecelerationFrame) {
