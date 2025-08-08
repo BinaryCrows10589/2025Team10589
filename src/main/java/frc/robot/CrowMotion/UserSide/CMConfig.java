@@ -12,8 +12,6 @@ import frc.robot.CrowMotion.UserSide.RobotProfilingUtils.CMRobotProfile;
  * Stores robot physical characteristics and live-state suppliers for use in trajectory planning.
  */
 public class CMConfig {
-
-
     private static CMRobotProfile robotProfile;
 
     private static Supplier<double[]> getRobotPositionMetersAndDegrees;
@@ -29,7 +27,8 @@ public class CMConfig {
     private static double defualtMaxDesiredTranslationalVelocity;
     private static double defualtMaxDesiredRotationalVelocity;
     private static double defualtEndTranslationalVelocityForStoppingTrajectories;
-    
+    private static double minMoveVelocity = 0;
+
 
     /**
      * Initializes the global CrowMotion configuration.
@@ -63,7 +62,8 @@ public class CMConfig {
         double _fieldLengthMeters,
         double _defualtMaxDesiredTranslationalVelocity,
         double _defualtMaxDesiredRotationalVelocity,
-        double _defualtEndTranslationalVelocityForStoppingTrajectories
+        double _defualtEndTranslationalVelocityForStoppingTrajectories,
+        double _minMoveVelocity
     ) {
         robotProfile = _robotProfile;
         getRobotPositionMetersAndDegrees = _getRobotPositionMetersAndDegrees;
@@ -78,6 +78,8 @@ public class CMConfig {
         defualtMaxDesiredTranslationalVelocity = _defualtMaxDesiredTranslationalVelocity;
         defualtMaxDesiredRotationalVelocity = _defualtMaxDesiredRotationalVelocity;
         defualtEndTranslationalVelocityForStoppingTrajectories = _defualtEndTranslationalVelocityForStoppingTrajectories;
+        minMoveVelocity = _minMoveVelocity;
+
         // Sets notifier thread priority for path generation
         Notifier.setHALThreadPriority(true, 50);
     }
@@ -156,5 +158,10 @@ public class CMConfig {
     /** @return Desired end translational velocity when stopping. */
     public static double getDefaultEndTranslationalVelocityForStoppingTrajectories() {
         return defualtEndTranslationalVelocityForStoppingTrajectories;
+    }
+
+    /** @return Minimum Velocity to make the robot move */
+    public static double getMinMoveVelocity() {
+        return minMoveVelocity;
     }
 }

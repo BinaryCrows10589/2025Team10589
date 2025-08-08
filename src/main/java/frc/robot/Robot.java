@@ -310,7 +310,7 @@ public class Robot extends LoggedRobot {
                 new CMEvent[] {},
                 3, 4.4, 3.5, 3.5, 3.5,
                 TrajectoryPriority.SPLIT_PROPORTIONALLY,
-                .2, true, 
+                .25, true,
                 new double[] { .03, .03, 3 }, 10, 20);
         robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d()));
         
