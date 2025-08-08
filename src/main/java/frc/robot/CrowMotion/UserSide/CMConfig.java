@@ -27,7 +27,6 @@ public class CMConfig {
     private static double defualtMaxDesiredTranslationalVelocity;
     private static double defualtMaxDesiredRotationalVelocity;
     private static double defualtEndTranslationalVelocityForStoppingTrajectories;
-    private static double minMoveVelocity = 0;
 
 
     /**
@@ -62,8 +61,7 @@ public class CMConfig {
         double _fieldLengthMeters,
         double _defualtMaxDesiredTranslationalVelocity,
         double _defualtMaxDesiredRotationalVelocity,
-        double _defualtEndTranslationalVelocityForStoppingTrajectories,
-        double _minMoveVelocity
+        double _defualtEndTranslationalVelocityForStoppingTrajectories
     ) {
         robotProfile = _robotProfile;
         getRobotPositionMetersAndDegrees = _getRobotPositionMetersAndDegrees;
@@ -78,7 +76,6 @@ public class CMConfig {
         defualtMaxDesiredTranslationalVelocity = _defualtMaxDesiredTranslationalVelocity;
         defualtMaxDesiredRotationalVelocity = _defualtMaxDesiredRotationalVelocity;
         defualtEndTranslationalVelocityForStoppingTrajectories = _defualtEndTranslationalVelocityForStoppingTrajectories;
-        minMoveVelocity = _minMoveVelocity;
 
         // Sets notifier thread priority for path generation
         Notifier.setHALThreadPriority(true, 50);
@@ -160,8 +157,4 @@ public class CMConfig {
         return defualtEndTranslationalVelocityForStoppingTrajectories;
     }
 
-    /** @return Minimum Velocity to make the robot move */
-    public static double getMinMoveVelocity() {
-        return minMoveVelocity;
-    }
 }
