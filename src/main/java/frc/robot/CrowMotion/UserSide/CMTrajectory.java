@@ -53,7 +53,7 @@ public class CMTrajectory {
 
     private int lastRotationDeadlineIndex = -1;
     private int currentRotationDeadlineIndex = 1;
-    private CMRotation rotationDeadline;
+    private CMRotation rotationDeadline = null;
     private double desiredRotationDegrees;
     private double maxRotationVelocityDegrees;
     private double desiredRotationalAccelerationDegrees;
@@ -62,6 +62,8 @@ public class CMTrajectory {
     private double rotationCorrectionRangeDegrees = 0;
     private double maxRotationCorrectionVelocityDegrees = 0;
     private double minRotationVelocityToMove = 0;
+    private double maxRotationTolorenceDegrees;
+    private double decelerationBufferDegrees;
 
     private boolean firstRotationDecelerationFrame = true;
     private boolean enteredCorrectionRange = false;
@@ -138,6 +140,14 @@ public class CMTrajectory {
         Logger.recordOutput("CrowMotion/" + pathName + "IsComplete", isComplete);
         if(this.isComplete) {
             this.endTime = -1;
+            this.lastRotationDeadlineIndex = -1;
+            this.currentRotationDeadlineIndex = 1;
+            this.lastMinPoint = null;
+            this.currentMinPointPathPoint = null;
+            this.currentMinPoint = null;
+            this.nextMinPoint = null;
+            this.endPoint = null;
+            //TODO: Reset all varialbes needed to allow for reuse.
             if (this.shouldStopAtEnd) {
                 CMConfig.setRobotVelocityMPSandDPS(0, 0, 0);
             }
@@ -157,25 +167,29 @@ public class CMTrajectory {
 
                 if(rotationDeadline == null) {
                     if(this.rotationDeadlines.length == 0 ) {
-                        this.rotationDeadline = new CMRotation(Math.toDegrees(robotPosition[2]),
+                        this.rotationDeadline = new CMRotation(robotPosition[2],
                             0, 1,
                             CMConfig.getDefaultMaxDesiredRotationalVelocity(),
                             CMConfig.getDefaultMaxDesiredRotationalAcceleration(),
                             CMConfig.getDefaultMaxDesiredRotationalDeceleration(),
                             CMConfig.getDefaultAngleCorrectionRange(),
                             CMConfig.getDefaultMaxRotationCorrectionVelocityDegrees(),
-                            CMConfig.getDefaultMinRotationVelocityToMove());
+                            CMConfig.getDefaultMinRotationVelocityToMove(),
+                            CMConfig.getDefaultMaxTolorenceDegrees(),
+                            CMConfig.getDefaultDecelerationBufferDegrees());
                     } else {
                         this.rotationDeadline = path[rotationDeadlines[0]].getDesiredRotation();
-                        this.desiredRotationDegrees = rotationDeadline.getAngleDegrees();
-                        this.maxRotationVelocityDegrees = this.rotationDeadline.getMaxRotationVelocityDegrees();
-                        this.desiredRotationalAccelerationDegrees = this.rotationDeadline.getDesiredRotationalAccelerationDegrees();
-                        this.desiredRotatioanalDecelerationDegrees = this.rotationDeadline.getDesiredRotationalDecelerationDegrees();
-                        this.rotationDirection = this.rotationDeadline.getRotationDirrection();
-                        this.rotationCorrectionRangeDegrees = this.rotationDeadline.getAngleCorrectionRange();
-                        this.maxRotationCorrectionVelocityDegrees = this.rotationDeadline.getMaxRotationCorrectionVelocityDegrees();
-                        this.minRotationVelocityToMove = this.rotationDeadline.getMinRotationVelocityToMoveDegrees();
                     }
+                    this.desiredRotationDegrees = rotationDeadline.getAngleDegrees();
+                    this.maxRotationVelocityDegrees = this.rotationDeadline.getMaxRotationVelocityDegrees();
+                    this.desiredRotationalAccelerationDegrees = this.rotationDeadline.getDesiredRotationalAccelerationDegrees();
+                    this.desiredRotatioanalDecelerationDegrees = this.rotationDeadline.getDesiredRotationalDecelerationDegrees();
+                    this.rotationDirection = this.rotationDeadline.getRotationDirrection();
+                    this.rotationCorrectionRangeDegrees = this.rotationDeadline.getAngleCorrectionRange();
+                    this.maxRotationCorrectionVelocityDegrees = this.rotationDeadline.getMaxRotationCorrectionVelocityDegrees();
+                    this.minRotationVelocityToMove = this.rotationDeadline.getMinRotationVelocityToMoveDegrees();
+                    this.maxRotationTolorenceDegrees = this.rotationDeadline.getMaxTolorenceDegrees();
+                    this.decelerationBufferDegrees = this.rotationDeadline.getDecelerationBufferDegrees();
                 }
                 
 
@@ -203,6 +217,8 @@ public class CMTrajectory {
                         this.desiredRotatioanalDecelerationDegrees = this.rotationDeadline.getDesiredRotationalDecelerationDegrees();
                         this.rotationDirection = this.rotationDeadline.getRotationDirrection();
                         this.rotationCorrectionRangeDegrees = this.rotationDeadline.getAngleCorrectionRange();
+                        this.maxRotationTolorenceDegrees = this.rotationDeadline.getMaxTolorenceDegrees();
+                        this.decelerationBufferDegrees = this.rotationDeadline.getDecelerationBufferDegrees();
                     }
                 }
                 Logger.recordOutput("CrowMotion/Debug/DesiredRotation", this.rotationDeadline.getAngleDegrees());
@@ -255,7 +271,6 @@ public class CMTrajectory {
     private boolean shouldEnd(double[] robotPosition) {
         boolean inXTolorence = Math.abs(robotPosition[0] - this.endRobotState[0]) < this.positionTolorence[0];
         boolean inYTolorence = Math.abs(robotPosition[1] - this.endRobotState[1]) < this.positionTolorence[1];
-        boolean inRotationTolorence = Math.abs(robotPosition[2] - this.endRobotState[2]) < this.positionTolorence[2];
         boolean hasTimeElasped = endTime != -1 && System.currentTimeMillis() >= endTime;
         return inXTolorence && inYTolorence;// && inRotationTolorence || hasTimeElasped;
     }
@@ -319,7 +334,15 @@ public class CMTrajectory {
     }
 
     private double calculateDesiredRotationalVelocity(double currentRotationalVelocity, double[] robotPosition) {
+        if(this.currentRotationDeadlineIndex != this.lastRotationDeadlineIndex) {
+            this.firstRotationDecelerationFrame = true;
+            this.enteredCorrectionRange = false;
+            this.shouldDecelerateRotation = false;
+            this.initalRotationalVelocity = 0;
+            this.initialDegreesToEnd = 0;
+        }
         double rawDegreesToGoal = robotPosition[2] - this.desiredRotationDegrees;
+        rawDegreesToGoal = (rawDegreesToGoal + 540) % 360 - 180;
         double degreesToGoal = Math.abs(rawDegreesToGoal); 
         double degreesToOffsetGoal = degreesToGoal - this.rotationCorrectionRangeDegrees; 
 
@@ -331,15 +354,15 @@ public class CMTrajectory {
         double realDesiredVelocity = 0;
         if(enteredCorrectionRange) {
             double desiredVelocity = Math.max(maxRotationCorrectionVelocityDegrees * (degreesToGoal / this.rotationCorrectionRangeDegrees), this.minRotationVelocityToMove);
-            if(degreesToGoal < .5) {
+            if(degreesToGoal < this.maxRotationTolorenceDegrees) {
                 desiredVelocity = 0;
             }
             realDesiredVelocity = desiredVelocity * dirToGoal;
         } else {
             double desiredVelocity = 0;
-            if(!this.shouldDecelerateRotation) { // Or rotation deadline has changed
+            if(!this.shouldDecelerateRotation) {
                 double distenceToStartDecelerating = (currentRotationalVelocity * currentRotationalVelocity - maxRotationCorrectionVelocityDegrees * maxRotationCorrectionVelocityDegrees)
-                    / (2 * this.desiredRotatioanalDecelerationDegrees) + 40; // TODO: Replace 40 with proper user configurable varaible
+                    / (2 * this.desiredRotatioanalDecelerationDegrees) + this.decelerationBufferDegrees; 
                 this.shouldDecelerateRotation = degreesToOffsetGoal < distenceToStartDecelerating;
             }
     
@@ -356,7 +379,12 @@ public class CMTrajectory {
                 desiredVelocity = currentRotationalVelocity + 
                     (this.desiredRotationalAccelerationDegrees * averageFrameTime);
             }
-            realDesiredVelocity = desiredVelocity * this.rotationDirection;   
+            // Add auto detection of shortest dir
+            double realRotationDirection = this.rotationDirection;
+            if(this.rotationDirection == 0) {
+                realRotationDirection = dirToGoal;
+            }
+            realDesiredVelocity = desiredVelocity * realRotationDirection;   
         }
         
         Logger.recordOutput("CrowMotion/Debug/Rotation/RobotRotation", robotPosition[2]);
@@ -367,8 +395,14 @@ public class CMTrajectory {
 
         Logger.recordOutput("CrowMotion/Debug/Rotation/DesiredRotationVelocity", realDesiredVelocity);
         Logger.recordOutput("CrowMotion/Debug/Rotation/CurrentRotationVelocity", currentRotationalVelocity);
-        
 
+        Logger.recordOutput("CrowMotion/Debug/Rotation/CurrentRotationDeadlineIndex", currentRotationDeadlineIndex);
+        Logger.recordOutput("CrowMotion/Debug/Rotation/LastRotationDeadlineIndex", lastRotationDeadlineIndex);
+        
+        this.lastRotationDeadlineIndex = this.currentRotationDeadlineIndex;
+        double rotationVelocityMag = Math.abs(realDesiredVelocity);
+        double rotationDirSing = Math.signum(realDesiredVelocity);
+        realDesiredVelocity = Math.min(rotationVelocityMag, maxRotationVelocityDegrees) * rotationDirSing;
         return realDesiredVelocity;
     }
 

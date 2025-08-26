@@ -8,9 +8,12 @@ public class CMRotation {
     private double desiredRotationalAccelerationDegrees;
     private double desiredRotationDecelerationDegrees;
     private double angleCorrectionRange;
-    private boolean shouldMirror = false;
     private double maxRotationCorrectionVelocityDegrees;
     private double minRotationVelocityToMoveDegrees;
+    private double maxTolorenceDegrees;
+    private double decelerationBufferDegrees;
+    private boolean shouldMirror = false;
+    
 
     /**
      * Constructs a CMRotation with optional field mirroring applied.
@@ -23,6 +26,7 @@ public class CMRotation {
     public CMRotation(double angleDegrees, int rotationDirrection, double completeRotationPercent, 
         double maxRotationVelocityDegrees, double desiredRotationalAccelerationDegrees, double desiredRotationDecelerationDegrees, 
         double angleCorrectionRange, double maxRotationCorrectionVelocityDegrees, double minRotationVelocityToMoveDegrees,
+        double maxTolorenceDegrees, double decelerationBufferDegrees,
         boolean shouldMirror) {
             
         this.angleDegrees = angleDegrees;
@@ -35,6 +39,8 @@ public class CMRotation {
         this.angleCorrectionRange = angleCorrectionRange;
         this.maxRotationCorrectionVelocityDegrees = maxRotationCorrectionVelocityDegrees;
         this.minRotationVelocityToMoveDegrees = minRotationVelocityToMoveDegrees;
+        this.maxTolorenceDegrees = maxTolorenceDegrees;
+        this.decelerationBufferDegrees = decelerationBufferDegrees;
         this.shouldMirror = shouldMirror;
     }
 
@@ -50,7 +56,8 @@ public class CMRotation {
         double desiredRotationalAccelerationDegrees,
         double desiredRotationDecelerationDegrees, 
         double angleCorrectionRange, double maxRotationCorrectionVelocityDegrees,
-        double minRotationVelocityToMoveDegrees) {
+        double minRotationVelocityToMoveDegrees,
+        double maxTolorenceDegrees, double decelerationBufferDegrees) {
         this(angleDegrees, rotationDirrection,
             completeRotationPercent,
             maxRotationVelocityDegrees, 
@@ -58,6 +65,7 @@ public class CMRotation {
             desiredRotationDecelerationDegrees,
             angleCorrectionRange, maxRotationCorrectionVelocityDegrees,
             minRotationVelocityToMoveDegrees,
+            maxTolorenceDegrees, decelerationBufferDegrees,
             CMConfig.getShouldMirror());
     }
     
@@ -118,4 +126,11 @@ public class CMRotation {
         return this.minRotationVelocityToMoveDegrees;
     }
 
+    public double getMaxTolorenceDegrees() {
+        return this.maxTolorenceDegrees;
+    }
+
+    public double getDecelerationBufferDegrees() {
+        return this.decelerationBufferDegrees;
+    }
 }

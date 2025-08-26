@@ -37,24 +37,12 @@ public class CMConfig {
 
     private static double defualtEndTranslationalVelocityForStoppingTrajectories;
 
+    private static double defaultMaxTolorenceDegrees;
+    private static double defaultDecelerationBufferDegrees;
+
 
     /**
      * Initializes the global CrowMotion configuration.
-     *
-     * @param robotProfile Robot physical configuration profile. Reference the RobotProfile file for help creating the profile. 
-     * @param _getRobotPositionMetersAndDegrees Supplier for [x, y, rot] position
-     * @param _getRobotVelocityMPSAndDPS Supplier for [x, y, rot] velocity
-     * @param _getAverageSwerveModuleVelocityMPS Supplier for average swerve module veclocity
-     * @param _setRobotVelocityMPSANDDPS Consumer for setting [x, y, rot] velocity
-     * @param distanceBetweenCentersOfRightAndLeftWheels The distence(meters) between the center of the right and left wheels of your swerve drive
-     * @param distanceBetweenCentersOfFrontAndBackWheels The distence(meters) between the center of the front and back wheels of your swerve drive
-     * @param _isBlueAlliance If the current allience is blue
-     * @param _defaultShouldMirror Supplier to determine if path should be mirrored
-     * @param _fieldWidthMeters The field width in meters
-     * @param _fieldLengthMeters The field length in meters
-     * @param _defualtMaxDesiredTranslationalVelocity Maximum translational velocity to target
-     * @param _defualtMaxDesiredRotationalVelocity Maximum rotational velocity to target
-     * @param _defualtEndTranslationalVelocityForStoppingTrajectories Desired end velocity for stop paths
      */
     public static void init(
         CMRobotProfile _robotProfile,
@@ -78,7 +66,9 @@ public class CMConfig {
         double _defualtMaxDesiredRotationalDeceleration,
         double _defaultAngleCorrectionRange,
         double _defaultMaxRotationCorrectionVelocityDegrees,
-        double _defaultMinRotationVelocityToMove
+        double _defaultMinRotationVelocityToMove,
+        double _defaultMaxTolorenceDegrees,
+        double _defaultDecelerationBufferDegrees
     ) {
         robotProfile = _robotProfile;
         getRobotPositionMetersAndDegrees = _getRobotPositionMetersAndDegrees;
@@ -102,6 +92,9 @@ public class CMConfig {
         defaultAngleCorrectionRange = _defaultAngleCorrectionRange;
         defaultMaxRotationCorrectionVelocityDegrees = _defaultMaxRotationCorrectionVelocityDegrees;
         defaultMinRotationVelocityToMove = _defaultMinRotationVelocityToMove;
+        defaultMaxTolorenceDegrees = _defaultMaxTolorenceDegrees;
+        defaultDecelerationBufferDegrees = _defaultDecelerationBufferDegrees;
+
         // Sets notifier thread priority for path generation
         Notifier.setHALThreadPriority(true, 50);
     }
@@ -113,6 +106,8 @@ public class CMConfig {
         
         return (Math.PI * (majorAxis + minorAxis)) * (1 + ((3 * h) / (10 + Math.sqrt(4 - (3 * h)))));
     }
+
+    // ---------------- Getters ----------------
 
     /** @return Robot profile used for the physics simulations */
     public static CMRobotProfile getRobotProfile() {
@@ -185,7 +180,6 @@ public class CMConfig {
         return defaultTranslationalDeceleration;
     }
     
-
     /** @return Desired end translational velocity when stopping. */
     public static double getDefaultEndTranslationalVelocityForStoppingTrajectories() {
         return defualtEndTranslationalVelocityForStoppingTrajectories;
@@ -211,4 +205,11 @@ public class CMConfig {
         return defaultMinRotationVelocityToMove;
     }
 
+    public static double getDefaultMaxTolorenceDegrees() {
+        return defaultMaxTolorenceDegrees;
+    }
+
+    public static double getDefaultDecelerationBufferDegrees() {
+        return defaultDecelerationBufferDegrees;
+    }
 }

@@ -244,18 +244,20 @@ public class Robot extends LoggedRobot {
                 new CMAutonPoint(2, 1),
             }, 0,  
                 new CMRotation[] {
-                    new CMRotation(0, 1,
-                        .5,480, 480, 480, 1, 5, .5),
+                    
                 },
                 new CMEvent[] {},
                 3, 3.5, 3.5f, 3.5,
                 TrajectoryPriority.SPLIT_PROPORTIONALLY,
-                .25, .1, true,
-                new double[] { .03, .03, 3 }, 10, 20);
+                .15, .1, true,
+                new double[] { .01, .01}, 10, 20);
         robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d()));
         
     }
-
+/*new CMRotation(0, 1,
+                        .3,480, 480, 480, 1, 5, .5, .5, 10),
+                    new CMRotation(-20, 0,
+                        .8,480, 480, 480, 1, 5, .5, .5, 10), */
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {

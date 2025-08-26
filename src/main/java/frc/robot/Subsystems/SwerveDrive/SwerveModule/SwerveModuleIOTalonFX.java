@@ -262,6 +262,7 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO{
     @Override
     public void setDesiredModuleDriveVoltage(double desiredVoltage) {
         this.driveControlVoltageRequest.Output = desiredVoltage;
+
         this.driveMotor.setControl(this.driveControlVoltageRequest);
     }
 
