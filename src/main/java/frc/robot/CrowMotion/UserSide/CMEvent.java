@@ -5,6 +5,7 @@ public class CMEvent {
     private String eventName;
     private Runnable eventFunction;
     private double eventTriggerPercent;
+    private boolean isEventTriggered = false;
 
     /**
      * Constructs a new CMEvent with the specified event name, event function, and trigger percentage.

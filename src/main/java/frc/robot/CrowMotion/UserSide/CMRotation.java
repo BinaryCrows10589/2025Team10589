@@ -1,29 +1,40 @@
 package frc.robot.CrowMotion.UserSide;
 
 public class CMRotation {
-    
-    public static enum RotationDirrection {
-        POSITIVE,
-        NEGITIVE
-    }
-
     private double angleDegrees;
-    private RotationDirrection rotationDirrection;
+    private int rotationDirrection;
     private double completeRotationPercent;
+    private double maxRotationVelocityDegrees;
+    private double desiredRotationalAccelerationDegrees;
+    private double desiredRotationDecelerationDegrees;
+    private double angleCorrectionRange;
     private boolean shouldMirror = false;
-    //TODO: Fix rotation as mirroing must happen in runtime not in compile time
+    private double maxRotationCorrectionVelocityDegrees;
+    private double minRotationVelocityToMoveDegrees;
+
     /**
      * Constructs a CMRotation with optional field mirroring applied.
      *
      * @param angleDegrees  The angle of rotation in degrees
-     * @param rotationDirrection The direction of the rotation (POSITIVE or NEGITIVE)
+     * @param rotationDirrection The direction of the rotation, -1 or 1 or 0(shortest)
      * @param completeRotationPercent The percent of the path by which rotation should be completed (0.0 to 1.0)
      * @param shouldMirror Wether the direction and angle should be mirrored (e.g., for alliance side switching)
      */
-    public CMRotation(double angleDegrees, RotationDirrection rotationDirrection, double completeRotationPercent, boolean shouldMirror) {
-        this.angleDegrees = (angleDegrees + 180) % 360 - 180;
+    public CMRotation(double angleDegrees, int rotationDirrection, double completeRotationPercent, 
+        double maxRotationVelocityDegrees, double desiredRotationalAccelerationDegrees, double desiredRotationDecelerationDegrees, 
+        double angleCorrectionRange, double maxRotationCorrectionVelocityDegrees, double minRotationVelocityToMoveDegrees,
+        boolean shouldMirror) {
+            
+        this.angleDegrees = angleDegrees;
+        assert (rotationDirrection == -1 || rotationDirrection == 1 || rotationDirrection == 0) : "Crow Motion, for rotation with angle of " + angleDegrees + " degrees. Rotation Direction must be -1 or 1 or 0(shortest): " + rotationDirrection + " is invalid";   
         this.rotationDirrection = rotationDirrection;
         this.completeRotationPercent = completeRotationPercent;
+        this.maxRotationVelocityDegrees = maxRotationVelocityDegrees;
+        this.desiredRotationalAccelerationDegrees = maxRotationVelocityDegrees;
+        this.desiredRotationDecelerationDegrees = desiredRotationDecelerationDegrees;
+        this.angleCorrectionRange = angleCorrectionRange;
+        this.maxRotationCorrectionVelocityDegrees = maxRotationCorrectionVelocityDegrees;
+        this.minRotationVelocityToMoveDegrees = minRotationVelocityToMoveDegrees;
         this.shouldMirror = shouldMirror;
     }
 
@@ -31,12 +42,25 @@ public class CMRotation {
      * Constructs a CMRotation with the default field mirror set through CrowMotionConfig
      *
      * @param angleDegrees The angle of rotation in degrees
-     * @param rotationDirrection The direction of the rotation (POSITIVE or NEGITIVE)
+     * @param rotationDirrection The direction of the rotation, -1 or 1 or 0(shortest)
      * @param completeRotationPercent The percent of the path by which rotation should be completed (0.0 to 1.0)
      */
-    public CMRotation(double angleDegrees, RotationDirrection rotationDirrection, double completeRotationPercent) {
-        this(angleDegrees, rotationDirrection, completeRotationPercent, CMConfig.getShouldMirror());
+    public CMRotation(double angleDegrees, int rotationDirrection,
+        double completeRotationPercent, double maxRotationVelocityDegrees,
+        double desiredRotationalAccelerationDegrees,
+        double desiredRotationDecelerationDegrees, 
+        double angleCorrectionRange, double maxRotationCorrectionVelocityDegrees,
+        double minRotationVelocityToMoveDegrees) {
+        this(angleDegrees, rotationDirrection,
+            completeRotationPercent,
+            maxRotationVelocityDegrees, 
+            desiredRotationalAccelerationDegrees,
+            desiredRotationDecelerationDegrees,
+            angleCorrectionRange, maxRotationCorrectionVelocityDegrees,
+            minRotationVelocityToMoveDegrees,
+            CMConfig.getShouldMirror());
     }
+    
 
     /**
      * Gets the angle of rotation in degrees.
@@ -44,7 +68,7 @@ public class CMRotation {
      * @return the angle in degrees
      */
     public double getAngleDegrees() {
-        return shouldMirror ? this.angleDegrees * -1 : this.angleDegrees;
+        return wrapAngle(shouldMirror ? this.angleDegrees * -1 : this.angleDegrees);
     }
 
     /**
@@ -52,8 +76,8 @@ public class CMRotation {
      *
      * @return the rotation direction as a RotationDirrection enum
      */
-    public RotationDirrection getRotationDirrection() {
-        return shouldMirror ? (rotationDirrection == RotationDirrection.POSITIVE ? RotationDirrection.NEGITIVE : RotationDirrection.POSITIVE)
+    public int getRotationDirrection() {
+        return shouldMirror ? (rotationDirrection == 1 ? -1 : 1)
         : rotationDirrection;
     }
 
@@ -64,6 +88,34 @@ public class CMRotation {
      */
     public double getCompleteRotationPercent() {
         return this.completeRotationPercent;
+    }
+
+    public double getMaxRotationVelocityDegrees() {
+        return maxRotationVelocityDegrees;
+    }
+    
+    public double getDesiredRotationalAccelerationDegrees() {
+        return desiredRotationalAccelerationDegrees;
+    }
+    
+    public double getDesiredRotationalDecelerationDegrees() {
+        return desiredRotationDecelerationDegrees;
+    }
+
+    public double getAngleCorrectionRange() {
+        return this.angleCorrectionRange;
+    }
+
+    public static double wrapAngle(double angleDegrees) {
+        return (angleDegrees + 180) % 360 - 180;
+    }
+
+    public double getMaxRotationCorrectionVelocityDegrees() {
+        return this.maxRotationCorrectionVelocityDegrees;
+    }
+
+    public double getMinRotationVelocityToMoveDegrees() {
+        return this.minRotationVelocityToMoveDegrees;
     }
 
 }

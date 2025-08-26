@@ -4,11 +4,12 @@ import java.awt.geom.Point2D;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.CrowMotion.UserSide.CMEvent;
+import frc.robot.CrowMotion.UserSide.CMRotation;
 
 public class CMPathPoint {
 
     private Point2D.Double translationalPoint;
-    private double desiredRotation;
+    private CMRotation desiredRotation;
     private CMEvent event;
     private double distenceFromStart;
 
@@ -20,9 +21,9 @@ public class CMPathPoint {
      * @param desiredRotation    The desired rotation angle at this point
      * @param event              The event to triggure at this point
      */
-    public CMPathPoint(Point2D.Double translationalPoint, double desiredRotation, CMEvent event, double distenceFromStart) {
+    public CMPathPoint(Point2D.Double translationalPoint, CMRotation desiredRotation, CMEvent event, double distenceFromStart) {
         this.translationalPoint = translationalPoint;
-        this.desiredRotation = wrapAngle(desiredRotation);
+        this.desiredRotation = desiredRotation;
         this.event = event;
         this.distenceFromStart = distenceFromStart;
     }
@@ -43,13 +44,10 @@ public class CMPathPoint {
      * @param desiredRotation The desired rotation angle at this point
      * @param distenceFromStart The distence that this point is from the start of the path
      */
-    public CMPathPoint(Point2D.Double translationalPoint, double desiredRotation, double distenceFromStart) {
-        this(translationalPoint, desiredRotation, null, distenceFromStart);
+    public CMPathPoint(Point2D.Double translationalPoint, double distenceFromStart) {
+        this(translationalPoint, null, null, distenceFromStart);
     }
 
-    public void setEvent(CMEvent event) {
-        this.event = event;
-    }
 
     /**
      * Gets the translational point.
@@ -60,13 +58,22 @@ public class CMPathPoint {
         return translationalPoint;
     }
 
+   
+    public void setDesiredRotation(CMRotation desiredRotation) {
+        this.desiredRotation = desiredRotation;
+    }
+
     /**
      * Gets the desired rotation.
      *
      * @return The desired rotation angle at this point
      */
-    public double getDesiredRotation() {
+    public CMRotation getDesiredRotation() {
         return desiredRotation;
+    }
+
+    public void setEvent(CMEvent event) {
+        this.event = event;
     }
 
     /**
@@ -76,11 +83,6 @@ public class CMPathPoint {
      */
     public CMEvent getEvent() {
         return event;
-    }
-
-    public static double wrapAngle(double angle) {
-        angle = ((angle + 180) % 360 + 360) % 360;
-        return angle - 180;
     }
 
     public double getDistenceFromStart() {

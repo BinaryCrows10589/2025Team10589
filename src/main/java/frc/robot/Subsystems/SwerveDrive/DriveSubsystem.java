@@ -308,7 +308,9 @@ public class DriveSubsystem extends SubsystemBase{
          ()->false,
          FieldConstants.kFieldWidthMeters,
          FieldConstants.kFieldLengthMeters,
-        4.311, 4.311, 3.5);
+        4.311, 3.5, 3.5, .25, 180, 180, 90,
+        10, 2,
+        3);
         /*utoBuilder.configureHolonomic(
             this::getRobotPose, // Robot pose supplier
             this::setRobotPose, // Method to reset odometry (will be called if your auto has a starting pose)

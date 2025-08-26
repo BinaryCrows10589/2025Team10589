@@ -30,7 +30,6 @@ import frc.robot.CrowMotion.UserSide.CMAutonPoint;
 import frc.robot.CrowMotion.UserSide.CMEvent;
 import frc.robot.CrowMotion.UserSide.CMRotation;
 import frc.robot.CrowMotion.UserSide.CMTrajectory;
-import frc.robot.CrowMotion.UserSide.CMRotation.RotationDirrection;
 import frc.robot.CrowMotion.UserSide.CMTrajectory.TrajectoryPriority;
 import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
 import frc.robot.Utils.GeneralUtils.PercentError;
@@ -237,80 +236,21 @@ public class Robot extends LoggedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        /*
-         * this.CMPaths.add(
-         * CMPathGenerator.generateCMPathAsync(
-         * "TestBezier",
-         * new CMAutonPoint[] {
-         * new CMAutonPoint(1, 1),
-         * new CMAutonPoint(5, 2),
-         * new CMAutonPoint(7, 3.5),
-         * new CMAutonPoint(6.5, 4.5),
-         * new CMAutonPoint(6, 4)
-         * },
-         * this.robotContainer.getRobotPosition().getRotation().getDegrees(),
-         * new CMRotation[] {
-         * new CMRotation(20, RotationDirrection.NEGITIVE, 1)
-         * },
-         * new CMEvent[] {
-         * new CMEvent("TestEvent0", () -> {
-         * Logger.recordOutput("CrowMotion/EventCalled0", true);
-         * }, 0),
-         * new CMEvent("TestEvent1", () -> {
-         * Logger.recordOutput("CrowMotion/EventCalled1", true);
-         * }, 1)
-         * }));
-         * 
-         * this.CMPaths.add(
-         * CMPathGenerator.generateCMPathAsync(
-         * "TestLinearFromBot",
-         * new CMAutonPoint[] {
-         * new CMAutonPoint(5, 2),
-         * },
-         * this.robotContainer.getRobotPosition().getRotation().getDegrees(),
-         * new CMRotation[] {
-         * new CMRotation(20, RotationDirrection.NEGITIVE, 1)
-         * },
-         * new CMEvent[] {
-         * new CMEvent("TestEvent0", () -> {
-         * Logger.recordOutput("CrowMotion/EventCalled0", true);
-         * }, 0),
-         * new CMEvent("TestEvent1", () -> {
-         * Logger.recordOutput("CrowMotion/EventCalled1", true);
-         * }, 1)
-         * }));
-         * 
-         * this.CMPaths.add(
-         * CMPathGenerator.generateCMPathAsync(
-         * "TestLinear",
-         * new CMAutonPoint[] {
-         * new CMAutonPoint(2, 2),
-         * new CMAutonPoint(10, 5),
-         * },
-         * this.robotContainer.getRobotPosition().getRotation().getDegrees(),
-         * new CMRotation[] {
-         * new CMRotation(20, RotationDirrection.NEGITIVE, 1)
-         * },
-         * new CMEvent[] {
-         * new CMEvent("TestEvent0", () -> {
-         * Logger.recordOutput("CrowMotion/EventCalled0", true);
-         * }, 0),
-         * new CMEvent("TestEvent1", () -> {
-         * Logger.recordOutput("CrowMotion/EventCalled1", true);
-         * }, 1)
-         * }));
-         */
         
         trajectory = new CMTrajectory("TestTraj", new CMAutonPoint[] {
-            new CMAutonPoint(FieldConstants.kFieldLengthMeters, FieldConstants.kFieldWidthMeters),
-            new CMAutonPoint(6, 7),
-            new CMAutonPoint(2, 1),
-            
-        }, 0, new CMRotation[] { new CMRotation(50, RotationDirrection.POSITIVE, .8) },
+                new CMAutonPoint(FieldConstants.kFieldLengthMeters,
+                    FieldConstants.kFieldWidthMeters),
+                new CMAutonPoint(6, 7),
+                new CMAutonPoint(2, 1),
+            }, 0,  
+                new CMRotation[] {
+                    new CMRotation(0, 1,
+                        .5,480, 480, 480, 1, 5, .5),
+                },
                 new CMEvent[] {},
-                3, 4.4, 3.5, 3.5, 3.5,
+                3, 3.5, 3.5f, 3.5,
                 TrajectoryPriority.SPLIT_PROPORTIONALLY,
-                2, .1, true,
+                .25, .1, true,
                 new double[] { .03, .03, 3 }, 10, 20);
         robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d()));
         

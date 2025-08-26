@@ -25,7 +25,16 @@ public class CMConfig {
     private static double fieldWidthMeters;
     private static double fieldLengthMeters;
     private static double defualtMaxDesiredTranslationalVelocity;
+    private static double defaultTranslationalAcceleration;
+    private static double defaultTranslationalDeceleration;
+
     private static double defualtMaxDesiredRotationalVelocity;
+    private static double defualtMaxDesiredRotationalAcceleration;
+    private static double defualtMaxDesiredRotationalDeceleration;
+    private static double defaultAngleCorrectionRange;
+    private static double defaultMaxRotationCorrectionVelocityDegrees;
+    private static double defaultMinRotationVelocityToMove;
+
     private static double defualtEndTranslationalVelocityForStoppingTrajectories;
 
 
@@ -60,8 +69,16 @@ public class CMConfig {
         double _fieldWidthMeters,
         double _fieldLengthMeters,
         double _defualtMaxDesiredTranslationalVelocity,
+        double _defaultTranslationalAcceleration,
+        double _defaultTranslationalDeceleration,
+
+        double _defualtEndTranslationalVelocityForStoppingTrajectories,
         double _defualtMaxDesiredRotationalVelocity,
-        double _defualtEndTranslationalVelocityForStoppingTrajectories
+        double _defualtMaxDesiredRotationalAcceleration,
+        double _defualtMaxDesiredRotationalDeceleration,
+        double _defaultAngleCorrectionRange,
+        double _defaultMaxRotationCorrectionVelocityDegrees,
+        double _defaultMinRotationVelocityToMove
     ) {
         robotProfile = _robotProfile;
         getRobotPositionMetersAndDegrees = _getRobotPositionMetersAndDegrees;
@@ -73,10 +90,18 @@ public class CMConfig {
         defualtShouldMirror = _defaultShouldMirror;
         fieldWidthMeters = _fieldWidthMeters;
         fieldLengthMeters = _fieldLengthMeters;
+        
         defualtMaxDesiredTranslationalVelocity = _defualtMaxDesiredTranslationalVelocity;
-        defualtMaxDesiredRotationalVelocity = _defualtMaxDesiredRotationalVelocity;
+        defaultTranslationalAcceleration = _defaultTranslationalAcceleration;
+        defaultTranslationalDeceleration = _defaultTranslationalDeceleration;
         defualtEndTranslationalVelocityForStoppingTrajectories = _defualtEndTranslationalVelocityForStoppingTrajectories;
 
+        defualtMaxDesiredRotationalVelocity = _defualtMaxDesiredRotationalVelocity;
+        defualtMaxDesiredRotationalAcceleration = _defualtMaxDesiredRotationalAcceleration;
+        defualtMaxDesiredRotationalDeceleration = _defualtMaxDesiredRotationalDeceleration;
+        defaultAngleCorrectionRange = _defaultAngleCorrectionRange;
+        defaultMaxRotationCorrectionVelocityDegrees = _defaultMaxRotationCorrectionVelocityDegrees;
+        defaultMinRotationVelocityToMove = _defaultMinRotationVelocityToMove;
         // Sets notifier thread priority for path generation
         Notifier.setHALThreadPriority(true, 50);
     }
@@ -152,9 +177,38 @@ public class CMConfig {
         return defualtMaxDesiredRotationalVelocity;
     }
 
+    public static double getDefaultTranslationalAcceleration() {
+        return defaultTranslationalAcceleration;
+    }
+    
+    public static double getDefaultTranslationalDeceleration() {
+        return defaultTranslationalDeceleration;
+    }
+    
+
     /** @return Desired end translational velocity when stopping. */
     public static double getDefaultEndTranslationalVelocityForStoppingTrajectories() {
         return defualtEndTranslationalVelocityForStoppingTrajectories;
+    }
+
+    public static double getDefaultMaxDesiredRotationalAcceleration() {
+        return defualtMaxDesiredRotationalAcceleration;
+    }
+
+    public static double getDefaultMaxDesiredRotationalDeceleration() {
+        return defualtMaxDesiredRotationalDeceleration;
+    }
+
+    public static double getDefaultAngleCorrectionRange() {
+        return defaultAngleCorrectionRange;
+    }
+
+    public static double getDefaultMaxRotationCorrectionVelocityDegrees() {
+        return defaultMaxRotationCorrectionVelocityDegrees;
+    }
+
+    public static double getDefaultMinRotationVelocityToMove() {
+        return defaultMinRotationVelocityToMove;
     }
 
 }
