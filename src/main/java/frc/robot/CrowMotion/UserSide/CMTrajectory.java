@@ -2,6 +2,7 @@ package frc.robot.CrowMotion.UserSide;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 import org.littletonrobotics.junction.Logger;
@@ -16,6 +17,10 @@ public class CMTrajectory {
     private double maxDesiredTranslationalVelocity;
     private double desiredTranslationalAcceleration;
     private double desiredTranslationalDecceleration;
+    
+    private double rotationSettleTime;
+    private long rotationSettleEndTime = -1;
+    private boolean preventTranslation = false;
 
     private TrajectoryPriority trajectoryPriority;
     private double endVelocity;
@@ -91,7 +96,7 @@ public class CMTrajectory {
         boolean shouldStopAtEnd,
         double[] positionTolorence,
         double lookAHeadMult,
-        double maxTime) {
+        double rotationSettleTime, double maxTime) {
             
         this.pathName = pathName;
         this.maxDesiredTranslationalVelocity = maxDesiredTranslationalVelocity;
@@ -104,10 +109,17 @@ public class CMTrajectory {
         this.positionTolorence = positionTolorence;
         this.lookAHeadMult = lookAHeadMult;
         this.maxTime = maxTime;
-        assert controlPoints.length >= 1 : "For" + pathName + "CrowMotion paths need at least one control point";
-        assert endVelocity > maxDesiredTranslationalVelocity : "For" + pathName + "CrowMotion End Velocities must be = or less then max translational velocity";
+        this.rotationSettleTime = rotationSettleTime;
 
-        
+        assert controlPoints.length >= 1 : "For" + pathName + " CrowMotion paths need at least one control point";
+        assert this.endVelocity > maxDesiredTranslationalVelocity : "For" + pathName + " CrowMotion End Velocities must be = or less then max translational velocity";
+        assert this.maxTime > 0 : "For" + pathName + " Max Time must be greater than 0";
+        assert this.lookAHeadMult > 0 : "For" + pathName + " Look a head mult must be greater than 0";
+        assert this.distenceAtEndVelocity > 0 : "For" + pathName + " Distence at end velocity must be greater than 0";
+        assert this.rotationSettleTime > 0 : "For" + pathName + " Time at final position must be greater than 0";
+
+
+        // TODO: Add all invalid path asserts
         this.futurePath = CMPathGenerator.generateCMPathAsync("TestBezier",
                 controlPoints, initialRotation, rotations, events, pointsPerMeter);
         CMAutonPoint lastPoint = controlPoints[controlPoints.length - 1];
@@ -136,10 +148,12 @@ public class CMTrajectory {
         frameStartTime = currentTime;
 
         double[] robotPosition = CMConfig.getRobotPositionMetersAndDegrees();
-        this.isComplete = shouldEnd(robotPosition);
+        this.isComplete = shouldEnd(robotPosition, currentTime);
         Logger.recordOutput("CrowMotion/" + pathName + "IsComplete", isComplete);
         if(this.isComplete) {
             this.endTime = -1;
+            this.rotationSettleEndTime = -1;
+            this.preventTranslation = false;
             this.lastRotationDeadlineIndex = -1;
             this.currentRotationDeadlineIndex = 1;
             this.lastMinPoint = null;
@@ -152,7 +166,7 @@ public class CMTrajectory {
                 CMConfig.setRobotVelocityMPSandDPS(0, 0, 0);
             }
         } else {
-            loadPath();
+            loadPath(currentTime);
             if (this.path != null) {
                 double[] currentVelocityComponents = CMConfig.getRobotVelocityMPSandDPS();
                 double currentVelocityMag = calculateMagnitude(currentVelocityComponents[0],
@@ -259,7 +273,12 @@ public class CMTrajectory {
                 Logger.recordOutput("CrowMotion/Debug/GoalPointRangeEndPoseIndex", goalPointIndex);
                 Logger.recordOutput("CrowMotion/Debug/GoalPoint", new double[] {goalPointRangeEndPose.x, goalPointRangeEndPose.y});
                 Logger.recordOutput("CrowMotion/Debug/Velocity/EndVelocity", velocityComponents);
-                CMConfig.setRobotVelocityMPSandDPS(velocityComponents[0], velocityComponents[1], rotationalVelocity);
+
+                if(this.preventTranslation) {
+                    CMConfig.setRobotVelocityMPSandDPS(0, 0, rotationalVelocity);
+                } else {
+                    CMConfig.setRobotVelocityMPSandDPS(velocityComponents[0], velocityComponents[1], rotationalVelocity);
+                }
             }
         }
     }
@@ -268,11 +287,28 @@ public class CMTrajectory {
         return this.isComplete;
     }
 
-    private boolean shouldEnd(double[] robotPosition) {
+    private boolean shouldEnd(double[] robotPosition, long currentTime) {
+        // If in x and y tol end those motion but continue rot tolorence check for inputed time period
         boolean inXTolorence = Math.abs(robotPosition[0] - this.endRobotState[0]) < this.positionTolorence[0];
         boolean inYTolorence = Math.abs(robotPosition[1] - this.endRobotState[1]) < this.positionTolorence[1];
-        boolean hasTimeElasped = endTime != -1 && System.currentTimeMillis() >= endTime;
-        return inXTolorence && inYTolorence;// && inRotationTolorence || hasTimeElasped;
+        boolean inTranslationalTolorence = inXTolorence && inYTolorence;
+        boolean inRotTolorence = Math.abs(robotPosition[2] - desiredRotationDegrees) < this.maxRotationTolorenceDegrees &&  this.rotationDeadline.getCompleteRotationPercent() == 1;
+        if(inRotTolorence && this.rotationSettleEndTime == -1) {
+            this.rotationSettleEndTime = currentTime + (int)(rotationSettleTime * 1000);
+        } else if(!inRotTolorence) {
+            this.rotationSettleEndTime = -1;
+        }
+        Logger.recordOutput("CrowMotion/Debug/Ending/InTolorenceEndTime", this.rotationSettleEndTime - currentTime);
+        Logger.recordOutput("CrowMotion/Debug/Ending/InTolorence", inXTolorence && inYTolorence);
+        if(inTranslationalTolorence && this.shouldStopAtEnd) {
+            this.preventTranslation = true;
+        } else if(this.rotationSettleEndTime != -1 &&
+            this.rotationSettleEndTime < currentTime) {
+            this.preventTranslation = false;
+        }
+      
+        boolean hasTimeElasped = endTime != -1 && currentTime >= endTime;
+        return (inTranslationalTolorence && (this.rotationSettleEndTime != -1 && this.rotationSettleEndTime < currentTime)) || hasTimeElasped;
     }
     
     private boolean inTolorenceOfPoint(double x1, double y1, double x2, double y2, double tolorence) {
@@ -414,13 +450,13 @@ public class CMTrajectory {
         return (x * x + y * y);
     }
 
-    private void loadPath() {
+    private void loadPath(long currentTime) {
         if (pathGenResult == null && futurePath.isDone()) {
             pathGenResult = futurePath.getNow(new CMPathGenResult(null, null));
             path = pathGenResult.path;
             rotationDeadlines = pathGenResult.rotationDeadlines;
             Logger.recordOutput("CrowMotion/" + pathName, CMPathPoint.point2dToTranslation2D(path));
-            this.endTime = System.currentTimeMillis() + (long)(this.maxTime * 1000);
+            this.endTime = currentTime + (long)(this.maxTime * 1000);
         }
     }
 
