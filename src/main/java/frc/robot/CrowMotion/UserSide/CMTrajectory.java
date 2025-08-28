@@ -77,6 +77,10 @@ public class CMTrajectory {
     private double initialDegreesToEnd = 0;
 
     private double maxFrameTime;
+
+    private double drivebaseCircumference;
+    private double maxModuleVelocity;
+
     //TODO: After getting robot pose as an array instentiat 3 vars and pass those around
     public static enum TrajectoryPriority {
         PREFER_ROTATION,
@@ -118,6 +122,8 @@ public class CMTrajectory {
         assert this.distenceAtEndVelocity > 0 : "For" + pathName + " Distence at end velocity must be greater than 0";
         assert this.rotationSettleTime > 0 : "For" + pathName + " Time at final position must be greater than 0";
 
+        this.drivebaseCircumference = CMConfig.getDrivebaseCircumference();
+        this.maxModuleVelocity = CMConfig.getRobotProfile().getMaxPossibleAverageSwerveModuleMPS();
 
         // TODO: Add all invalid path asserts
         this.futurePath = CMPathGenerator.generateCMPathAsync("TestBezier",
@@ -209,6 +215,12 @@ public class CMTrajectory {
 
                 // Trejectory logic
                 double desiredVelocityMag = calculateDesiredTranslationalVelocity(currentVelocityMag, robotPosition);
+                double rotationalVelocity = calculateDesiredRotationalVelocity(Math.abs(currentVelocityComponents[2]), robotPosition);
+                
+                double[] desaturatedVelocities = desaturateVelocities(desiredVelocityMag, Math.abs(rotationalVelocity));
+                desiredVelocityMag = desaturatedVelocities[0];
+                rotationalVelocity = desaturatedVelocities[1] * Math.signum(rotationalVelocity);
+
                 double travelDistence = ((desiredVelocityMag + currentVelocityMag) / 2) * averageFrameTime;
                 
                 double disToNext = calculateMagnitude(nextMinPoint.x - robotPosition[0], nextMinPoint.y - robotPosition[1]);
@@ -262,7 +274,6 @@ public class CMTrajectory {
                 }
 
                 double[] velocityDir = new double[] {goalPointRangeEndPose.x - robotPosition[0], goalPointRangeEndPose.y - robotPosition[1]};
-                double rotationalVelocity = calculateDesiredRotationalVelocity(Math.abs(currentVelocityComponents[2]), robotPosition);
 
                 double[] velocityComponents = calculateComponentVelocities(velocityDir[0], velocityDir[1], desiredVelocityMag);
                 Logger.recordOutput("CrowMotion/Debug/Velocity/MaxTranslationalVelocity", this.maxDesiredTranslationalVelocity);
@@ -292,7 +303,7 @@ public class CMTrajectory {
         boolean inXTolorence = Math.abs(robotPosition[0] - this.endRobotState[0]) < this.positionTolorence[0];
         boolean inYTolorence = Math.abs(robotPosition[1] - this.endRobotState[1]) < this.positionTolorence[1];
         boolean inTranslationalTolorence = inXTolorence && inYTolorence;
-        boolean inRotTolorence = Math.abs(robotPosition[2] - desiredRotationDegrees) < this.maxRotationTolorenceDegrees &&  this.rotationDeadline.getCompleteRotationPercent() == 1;
+        boolean inRotTolorence = Math.abs(robotPosition[2] - desiredRotationDegrees) < this.maxRotationTolorenceDegrees && this.rotationDeadline.getCompleteRotationPercent() == 1;
         if(inRotTolorence && this.rotationSettleEndTime == -1) {
             this.rotationSettleEndTime = currentTime + (int)(rotationSettleTime * 1000);
         } else if(!inRotTolorence) {
@@ -311,12 +322,44 @@ public class CMTrajectory {
         return (inTranslationalTolorence && (this.rotationSettleEndTime != -1 && this.rotationSettleEndTime < currentTime)) || hasTimeElasped;
     }
     
-    private boolean inTolorenceOfPoint(double x1, double y1, double x2, double y2, double tolorence) {
-        boolean inXTolorence = Math.abs(x1 - x2) < tolorence;
-        boolean inYTolorence = Math.abs(y1 - x2) < tolorence;
-        return inXTolorence && inYTolorence;
+    private double[] desaturateVelocities(double desiredTranslationMag, double desiredRotMag) {
+        double velocityNeededForRotation = ((desiredRotMag/360) * this.drivebaseCircumference);
+        double requiredModuleVelocity = desiredTranslationMag + velocityNeededForRotation;
+        if(requiredModuleVelocity > this.maxModuleVelocity) {
+            switch (trajectoryPriority) {
+                case SPLIT_PROPORTIONALLY:
+                    {
+                        double proportion = maxModuleVelocity / (desiredTranslationMag + velocityNeededForRotation);
+                        double newTranslationalVelocity = desiredTranslationMag * proportion;
+                        double newRotationalLinearVelocity = maxModuleVelocity - newTranslationalVelocity;
+                        double newRotationalVelocity = (newRotationalLinearVelocity * 360) / drivebaseCircumference;
+                        return new double[] {newTranslationalVelocity, newRotationalVelocity};
+                    }
+                case PREFER_TRANSLATION:
+                    {
+                        if(desiredTranslationMag > maxModuleVelocity) {
+                            return new double[] {desiredTranslationMag, 0};
+                        }
+                        double newRotationalLinearVelocity = maxModuleVelocity - desiredTranslationMag;
+                        double newRotationVelocity = (newRotationalLinearVelocity * 360) / drivebaseCircumference;
+                        return new double[] {desiredTranslationMag, newRotationVelocity};
+                    }
+                case PREFER_ROTATION: 
+                    {
+                        if(velocityNeededForRotation > maxModuleVelocity) {
+                            return new double[] {0, desiredRotMag};
+                        }
+                        double newTranslationalVelocity = maxModuleVelocity - velocityNeededForRotation;
+                        return new double[] {newTranslationalVelocity, desiredRotMag};
+                    }
+                default:
+                    return new double[] {desiredTranslationMag, desiredRotMag};
+            }
+        }
+        return new double[] {desiredTranslationMag, desiredRotMag};
+        
     }
-    
+
     private double[] calculateComponentVelocities(double deltaX, double deltaY,
         double translationalVelocityMagnitude) {
         double length = calculateMagnitude(deltaX, deltaY);
@@ -468,5 +511,7 @@ public class CMTrajectory {
         }
         return value;
     }
+
+    
 }
 

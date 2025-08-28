@@ -300,7 +300,6 @@ public class DriveSubsystem extends SubsystemBase{
         CMConfig.init(new CMRobotProfile(4.311, 578, 4.311, ()-> 0.0),
          this::getRobotPositionCrowMotion,
          this::getRobotVelocitiesCrowMotion,
-         this::getAverageSwerveModuleVelocity,
          this::driveCrowMotion,
          SwerveDriveConstants.kDistanceBetweenCentersOfRightAndLeftWheels,
          SwerveDriveConstants.kDistanceBetweenCentersOfFrontAndBackWheels,

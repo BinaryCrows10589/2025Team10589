@@ -244,10 +244,8 @@ public class Robot extends LoggedRobot {
                 new CMAutonPoint(2, 1),
             }, 0,  
                 new CMRotation[] {
-                    new CMRotation(170, 1,
-                        .9,480, 480, 480, 1, 5, .5, .5, 10),
-                    new CMRotation(0, 0,
-                        1,480, 480, 480, 1, 5, .5, .5, 10)
+                    new CMRotation(0, 1,
+                        .2,480, 480, 480, 1, 5, .5, .5, 10),
                 },
                 new CMEvent[] {},
                 3, 3.5, 3.5f, 3.5,

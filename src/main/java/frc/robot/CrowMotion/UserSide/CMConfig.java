@@ -18,7 +18,7 @@ public class CMConfig {
     private static Supplier<double[]> getRobotVelocityMPSandDPS;
     private static Supplier<Double> getAverageSwerveModuleVelocityMPS;
     private static Consumer<double[]> setRobotVelocityMPSANDDPS;
-    private static double wheelCircumference;
+    private static double drivebaseCircumference;
 
     private static boolean isBlueAlliance;
     private static Supplier<Boolean> defualtShouldMirror;
@@ -48,7 +48,6 @@ public class CMConfig {
         CMRobotProfile _robotProfile,
         Supplier<double[]> _getRobotPositionMetersAndDegrees,
         Supplier<double[]> _getRobotVelocityMPSAndDPS,
-        Supplier<Double> _getAverageSwerveModuleVelocityMPS,
         Consumer<double[]> _setRobotVelocityMPSANDDPS,
         double _distanceBetweenCentersOfRightAndLeftWheels,
         double _distanceBetweenCentersOfFrontAndBackWheels,
@@ -73,9 +72,8 @@ public class CMConfig {
         robotProfile = _robotProfile;
         getRobotPositionMetersAndDegrees = _getRobotPositionMetersAndDegrees;
         getRobotVelocityMPSandDPS = _getRobotVelocityMPSAndDPS;
-        getAverageSwerveModuleVelocityMPS = _getAverageSwerveModuleVelocityMPS;
         setRobotVelocityMPSANDDPS = _setRobotVelocityMPSANDDPS;
-        wheelCircumference = calculateWheelCircumference(_distanceBetweenCentersOfRightAndLeftWheels, _distanceBetweenCentersOfFrontAndBackWheels);
+        drivebaseCircumference = calculateDrivebaseCircumference(_distanceBetweenCentersOfRightAndLeftWheels, _distanceBetweenCentersOfFrontAndBackWheels);
         isBlueAlliance = _isBlueAlliance;
         defualtShouldMirror = _defaultShouldMirror;
         fieldWidthMeters = _fieldWidthMeters;
@@ -99,7 +97,7 @@ public class CMConfig {
         Notifier.setHALThreadPriority(true, 50);
     }
 
-    private static double calculateWheelCircumference(double distanceBetweenCentersOfRightAndLeftWheels, double distanceBetweenCentersOfFrontAndBackWheels) {
+    private static double calculateDrivebaseCircumference(double distanceBetweenCentersOfRightAndLeftWheels, double distanceBetweenCentersOfFrontAndBackWheels) {
         double majorAxis = Math.max(distanceBetweenCentersOfRightAndLeftWheels, distanceBetweenCentersOfFrontAndBackWheels);
         double minorAxis = Math.min(distanceBetweenCentersOfRightAndLeftWheels, distanceBetweenCentersOfFrontAndBackWheels);
         double h = Math.pow(((majorAxis - minorAxis) / (majorAxis + minorAxis)), 2);
@@ -138,8 +136,8 @@ public class CMConfig {
     }
 
     /** @return The wheel circumference in meters */
-    public static double getWheelCircumference() {
-        return wheelCircumference;
+    public static double getDrivebaseCircumference() {
+        return drivebaseCircumference;
     }
 
     /** @return If the current allience is the blue alliance */
