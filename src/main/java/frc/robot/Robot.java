@@ -229,6 +229,12 @@ public class Robot extends LoggedRobot {
     public void teleopInit() {
         VisionConstants.updateVision = true;
         checkDriverStationUpdate();
+        Logger.recordOutput("CrowMotion/Debug/Events/Event1", false);
+        Logger.recordOutput("CrowMotion/Debug/Events/Event2", false);
+        Logger.recordOutput("CrowMotion/Debug/Events/Event3", false);
+        Logger.recordOutput("CrowMotion/Debug/Events/Event4", false);
+        Logger.recordOutput("CrowMotion/Debug/Events/Event5", false);
+        Logger.recordOutput("CrowMotion/Debug/Events/Event6", false);
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
