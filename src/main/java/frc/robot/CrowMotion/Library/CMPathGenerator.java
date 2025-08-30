@@ -62,7 +62,6 @@ public class CMPathGenerator {
         }
         
         CMPathPoint[] path = new CMPathPoint[translationData.length];
-        ArrayList<Translation2d> translationsForLogging = new ArrayList<Translation2d>();
         
         Point2D.Double translationLast = null;
         double currentDistenceFromStart = 0.0;
@@ -75,10 +74,6 @@ public class CMPathGenerator {
             currentDistenceFromStart += distenceFromLast;
             translationLast = translation;
             path[i] = new CMPathPoint(translation, currentDistenceFromStart);
-            
-            if (i % 10 == 0) {
-                translationsForLogging.add(new Translation2d(translation.x, translation.y));
-            }
         }
 
         return new CMPathGenResult(path, rotations, events);
