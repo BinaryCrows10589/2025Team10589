@@ -244,33 +244,39 @@ public class Robot extends LoggedRobot {
                 new CMAutonPoint(2, 1),
             }, 0,  
                 new CMRotation[] {
+                    new CMRotation(170, 1,
+                        .9,480, 480, 480, 1, 5, .5, .5, 10),
                     new CMRotation(0, 1,
-                        .2,480, 480, 480, 1, 5, .5, .5, 10),
-                },
-                new CMEvent[] {},
-                3, 3.5, 3.5f, 3.5,
+                        1,480, 480, 480, 1, 5, .5, .5, 10),
+                    },
+                    new CMEvent[] {
+                        new CMEvent("Event1", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event1", true), 0),
+                        new CMEvent("Event2", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event2", true), 0.2),
+                        new CMEvent("Event3", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event3", true), 0.4),
+                        new CMEvent("Event4", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event4", true), 0.53),
+                        new CMEvent("Event5", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event5", true), 0.8),
+                        new CMEvent("Event6", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event6", true), 1)
+                    },                3, 3.5, 3.5f, 3.5,
                 TrajectoryPriority.SPLIT_PROPORTIONALLY,
                 .15, .1, true,
                 new double[] { .01, .01}, 10,
                 .1,
-                20);
+                12);
         robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d()));
         
     }
-/*new CMRotation(0, 1,
+    /*new CMRotation(0, 1,
                         .3,480, 480, 480, 1, 5, .5, .5, 10),
                     new CMRotation(-20, 0,
                         .8,480, 480, 480, 1, 5, .5, .5, 10), */
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        if (!trajectory.isCompleted()) {
+        System.out.println("Running Periodic");
+        if(!trajectory.isCompleted()) {
             trajectory.runTrejectoryFrame();
-        } else {
-            robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d()));
         }
-
-
+      
         // this.robotContainer.driveSubsystem().drive(4.311, 0 ,0);
         // RobotProfilingUtil.ProfileMaxPossibleRotationalVelocityDPS.profileMaxPossibleRotationalVelocityDPS();
         // RobotProfilingUtil.ProfileMaxPossibleTranslationalVelocityMPSMaxPossibleAverageSwerveModuleMPS.profileMaxPossibleTranslationalVelocityMPSAndMaxPossibleAverageSwerveModuleMPS();

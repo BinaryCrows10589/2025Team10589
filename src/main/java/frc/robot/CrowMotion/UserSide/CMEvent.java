@@ -5,7 +5,7 @@ public class CMEvent {
     private String eventName;
     private Runnable eventFunction;
     private double eventTriggerPercent;
-    private boolean isEventTriggered = false;
+    private boolean hasBeenTriggered = false;
 
     /**
      * Constructs a new CMEvent with the specified event name, event function, and trigger percentage.
@@ -45,6 +45,14 @@ public class CMEvent {
      */
     public double getEventTriggerPercent() {
         return eventTriggerPercent;
+    }
+
+    public boolean setHasBeenTriggered(boolean triggered) {
+        return this.hasBeenTriggered = triggered;
+    }
+
+    public boolean getHasBeenTriggered() {
+        return this.hasBeenTriggered;
     }
 
 }

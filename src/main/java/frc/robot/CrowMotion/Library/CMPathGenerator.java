@@ -63,8 +63,7 @@ public class CMPathGenerator {
         
         CMPathPoint[] path = new CMPathPoint[translationData.length];
         ArrayList<Translation2d> translationsForLogging = new ArrayList<Translation2d>();
-        //double lastRotation = currentRotation;
-        int currentRotationCheckPoint = 0;
+        
         Point2D.Double translationLast = null;
         double currentDistenceFromStart = 0.0;
         for (int i = 0; i < translationData.length; i++) {
@@ -81,19 +80,8 @@ public class CMPathGenerator {
                 translationsForLogging.add(new Translation2d(translation.x, translation.y));
             }
         }
-        int[] rotationDeadlines = new int[rotations.length];
-        for (int i = 0; i < rotations.length; i++) {
-            int deadlineIndex = (int) (rotations[i].getCompleteRotationPercent() * (translationData.length - 1));
-            path[deadlineIndex].setDesiredRotation(rotations[i]);
-            rotationDeadlines[i] = deadlineIndex;
-        }
 
-        for (int i = 0; i < events.length; i++) {
-            int triggerIndex = (int) (events[i].getEventTriggerPercent() * (translationData.length - 1));
-            path[triggerIndex].setEvent(events[i]);
-        }
-
-        return new CMPathGenResult(path, rotationDeadlines);
+        return new CMPathGenResult(path, rotations, events);
     }
 
     private static Point2D.Double[] generateLinearPointArray(CMAutonPoint[] controlPoints, double pointsPerMeter) {
@@ -159,19 +147,6 @@ public class CMPathGenerator {
         }
 
         return curvePoints;
-    }
-
-    public static void writePointsToCSV(CMPathPoint[] points, String filename) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename, true))) {
-            for (CMPathPoint point : points) {
-                writer.printf("%.4f,%.4f,%.4f\n",
-                        point.getTranslationalPoint().getX(),
-                        point.getTranslationalPoint().getY(),
-                        point.getDesiredRotation());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }
