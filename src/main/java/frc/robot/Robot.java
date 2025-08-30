@@ -14,6 +14,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -247,13 +248,13 @@ public class Robot extends LoggedRobot {
                 new CMAutonPoint(FieldConstants.kFieldLengthMeters,
                     FieldConstants.kFieldWidthMeters),
                 new CMAutonPoint(6, 7),
-                new CMAutonPoint(2, 1),
-            }, 0,  
+                new CMAutonPoint(12, 6),
+            }, 
                 new CMRotation[] {
-                    new CMRotation(170, 1,
+                    new CMRotation(90, 1,
                         .9,480, 480, 480, 1, 5, .5, .5, 10),
                     new CMRotation(0, 1,
-                        1,480, 480, 480, 1, 5, .5, .5, 10),
+                        1,480, 480, 480, 1, 5, .5, 1, 20),
                     },
                     new CMEvent[] {
                         new CMEvent("Event1", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event1", true), 0),
@@ -262,14 +263,14 @@ public class Robot extends LoggedRobot {
                         new CMEvent("Event4", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event4", true), 0.53),
                         new CMEvent("Event5", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event5", true), 0.8),
                         new CMEvent("Event6", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event6", true), 1)
-                    },                3, 3.5, 3.5f, 3.5,
+                    },                3, 4.4, 4, 4,
                 TrajectoryPriority.SPLIT_PROPORTIONALLY,
-                .15, .1, true,
+                .05, .05, true,
                 new double[] { .01, .01}, 10,
-                .1,
+                .04,
                 12);
-        robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d()));
-        
+        robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d(FieldConstants.kFieldLengthMeters, FieldConstants.kFieldWidthMeters, new Rotation2d(Math.PI))));
+        trajectory.init();
     }
     /*new CMRotation(0, 1,
                         .3,480, 480, 480, 1, 5, .5, .5, 10),
@@ -281,6 +282,9 @@ public class Robot extends LoggedRobot {
         System.out.println("Running Periodic");
         if(!trajectory.isCompleted()) {
             trajectory.runTrejectoryFrame();
+        } else{
+            robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d(FieldConstants.kFieldLengthMeters, FieldConstants.kFieldWidthMeters, new Rotation2d(Math.PI))));
+            trajectory.init();
         }
       
         // this.robotContainer.driveSubsystem().drive(4.311, 0 ,0);

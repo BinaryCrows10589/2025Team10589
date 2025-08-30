@@ -14,65 +14,68 @@ import frc.robot.CrowMotion.Library.CMPathGenerator;
 import frc.robot.CrowMotion.Library.CMPathPoint;
 
 public class CMTrajectory {
-
     private String pathName;
+    private double drivebaseCircumference;
+    private double maxModuleVelocity;
     private double maxDesiredTranslationalVelocity;
     private double desiredTranslationalAcceleration;
     private double desiredTranslationalDecceleration;
-    
-    private double rotationSettleTime;
-    private long rotationSettleEndTime = -1;
-    private boolean preventTranslation = false;
-
     private TrajectoryPriority trajectoryPriority;
     private double endVelocity;
     private double distenceAtEndVelocity;
-
     private boolean shouldStopAtEnd;
     private double[] positionTolorence;
     private double lookAHeadMult;
+    private double rotationSettleTime;
     private double maxTime;
-    private CompletableFuture<CMPathGenResult> futurePath;
 
+    private CompletableFuture<CMPathGenResult> futurePath;
     private CMPathGenResult pathGenResult = null;
     private CMPathPoint[] path = null;
     private CMRotation[] rotationDeadlines = null;
+    private CMEvent[] events = null;
     private double[] endRobotState;
-    private long endTime = -1;
-    private boolean isComplete = false;
 
+    private long endTime = -1;
+    private long rotationSettleEndTime = -1;
     private long frameStartTime = -1;
-    private double averageFrameTime = .02;
+
+    private boolean isComplete = false;
+    private boolean preventTranslation = false;
+
+    private double averageFrameTime = 0.02;
+    private double maxFrameTime = 0;
 
     private int currentMinPointIndex = 1;
+    private int goalPointIndex = 0;
     private CMPathPoint lastMinPointPathPoint = null;
-    private Point2D.Double lastMinPoint = null;
-    private Point2D.Double nextMinPoint = null;
-
-    private Point2D.Double currentMinPoint = null;
     private CMPathPoint currentMinPointPathPoint = null;
     private CMPathPoint endPoint = null;
-    private int goalPointIndex;
+    private Point2D.Double lastMinPoint = null;
+    private Point2D.Double currentMinPoint = null;
+    private Point2D.Double nextMinPoint = null;
 
-    private boolean shouldDecelerate = false;
     private double velocityDelta = 0;
-    private boolean firstDecelerationFrame = true;
     private double initialDistenceToEnd = 0;
+    private boolean shouldDecelerate = false;
+    private boolean firstDecelerationFrame = true;
 
     private int lastRotationDeadlineIndex = -1;
     private int currentRotationDeadlineIndex = 0;
     private CMRotation rotationDeadline = null;
-    private double desiredRotationDegrees;
-    private double maxRotationVelocityDegrees;
-    private double desiredRotationalAccelerationDegrees;
-    private double desiredRotatioanalDecelerationDegrees;
+
+    private double desiredRotationDegrees = 0;
+    private double maxRotationVelocityDegrees = 0;
+    private double desiredRotationalAccelerationDegrees = 0;
+    private double desiredRotatioanalDecelerationDegrees = 0;
     private int rotationDirection = 0;
+
     private double rotationCorrectionRangeDegrees = 0;
     private double maxRotationCorrectionVelocityDegrees = 0;
     private double minRotationVelocityToMove = 0;
-    private double maxRotationTolorenceDegrees;
-    private double decelerationBufferDegrees;
-    private double rotationDeadlineCompletePercent;
+    private double maxRotationTolorenceDegrees = 0;
+    private double decelerationBufferDegrees = 0;
+    private double rotationDeadlineCompletePercent = 0;
 
     private boolean firstRotationDecelerationFrame = true;
     private boolean enteredCorrectionRange = false;
@@ -80,15 +83,8 @@ public class CMTrajectory {
     private double initalRotationalVelocity = 0;
     private double initialDegreesToEnd = 0;
 
-    private double maxFrameTime;
-    private double startTime = 0;
-    private long calls = 0;
-
-    private double drivebaseCircumference;
-    private double maxModuleVelocity;
-
-    private CMEvent[] events;
     private int lastTriggeredEventIndex = -1;
+
 
     //TODO: After getting robot pose as an array instentiat 3 vars and pass those around
     public static enum TrajectoryPriority {
@@ -97,8 +93,11 @@ public class CMTrajectory {
         SPLIT_PROPORTIONALLY
     }
 
-    public CMTrajectory(String pathName, CMAutonPoint[] controlPoints, double initialRotation,
-        CMRotation[] rotations, CMEvent[] events,
+    public CMTrajectory(
+        String pathName,
+        CMAutonPoint[] controlPoints,
+        CMRotation[] rotations,
+        CMEvent[] events,
         double pointsPerMeter,
         double maxDesiredTranslationalVelocity,
         double desiredTranslationalAcceleration,
@@ -109,7 +108,8 @@ public class CMTrajectory {
         boolean shouldStopAtEnd,
         double[] positionTolorence,
         double lookAHeadMult,
-        double rotationSettleTime, double maxTime) {
+        double rotationSettleTime,
+        double maxTime) {
             
         this.pathName = pathName;
         this.maxDesiredTranslationalVelocity = maxDesiredTranslationalVelocity;
@@ -136,22 +136,65 @@ public class CMTrajectory {
 
         // TODO: Add all invalid path asserts
         this.futurePath = CMPathGenerator.generateCMPathAsync("TestBezier",
-                controlPoints, initialRotation, rotations, events, pointsPerMeter);
+                controlPoints, rotations, events, pointsPerMeter);
         CMAutonPoint lastPoint = controlPoints[controlPoints.length - 1];
-        double endRotation = rotations.length == 0 ? initialRotation
-                : rotations[rotations.length - 1].getAngleDegrees();
-        this.endRobotState = new double[] { lastPoint.getX(), lastPoint.getY(), endRotation };
+        
+        this.endRobotState = new double[] { lastPoint.getX(), lastPoint.getY()};
     }
-    // I want to clamp the vector to have a max change per frame, that is equal to the max accelration, but insteed of magnatude also takes into acount rotations. It shoud rotate the vector over just flipping dir 
-    /* 3. When doing 2 also approximate the desired rotation by the end of this frame
-        * 4. Desaturate the translation and rotaiton velocity in acordence with the path priority given
-        * 5. Calculate translational vector
-        * 6. Apply velocities
-        */
+
+    public void init() {
+        endTime = -1;
+        rotationSettleEndTime = -1;
+        frameStartTime = -1;
+
+        isComplete = false;
+        preventTranslation = false;
+    
+        averageFrameTime = 0.02;
+        maxFrameTime = 0;
+    
+        currentMinPointIndex = 1;
+        goalPointIndex = 0;
+        lastMinPointPathPoint = null;
+        currentMinPointPathPoint = null;
+        endPoint = null;
+        lastMinPoint = null;
+        currentMinPoint = null;
+        nextMinPoint = null;
+    
+        velocityDelta = 0;
+        initialDistenceToEnd = 0;
+        shouldDecelerate = false;
+        firstDecelerationFrame = true;
+    
+        lastRotationDeadlineIndex = -1;
+        currentRotationDeadlineIndex = 0;
+        rotationDeadline = null;
+    
+        desiredRotationDegrees = 0;
+        maxRotationVelocityDegrees = 0;
+        desiredRotationalAccelerationDegrees = 0;
+        desiredRotatioanalDecelerationDegrees = 0;
+        rotationDirection = 0;
+    
+        rotationCorrectionRangeDegrees = 0;
+        maxRotationCorrectionVelocityDegrees = 0;
+        minRotationVelocityToMove = 0;
+        maxRotationTolorenceDegrees = 0;
+        decelerationBufferDegrees = 0;
+        rotationDeadlineCompletePercent = 0;
+    
+        firstRotationDecelerationFrame = true;
+        enteredCorrectionRange = false;
+        shouldDecelerateRotation = false;
+        initalRotationalVelocity = 0;
+        initialDegreesToEnd = 0;
+    
+        lastTriggeredEventIndex = -1;
+    }
+
     public void runTrejectoryFrame() {
         long currentTime = System.currentTimeMillis();
-        loadPath(currentTime);
-
         if(frameStartTime != -1) {
             double frameTime = (currentTime - frameStartTime) / 1000.0; // Convert to seconds
             if(frameTime > maxFrameTime) {
@@ -179,28 +222,16 @@ public class CMTrajectory {
                             lastTriggeredEventIndex = i;
                         }
                     }
-
+                }
+                
+                if(events != null) {
                     for(int i = 0; i < this.events.length; i++) {
                         events[i].setHasBeenTriggered(false);
                     }
                 }
-
-                this.endTime = -1;
-                this.rotationSettleEndTime = -1;
-                this.preventTranslation = false;
-                this.lastRotationDeadlineIndex = -1;
-                this.currentRotationDeadlineIndex = 0;
-                this.lastMinPointPathPoint = null;
-                this.lastMinPoint = null;
-                this.currentMinPointPathPoint = null;
-                this.currentMinPoint = null;
-                this.nextMinPoint = null;
-                this.endPoint = null;
-                this.lastTriggeredEventIndex = -1;
-        
                 if (this.shouldStopAtEnd) {
                     CMConfig.setRobotVelocityMPSandDPS(0, 0, 0);
-                }
+                }        
             } else {
                 double[] currentVelocityComponents = CMConfig.getRobotVelocityMPSandDPS();
                 double currentVelocityMag = calculateMagnitude(currentVelocityComponents[0],
@@ -341,6 +372,8 @@ public class CMTrajectory {
                     CMConfig.setRobotVelocityMPSandDPS(velocityComponents[0], velocityComponents[1], rotationalVelocity);
                 }
             }
+        } else {
+            loadPath(currentTime);
         }
     }
         
@@ -368,16 +401,18 @@ public class CMTrajectory {
             this.rotationSettleEndTime < currentTime) {
             this.preventTranslation = false;
         }
-      
+        
         boolean hasTimeElasped = endTime != -1 && currentTime >= endTime;
 
         boolean doneWithRot = (this.rotationSettleEndTime != -1 && this.rotationSettleEndTime < currentTime) || rotationDeadlineCompletePercent != 1;
+        Logger.recordOutput("CrowMotion/Debug/Ending/DoneWithRot",this.rotationSettleEndTime != -1);
         return (inTranslationalTolorence && doneWithRot) || hasTimeElasped;
     }
     
     private double[] desaturateVelocities(double desiredTranslationMag, double desiredRotMag) {
         double velocityNeededForRotation = ((desiredRotMag/360) * this.drivebaseCircumference);
         double requiredModuleVelocity = desiredTranslationMag + velocityNeededForRotation;
+         
         if(requiredModuleVelocity > this.maxModuleVelocity) {
             switch (trajectoryPriority) {
                 case SPLIT_PROPORTIONALLY:
@@ -553,7 +588,6 @@ public class CMTrajectory {
             rotationDeadlines = pathGenResult.rotationDeadlines;
             events = pathGenResult.events;
             Logger.recordOutput("CrowMotion/" + pathName, CMPathPoint.point2dToTranslation2D(path));
-            this.startTime = currentTime;
             this.endTime = currentTime + (long)(this.maxTime * 1000);
         }
     }

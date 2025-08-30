@@ -230,7 +230,7 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     public void setRobotPose(AutonPoint newRobotPose) {
-       // setRobotPose(newRobotPose.getAutonPoint());
+        setRobotPose(newRobotPose.getAutonPoint());
     }
 
     public void setRobotStartingPose(AutonPoint newRobotPose) {
@@ -239,7 +239,7 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     private void setRobotPose(Pose2d newRobotPose) {
-        //this.poseEstimatorSubsystem.setRobotPose(newRobotPose);
+        this.poseEstimatorSubsystem.setRobotPose(newRobotPose);
     }
 
     public void resetRobotPose() {

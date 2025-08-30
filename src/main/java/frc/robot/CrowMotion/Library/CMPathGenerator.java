@@ -20,7 +20,7 @@ import frc.robot.CrowMotion.UserSide.CMRotation;
 public class CMPathGenerator {
 
     public static CompletableFuture<CMPathGenResult> generateCMPathAsync(String pathTime,
-            CMAutonPoint[] controlPoints, double initialRotation, CMRotation[] rotations, CMEvent[] events,
+            CMAutonPoint[] controlPoints, CMRotation[] rotations, CMEvent[] events,
             double pointsPerMeter) {
         CompletableFuture<CMPathGenResult> future = new CompletableFuture<>();
 
@@ -28,7 +28,7 @@ public class CMPathGenerator {
         RobotModeConstants.startPathGenTime = System.currentTimeMillis();
         holder[0] = new Notifier(() -> {
             try {
-                CMPathGenResult result = createCMPath(pathTime, controlPoints, initialRotation, rotations, events,
+                CMPathGenResult result = createCMPath(pathTime, controlPoints, rotations, events,
                         pointsPerMeter);
                 future.complete(result);
             } catch (Exception e) {
@@ -47,7 +47,7 @@ public class CMPathGenerator {
     }
 
     private static CMPathGenResult createCMPath(String pathName, CMAutonPoint[] controlPoints,
-            double initialRotation, CMRotation[] rotations, CMEvent[] events, double pointsPerMeter) {
+           CMRotation[] rotations, CMEvent[] events, double pointsPerMeter) {
         Point2D.Double[] translationData;
         double[] robotPosition = CMConfig.getRobotPositionMetersAndDegrees();
 
