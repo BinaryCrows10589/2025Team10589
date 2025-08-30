@@ -7,7 +7,6 @@ package frc.robot.CrowMotion.UserSide;
  * All distance units are in meters.
  */
 public class CMAutonPoint {
-
     private double x;
     private double y;
     private boolean shouldMirror = false;
@@ -61,6 +60,19 @@ public class CMAutonPoint {
     public CMAutonPoint(double x, double y) {
         this(x, y, 0, 0, 0, 0, CMConfig.getShouldMirror());
     }
+
+    /**
+     * Constructs a CMAutonPoint with no alliance-specific fudging and 
+     * mirror setting determined from configuration.
+     *
+     * @param x the base x-coordinate in meters
+     * @param y the base y-coordinate in meters
+     * @param shouldMirror whether to mirror the y-coordinate across the field
+     */
+    public CMAutonPoint(double x, double y, boolean shouldMirror) {
+        this(x, y, 0, 0, 0, 0, shouldMirror);
+    }
+
 
     /**
      * Gets the x-coordinate adjusted by alliance-specific fudge values.

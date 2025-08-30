@@ -33,6 +33,7 @@ import frc.robot.CrowMotion.UserSide.CMRotation;
 import frc.robot.CrowMotion.UserSide.CMTrajectory;
 import frc.robot.CrowMotion.UserSide.CMTrajectory.TrajectoryPriority;
 import frc.robot.Utils.AutonUtils.AutonPointUtils.AutonPoint;
+import frc.robot.Utils.CommandUtils.Wait;
 import frc.robot.Utils.GeneralUtils.PercentError;
 import frc.robot.Utils.GeneralUtils.Tolerance;
 import frc.robot.Utils.GeneralUtils.NetworkTableChangableValueUtils.NetworkTablesChangableValue;
@@ -277,14 +278,21 @@ public class Robot extends LoggedRobot {
                     new CMRotation(-20, 0,
                         .8,480, 480, 480, 1, 5, .5, .5, 10), */
     /** This function is called periodically during operator control. */
+    Wait wait = new Wait(5);
     @Override
     public void teleopPeriodic() {
         System.out.println("Running Periodic");
         if(!trajectory.isCompleted()) {
             trajectory.runTrejectoryFrame();
         } else{
-            robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d(FieldConstants.kFieldLengthMeters, FieldConstants.kFieldWidthMeters, new Rotation2d(Math.PI))));
-            trajectory.init();
+            if(wait.hasTimePassed()) {
+                robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d(FieldConstants.kFieldLengthMeters, FieldConstants.kFieldWidthMeters, new Rotation2d(Math.PI))));
+                trajectory.init();
+                wait.disableTimer();
+            } else if(!wait.isEnabled()) {
+                wait.startTimer();
+            }
+            
         }
       
         // this.robotContainer.driveSubsystem().drive(4.311, 0 ,0);

@@ -75,7 +75,8 @@ public class RobotContainer {
         this.driveSubsystem = this.robotCreator.getDriveSubsystem();
         this.driveCommandFactory = new DriveCommandFactory(this.driveSubsystem, this.robotCreator.getElevatorSubsystem(), this.driverController);   
         this.fieldOrientedDriveCommand = this.driveCommandFactory.createFieldOrientedDriveCommand();
-        //this.driveSubsystem.setDefaultCommand(this.fieldOrientedDriveCommand);
+        this.driveSubsystem.setDefaultCommand(this.fieldOrientedDriveCommand);
+
         this.lockSwerves = this.driveCommandFactory.createLockSwervesCommand();
         this.resetOdometry = this.driveCommandFactory.createResetOdometryCommand();
         this.climberCommandFactory = new ClimberCommandFactory(this.robotCreator.getClimberSubsystem());
@@ -299,6 +300,11 @@ public class RobotContainer {
     public void onRobotEnable() {
         this.robotCreator.getAlgaePivotSubsystem().setDesiredPivotRotation(AlgaePivotConstants.kDefultPivotPosition);
         this.robotCreator.getElevatorSubsystem().disableElevatorMotors();
+    }
+
+    public void setDefualtDriveCommand() {
+        this.driveSubsystem.setDefaultCommand(this.fieldOrientedDriveCommand);
+
     }
         
 }
