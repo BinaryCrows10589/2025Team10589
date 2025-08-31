@@ -253,7 +253,7 @@ public class Robot extends LoggedRobot {
             }, 
                 new CMRotation[] {
                     new CMRotation(90, 1,
-                        .9,480, 480, 480, 1, 5, .5, .5, 10),
+                        0,480, 480, 480, 1, 5, .5, .5, 10),
                     new CMRotation(0, 1,
                         1,480, 480, 480, 1, 5, .5, 1, 20),
                     },

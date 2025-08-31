@@ -67,6 +67,66 @@ public class CMRotation {
             minRotationVelocityToMoveDegrees,
             maxTolorenceDegrees, decelerationBufferDegrees,
             CMConfig.getShouldMirror());
+
+        if(maxRotationVelocityDegrees <= 0) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Rotation's maximum rotation velocity must be positive, not: " + maxRotationVelocityDegrees
+            );
+        }
+
+        if(desiredRotationalAccelerationDegrees <= 0) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Rotation's desired rotational acceleration must be positive, not: " + desiredRotationalAccelerationDegrees
+            );
+        }
+        
+        if(desiredRotationDecelerationDegrees <= 0) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Rotation's desired rotation deceleration must be positive, not: " + desiredRotationDecelerationDegrees
+            );
+        }
+        
+        if(angleCorrectionRange < 0) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Rotation's angle correction range must be >= 0, not: " + angleCorrectionRange
+            );
+        }
+        
+        if(decelerationBufferDegrees < 0) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Rotation's deceleration buffer degrees must be >= 0, not: " + decelerationBufferDegrees
+            );
+        }
+        
+        if(minRotationVelocityToMoveDegrees <= 0) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Rotation's minimum rotation velocity to move must be positive, not: " + minRotationVelocityToMoveDegrees
+            );
+        }
+        
+        if(maxRotationCorrectionVelocityDegrees <= 0) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Rotation's maximum rotation correction velocity must be positive, not: " + maxRotationCorrectionVelocityDegrees
+            );
+        }
+        
+        if(maxTolorenceDegrees <= 0) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Rotation's maximum tolerance degrees must be positive, not: " + maxTolorenceDegrees
+            );
+        }
+
+        if(this.rotationDirrection != 0 && this.rotationDirrection != 1 && this.rotationDirrection != -1) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Rotation's rotation direction must be 0, 1 or -1 not: " + this.rotationDirrection
+            );
+        }
+
+        if(this.completeRotationPercent < 0 || this.completeRotationPercent > 1) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Rotation's complete rotation percent between(inclusive) 0 and 1 not: " + this.completeRotationPercent
+            );
+        }
     }
     
 

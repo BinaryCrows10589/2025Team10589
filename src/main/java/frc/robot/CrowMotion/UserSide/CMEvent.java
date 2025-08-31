@@ -18,6 +18,12 @@ public class CMEvent {
         this.eventName = eventName;
         this.eventFunction = eventFunction;
         this.eventTriggerPercent = eventTriggerPercent;
+
+        if(eventTriggerPercent < 0 || eventTriggerPercent > 1) {
+            throw new ExceptionInInitializerError(
+                "CrowMotion Event's eventTriggerPercent must be between 0 and 1(inclusive), not: " + eventTriggerPercent
+            );
+        }
     }
 
     /**

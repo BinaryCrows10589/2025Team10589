@@ -121,18 +121,37 @@ public class CMTrajectory {
         this.lookAHeadMult = lookAHeadMult;
         this.maxTime = maxTime;
         this.rotationSettleTime = rotationSettleTime;
-
-        assert controlPoints.length >= 1 : "For" + pathName + " CrowMotion paths need at least one control point";
-        assert this.endVelocity > maxDesiredTranslationalVelocity : "For" + pathName + " CrowMotion End Velocities must be = or less then max translational velocity";
-        assert this.maxTime > 0 : "For" + pathName + " Max Time must be greater than 0";
-        assert this.lookAHeadMult > 0 : "For" + pathName + " Look a head mult must be greater than 0";
-        assert this.distenceAtEndVelocity > 0 : "For" + pathName + " Distence at end velocity must be greater than 0";
-        assert this.rotationSettleTime > 0 : "For" + pathName + " Time at final position must be greater than 0";
-
+        
+        if(controlPoints.length == 0) {
+            throw new ExceptionInInitializerError("For " + pathName + " CrowMotion paths need at least one control point");
+        }
+        if(this.endVelocity > maxDesiredTranslationalVelocity) {
+            throw new ExceptionInInitializerError("For " + pathName + " CrowMotion End Velocities must be = or less then max translational velocity");
+        }
+        if(this.maxTime <= 0) {
+            throw new ExceptionInInitializerError("For " + pathName + " Max Time must be greater than 0");
+        }
+        if(this.lookAHeadMult <= 0) {
+            throw new ExceptionInInitializerError("For " + pathName + " Look a head mult must be greater than 0");
+        }
+        if(this.distenceAtEndVelocity < 0) {
+            throw new ExceptionInInitializerError("For " + pathName + " Distence at end velocity must be at least 0");
+        }
+        if(this.rotationSettleTime < 0) {
+            throw new ExceptionInInitializerError("For " + pathName + " Time at final position must be at least 0");
+        }
+        if(this.maxDesiredTranslationalVelocity <= 0) {
+            throw new ExceptionInInitializerError("For " + pathName + " Max desired translational velocity must greater then 0");
+        }
+        if(this.desiredTranslationalAcceleration <= 0) {
+            throw new ExceptionInInitializerError("For " + pathName + " Desired translational acceleration must greater then 0");
+        }
+        if(this.desiredTranslationalDecceleration <= 0) {
+            throw new ExceptionInInitializerError("For " + pathName + " Desired translational deceleration must greater then 0");
+        }
         this.drivebaseCircumference = CMConfig.getDrivebaseCircumference();
         this.maxModuleVelocity = CMConfig.getRobotProfile().getMaxPossibleAverageSwerveModuleMPS();
 
-        // TODO: Add all invalid path asserts
         this.futurePath = CMPathGenerator.generateCMPathAsync("TestBezier",
                 controlPoints, rotations, events, pointsPerMeter);
         CMAutonPoint lastPoint = controlPoints[controlPoints.length - 1];
@@ -553,7 +572,6 @@ public class CMTrajectory {
                 desiredVelocity = currentRotationalVelocity + 
                     (this.desiredRotationalAccelerationDegrees * averageFrameTime);
             }
-            // Add auto detection of shortest dir
             double realRotationDirection = this.rotationDirection;
             if(this.rotationDirection == 0) {
                 realRotationDirection = dirToGoal;
