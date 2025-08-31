@@ -2,7 +2,7 @@ package frc.robot.CrowMotion.UserSide;
 
 public class CMRotation {
     private double angleDegrees;
-    private int rotationDirrection;
+    private int rotationDirection;
     private double completeRotationPercent;
     private double maxRotationVelocityDegrees;
     private double desiredRotationalAccelerationDegrees;
@@ -10,7 +10,7 @@ public class CMRotation {
     private double angleCorrectionRange;
     private double maxRotationCorrectionVelocityDegrees;
     private double minRotationVelocityToMoveDegrees;
-    private double maxTolorenceDegrees;
+    private double maxToleranceDegrees;
     private double decelerationBufferDegrees;
     private boolean shouldMirror = false;
     
@@ -19,19 +19,19 @@ public class CMRotation {
      * Constructs a CMRotation with optional field mirroring applied.
      *
      * @param angleDegrees  The angle of rotation in degrees
-     * @param rotationDirrection The direction of the rotation, -1 or 1 or 0(shortest)
+     * @param rotationDirection The direction of the rotation, -1 or 1 or 0(shortest)
      * @param completeRotationPercent The percent of the path by which rotation should be completed (0.0 to 1.0)
      * @param shouldMirror Wether the direction and angle should be mirrored (e.g., for alliance side switching)
      */
-    public CMRotation(double angleDegrees, int rotationDirrection, double completeRotationPercent, 
+    public CMRotation(double angleDegrees, int rotationDirection, double completeRotationPercent, 
         double maxRotationVelocityDegrees, double desiredRotationalAccelerationDegrees, double desiredRotationDecelerationDegrees, 
         double angleCorrectionRange, double maxRotationCorrectionVelocityDegrees, double minRotationVelocityToMoveDegrees,
         double maxTolorenceDegrees, double decelerationBufferDegrees,
         boolean shouldMirror) {
             
         this.angleDegrees = angleDegrees;
-        assert (rotationDirrection == -1 || rotationDirrection == 1 || rotationDirrection == 0) : "Crow Motion, for rotation with angle of " + angleDegrees + " degrees. Rotation Direction must be -1 or 1 or 0(shortest): " + rotationDirrection + " is invalid";   
-        this.rotationDirrection = rotationDirrection;
+        assert (rotationDirection == -1 || rotationDirection == 1 || rotationDirection == 0) : "Crow Motion, for rotation with angle of " + angleDegrees + " degrees. Rotation Direction must be -1 or 1 or 0(shortest): " + rotationDirection + " is invalid";   
+        this.rotationDirection = rotationDirection;
         this.completeRotationPercent = completeRotationPercent;
         this.maxRotationVelocityDegrees = maxRotationVelocityDegrees;
         this.desiredRotationalAccelerationDegrees = maxRotationVelocityDegrees;
@@ -39,7 +39,7 @@ public class CMRotation {
         this.angleCorrectionRange = angleCorrectionRange;
         this.maxRotationCorrectionVelocityDegrees = maxRotationCorrectionVelocityDegrees;
         this.minRotationVelocityToMoveDegrees = minRotationVelocityToMoveDegrees;
-        this.maxTolorenceDegrees = maxTolorenceDegrees;
+        this.maxToleranceDegrees = maxTolorenceDegrees;
         this.decelerationBufferDegrees = decelerationBufferDegrees;
         this.shouldMirror = shouldMirror;
     }
@@ -48,17 +48,17 @@ public class CMRotation {
      * Constructs a CMRotation with the default field mirror set through CrowMotionConfig
      *
      * @param angleDegrees The angle of rotation in degrees
-     * @param rotationDirrection The direction of the rotation, -1 or 1 or 0(shortest)
+     * @param rotationDirection The direction of the rotation, -1 or 1 or 0(shortest)
      * @param completeRotationPercent The percent of the path by which rotation should be completed (0.0 to 1.0)
      */
-    public CMRotation(double angleDegrees, int rotationDirrection,
+    public CMRotation(double angleDegrees, int rotationDirection,
         double completeRotationPercent, double maxRotationVelocityDegrees,
         double desiredRotationalAccelerationDegrees,
         double desiredRotationDecelerationDegrees, 
         double angleCorrectionRange, double maxRotationCorrectionVelocityDegrees,
         double minRotationVelocityToMoveDegrees,
         double maxTolorenceDegrees, double decelerationBufferDegrees) {
-        this(angleDegrees, rotationDirrection,
+        this(angleDegrees, rotationDirection,
             completeRotationPercent,
             maxRotationVelocityDegrees, 
             desiredRotationalAccelerationDegrees,
@@ -116,9 +116,9 @@ public class CMRotation {
             );
         }
 
-        if(this.rotationDirrection != 0 && this.rotationDirrection != 1 && this.rotationDirrection != -1) {
+        if(this.rotationDirection != 0 && this.rotationDirection != 1 && this.rotationDirection != -1) {
             throw new ExceptionInInitializerError(
-                "CrowMotion Rotation's rotation direction must be 0, 1 or -1 not: " + this.rotationDirrection
+                "CrowMotion Rotation's rotation direction must be 0, 1 or -1 not: " + this.rotationDirection
             );
         }
 
@@ -144,9 +144,9 @@ public class CMRotation {
      *
      * @return the rotation direction as a RotationDirrection enum
      */
-    public int getRotationDirrection() {
-        return shouldMirror ? (rotationDirrection == 1 ? -1 : 1)
-        : rotationDirrection;
+    public int getRotationDirection() {
+        return shouldMirror ? (rotationDirection == 1 ? -1 : 1)
+        : rotationDirection;
     }
 
     /**
@@ -186,8 +186,8 @@ public class CMRotation {
         return this.minRotationVelocityToMoveDegrees;
     }
 
-    public double getMaxTolorenceDegrees() {
-        return this.maxTolorenceDegrees;
+    public double getMaxToleranceDegrees() {
+        return this.maxToleranceDegrees;
     }
 
     public double getDecelerationBufferDegrees() {

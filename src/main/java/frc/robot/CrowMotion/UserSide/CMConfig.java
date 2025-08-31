@@ -3,7 +3,6 @@ package frc.robot.CrowMotion.UserSide;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.CrowMotion.UserSide.RobotProfilingUtils.CMRobotProfile;
 
@@ -37,7 +36,7 @@ public class CMConfig {
 
     private static double defualtEndTranslationalVelocityForStoppingTrajectories;
 
-    private static double defaultMaxTolorenceDegrees;
+    private static double defaultMaxToleranceDegrees;
     private static double defaultDecelerationBufferDegrees;
 
 
@@ -66,7 +65,7 @@ public class CMConfig {
         double _defaultAngleCorrectionRange,
         double _defaultMaxRotationCorrectionVelocityDegrees,
         double _defaultMinRotationVelocityToMove,
-        double _defaultMaxTolorenceDegrees,
+        double _defaultMaxToleranceDegrees,
         double _defaultDecelerationBufferDegrees
     ) {
         robotProfile = _robotProfile;
@@ -90,7 +89,7 @@ public class CMConfig {
         defaultAngleCorrectionRange = _defaultAngleCorrectionRange;
         defaultMaxRotationCorrectionVelocityDegrees = _defaultMaxRotationCorrectionVelocityDegrees;
         defaultMinRotationVelocityToMove = _defaultMinRotationVelocityToMove;
-        defaultMaxTolorenceDegrees = _defaultMaxTolorenceDegrees;
+        defaultMaxToleranceDegrees = _defaultMaxToleranceDegrees;
         defaultDecelerationBufferDegrees = _defaultDecelerationBufferDegrees;
 
         // Sets notifier thread priority for path generation
@@ -203,8 +202,8 @@ public class CMConfig {
         return defaultMinRotationVelocityToMove;
     }
 
-    public static double getDefaultMaxTolorenceDegrees() {
-        return defaultMaxTolorenceDegrees;
+    public static double getDefaultMaxToleranceDegrees() {
+        return defaultMaxToleranceDegrees;
     }
 
     public static double getDefaultDecelerationBufferDegrees() {

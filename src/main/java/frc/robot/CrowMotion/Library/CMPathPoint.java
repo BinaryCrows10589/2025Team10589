@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 public class CMPathPoint {
 
     private Point2D.Double translationalPoint;
-    private double distenceFromStart;
+    private double distanceFromStart;
 
     /**
      * Constructs an instance with the specified translational point, rotation, and
@@ -18,7 +18,7 @@ public class CMPathPoint {
      */
     public CMPathPoint(Point2D.Double translationalPoint, double distenceFromStart) {
         this.translationalPoint = translationalPoint;
-        this.distenceFromStart = distenceFromStart;
+        this.distanceFromStart = distenceFromStart;
     }
 
     public static Translation2d[] point2dToTranslation2D(CMPathPoint[] points) {
@@ -40,8 +40,8 @@ public class CMPathPoint {
         return translationalPoint;
     }
 
-    public double getDistenceFromStart() {
-        return this.distenceFromStart;
+    public double getDistanceFromStart() {
+        return this.distanceFromStart;
     }
 
 }

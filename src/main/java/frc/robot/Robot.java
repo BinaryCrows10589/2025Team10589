@@ -283,7 +283,7 @@ public class Robot extends LoggedRobot {
     public void teleopPeriodic() {
         System.out.println("Running Periodic");
         if(!trajectory.isCompleted()) {
-            trajectory.runTrejectoryFrame();
+            trajectory.runTrajectoryFrame();
         } else{
             if(wait.hasTimePassed()) {
                 robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d(FieldConstants.kFieldLengthMeters, FieldConstants.kFieldWidthMeters, new Rotation2d(Math.PI))));

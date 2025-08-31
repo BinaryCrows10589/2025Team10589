@@ -1,15 +1,10 @@
 package frc.robot.CrowMotion.Library;
 
 import java.awt.geom.Point2D;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 import org.littletonrobotics.junction.Logger;
 
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.CrowMotion.UserSide.CMAutonPoint;
@@ -19,6 +14,7 @@ import frc.robot.CrowMotion.UserSide.CMRotation;
 
 public class CMPathGenerator {
 
+    // TODO: Call me a prude but I'm pretty sure async means that there is only one thread
     public static CompletableFuture<CMPathGenResult> generateCMPathAsync(String pathTime,
             CMAutonPoint[] controlPoints, CMRotation[] rotations, CMEvent[] events,
             double pointsPerMeter) {
@@ -64,16 +60,16 @@ public class CMPathGenerator {
         CMPathPoint[] path = new CMPathPoint[translationData.length];
         
         Point2D.Double translationLast = null;
-        double currentDistenceFromStart = 0.0;
+        double currentDistanceFromStart = 0.0;
         for (int i = 0; i < translationData.length; i++) {
             Point2D.Double translation = translationData[i];
-            double distenceFromLast = 0;
+            double distanceFromLast = 0;
             if(translationLast != null) {
-                distenceFromLast = translation.distance(translationLast);
+                distanceFromLast = translation.distance(translationLast);
             }
-            currentDistenceFromStart += distenceFromLast;
+            currentDistanceFromStart += distanceFromLast;
             translationLast = translation;
-            path[i] = new CMPathPoint(translation, currentDistenceFromStart);
+            path[i] = new CMPathPoint(translation, currentDistanceFromStart);
         }
 
         return new CMPathGenResult(path, rotations, events);
@@ -86,7 +82,7 @@ public class CMPathGenerator {
         double distance = Math.sqrt(xDelta * xDelta + yDelta * yDelta);
 
         int numberOfPoints = (int) (distance * pointsPerMeter) + 1;
-        Logger.recordOutput("CrowMotion/NumberOfPoints", numberOfPoints);
+        Logger.recordOutput("CrowMotion/NumberOfPoints", numberOfPoints); // TODO: make specific to this path?
         Point2D.Double[] points = new Point2D.Double[numberOfPoints];
 
         for (int i = 0; i < numberOfPoints; i++) {
@@ -115,7 +111,7 @@ public class CMPathGenerator {
 
         double[] x = new double[degree];
         double[] y = new double[degree];
-
+        
         for (int i = 0; i < degree; i++) {
             x[i] = controlPoints[i].getX();
             y[i] = controlPoints[i].getY();
