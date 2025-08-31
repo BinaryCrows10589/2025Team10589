@@ -14,13 +14,12 @@ import frc.robot.CrowMotion.UserSide.CMRotation;
 
 public class CMPathGenerator {
 
-    // TODO: Call me a prude but I'm pretty sure async means that there is only one thread
     public static CompletableFuture<CMPathGenResult> generateCMPathAsync(String pathTime,
             CMAutonPoint[] controlPoints, CMRotation[] rotations, CMEvent[] events,
             double pointsPerMeter) {
         CompletableFuture<CMPathGenResult> future = new CompletableFuture<>();
 
-        Notifier[] holder = new Notifier[1]; // to close from outside the Notifier thread
+        Notifier[] holder = new Notifier[1];
         RobotModeConstants.startPathGenTime = System.currentTimeMillis();
         holder[0] = new Notifier(() -> {
             try {
@@ -81,8 +80,7 @@ public class CMPathGenerator {
 
         double distance = Math.sqrt(xDelta * xDelta + yDelta * yDelta);
 
-        int numberOfPoints = (int) (distance * pointsPerMeter) + 1;
-        Logger.recordOutput("CrowMotion/NumberOfPoints", numberOfPoints); // TODO: make specific to this path?
+        int numberOfPoints = Math.max(((int) (distance * pointsPerMeter) + 1), 3);
         Point2D.Double[] points = new Point2D.Double[numberOfPoints];
 
         for (int i = 0; i < numberOfPoints; i++) {
@@ -102,8 +100,8 @@ public class CMPathGenerator {
             double dy = controlPoints[i + 1].getY() - controlPoints[i].getY();
             estimatedLength += Math.sqrt(dx * dx + dy * dy);
         }
-        int numberOfPoints = (int) (estimatedLength * pointsPerMeter * 1.3) + 1;
-
+        int numberOfPoints = Math.max(((int) (estimatedLength * pointsPerMeter * 1.3) + 1), 3);
+        
         int degree = controlPoints.length;
         double tStep = 1.0 / (numberOfPoints - 1);
 

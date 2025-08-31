@@ -148,8 +148,7 @@ public class CMTrajectory {
         this.drivebaseCircumference = CMConfig.getDrivebaseCircumference();
         this.maxModuleVelocity = CMConfig.getRobotProfile().getMaxPossibleAverageSwerveModuleMPS();
 
-        // TODO: Is this meant to use a name that is different from the trajectory name?
-        this.futurePath = CMPathGenerator.generateCMPathAsync("TestBezier",
+        this.futurePath = CMPathGenerator.generateCMPathAsync(pathName,
                 controlPoints, rotations, events, pointsPerMeter);
         CMAutonPoint lastPoint = controlPoints[controlPoints.length - 1];
         
@@ -164,7 +163,6 @@ public class CMTrajectory {
         isComplete = false;
         preventTranslation = false;
         
-        // TODO: While I get why it's done this way this is still a magic number
         averageFrameTime = 0.02;
         maxFrameTime = 0;
     
@@ -208,14 +206,6 @@ public class CMTrajectory {
         lastTriggeredEventIndex = -1;
 
         if(events != null) {
-            // TODO: I read that there is a slight performance benefit to using a foreach loop instead of a for loop
-            // when iterating over every index in an array. For this specific instance, it would look like this:
-            /*
-            for (CMEvent event : this.events) {
-                event.setHasBeenTriggered(false);
-            }
-            */
-            // This can also be applied to a couple other places, particularly with the event list
             for(int i = 0; i < this.events.length; i++) {
                 events[i].setHasBeenTriggered(false);
             }
@@ -231,7 +221,6 @@ public class CMTrajectory {
                 maxFrameTime = frameTime;
                 Logger.recordOutput("CrowMotion/Debug/MaxFrameTime", maxFrameTime);
             }
-            // TODO: Is it intentional to make this a weighted average? Might be worth it to save the cycles and not have it this way?
             averageFrameTime = (averageFrameTime * .9) + (frameTime * .1); 
             Logger.recordOutput("CrowMotion/Debug/FrameTime", averageFrameTime);
         }
@@ -253,8 +242,7 @@ public class CMTrajectory {
                 if(events != null) {
                     for(int i = lastTriggeredEventIndex+1; i < events.length; i++) {
                         CMEvent event = events[i];
-                        // TODO: Under what circumstances do we NOT want to run every remaining trigger? Just in case we skip over one somehow + one less if statement
-                        if(event.getEventTriggerPercent() == 1) {
+                        if(!event.getHasBeenTriggered()) {
                             event.getEventFunction().run();
                             event.setHasBeenTriggered(true);
                             lastTriggeredEventIndex = i;
@@ -339,7 +327,6 @@ public class CMTrajectory {
                             lastRotationDeadlineIndex = currentRotationDeadlineIndex;
                             currentRotationDeadlineIndex = i;
                             this.rotationDeadline = rotationDeadlines[currentRotationDeadlineIndex];
-                            // TODO: You probably should put the rotationDeadline config in its own function to avoid duplicate code
                             this.desiredRotationDegrees = rotationDeadline.getAngleDegrees();
                             this.maxRotationVelocityDegrees = this.rotationDeadline.getMaxRotationVelocityDegrees();
                             this.desiredRotationalAccelerationDegrees = this.rotationDeadline.getDesiredRotationalAccelerationDegrees();
@@ -358,12 +345,9 @@ public class CMTrajectory {
                 for(int i = lastTriggeredEventIndex+1; i < this.events.length-1; i++) {
                     CMEvent event = events[i];
                     double triggerPercent = event.getEventTriggerPercent();
-                    // TODO: Why check that triggerPercent isn't 1? I don't see how that would ever matter...
-                    if(percentTravel >= triggerPercent && triggerPercent != 1) {
-                        if(event.getHasBeenTriggered()) {
+                    if(percentTravel >= triggerPercent && !event.getHasBeenTriggered()) {
                             event.getEventFunction().run();
                             event.setHasBeenTriggered(true);
-                        }
                             lastTriggeredEventIndex = i;
                     } else {
                         break;
