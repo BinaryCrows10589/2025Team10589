@@ -244,7 +244,7 @@ public class Robot extends LoggedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        
+        /* 
         trajectory = new CMTrajectory("TestTraj", new CMAutonPoint[] {
                 new CMAutonPoint(FieldConstants.kFieldLengthMeters,
                     FieldConstants.kFieldWidthMeters),
@@ -271,7 +271,7 @@ public class Robot extends LoggedRobot {
                 .04,
                 12);
         robotContainer.driveSubsystem().setRobotPose(new AutonPoint(new Pose2d(FieldConstants.kFieldLengthMeters, FieldConstants.kFieldWidthMeters, new Rotation2d(Math.PI))));
-        trajectory.init();
+        trajectory.init();*/
     }
     /*new CMRotation(0, 1,
                         .3,480, 480, 480, 1, 5, .5, .5, 10),
@@ -281,7 +281,7 @@ public class Robot extends LoggedRobot {
     Wait wait = new Wait(5);
     @Override
     public void teleopPeriodic() {
-        System.out.println("Running Periodic");
+        /*System.out.println("Running Periodic");
         if(!trajectory.isCompleted()) {
             trajectory.runTrajectoryFrame();
         } else{
@@ -293,7 +293,7 @@ public class Robot extends LoggedRobot {
                 wait.startTimer();
             }
             
-        }
+        }*/
       
         // this.robotContainer.driveSubsystem().drive(4.311, 0 ,0);
         // RobotProfilingUtil.ProfileMaxPossibleRotationalVelocityDPS.profileMaxPossibleRotationalVelocityDPS();

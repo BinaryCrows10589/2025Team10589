@@ -85,8 +85,8 @@ public class OdometryIOUpdater implements OdometryIO{
                 VisionConstants.originPosition = OriginPosition.kRedAllianceWallRightSide;
                 VisionConstants.kExcludedTags = VisionConstants.kExcludedTagsRed;
             }
-            
-            setRobotPose(flipAlliance(getRobotPose()));
+            //TODO: Dispabled for crowmotion testing
+            //setRobotPose(flipAlliance(getRobotPose()));
             for(PhotonPoseEstimator photonPoseEstimator : this.photonPoseEstimators) {
                 photonPoseEstimator.getFieldTags().setOrigin(VisionConstants.originPosition);
                 Logger.recordOutput("Vision/OrginPosition", photonPoseEstimator.getFieldTags().getOrigin());

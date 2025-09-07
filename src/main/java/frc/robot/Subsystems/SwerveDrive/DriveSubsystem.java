@@ -235,7 +235,7 @@ public class DriveSubsystem extends SubsystemBase{
 
     public void setRobotStartingPose(AutonPoint newRobotPose) {
         //ControlConstants.robotStartPosition = newRobotPose;
-        //setRobotPose(newRobotPose.getAutonPoint());
+        setRobotPose(newRobotPose.getAutonPoint(false));
     }
 
     private void setRobotPose(Pose2d newRobotPose) {

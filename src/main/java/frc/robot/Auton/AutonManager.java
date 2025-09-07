@@ -24,6 +24,7 @@ import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDAndHuman
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndDStartingOnOwnAliance;
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBAndHumanPlayerStartingOnOwnAliance;
 import frc.robot.Auton.Autons.OwnAlianceBargeStartAutons.PlaceCoralBStartingOnOwnAliance;
+import frc.robot.Auton.Autons.TestAutons.CMTestAuto;
 import frc.robot.Commands.HighLevelCommandsFactory;
 import frc.robot.Subsystems.Elevator.ElevatorCommandFactory;
 import frc.robot.Subsystems.Outtake.OuttakeCommandFactory;
@@ -80,6 +81,8 @@ public class AutonManager {
     
 
     private void addAllAutons() {
+        addAuton("CMTestAuto", CMTestAuto.getAutonSupplier(driveSubsystem));
+
         addAuton(placeCoralBStartingOnOwnAlianceAuton, PlaceCoralBStartingOnOwnAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         addAuton(placeCoralBAndHumanPlayerStartingOnOwnAlianceAuton, PlaceCoralBAndHumanPlayerStartingOnOwnAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
         addAuton(placeCoralBAndDStartingOnOwnAlianceAuton, PlaceCoralBAndDStartingOnOwnAliance.getAutonSupplier(driveCommandFactory, driveSubsystem, elevatorCommandFactory, outtakeCommandFactory, highLevelCommandsFactory));
