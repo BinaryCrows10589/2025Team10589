@@ -46,10 +46,10 @@ public class CMTestAuto {
                 new CMAutonPoint(3, 4, false)
             }, 
                 new CMRotation[] {
-                    /*
-                    new CMRotation(90,
+                    
+                    new CMRotation(10,
                         1,
-                        .5,
+                        .9,
                         120,
                         480,
                         480,
@@ -62,13 +62,13 @@ public class CMTestAuto {
                         1,
                         1,
                         120,
-                        480,
+                        50,
                         480,
                         1,
                         5,
                         .5,
                         1,
-                        20)*/
+                        20)
                     }, 
                     new CMEvent[] {
                         new CMEvent("Event1", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event1", true), 0),
@@ -83,7 +83,8 @@ public class CMTestAuto {
                 3.5,
                 3.5,
                 TrajectoryPriority.SPLIT_PROPORTIONALLY,
-                .05, .1, true,
+                .08, .1, 0,
+                true,
                 new double[] { .01, .01}, 10,
                 .04,
                 50), driveSubsystem);
