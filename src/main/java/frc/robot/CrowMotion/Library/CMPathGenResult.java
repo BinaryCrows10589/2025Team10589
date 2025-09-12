@@ -6,7 +6,6 @@ import frc.robot.CrowMotion.UserSide.CMRotation;
 
 public class CMPathGenResult {
     public CMPathPoint[] path;
-    public Translation2d[] loggingPoints;
     public CMRotation[] rotationDeadlines;
     public CMEvent[] events;
 

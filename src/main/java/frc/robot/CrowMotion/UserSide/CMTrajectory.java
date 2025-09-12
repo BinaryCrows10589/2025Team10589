@@ -41,7 +41,6 @@ public class CMTrajectory {
     private boolean preventTranslation = false;
 
     private double averageFrameTime = 0.02;
-    private double maxFrameTime = 0;
 
     private int currentMinPointIndex = 1;
     private int goalPointIndex = 0;
@@ -291,7 +290,6 @@ public class CMTrajectory {
         preventTranslation = false;
 
         averageFrameTime = 0.02;
-        maxFrameTime = 0;
 
         currentMinPointIndex = 1;
         goalPointIndex = 0;
@@ -346,12 +344,8 @@ public class CMTrajectory {
 
         if (frameStartTime != -1) {
             double frameTime = (currentTime - frameStartTime) / 1000.0;
-            if (frameTime > maxFrameTime) {
-                maxFrameTime = frameTime;
-                Logger.recordOutput("CrowMotion/Debug/MaxFrameTime", maxFrameTime);
-            }
+            
             averageFrameTime = (averageFrameTime * .9) + (frameTime * .1);
-            Logger.recordOutput("CrowMotion/Debug/FrameTime", averageFrameTime);
         }
         frameStartTime = currentTime;
 
@@ -361,8 +355,6 @@ public class CMTrajectory {
         double robotRot = robotPosition[2];
 
         this.isComplete = shouldEnd(robotX, robotY, robotRot, currentTime);
-        Logger.recordOutput("CrowMotion/" + pathName + "IsComplete", isComplete);
-        Logger.recordOutput("CrowMotion/" + pathName + "IsNull", path == null);
         if (!this.isComplete) {
             this.isComplete = shouldEnd(robotX, robotY, robotRot, currentTime);
         }
@@ -432,7 +424,8 @@ public class CMTrajectory {
 
                 // Trejectory logic
                 double desiredVelocityMag = calculateDesiredTranslationalVelocity(currentVelocityMag, robotX, robotY);
-                double rotationalVelocity = calculateDesiredRotationalVelocity(Math.abs(currentVelocityComponents[2]),
+                double currentRotationalVelocity = Math.abs(currentVelocityComponents[2]);
+                double rotationalVelocity = calculateDesiredRotationalVelocity(currentRotationalVelocity,
                         robotRot);
 
                 double[] desaturatedVelocities = desaturateVelocities(desiredVelocityMag, Math.abs(rotationalVelocity));
@@ -494,7 +487,6 @@ public class CMTrajectory {
                     }
                 }
 
-                Logger.recordOutput("CrowMotion/Debug/DesiredRotation", this.rotationDeadline.getAngleDegrees());
                 this.goalPointIndex = -1;
                 Point2D.Double goalPointRangeEndPose = new Point2D.Double();
                 double distanceToGoalPointEndRange = 0;
@@ -518,28 +510,20 @@ public class CMTrajectory {
 
                 double[] velocityComponents = calculateComponentVelocities(velocityDir[0], velocityDir[1],
                         desiredVelocityMag);
-                Logger.recordOutput("CrowMotion/Debug/Velocity/MaxTranslationalVelocity",
-                        this.maxDesiredTranslationalVelocity);
-                Logger.recordOutput("CrowMotion/Debug/Velocity/DesiredTranslationalAcceleration",
-                        desiredTranslationalAcceleration);
-                Logger.recordOutput("CrowMotion/Debug/Velocity/DesiredVelocityMag", desiredVelocityMag);
-                Logger.recordOutput("CrowMotion/Debug/Velocity/CurrentVelocityMag", currentVelocityMag);
-                Logger.recordOutput("CrowMotion/Debug/TravelDistance", travelDistance);
-                Logger.recordOutput("CrowMotion/Debug/GoalPointRangeEndPoseIndex", goalPointIndex);
-                Logger.recordOutput("CrowMotion/Debug/GoalPoint",
-                        new double[] { goalPointRangeEndPose.x, goalPointRangeEndPose.y });
-                Logger.recordOutput("CrowMotion/Debug/Velocity/EndVelocity", velocityComponents);
-                // Logger.recordOutput("CrowMotion/Debug/TrajLength",
-                // this.path[this.path.length-1].getDistenceFromStart());
-                // Logger.recordOutput("CrowMotion/Debug/PercentCompletion", percentTravel);
-
+                
                 if (this.preventTranslation) {
                     CMConfig.setRobotVelocityMPSAndDPS(0, 0, rotationalVelocity);
                 } else {
                     CMConfig.setRobotVelocityMPSAndDPS(velocityComponents[0], velocityComponents[1],
                             rotationalVelocity);
                 }
+                Logger.recordOutput("CrowMotion/" + pathName + "/TranslationVelocities/DesiredMag", desiredVelocityMag);
+                Logger.recordOutput("CrowMotion/" + pathName + "/TranslationVelocities/ActualMag", currentVelocityMag);
+                Logger.recordOutput("CrowMotion/" + pathName + "/RotationalVelocities/ActualMag", rotationalVelocity);
+                Logger.recordOutput("CrowMotion/" + pathName + "/RotationalVelocities/ActualMag", currentRotationalVelocity);
+                Logger.recordOutput("CrowMotion/" + pathName + "/Rotation/DesiredRotation", this.desiredRotationDegrees);
             }
+            Logger.recordOutput("CrowMotion/" + pathName + "/Status/PathLoaded", true);
         } else {
             loadPath(currentTime);
         }
@@ -563,8 +547,6 @@ public class CMTrajectory {
             this.rotationSettleEndTime = -1;
         }
 
-        Logger.recordOutput("CrowMotion/Debug/Ending/InToleranceEndTime", this.rotationSettleEndTime - currentTime);
-        Logger.recordOutput("CrowMotion/Debug/Ending/InTolerance", inTranslationalTolerance);
         if (inTranslationalTolerance && this.shouldStopAtEnd) {
             this.preventTranslation = true;
         } else if (this.rotationSettleEndTime != -1 &&
@@ -576,7 +558,6 @@ public class CMTrajectory {
 
         boolean doneWithRot = rotationDeadlineCompletePercent != 1
                 || (this.rotationSettleEndTime != -1 && this.rotationSettleEndTime < currentTime);
-        Logger.recordOutput("CrowMotion/Debug/Ending/DoneWithRot", this.rotationSettleEndTime != -1);
         return (inTranslationalTolerance && doneWithRot) || hasTimeElasped;
     }
 
@@ -655,16 +636,12 @@ public class CMTrajectory {
                 this.initialDistanceToEnd = distanceToEnd;
             }
             double percent = ((distanceToEnd - this.distanceAtEndVelocity) / initialDistanceToEnd);
-            Logger.recordOutput("CrowMotion/Debug/Percent", percent);
-            Logger.recordOutput("CrowMotion/Debug/VelocityDelta", velocityDelta);
-            Logger.recordOutput("CrowMotion/Debug/InitialDistenceToEnd", this.initialDistanceToEnd);
             desiredVelocity = Math.max((velocityDelta * clamp(0, 1, percent) + endVelocity), this.endVelocity);
         } else {
             firstDecelerationFrame = true;
             desiredVelocity = lastDesiredVelocity + this.desiredTranslationalAcceleration * this.averageFrameTime;
         }
 
-        Logger.recordOutput("CrowMotion/Debug/DistanceToEnd", distanceToEnd);
         lastDesiredVelocity = Math.min(desiredVelocity, this.maxDesiredTranslationalVelocity);
         return lastDesiredVelocity;
     }
@@ -728,17 +705,7 @@ public class CMTrajectory {
             realDesiredVelocity = desiredVelocity * realRotationDirection;
         }
 
-        Logger.recordOutput("CrowMotion/Debug/Rotation/RobotRotation", robotRot);
-        Logger.recordOutput("CrowMotion/Debug/Rotation/DegreesToOffsetGoal", degreesToOffsetGoal);
-        Logger.recordOutput("CrowMotion/Debug/Rotation/DegreesToGoal", degreesToGoal);
-        Logger.recordOutput("CrowMotion/Debug/Rotation/ShouldDecelerateRotation", shouldDecelerateRotation);
-        Logger.recordOutput("CrowMotion/Debug/Rotation/EnteredCorrectionRange", enteredCorrectionRange);
-
-        Logger.recordOutput("CrowMotion/Debug/Rotation/DesiredRotationVelocity", realDesiredVelocity);
-        Logger.recordOutput("CrowMotion/Debug/Rotation/CurrentRotationVelocity", currentRotationalVelocity);
-
-        Logger.recordOutput("CrowMotion/Debug/Rotation/CurrentRotationDeadlineIndex", currentRotationDeadlineIndex);
-        Logger.recordOutput("CrowMotion/Debug/Rotation/LastRotationDeadlineIndex", lastRotationDeadlineIndex);
+        
 
         this.lastRotationDeadlineIndex = this.currentRotationDeadlineIndex;
         double rotationVelocityMag = Math.abs(realDesiredVelocity);
@@ -762,8 +729,8 @@ public class CMTrajectory {
             path = pathGenResult.path;
             rotationDeadlines = pathGenResult.rotationDeadlines;
             events = pathGenResult.events;
-            Logger.recordOutput("CrowMotion/" + pathName, CMPathPoint.point2dToTranslation2D(path));
             this.endTime = currentTime + (long) (this.maxTime * 1000);
+            Logger.recordOutput("CrowMotion/" + pathName + "/Path", CMPathPoint.point2dToTranslation2D(path));
         }
     }
 
