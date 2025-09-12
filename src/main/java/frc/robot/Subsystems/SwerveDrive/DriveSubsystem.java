@@ -16,7 +16,6 @@ import frc.robot.Constants.GenericConstants.RobotModeConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants;
 import frc.robot.Constants.MechanismConstants.DrivetrainConstants.SwerveDriveConstants;
 import frc.robot.CrowMotion.UserSide.CMConfig;
-import frc.robot.CrowMotion.UserSide.RobotProfilingUtils.CMRobotProfile;
 import frc.robot.Subsystems.PoseEstimation.PoseEstimatorSubsystem;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIO;
 import frc.robot.Subsystems.SwerveDrive.Gyro.GyroIOInputsAutoLogged;
@@ -297,7 +296,7 @@ public class DriveSubsystem extends SubsystemBase{
             this.backRightSwerveModule.getModuleState().speedMetersPerSecond) / 4;
     }
     private void configureCrowMotion() {
-        CMConfig.init(new CMRobotProfile(4.311, 578, 4.311, ()-> 0.0),
+        CMConfig.init(
          this::getRobotPositionCrowMotion,
          this::getRobotVelocitiesCrowMotion,
          this::driveCrowMotion,
@@ -307,18 +306,21 @@ public class DriveSubsystem extends SubsystemBase{
          ()->false,
          FieldConstants.kFieldWidthMeters,
          FieldConstants.kFieldLengthMeters,
-        4.311,
-        3.5,
-        3.5,
-        .25,
-        240,
-        360,
-        360,
-        1,
-        5,
-        .5,
-        .5,
-        10);
+         4.311,
+         3.5,
+         3.5,
+         480,
+         480,
+         480,
+         .5,
+         5,
+         2.5,
+         .08,
+         1,
+         10,
+         .04,
+         4.3111
+         );
         /*utoBuilder.configureHolonomic(
             this::getRobotPose, // Robot pose supplier
             this::setRobotPose, // Method to reset odometry (will be called if your auto has a starting pose)

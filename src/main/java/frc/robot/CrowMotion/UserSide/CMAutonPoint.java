@@ -47,7 +47,7 @@ public class CMAutonPoint {
      * @param redYFudge     the y offset for red alliance in meters
      */
     public CMAutonPoint(double x, double y, double blueXFudge, double blueYFudge, double redXFudge, double redYFudge) {
-        this(x, y, blueXFudge, blueYFudge, redXFudge, redYFudge, CMConfig.getShouldMirror());
+        this(x, y, blueXFudge, blueYFudge, redXFudge, redYFudge, CMConfig.shouldMirror());
     }
 
     /**
@@ -58,7 +58,7 @@ public class CMAutonPoint {
      * @param y the base y-coordinate in meters
      */
     public CMAutonPoint(double x, double y) {
-        this(x, y, 0, 0, 0, 0, CMConfig.getShouldMirror());
+        this(x, y, 0, 0, 0, 0, CMConfig.shouldMirror());
     }
 
     /**
@@ -89,7 +89,7 @@ public class CMAutonPoint {
      * @return the adjusted y-coordinate in meters
      */
     public double getY() {
-        return (this.shouldMirror ? (CMConfig.getFieldWidth() - this.y) : this.y) + 
+        return (this.shouldMirror ? (CMConfig.getFieldWidthMeters() - this.y) : this.y) + 
             (CMConfig.isBlueAlliance() ? blueYFudge : redYFudge);
     }
 

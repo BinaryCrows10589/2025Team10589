@@ -16,12 +16,106 @@ public class CMRotation {
     
 
     /**
-     * Constructs a CMRotation with optional field mirroring applied.
+     * Constructs a {@code CMRotation} with detailed rotational motion
+     * configuration and optional field mirroring.
      *
-     * @param angleDegrees  The angle of rotation in degrees
-     * @param rotationDirection The direction of the rotation, -1 or 1 or 0(shortest)
-     * @param completeRotationPercent The percent of the path by which rotation should be completed (0.0 to 1.0)
-     * @param shouldMirror Wether the direction and angle should be mirrored (e.g., for alliance side switching)
+     * @param angleDegrees
+     * The final angle of the robot in degrees.
+     *
+     * @param rotationDirection
+     * The direction of the rotation: -1, 0, or 1.
+     * <ul>
+     *   <li>-1 = negative direction</li>
+     *   <li>1 = positive direction</li>
+     *   <li>0 = shortest path</li>
+     * </ul>
+     *
+     * @param completeRotationPercent
+     * Defines at what percentage of the trajectory the robot will stop trying
+     * to reach this rotation.
+     * <ul>
+     *   <li>Lower bound: 0.0 (rotation completes immediately).</li>
+     *   <li>Upper bound: 1.0 (rotation completes at the very end of the path).</li>
+     * </ul>
+     * <b>Note:</b> Only a value of 1.0 forces the robot to be at this rotation
+     * when the trajectory ends.
+     *
+     * @param maxRotationVelocityDegrees
+     * The maximum angular velocity the robot is allowed to rotate at.
+     * <ul>
+     *   <li>Suggested start: 240°/s</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: drivetrain’s safe max rotation speed</li>
+     * </ul>
+     *
+     * @param desiredRotationalAccelerationDegrees
+     * The angular acceleration used to increase rotation speed smoothly.
+     * <ul>
+     *   <li>Suggested start: 240°/s²</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: drivetrain’s safe rotational acceleration</li>
+     * </ul>
+     *
+     * @param desiredRotationDecelerationDegrees
+     * The angular deceleration used near the end of rotation to smoothly
+     * reduce velocity until reaching the target angle.
+     * <ul>
+     *   <li>Suggested start: 240°/s²</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: drivetrain’s safe rotational deceleration</li>
+     * </ul>
+     *
+     * @param angleCorrectionRange
+     * The range (in degrees) around the target when the robot applies angle correction logic
+     * <ul>
+     *   <li>Suggested start: 1</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: Anything</li>
+     * </ul>
+     *
+     * @param maxRotationCorrectionVelocityDegrees
+     * The maximum angular velocity allowed when performing fine angle
+     * corrections near the target.
+     * <ul>
+     *   <li>Suggested start: 5</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: must be ≤ {@code maxRotationVelocityDegrees}</li>
+     * </ul>
+     *
+     * @param minRotationVelocityToMoveDegrees
+     * The minimum angular velocity the robot will use when rotating. Prevents
+     * the robot from stalling or crawling too slowly.
+     * <ul>
+     *   <li>Suggested start: .5</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: Depends on specfic robot. Likely close to .5</li>
+     * </ul>
+     *
+     * @param maxTolorenceDegrees
+     * The maximum allowed error in degrees for the rotation to be considered
+     * complete. Inputed value is ±
+     * <ul>
+     *   <li>Suggested start: ±1°</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: depends on how precise the application must be</li>
+     * </ul>
+     *
+     * @param decelerationBufferDegrees
+     * The number of degrees before the target at which the robot begins
+     * decelerating.
+     * <ul>
+     *   <li>Suggested start: 10°</li>
+     *   <li>Lower bound: ≥ 0</li>
+     *   <li>Upper bound: should not exceed full rotation angle</li>
+     * </ul>
+     *
+     * @param shouldMirror
+     * Whether the direction and angle should be mirrored (e.g., for alliance
+     * side switching).
+     * <ul>
+     *   <li>false = no mirroring</li>
+     *   <li>true = mirror across the field centerline</li>
+     * </ul>
      */
     public CMRotation(double angleDegrees, int rotationDirection, double completeRotationPercent, 
         double maxRotationVelocityDegrees, double desiredRotationalAccelerationDegrees, double desiredRotationDecelerationDegrees, 
@@ -30,7 +124,6 @@ public class CMRotation {
         boolean shouldMirror) {
             
         this.angleDegrees = angleDegrees;
-        assert (rotationDirection == -1 || rotationDirection == 1 || rotationDirection == 0) : "Crow Motion, for rotation with angle of " + angleDegrees + " degrees. Rotation Direction must be -1 or 1 or 0(shortest): " + rotationDirection + " is invalid";   
         this.rotationDirection = rotationDirection;
         this.completeRotationPercent = completeRotationPercent;
         this.maxRotationVelocityDegrees = maxRotationVelocityDegrees;
@@ -42,31 +135,6 @@ public class CMRotation {
         this.maxToleranceDegrees = maxTolorenceDegrees;
         this.decelerationBufferDegrees = decelerationBufferDegrees;
         this.shouldMirror = shouldMirror;
-    }
-
-    /**
-     * Constructs a CMRotation with the default field mirror set through CrowMotionConfig
-     *
-     * @param angleDegrees The angle of rotation in degrees
-     * @param rotationDirection The direction of the rotation, -1 or 1 or 0(shortest)
-     * @param completeRotationPercent The percent of the path by which rotation should be completed (0.0 to 1.0)
-     */
-    public CMRotation(double angleDegrees, int rotationDirection,
-        double completeRotationPercent, double maxRotationVelocityDegrees,
-        double desiredRotationalAccelerationDegrees,
-        double desiredRotationDecelerationDegrees, 
-        double angleCorrectionRange, double maxRotationCorrectionVelocityDegrees,
-        double minRotationVelocityToMoveDegrees,
-        double maxTolorenceDegrees, double decelerationBufferDegrees) {
-        this(angleDegrees, rotationDirection,
-            completeRotationPercent,
-            maxRotationVelocityDegrees, 
-            desiredRotationalAccelerationDegrees,
-            desiredRotationDecelerationDegrees,
-            angleCorrectionRange, maxRotationCorrectionVelocityDegrees,
-            minRotationVelocityToMoveDegrees,
-            maxTolorenceDegrees, decelerationBufferDegrees,
-            CMConfig.getShouldMirror());
 
         if(maxRotationVelocityDegrees <= 0) {
             throw new ExceptionInInitializerError(
@@ -127,6 +195,118 @@ public class CMRotation {
                 "CrowMotion Rotation's complete rotation percent between(inclusive) 0 and 1 not: " + this.completeRotationPercent
             );
         }
+    }
+
+    /**
+     * Constructs a {@code CMRotation} with detailed rotational motion
+     * configuration and optional field mirroring.
+     *
+     * @param angleDegrees
+     * The final angle of the robot in degrees.
+     *
+     * @param rotationDirection
+     * The direction of the rotation: -1, 0, or 1.
+     * <ul>
+     *   <li>-1 = negative direction</li>
+     *   <li>1 = positive direction</li>
+     *   <li>0 = shortest path</li>
+     * </ul>
+     *
+     * @param completeRotationPercent
+     * Defines at what percentage of the trajectory the robot will stop trying
+     * to reach this rotation.
+     * <ul>
+     *   <li>Lower bound: 0.0 (rotation completes immediately).</li>
+     *   <li>Upper bound: 1.0 (rotation completes at the very end of the path).</li>
+     * </ul>
+     * <b>Note:</b> Only a value of 1.0 forces the robot to be at this rotation
+     * when the trajectory ends.
+     *
+     * @param maxRotationVelocityDegrees
+     * The maximum angular velocity the robot is allowed to rotate at.
+     * <ul>
+     *   <li>Suggested start: 240°/s</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: drivetrain’s safe max rotation speed</li>
+     * </ul>
+     *
+     * @param desiredRotationalAccelerationDegrees
+     * The angular acceleration used to increase rotation speed smoothly.
+     * <ul>
+     *   <li>Suggested start: 240°/s²</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: drivetrain’s safe rotational acceleration</li>
+     * </ul>
+     *
+     * @param desiredRotationDecelerationDegrees
+     * The angular deceleration used near the end of rotation to smoothly
+     * reduce velocity until reaching the target angle.
+     * <ul>
+     *   <li>Suggested start: 240°/s²</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: drivetrain’s safe rotational deceleration</li>
+     * </ul>
+     *
+     * @param angleCorrectionRange
+     * The range (in degrees) around the target when the robot applies angle correction logic
+     * <ul>
+     *   <li>Suggested start: 1</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: Anything</li>
+     * </ul>
+     *
+     * @param maxRotationCorrectionVelocityDegrees
+     * The maximum angular velocity allowed when performing fine angle
+     * corrections near the target.
+     * <ul>
+     *   <li>Suggested start: 5</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: must be ≤ {@code maxRotationVelocityDegrees}</li>
+     * </ul>
+     *
+     * @param minRotationVelocityToMoveDegrees
+     * The minimum angular velocity the robot will use when rotating. Prevents
+     * the robot from stalling or crawling too slowly.
+     * <ul>
+     *   <li>Suggested start: .5</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: Depends on specfic robot. Likely close to .5</li>
+     * </ul>
+     *
+     * @param maxTolorenceDegrees
+     * The maximum allowed error in degrees for the rotation to be considered
+     * complete. Inputed value is ±
+     * <ul>
+     *   <li>Suggested start: ±1°</li>
+     *   <li>Lower bound: > 0</li>
+     *   <li>Upper bound: depends on how precise the application must be</li>
+     * </ul>
+     *
+     * @param decelerationBufferDegrees
+     * The number of degrees before the target at which the robot begins
+     * decelerating.
+     * <ul>
+     *   <li>Suggested start: 10°</li>
+     *   <li>Lower bound: ≥ 0</li>
+     *   <li>Upper bound: should not exceed full rotation angle</li>
+     * </ul>
+     */
+    public CMRotation(double angleDegrees, int rotationDirection,
+        double completeRotationPercent, double maxRotationVelocityDegrees,
+        double desiredRotationalAccelerationDegrees,
+        double desiredRotationDecelerationDegrees, 
+        double angleCorrectionRange, double maxRotationCorrectionVelocityDegrees,
+        double minRotationVelocityToMoveDegrees,
+        double maxTolorenceDegrees, double decelerationBufferDegrees) {
+        this(angleDegrees, rotationDirection,
+            completeRotationPercent,
+            maxRotationVelocityDegrees, 
+            desiredRotationalAccelerationDegrees,
+            desiredRotationDecelerationDegrees,
+            angleCorrectionRange, maxRotationCorrectionVelocityDegrees,
+            minRotationVelocityToMoveDegrees,
+            maxTolorenceDegrees, decelerationBufferDegrees,
+            CMConfig.shouldMirror());
     }
     
 

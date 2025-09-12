@@ -89,7 +89,121 @@ public class CMTrajectory {
         PREFER_TRANSLATION,
         SPLIT_PROPORTIONALLY
     }
-
+     /**
+     * Creates a new {@code CMTranslationConfig} to define the translational motion
+     * settings for a trajectory.
+     *
+     * <p>Each parameter directly affects how the robot follows and finishes the
+     * path. These values should be tuned based on whether the trajectory is
+     * stopping or non-stopping, the robot’s drivetrain limits, and the desired
+     * balance between accuracy and speed.</p>
+     *
+     * @param maxDesiredTranslationVelocityMeters
+     *        The maximum translational velocity the robot is allowed to reach while
+     *        following the trajectory.
+     *        <ul>
+     *          <li>Suggested start value: 3.5 m/s</li>
+     *          <li>Lower bound: &gt; 0</li>
+     *          <li>Upper bound: robot’s maximum safe velocity</li>
+     *        </ul>
+     * @param desiredTranslationalAccelerationMeters
+     *        The maximum translational acceleration allowed while following the
+     *        path. Controls how quickly the robot speeds up.
+     *        <ul>
+     *          <li>Suggested start: 3.5</li>
+     *          <li>Lower bound: &gt; 0</li>
+     *          <li>Upper bound: Robot’s maximum safe acceleration</li>
+     *        </ul>
+     *        <strong>Note:</strong> If odometry drift is occurring, decreasing
+     *        acceleration will help prevent wheel slippage.
+     *        
+     * @param desiredTranslationalDecelerationMeters
+     *        The deceleration rate used only at the very end of the trajectory to
+     *        smoothly reduce the robot’s velocity down to the specified end
+     *        velocity by the time it reaches {@code distanceAtEndVelocityMeters}.
+     *        <ul>
+     *          <li>Suggested start: 3.5</li>
+     *          <li>Upper bound: Robot’s maximum safe acceleration</li>
+     *        </ul>
+     *        <strong>Note:</strong> If odometry drift is occurring, decreasing
+     *        deceleration will help prevent wheel slippage.
+     *        <br>
+     * @param endVelocityMeters
+     *        The velocity that the robot should be traveling at
+     *        while it travels the distance specified by {@code distanceAtEndVelocityMeters}.
+     *        <ul>
+     *          <li><b>Stopping trajectories:</b> Suggested ≈ 0.08 m/s, or the maximum
+     *          speed the robot can stop at “instantly.”</li>
+     *          <li><b>Non-stopping trajectories:</b> Should be any value ≤
+     *          {@code maxDesiredTranslationVelocityMeters}. Allows smooth pass-off to
+     *          the next trajectory or driver control.</li>
+     *        </ul>
+     *        For stopping: decrease to increase accuracy, increase to save time.
+     *        <br>
+     * @param distanceAtEndVelocityMeters
+     *        The distance from the final target point at which the robot should
+     *        already be traveling at {@code endVelocityMeters}.
+     *        <ul>
+     *          <li><b>Stopping trajectories:</b> Suggested ≈ 0.05 m</li>
+     *          <li><b>Non-stopping trajectories:</b> Can be 0</li>
+     *        </ul>
+     *        Increase this distance to improve accuracy, decrease to save time.
+     *        <br>
+     * @param minStartVelocityMeters
+     *        The initial velocity assigned to the robot when beginning the
+     *        trajectory. Prevents excessively slow starts.
+     *        <ul>
+     *          <li>Suggested start: <b>2.0 m/s</b></li>
+     *          <li>Lower bound: &gt; 0</li>
+     *        </ul>
+     *        This allows the robot to accelerate very quickly at the start, then
+     *        transition to smoother acceleration to save time while limiting forces.
+     *        <br>
+     * @param shouldStopAtEnd
+     *        Whether the robot’s velocity should be forced to 0 at the end of the
+     *        trajectory.
+     *        <ul>
+     *          <li><b>true:</b> Robot stops fully at the end.</li>
+     *          <li><b>false:</b> Robot continues moving, allowing a smooth transition
+     *          to another trajectory or driver control.</li>
+     *        </ul>
+     *        <br>
+     * @param positionToleranceMeters
+     *        The positional tolerance that determines when the trajectory is
+     *        considered complete.
+     *        <ul>
+     *          <li><b>Stopping trajectories:</b> Suggested ≈ ±0.01 m. Smaller values
+     *          increase accuracy.</li>
+     *          <li><b>Non-stopping trajectories:</b> Suggested ≥ ±0.5 m. Looser
+     *          tolerance allows smooth transitions to the next trajectory or driver
+     *          control.</li>
+     *        </ul>
+     *        <br>
+     * @param lookaheadDistanceMultiplier
+     *        Multiplier used to determine which point along the path the robot should
+     *        aim for.
+     *        <ul>
+     *          <li>Suggested value: <b>10</b></li>
+     *          <li>Reasonable range: 7–10</li>
+     *        </ul>
+     *        Lower values improve path-following accuracy but increase side-to-side
+     *        oscillation. Higher values reduce oscillation but cause the robot to
+     *        cut corners more aggressively.
+     * @param rotationSettleTime
+     *        Time (s) the robot must remain within rotational tolerance before
+     *        the trajectory is considered complete. Prevents overshoot from
+     *        falsely ending the trajectory.
+     *        <ul>
+     *          <li><b>Suggested start:</b> .04</li>
+     *          <li><b>Lower bound:</b> 0</li>
+     *          <li><b>Upper bound:</b> Infinity</li>
+     *        </ul>
+     *
+     * @param maxTime
+     *        Maximum allowed execution time for this trajectory.
+     *        Will be hard cut off after this time passes
+     * 
+     */
     public CMTrajectory(
             String pathName,
             CMAutonPoint[] controlPoints,
@@ -159,7 +273,7 @@ public class CMTrajectory {
                     "For " + pathName + " Desired translational deceleration must be greater then 0");
         }
         this.drivebaseCircumference = CMConfig.getDrivebaseCircumference();
-        this.maxModuleVelocity = CMConfig.getRobotProfile().getMaxPossibleAverageSwerveModuleMPS();
+        this.maxModuleVelocity = CMConfig.getMaxPossibleAverageSwerveModuleMPS();
 
         this.futurePath = CMPathGenerator.generateCMPathAsync(pathName,
                 controlPoints, rotations, events, pointsPerMeter);
@@ -266,10 +380,10 @@ public class CMTrajectory {
                 }
 
                 if (this.shouldStopAtEnd) {
-                    CMConfig.setRobotVelocityMPSandDPS(0, 0, 0);
+                    CMConfig.setRobotVelocityMPSAndDPS(0, 0, 0);
                 }
             } else {
-                double[] currentVelocityComponents = CMConfig.getRobotVelocityMPSandDPS();
+                double[] currentVelocityComponents = CMConfig.getRobotVelocityMPSAndDPS();
                 double currentVelocityMag = calculateMagnitude(currentVelocityComponents[0],
                         currentVelocityComponents[1]);
                 if (this.lastDesiredVelocity == -1) {
@@ -420,9 +534,9 @@ public class CMTrajectory {
                 // Logger.recordOutput("CrowMotion/Debug/PercentCompletion", percentTravel);
 
                 if (this.preventTranslation) {
-                    CMConfig.setRobotVelocityMPSandDPS(0, 0, rotationalVelocity);
+                    CMConfig.setRobotVelocityMPSAndDPS(0, 0, rotationalVelocity);
                 } else {
-                    CMConfig.setRobotVelocityMPSandDPS(velocityComponents[0], velocityComponents[1],
+                    CMConfig.setRobotVelocityMPSAndDPS(velocityComponents[0], velocityComponents[1],
                             rotationalVelocity);
                 }
             }

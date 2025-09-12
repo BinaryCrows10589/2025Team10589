@@ -43,11 +43,11 @@ public class CMTestAuto {
             new CMTrajectory("TestTraj",
                 new CMAutonPoint[] {
                     new CMAutonPoint(0, 0, false),
-                    //new CMAutonPoint(2, 2, false),
+                    new CMAutonPoint(2, 2, false),
                     new CMAutonPoint(1.5, 3, false)
                 }, 
                 new CMRotation[] {
-                    /*
+                    
                     new CMRotation(10,
                         1,
                         .9,
@@ -69,7 +69,7 @@ public class CMTestAuto {
                         5,
                         .5,
                         1,
-                        20) */
+                        20) 
                     }, 
                     new CMEvent[] {
                         new CMEvent("Event1", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event1", true), 0),

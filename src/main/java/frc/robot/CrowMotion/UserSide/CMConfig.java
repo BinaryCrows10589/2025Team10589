@@ -3,97 +3,155 @@ package frc.robot.CrowMotion.UserSide;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import edu.wpi.first.wpilibj.Notifier;
-import frc.robot.CrowMotion.UserSide.RobotProfilingUtils.CMRobotProfile;
-
 /**
- * Global configuration for CrowMotion.
- * Stores robot physical characteristics and live-state suppliers for use in trajectory planning.
+ * CMConfig is a centralized configuration class for CrowMotion.
+ * <p>
+ * This class stores robot, field, and trajectory parameters, and provides static accessors
+ * and mutators for consumers and suppliers of these values. All values must be initialized
+ * through the {@link #init(Supplier, Supplier, Consumer, double, boolean, Supplier, double, double, 
+ * double, double, double, double, double, double, double, double, double, double, double, double, double, double)} method
+ * before usage.
+ * </p>
  */
 public class CMConfig {
-    private static CMRobotProfile robotProfile;
 
+    // ------------------------------
+    // Robot state suppliers & consumers
+    // ------------------------------
     private static Supplier<double[]> getRobotPositionMetersAndDegrees;
-    private static Supplier<double[]> getRobotVelocityMPSandDPS;
-    private static Supplier<Double> getAverageSwerveModuleVelocityMPS;
-    private static Consumer<double[]> setRobotVelocityMPSANDDPS;
+    private static Supplier<double[]> getRobotVelocityMPSAndDPS;
+    private static Consumer<double[]> setRobotVelocityMPSAndDPS;
+
+    // ------------------------------
+    // Physical parameters
+    // ------------------------------
     private static double drivebaseCircumference;
 
+    // ------------------------------
+    // Field and alliance info
+    // ------------------------------
     private static boolean isBlueAlliance;
-    private static Supplier<Boolean> defualtShouldMirror;
+    private static Supplier<Boolean> defaultShouldMirror;
     private static double fieldWidthMeters;
     private static double fieldLengthMeters;
-    private static double defualtMaxDesiredTranslationalVelocity;
+
+    // ------------------------------
+    // Translational motion defaults
+    // ------------------------------
+    private static double defaultMaxDesiredTranslationalVelocity;
     private static double defaultTranslationalAcceleration;
     private static double defaultTranslationalDeceleration;
 
-    private static double defualtMaxDesiredRotationalVelocity;
-    private static double defualtMaxDesiredRotationalAcceleration;
-    private static double defualtMaxDesiredRotationalDeceleration;
+    // ------------------------------
+    // Rotational motion defaults
+    // ------------------------------
+    private static double defaultMaxDesiredRotationalVelocity;
+    private static double defaultMaxDesiredRotationalAcceleration;
+    private static double defaultMaxDesiredRotationalDeceleration;
     private static double defaultAngleCorrectionRange;
     private static double defaultMaxRotationCorrectionVelocityDegrees;
     private static double defaultMinRotationVelocityToMove;
 
-    private static double defualtEndTranslationalVelocityForStoppingTrajectories;
+    // ------------------------------
+    // Trajectory stopping behavior
+    // ------------------------------
+    private static double defaultEndTranslationalVelocityForStoppingTrajectories;
 
+    // ------------------------------
+    // Tolerance & deceleration
+    // ------------------------------
     private static double defaultMaxToleranceDegrees;
     private static double defaultDecelerationBufferDegrees;
+    private static double defaultRotationSettleTime;
 
+    // ------------------------------
+    // Reason / extra variables
+    // ------------------------------
+    private static double maxPossibleAverageSwerveModuleMPS;
 
     /**
-     * Initializes the global CrowMotion configuration.
+     * <p>
+     * Initializes Crow Motion and sets default values for trejectories.
+     * </p>
+     *
+     * @param robotPositionSupplier Supplier providing robot position in meters and degrees [x, y, angle]
+     * @param robotVelocitySupplier Supplier providing robot velocity in meters/sec and degrees/sec [vx, vy, omega]
+     * @param robotVelocityConsumer Consumer to set robot velocity in meters/sec and degrees/sec [vx, vy, omega]
+     * @param distanceBetweenCentersOfRightAndLeftWheels Distence between centers of right and left wheels
+     * @param distanceBetweenCentersOfFrontAndBackWheels Distance between centers of front and back wheels
+     * @param isBlueAlliance Boolean indicating if the robot is on the blue alliance
+     * @param shouldMirrorSupplier Supplier to determine if paths should be mirrored
+     * @param fieldWidth Field width in meters
+     * @param fieldLength Field length in meters
+     * @param maxTranslationalVelocity Maximum desired translational velocity (m/s)
+     * @param translationalAcceleration Translational acceleration (m/s²)
+     * @param translationalDeceleration Translational deceleration (m/s²)
+     * @param maxRotationalVelocity Maximum desired rotational velocity (deg/s)
+     * @param maxRotationalAcceleration Maximum desired rotational acceleration (deg/s²)
+     * @param maxRotationalDeceleration Maximum desired rotational deceleration (deg/s²)
+     * @param angleCorrectionRange Angle correction range (degrees)
+     * @param maxRotationCorrectionVelocity Maximum rotational correction velocity (deg/s)
+     * @param minRotationVelocityToMove Minimum rotational velocity to start moving (deg/s)
+     * @param endTranslationalVelocityForStopping Trajectory stopping velocity (m/s)
+     * @param maxToleranceDegrees Maximum allowed angle tolerance for trajectory (deg)
+     * @param decelerationBufferDegrees Buffer for deceleration calculations (deg)
+     * @param rotationSettleTime Rotation settle time (seconds)
+     * @param maxSwerveModuleMPS Maximum possible average swerve module velocity (m/s)
      */
     public static void init(
-        CMRobotProfile _robotProfile,
-        Supplier<double[]> _getRobotPositionMetersAndDegrees,
-        Supplier<double[]> _getRobotVelocityMPSAndDPS,
-        Consumer<double[]> _setRobotVelocityMPSANDDPS,
-        double _distanceBetweenCentersOfRightAndLeftWheels,
-        double _distanceBetweenCentersOfFrontAndBackWheels,
-        boolean _isBlueAlliance,
-        Supplier<Boolean> _defaultShouldMirror,
-        double _fieldWidthMeters,
-        double _fieldLengthMeters,
-        double _defualtMaxDesiredTranslationalVelocity,
-        double _defaultTranslationalAcceleration,
-        double _defaultTranslationalDeceleration,
-
-        double _defualtEndTranslationalVelocityForStoppingTrajectories,
-        double _defualtMaxDesiredRotationalVelocity,
-        double _defualtMaxDesiredRotationalAcceleration,
-        double _defualtMaxDesiredRotationalDeceleration,
-        double _defaultAngleCorrectionRange,
-        double _defaultMaxRotationCorrectionVelocityDegrees,
-        double _defaultMinRotationVelocityToMove,
-        double _defaultMaxToleranceDegrees,
-        double _defaultDecelerationBufferDegrees
+            Supplier<double[]> robotPositionSupplier,
+            Supplier<double[]> robotVelocitySupplier,
+            Consumer<double[]> robotVelocityConsumer,
+            double distanceBetweenCentersOfRightAndLeftWheels,
+            double distanceBetweenCentersOfFrontAndBackWheels,
+            boolean isBlueAlliance,
+            Supplier<Boolean> shouldMirrorSupplier,
+            double fieldWidth,
+            double fieldLength,
+            double maxTranslationalVelocity,
+            double translationalAcceleration,
+            double translationalDeceleration,
+            double maxRotationalVelocity,
+            double maxRotationalAcceleration,
+            double maxRotationalDeceleration,
+            double angleCorrectionRange,
+            double maxRotationCorrectionVelocity,
+            double minRotationVelocityToMove,
+            double endTranslationalVelocityForStopping,
+            double maxToleranceDegrees,
+            double decelerationBufferDegrees,
+            double rotationSettleTime,
+            double maxSwerveModuleMPS
     ) {
-        robotProfile = _robotProfile;
-        getRobotPositionMetersAndDegrees = _getRobotPositionMetersAndDegrees;
-        getRobotVelocityMPSandDPS = _getRobotVelocityMPSAndDPS;
-        setRobotVelocityMPSANDDPS = _setRobotVelocityMPSANDDPS;
-        drivebaseCircumference = calculateDrivebaseCircumference(_distanceBetweenCentersOfRightAndLeftWheels, _distanceBetweenCentersOfFrontAndBackWheels);
-        isBlueAlliance = _isBlueAlliance;
-        defualtShouldMirror = _defaultShouldMirror;
-        fieldWidthMeters = _fieldWidthMeters;
-        fieldLengthMeters = _fieldLengthMeters;
-        
-        defualtMaxDesiredTranslationalVelocity = _defualtMaxDesiredTranslationalVelocity;
-        defaultTranslationalAcceleration = _defaultTranslationalAcceleration;
-        defaultTranslationalDeceleration = _defaultTranslationalDeceleration;
-        defualtEndTranslationalVelocityForStoppingTrajectories = _defualtEndTranslationalVelocityForStoppingTrajectories;
+        CMConfig.getRobotPositionMetersAndDegrees = robotPositionSupplier;
+        CMConfig.getRobotVelocityMPSAndDPS = robotVelocitySupplier;
+        CMConfig.setRobotVelocityMPSAndDPS = robotVelocityConsumer;
 
-        defualtMaxDesiredRotationalVelocity = _defualtMaxDesiredRotationalVelocity;
-        defualtMaxDesiredRotationalAcceleration = _defualtMaxDesiredRotationalAcceleration;
-        defualtMaxDesiredRotationalDeceleration = _defualtMaxDesiredRotationalDeceleration;
-        defaultAngleCorrectionRange = _defaultAngleCorrectionRange;
-        defaultMaxRotationCorrectionVelocityDegrees = _defaultMaxRotationCorrectionVelocityDegrees;
-        defaultMinRotationVelocityToMove = _defaultMinRotationVelocityToMove;
-        defaultMaxToleranceDegrees = _defaultMaxToleranceDegrees;
-        defaultDecelerationBufferDegrees = _defaultDecelerationBufferDegrees;
+        CMConfig.drivebaseCircumference = CMConfig.calculateDrivebaseCircumference(distanceBetweenCentersOfRightAndLeftWheels, distanceBetweenCentersOfFrontAndBackWheels);
 
-        // Sets notifier thread priority for path generation
-        Notifier.setHALThreadPriority(true, 50);
+        CMConfig.isBlueAlliance = isBlueAlliance;
+        CMConfig.defaultShouldMirror = shouldMirrorSupplier;
+        CMConfig.fieldWidthMeters = fieldWidth;
+        CMConfig.fieldLengthMeters = fieldLength;
+
+        CMConfig.defaultMaxDesiredTranslationalVelocity = maxTranslationalVelocity;
+        CMConfig.defaultTranslationalAcceleration = translationalAcceleration;
+        CMConfig.defaultTranslationalDeceleration = translationalDeceleration;
+
+        CMConfig.defaultMaxDesiredRotationalVelocity = maxRotationalVelocity;
+        CMConfig.defaultMaxDesiredRotationalAcceleration = maxRotationalAcceleration;
+        CMConfig.defaultMaxDesiredRotationalDeceleration = maxRotationalDeceleration;
+        CMConfig.defaultAngleCorrectionRange = angleCorrectionRange;
+        CMConfig.defaultMaxRotationCorrectionVelocityDegrees = maxRotationCorrectionVelocity;
+        CMConfig.defaultMinRotationVelocityToMove = minRotationVelocityToMove;
+
+        CMConfig.defaultEndTranslationalVelocityForStoppingTrajectories = endTranslationalVelocityForStopping;
+
+        CMConfig.defaultMaxToleranceDegrees = maxToleranceDegrees;
+        CMConfig.defaultDecelerationBufferDegrees = decelerationBufferDegrees;
+        CMConfig.defaultRotationSettleTime = rotationSettleTime;
+
+        CMConfig.maxPossibleAverageSwerveModuleMPS = maxSwerveModuleMPS;
     }
 
     private static double calculateDrivebaseCircumference(double distanceBetweenCentersOfRightAndLeftWheels, double distanceBetweenCentersOfFrontAndBackWheels) {
@@ -103,91 +161,65 @@ public class CMConfig {
         
         return (Math.PI * (majorAxis + minorAxis)) * (1 + ((3 * h) / (10 + Math.sqrt(4 - (3 * h)))));
     }
-
-    // ---------------- Getters ----------------
-
-    /** @return Robot profile used for the physics simulations */
-    public static CMRobotProfile getRobotProfile() {
-        return robotProfile;
-    }
-
-    /** @return Robot position [x meters, y meters, rotation degrees]. */
+    
     public static double[] getRobotPositionMetersAndDegrees() {
         return getRobotPositionMetersAndDegrees.get();
     }
 
-    /** @return Robot velocity [x m/s, y m/s, rotation deg/s]. */
-    public static double[] getRobotVelocityMPSandDPS() {
-        return getRobotVelocityMPSandDPS.get();
+    public static double[] getRobotVelocityMPSAndDPS() {
+        return getRobotVelocityMPSAndDPS.get();
     }
 
-    /** @return Average Velocitiy of Swerve modules in MPS*/
-    public static double getAverageSwerveModuleVelocityMPS() {
-        return getAverageSwerveModuleVelocityMPS.get();
+    public static void setRobotVelocityMPSAndDPS(double x, double y, double rot) {
+        setRobotVelocityMPSAndDPS.accept(new double[] {x, y, rot});
     }
 
-    /**
-     * Sets the robot's velocity via wrapped consumer.
-     * @param velocity Array of [x m/s, y m/s, rotation deg/s]
-     */
-    public static void setRobotVelocityMPSandDPS(double xVelocityMPS, double yVelocityMPS, double rotationalVelocityDPS) {
-        setRobotVelocityMPSANDDPS.accept(new double[] {xVelocityMPS, yVelocityMPS, rotationalVelocityDPS});
-    }
-
-    /** @return The wheel circumference in meters */
     public static double getDrivebaseCircumference() {
         return drivebaseCircumference;
     }
 
-    /** @return If the current allience is the blue alliance */
     public static boolean isBlueAlliance() {
         return isBlueAlliance;
     }
 
-    /** @return Whether the path should be mirrored. */
-    public static boolean getShouldMirror() {
-        return defualtShouldMirror.get();
+    public static boolean shouldMirror() {
+        return defaultShouldMirror.get();
     }
 
-    /** @return The field width in meters */
-    public static double getFieldWidth() {
+    public static double getFieldWidthMeters() {
         return fieldWidthMeters;
     }
 
-    /** @return The field length in meters */
-    public static double getFieldLength() {
+    public static double getFieldLengthMeters() {
         return fieldLengthMeters;
     }
 
-    /** @return Maximum translational velocity to target. */
     public static double getDefaultMaxDesiredTranslationalVelocity() {
-        return defualtMaxDesiredTranslationalVelocity;
-    }
-
-    /** @return Maximum rotational velocity to target. */
-    public static double getDefaultMaxDesiredRotationalVelocity() {
-        return defualtMaxDesiredRotationalVelocity;
+        return defaultMaxDesiredTranslationalVelocity;
     }
 
     public static double getDefaultTranslationalAcceleration() {
         return defaultTranslationalAcceleration;
     }
-    
+
     public static double getDefaultTranslationalDeceleration() {
         return defaultTranslationalDeceleration;
     }
-    
-    /** @return Desired end translational velocity when stopping. */
-    public static double getDefaultEndTranslationalVelocityForStoppingTrajectories() {
-        return defualtEndTranslationalVelocityForStoppingTrajectories;
+
+    public static double getMaxPossibleAverageSwerveModuleMPS() {
+        return maxPossibleAverageSwerveModuleMPS;
+    }
+
+    public static double getDefaultMaxDesiredRotationalVelocity() {
+        return defaultMaxDesiredRotationalVelocity;
     }
 
     public static double getDefaultMaxDesiredRotationalAcceleration() {
-        return defualtMaxDesiredRotationalAcceleration;
+        return defaultMaxDesiredRotationalAcceleration;
     }
 
     public static double getDefaultMaxDesiredRotationalDeceleration() {
-        return defualtMaxDesiredRotationalDeceleration;
+        return defaultMaxDesiredRotationalDeceleration;
     }
 
     public static double getDefaultAngleCorrectionRange() {
@@ -202,11 +234,19 @@ public class CMConfig {
         return defaultMinRotationVelocityToMove;
     }
 
+    public static double getDefaultEndTranslationalVelocityForStoppingTrajectories() {
+        return defaultEndTranslationalVelocityForStoppingTrajectories;
+    }
+
     public static double getDefaultMaxToleranceDegrees() {
         return defaultMaxToleranceDegrees;
     }
 
     public static double getDefaultDecelerationBufferDegrees() {
         return defaultDecelerationBufferDegrees;
+    }
+
+    public static double getDefaultRotationSettleTime() {
+        return defaultRotationSettleTime;
     }
 }
