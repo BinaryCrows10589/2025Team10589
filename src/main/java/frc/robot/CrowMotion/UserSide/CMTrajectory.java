@@ -96,8 +96,39 @@ public class CMTrajectory {
      * path. These values should be tuned based on whether the trajectory is
      * stopping or non-stopping, the robot’s drivetrain limits, and the desired
      * balance between accuracy and speed.</p>
+     ** @param pathName
+     *        The name of the path. Used in logging.
      *
-     * @param maxDesiredTranslationVelocityMeters
+     * @param controlPoints
+     *        Array of {@link CMAutonPoint} control points defining the Path.
+     *        <ul>
+     *          <li>If given 1 point, the path is a line from the robot to the point.</li>
+     *          <li>If given 2 points, the path is a line from point 1 to point 2.</li>
+     *          <li>If given 3 or more points, the path is a curve generated from the points.</li>
+     *        </ul>
+     *        <strong>Note:</strong> The Bezier curve algorithm only guarantees the 1st and last point
+     *        are on the curve; others are control points. This is how all Bezier curve generation works,
+     *        including PathPlanner, Choreo, and WPILib Trajectories.
+     *
+     * @param rotations
+     *        Array of {@link CMRotation} objects specifying desired rotation
+     *        deadlines (target angles, velocity profiles, and deadlines) along the trajectory.
+     *
+     * @param events
+     *        Array of {@link CMEvent} triggers scheduled to occur at specific
+     *        completion percentages of the trajectory.
+     *
+     * @param pointsPerMeter
+     *        Resolution of the generated path, measured as number of interpolated
+     *        path points per meter of travel. Higher values yield smoother paths but
+     *        heavier computations.
+     *        <ul>
+     *          <li><b>Suggested start:</b> 1.5 (Works well; if you want smoother, try 3)</li>
+     *          <li><b>Lower bound:</b> 1</li>
+     *          <li><b>Upper bound:</b> Infinity (anything above 3 is usually pointless)</li>
+     *        </ul>
+     *
+     * @param maxDesiredTranslationalVelocity
      *        The maximum translational velocity the robot is allowed to reach while
      *        following the trajectory.
      *        <ul>
@@ -105,7 +136,7 @@ public class CMTrajectory {
      *          <li>Lower bound: &gt; 0</li>
      *          <li>Upper bound: robot’s maximum safe velocity</li>
      *        </ul>
-     * @param desiredTranslationalAccelerationMeters
+     * @param desiredTranslationalAcceleration
      *        The maximum translational acceleration allowed while following the
      *        path. Controls how quickly the robot speeds up.
      *        <ul>
@@ -116,10 +147,10 @@ public class CMTrajectory {
      *        <strong>Note:</strong> If odometry drift is occurring, decreasing
      *        acceleration will help prevent wheel slippage.
      *        
-     * @param desiredTranslationalDecelerationMeters
+     * @param desiredTranslationalDecceleration
      *        The deceleration rate used only at the very end of the trajectory to
      *        smoothly reduce the robot’s velocity down to the specified end
-     *        velocity by the time it reaches {@code distanceAtEndVelocityMeters}.
+     *        velocity by the time it reaches {@code distanceAtendVelocity}.
      *        <ul>
      *          <li>Suggested start: 3.5</li>
      *          <li>Upper bound: Robot’s maximum safe acceleration</li>
@@ -127,9 +158,17 @@ public class CMTrajectory {
      *        <strong>Note:</strong> If odometry drift is occurring, decreasing
      *        deceleration will help prevent wheel slippage.
      *        <br>
-     * @param endVelocityMeters
+     * @param trajectoryPriority
+     *        How to prioritize velocity when translational and rotational demands
+     *        exceed the drivetrain’s capacity:
+     *        <ul>
+     *          <li>{@code PREFER_ROTATION}, Lowers translatinal speed however much is needed to allow for the rotation speed</li>
+     *          <li>{@code PREFER_TRANSLATION}, Lowers rotation speed however much is needed to allow for the translational speed</li>
+     *          <li>{@code SPLIT_PROPORTIONALLY}, Lowers both in proportion until the motion is possible</li>
+     *        </ul>
+     * @param endVelocity
      *        The velocity that the robot should be traveling at
-     *        while it travels the distance specified by {@code distanceAtEndVelocityMeters}.
+     *        while it travels the distance specified by {@code distanceAtendVelocity}.
      *        <ul>
      *          <li><b>Stopping trajectories:</b> Suggested ≈ 0.08 m/s, or the maximum
      *          speed the robot can stop at “instantly.”</li>
@@ -139,16 +178,16 @@ public class CMTrajectory {
      *        </ul>
      *        For stopping: decrease to increase accuracy, increase to save time.
      *        <br>
-     * @param distanceAtEndVelocityMeters
+     * @param distanceAtEndVelocity
      *        The distance from the final target point at which the robot should
-     *        already be traveling at {@code endVelocityMeters}.
+     *        already be traveling at {@code endVelocity}.
      *        <ul>
      *          <li><b>Stopping trajectories:</b> Suggested ≈ 0.05 m</li>
      *          <li><b>Non-stopping trajectories:</b> Can be 0</li>
      *        </ul>
      *        Increase this distance to improve accuracy, decrease to save time.
      *        <br>
-     * @param minStartVelocityMeters
+     * @param minStartVelocity
      *        The initial velocity assigned to the robot when beginning the
      *        trajectory. Prevents excessively slow starts.
      *        <ul>
@@ -167,7 +206,7 @@ public class CMTrajectory {
      *          to another trajectory or driver control.</li>
      *        </ul>
      *        <br>
-     * @param positionToleranceMeters
+     * @param positionTolerance
      *        The positional tolerance that determines when the trajectory is
      *        considered complete.
      *        <ul>
@@ -178,11 +217,11 @@ public class CMTrajectory {
      *          control.</li>
      *        </ul>
      *        <br>
-     * @param lookaheadDistanceMultiplier
+     * @param lookAheadMultiplier
      *        Multiplier used to determine which point along the path the robot should
      *        aim for.
      *        <ul>
-     *          <li>Suggested value: <b>10</b></li>
+     *          <li>Suggested value: 10</li>
      *          <li>Reasonable range: 7–10</li>
      *        </ul>
      *        Lower values improve path-following accuracy but increase side-to-side
