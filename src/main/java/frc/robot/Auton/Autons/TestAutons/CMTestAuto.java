@@ -47,48 +47,15 @@ public class CMTestAuto {
                     new CMAutonPoint(1.5, 3, false)
                 }, 
                 new CMRotation[] {
-                    
-                    new CMRotation(10,
-                        1,
-                        .9,
-                        120,
-                        480,
-                        480,
-                        1,
-                        5,
-                        .5,
-                        1,
-                        10),
-                    new CMRotation(180,
-                        1,
-                        1,
-                        120,
-                        480,
-                        480,
-                        1,
-                        5,
-                        .5,
-                        1,
-                        20) 
+                    new CMRotation(10, 1, .25, 1, 5, .5, 10, 1),
+                   
                     }, 
-                    new CMEvent[] {
-                        new CMEvent("Event1", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event1", true), 0),
-                        new CMEvent("Event2", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event2", true), 0.2),
-                        new CMEvent("Event3", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event3", true), 0.4),
-                        new CMEvent("Event4", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event4", true), 0.53),
-                        new CMEvent("Event5", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event5", true), 0.8),
-                        new CMEvent("Event6", () -> Logger.recordOutput("CrowMotion/Debug/Events/Event6", true), 1)
-                    },
-                1.5,
-                3.5,
-                3.5,
-                3.5,
-                TrajectoryPriority.SPLIT_PROPORTIONALLY,
-                .08, .1, 0,
-                true,
-                new double[] { .01, .01}, 10,
-                .04,
-                50), driveSubsystem);
+                    null,
+                    TrajectoryPriority.SPLIT_PROPORTIONALLY,
+                    4.4, 4.4, 4.4, 0,
+                    true,
+                    new double[] {.01, .01}, .04, 50
+                ), driveSubsystem);
         return command;
     } 
 
